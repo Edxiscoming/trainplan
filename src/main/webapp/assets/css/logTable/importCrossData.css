@@ -1,0 +1,22 @@
+/* CSS Document */
+@charset "utf-8";
+
+@import url("mainCross.css");
+
+.padding-5{
+    padding:5px 0px;"
+}
+.margin-top-5{
+    line-height:35px;
+}
+
+.div-header{
+    width:100px;text-align: right;
+}
+
+.closeSlide{
+	cursor: pointer;
+    color: darkgreen;
+    font-weight: 900;
+    margin-right: 10px;
+}

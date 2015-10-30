@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="trainInfoDao">
+
+	<select id="getTrainInfoTotalCount" parameterType="map"
+		resultType="map">
+		select count(*) as count from jhpt_jbt.m_trainline_temp t where 1=1
+		AND t.PARENT_ID = #{chartId}
+		<!-- <if test="operation != null"> AND t.BUSINESS =#{operation} </if> -->
+		<if test="trainNbr != null and fuzzyFlag == 1">
+			AND t.name like '%${trainNbr}%'
+		</if>
+		<if test="trainNbr != null and fuzzyFlag == 0">
+			AND t.name = #{trainNbr}
+		</if>
+		<if test="startBureauShortName != null">
+			AND t.SOURCE_BUREAU_SHORT_NAME = #{startBureauShortName}
+		</if>
+		<if test="endBureauShortName != null">
+			AND t.TARGET_BUREAU_SHORT_NAME = #{endBureauShortName}
+		</if>
+		<if test="passBureauShortName != null">
+			AND t.ROUTE_BUREAU_SHORT_NAMES like '%${passBureauShortName}%'
+		</if>
+		<if test="business != null">
+			AND t.BUSINESS = #{business}
+		</if>
+		<if test="sourceNodeName != null">
+			AND t.source_node_name = #{sourceNodeName}
+		</if>
+		<if test="targetNodeName != null">
+			AND t.target_node_name = #{targetNodeName}
+		</if>
+		
+	</select>
+
+	<select id="getTrainInfoForTrainId" parameterType="string"
+		resultType="org.railway.com.trainplan.service.dto.TrainlineTemplateDto">
+		select id as planTrainId,
+		name as TrainNbr,
+		source_bureau_name as StartBureauFull,
+		target_bureau_name as EndBureauFull,
+		source_node_name as StartStn,
+		target_node_name as EndStn,
+		SOURCE_TIME_SCHEDULE_DATES as arrRunDays;
+		TARGET_TIME_SCHEDULE_DATES as rundays,
+		TO_CHAR(source_time, 'hh24:mi:SS') as StartTime,
+		TO_CHAR(target_time, 'hh24:mi:SS') as EndTime
+
+		from JHPT_jbt.m_trainline_temp where id=#{baseTrainId}
+
+	</select>
+
+
+	<select id="getTrainInfo" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.PlanTrain">
+		select id as planTrainId,
+		name as trainNbr,
+		source_node_name as startStn,
+		target_node_name as endStn,
+		source_bureau_short_name as startBureauShortName,
+		TARGET_BUREAU_SHORT_NAME as endBureau,
+		route_bureau_shortnames as routingBureauShortName,
+		TARGET_TIME_SCHEDULE_DATES as relativeTargetTimeDay,
+		source_bureau_name as startBureauFull,
+		target_bureau_name as endBureauFull,
+		to_char(source_time,'hh24:mi:ss') as startTimeStr,
+		to_char(target_time,'hh24:mi:ss') as endTimeStr,
+		BUSINESS as operation
+		from jhpt_jbt.m_trainline_temp t where 1=1 AND t.PARENT_ID = #{chartId}
+		<if test="trainNbr != null">
+			AND t.name= #{trainNbr}
+		</if>
+		<!-- <if test="operation != null"> AND t.BUSINESS= #{operation} </if> -->
+		<if test="startBureau != null">
+			AND t.source_bureau_short_name = #{startBureauShortName}
+		</if>
+		<if test="endBureau != null">
+			AND t.target_bureau_short_name = #{endBureauShortName}
+		</if>
+		order by trainNbr
+	</select>
+
+	<select id="getTrainlineTotalCount" parameterType="map"
+		resultType="map">
+		select count(*) as count from (
+		select t.id as planTrainId,
+		t.name as trainNbr,
+		t.source_node_name as startStn,
+		t.target_node_name as endStn,
+		t.source_bureau_short_name as startBureau,
+		t.target_bureau_short_name as endBureau,
+		t.route_bureau_short_names as routingBureauShortName,
+		t.source_bureau_name as startBureauFull,
+		t.target_bureau_name as endBureauFull,
+		to_char(t.source_time,'MMDD HH:mm') as startTimeStr,
+		to_char(t.target_time,'MMDD HH:mm') as endTimeStr,
+		t.business as operation,
+		t.source_time_schedule_dates,
+		t.target_time_schedule_dates,
+		<if test="user != null">
+			case when
+			instr(t2.check_lev1_bureau,'${user}')>=0
+			then 1
+
+			when instr(t2.check_lev1_bureau,'${user}')&lt;=-1
+			then 0
+
+			end as checklev1breau,
+
+		</if>
+		<if test="user = null">
+			t2.check_lev1_bureau as checklev1breau,
+		</if>
+
+
+		case
+		when t2.dailyplan_id is null
+		then 0
+		when t2.dailyplan_id is not null
+		then 1
+		end as redundance
+		from jhpt_jbt.m_trainline t left join plan_train t2 on
+		t.id=t2.dailyplan_id
+
+		where 1 = 1
+		<!-- <if test="operation != null"> AND t.business= #{operation} </if> -->
+		<if test="startBureauShortName != null">
+			AND t.source_bureau_short_name = #{startBureauShortName}
+		</if>
+		<if test="endBureauShortName != null">
+			AND t.target_bureau_short_name = #{endBureauShortName}
+		</if>
+
+		<if test="lineReloadStatus = 1">
+
+			AND t2.check_lev1_bureau like '%${user}%'
+		</if>
+		<if test="lineReloadStatus = 0">
+
+			AND t2.check_lev1_bureau not like '%${user}%'
+		</if>
+
+		<choose>
+			<when test="highline_flag != null">
+				AND t2.highline_flag = 1
+			</when>
+			<otherwise>
+				AND t2.highline_flag != 1
+			</otherwise>
+		</choose>
+
+
+
+		<!-- <if test="likeFlag != null"> and t.name like '%${trainNbr}%' </if> -->
+
+		<if test="trainNbr != null and fuzzyFlag == 1">
+			AND t.name like '%${trainNbr}%'
+		</if>
+		<if test="trainNbr != null and fuzzyFlag == 0">
+			AND t.name = #{trainNbr}
+		</if>
+
+
+		<if test="startDate != null">
+			and to_char(t.source_time, 'yyyymmdd') >= #{startDate}
+		</if>
+
+		<if test="endDate != null">
+			and to_char(t.target_time, 'yyyymmdd') &lt;= #{endDate}
+		</if>
+
+
+		)
+	</select>
+
+
+	<select id="getTrainlineForPage" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.PlanTrain">
+		select * from (select ROWNUM AS num, m.* from
+		(
+
+
+		select t.id as planTrainId,
+		t.name as trainNbr,
+		t.source_node_name as startStn,
+		t.target_node_name as endStn,
+		t.source_bureau_short_name as startBureau,
+		t.target_bureau_short_name as endBureau,
+		t.route_bureau_short_names as routingBureauShortName,
+		t.source_bureau_name as startBureauFull,
+		t.target_bureau_name as endBureauFull,
+		to_char(t.source_time,'MMDD HH:mm') as startTimeStr,
+		to_char(t.target_time,'MMDD HH:mm') as endTimeStr,
+		t.business as operation,
+		t.source_time_schedule_dates,
+		t.target_time_schedule_dates,
+		<if test="user != null">
+			case when
+			instr(t2.check_lev1_bureau,'${user}')>=0
+			then 1
+
+			when instr(t2.check_lev1_bureau,'${user}')&lt;=-1
+			then 0
+
+			end as checklev1breau,
+
+		</if>
+		<if test="user = null">
+			t2.check_lev1_bureau as checklev1breau,
+		</if>
+
+
+		case
+		when t2.dailyplan_id is null
+		then 0
+		when t2.dailyplan_id is not null
+		then 1
+		end as redundance
+		from jhpt_jbt.m_trainline t left join plan_train t2 on
+		t.id=t2.dailyplan_id
+
+
+
+
+		where 1 = 1
+		<!-- <if test="operation != null"> AND t.business= #{operation} </if> -->
+		<if test="startBureauShortName != null">
+			AND t.source_bureau_short_name = #{startBureauShortName}
+		</if>
+		<if test="endBureauShortName != null">
+			AND t.target_bureau_short_name = #{endBureauShortName}
+		</if>
+
+		<if test="lineReloadStatus == 1">
+
+			AND t2.check_lev1_bureau like '%${user}%'
+		</if>
+		<if test="lineReloadStatus == 0">
+
+			AND t2.check_lev1_bureau not like '%${user}%'
+		</if>
+
+
+
+		<if test="startDate != null">
+			and to_char(t.source_time, 'yyyymmdd') >= #{startDate}
+		</if>
+
+		<if test="endDate != null">
+			and to_char(t.source_time, 'yyyymmdd')&lt;= #{endDate}
+		</if>
+
+		<!-- <if test="likeFlag != null"> and t.name like '%${trainNbr}%' </if> -->
+
+		<if test="trainNbr != null and fuzzyFlag == 1">
+			AND t.name like '%${trainNbr}%'
+		</if>
+		<if test="trainNbr != null and fuzzyFlag == 0">
+			AND t.name = #{trainNbr}
+		</if>
+		<choose>
+			<when test="highline_flag != null">
+				AND t2.highline_flag = 1
+			</when>
+			<otherwise>
+				AND t2.highline_flag != 1
+			</otherwise>
+		</choose>
+
+
+
+
+		order by t.source_time,trainNbr
+		) m ) where num >=#{rownumstart} AND num &lt;=#{rownumend}
+	</select>
+
+	<select id="getTrainInfoForPage" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.PlanTrain">
+		select * from (select ROWNUM AS num, n.* from (
+		select m.* from (
+		select id as planTrainId,
+		name as trainNbr,
+		source_node_name as startStn,
+		target_node_name as endStn,
+		source_bureau_short_name as startBureau,
+		target_bureau_short_name as endBureau,
+		route_bureau_short_names as routingBureauShortName,
+		TARGET_TIME_SCHEDULE_DATES as relativeTargetTimeDay,
+		source_bureau_name as startBureauFull,
+		target_bureau_name as endBureauFull,
+		to_char(source_time,'hh24:mi:ss') as startTimeStr,
+		to_char(target_time,'hh24:mi:ss') as endTimeStr,
+		BUSINESS as operation,
+		SOURCE_BUREAU_ID as sourceBureauId,
+		SOURCE_NODE_ID as sourceNodeId,
+		TARGET_BUREAU_ID as targetBureauId,
+		TARGET_NODE_ID as targetNodeId,
+		TARGET_TIME_SCHEDULE_DATES as targetTimeScheduleDates,
+		ROUTE_ID AS routeId,
+		TYPE_ID AS trainTypeId
+		,TO_CHAR(EXECUTION_SOURCE_TIME, 'yyyymmdd') sourceTime
+		,TO_CHAR(EXECUTION_TARGET_TIME, 'yyyymmdd') targetTime
+        ,SOURCE_NODE_STATION_ID sourceNodeStationId
+        ,SOURCE_NODE_STATION_NAME sourceNodeStationName
+        ,SOURCE_NODE_TDCS_ID sourceNodeTdcsId
+        ,SOURCE_NODE_TDCS_NAME sourceNodeTdcsName
+        ,TARGET_NODE_STATION_ID targetNodeStationId
+        ,TARGET_NODE_STATION_NAME targetNodeStationName
+        ,TARGET_NODE_TDCS_ID targetNodeTdcsId
+        ,TARGET_NODE_TDCS_NAME targetNodeTdcsName
+		from jhpt_jbt.m_trainline_temp t where 1=1 AND t.PARENT_ID = #{chartId}
+		<!-- <if test="operation != null"> AND t.BUSINESS = #{operation} </if> -->
+		<if test="trainNbr != null and fuzzyFlag == 1">
+			AND t.name like '%${trainNbr}%'
+		</if>
+		<if test="trainNbr != null and fuzzyFlag == 0">
+			AND t.name = #{trainNbr}
+		</if>
+		<if test="startBureauShortName != null">
+			AND t.source_bureau_short_name = #{startBureauShortName}
+		</if>
+		<if test="endBureauShortName != null">
+			AND t.target_bureau_short_name = #{endBureauShortName}
+		</if>
+		<if test="passBureauShortName != null">
+			AND t.ROUTE_BUREAU_SHORT_NAMES like '%${passBureauShortName}%'
+		</if>
+		<if test="business != null">
+			AND t.BUSINESS = #{business}
+		</if>
+		<if test="sourceNodeName != null">
+			AND t.source_node_name = #{sourceNodeName}
+		</if>
+		<if test="targetNodeName != null">
+			AND t.target_node_name = #{targetNodeName}
+		</if>
+		order by trainNbr
+		) m order by trainNbr) n ) where num >=#{rownumstart} AND num
+		&lt;=#{rownumend}
+
+	</select>
+	<select id="getTrainInfoFromJbtByChartidTrainnbr" parameterType="map" resultType="org.railway.com.trainplan.entity.PlanTrain">
+		
+		select id as planTrainId,
+		name as trainNbr,
+		source_node_name as startStn,
+		target_node_name as endStn,
+		source_bureau_short_name as startBureau,
+		target_bureau_short_name as endBureau,
+		route_bureau_short_names as routingBureauShortName,
+		TARGET_TIME_SCHEDULE_DATES as relativeTargetTimeDay,
+		source_bureau_name as startBureauFull,
+		target_bureau_name as endBureauFull,
+		to_char(source_time,'hh24:mi:ss') as startTimeStr,
+		to_char(target_time,'hh24:mi:ss') as endTimeStr,
+		BUSINESS as operation,
+		SOURCE_BUREAU_ID as sourceBureauId,
+		SOURCE_NODE_ID as sourceNodeId,
+		TARGET_BUREAU_ID as targetBureauId,
+		TARGET_NODE_ID as targetNodeId,
+		TARGET_TIME_SCHEDULE_DATES as targetTimeScheduleDates,
+		ROUTE_ID AS routeId,
+		TYPE_ID AS trainTypeId
+		,TO_CHAR(EXECUTION_SOURCE_TIME, 'yyyymmdd') sourceTime
+		,TO_CHAR(EXECUTION_TARGET_TIME, 'yyyymmdd') targetTime
+        ,SOURCE_NODE_STATION_ID sourceNodeStationId
+        ,SOURCE_NODE_STATION_NAME sourceNodeStationName
+        ,SOURCE_NODE_TDCS_ID sourceNodeTdcsId
+        ,SOURCE_NODE_TDCS_NAME sourceNodeTdcsName
+        ,TARGET_NODE_STATION_ID targetNodeStationId
+        ,TARGET_NODE_STATION_NAME targetNodeStationName
+        ,TARGET_NODE_TDCS_ID targetNodeTdcsId
+        ,TARGET_NODE_TDCS_NAME targetNodeTdcsName
+		from jhpt_jbt.m_trainline_temp t 
+		where 1=1 
+		AND t.PARENT_ID = #{chartId}
+		AND t.name = #{trainNbr}
+	
+
+	</select>
+	<select id="getTrainInfoFromJbtByChartidTrainnbrBeforeTrain" parameterType="map" resultType="string">
+		
+		select source_bureau_short_name as bureau
+		from jhpt_jbt.m_trainline_temp t 
+		where 1=1 
+		AND t.PARENT_ID = #{chartId}
+		AND t.name = #{trainNbr}
+	
+
+	</select>
+	<select id="getTrainInfoForPageEdit" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.PlanTrainForJbtEdit">
+		
+		select m.* from (
+		select id as planTrainId,
+		name as
+		trainNbr,
+		high_speed highline_flag,
+		source_node_name as startStn,
+		target_node_name as endStn,
+		source_bureau_short_name as startBureau,
+		target_bureau_short_name as endBureau,
+		route_bureau_short_names as routingBureauShortName,
+		TARGET_TIME_SCHEDULE_DATES as relativeTargetTimeDay,
+		source_bureau_name as startBureauFull,
+		target_bureau_name as endBureauFull,
+		to_char(source_time,'hh24:mi:ss') as startTimeStr,
+		to_char(target_time,'hh24:mi:ss') as endTimeStr,
+		to_char(source_time,'yyyy-mm-dd hh24:mi:ss') as startTimeAll,
+		to_char(target_time,'yyyy-mm-dd hh24:mi:ss') as endTimeAll,
+		BUSINESS as operation,
+		SOURCE_BUREAU_ID as sourceBureauId,
+		SOURCE_NODE_ID as sourceNodeId,
+		TARGET_BUREAU_ID as targetBureauId,
+		TARGET_NODE_ID as targetNodeId,
+		TARGET_TIME_SCHEDULE_DATES as targetTimeScheduleDates,
+		ROUTE_ID AS routeId,
+		TYPE_ID AS trainTypeId
+		,TO_CHAR(EXECUTION_SOURCE_TIME, 'yyyymmdd') sourceTimeActivity
+		,TO_CHAR(EXECUTION_TARGET_TIME, 'yyyymmdd') targetTimeActivity
+        ,SOURCE_NODE_STATION_ID sourceNodeStationId
+        ,SOURCE_NODE_STATION_NAME sourceNodeStationName
+        ,SOURCE_NODE_TDCS_ID sourceNodeTdcsId
+        ,SOURCE_NODE_TDCS_NAME sourceNodeTdcsName
+        ,TARGET_NODE_STATION_ID targetNodeStationId
+        ,TARGET_NODE_STATION_NAME targetNodeStationName
+        ,TARGET_NODE_TDCS_ID targetNodeTdcsId
+        ,TARGET_NODE_TDCS_NAME targetNodeTdcsName
+		from jhpt_jbt.m_trainline_temp t where 1=1 AND t.PARENT_ID = #{chartId}
+		<!-- <if test="operation != null"> AND t.BUSINESS = #{operation} </if> -->
+		<if test="trainNbr != null">
+			AND t.name like '%${trainNbr}%'
+		</if>
+		<if test="operation != null">
+			AND t.BUSINESS = #{operation}
+		</if>
+		order by trainNbr
+		) m order by trainNbr
+
+	</select>
+	<select id="getTrainInfoForPageJbtId" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.PlanTrainForJbtEdit">
+		
+		select m.* from (
+		select id as planTrainId,
+		name as
+		trainNbr,
+		high_speed highline_flag,
+		source_node_name as startStn,
+		target_node_name as endStn,
+		source_bureau_short_name as startBureau,
+		target_bureau_short_name as endBureau,
+		route_bureau_short_names as routingBureauShortName,
+		TARGET_TIME_SCHEDULE_DATES as relativeTargetTimeDay,
+		source_bureau_name as startBureauFull,
+		target_bureau_name as endBureauFull,
+		to_char(source_time,'hh24:mi:ss') as startTimeStr,
+		to_char(target_time,'hh24:mi:ss') as endTimeStr,
+		BUSINESS as operation,
+		SOURCE_BUREAU_ID as sourceBureauId,
+		SOURCE_NODE_ID as sourceNodeId,
+		TARGET_BUREAU_ID as targetBureauId,
+		TARGET_NODE_ID as targetNodeId,
+		TARGET_TIME_SCHEDULE_DATES as targetTimeScheduleDates,
+		ROUTE_ID AS routeId,
+		TYPE_ID AS trainTypeId
+		,TO_CHAR(EXECUTION_SOURCE_TIME, 'yyyymmdd') sourceTime
+		,TO_CHAR(EXECUTION_TARGET_TIME, 'yyyymmdd') targetTime
+        ,SOURCE_NODE_STATION_ID sourceNodeStationId
+        ,SOURCE_NODE_STATION_NAME sourceNodeStationName
+        ,SOURCE_NODE_TDCS_ID sourceNodeTdcsId
+        ,SOURCE_NODE_TDCS_NAME sourceNodeTdcsName
+        ,TARGET_NODE_STATION_ID targetNodeStationId
+        ,TARGET_NODE_STATION_NAME targetNodeStationName
+        ,TARGET_NODE_TDCS_ID targetNodeTdcsId
+        ,TARGET_NODE_TDCS_NAME targetNodeTdcsName
+		from jhpt_jbt.m_trainline_temp t where t.id=#{trainlineId}
+		order by trainNbr
+		) m order by trainNbr
+
+	</select>
+
+
+
+</mapper>

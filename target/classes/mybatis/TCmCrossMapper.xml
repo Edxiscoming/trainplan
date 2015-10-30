@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.comfirmedmap.repository.TCmCrossMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmCross" >
+    <id column="CM_CROSS_ID" property="cmCrossId" jdbcType="VARCHAR" />
+    <result column="CM_CROSS_NAME" property="cmCrossName" jdbcType="VARCHAR" />
+    <result column="CREAT_PEOPLE" property="creatPeople" jdbcType="VARCHAR" />
+    <result column="CREAT_PEOPLE_ORG" property="creatPeopleOrg" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="CHECK_PEOPLE" property="checkPeople" jdbcType="VARCHAR" />
+    <result column="CHECK_PEOPLE_ORG" property="checkPeopleOrg" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+    <result column="CHECK_TIME" property="checkTime" jdbcType="VARCHAR" />
+    <result column="CM_ORIGINAL_CROSS_ID" property="cmOriginalCrossId" jdbcType="VARCHAR" />
+    <result column="CHECK_FLAG" property="checkFlag" jdbcType="DECIMAL" />
+    
+    <result column="THROUGH_LINE" property="throughline" jdbcType="VARCHAR" />
+    <result column="TOKEN_PSG_BUREAU" property="tokenpsgbureau" jdbcType="VARCHAR" />
+    <result column="HIGHLINE_FLAG" property="highlineflag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CM_CROSS_ID, CM_CROSS_NAME, CREAT_PEOPLE, CREAT_PEOPLE_ORG, CREAT_TIME, CHECK_PEOPLE, 
+    CHECK_PEOPLE_ORG, USE_STATUS, CHECK_TIME, CM_ORIGINAL_CROSS_ID, CHECK_FLAG,THROUGH_LINE,TOKEN_PSG_BUREAU,HIGHLINE_FLAG 
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     * 
+    from T_CM_CROSS a,T_CM_ORIGINAL_CROSS b 
+    where a.CM_CROSS_ID = #{cmCrossId}
+    and a.CM_ORIGINAL_CROSS_ID = b.CM_ORIGINAL_CROSS_ID
+  </select>
+  <select id="selectByCmOriginalCross" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_CROSS
+    where CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId}
+  </select>
+  
+   <select id="selectByCmCrossId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     * 
+    from T_CM_CROSS a,T_CM_TRAIN b 
+    where a.CM_CROSS_ID = #{cmCrossId}
+    and a.CM_CROSS_ID = b.CM_CROSS_ID
+  </select>
+  
+  <select id="selectByCrossNameAndScheme" resultMap="BaseResultMap" parameterType="map" >
+  SELECT * FROM T_CM_CROSS WHERE CM_CROSS_NAME=#{cmCrossName} AND CM_VERSION_ID IN (
+	SELECT CM_VERSION_ID FROM T_CM_VERSION WHERE M_TEMPLATE_SCHEME=#{mTemplateScheme}
+  )
+  </select>
+  
+   <select id="selectListBySql" resultType="com.railway.passenger.transdispatch.comfirmedmap.entity.Ljzd">
+        select ljdm,ljjc,ljpym,ljqc
+        from jhpt_jcsj.ljzd order by ljdm asc   
+    </select>
+    
+   <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_CROSS
+    where 1=1
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CM_CROSS
+    where CM_CROSS_ID = #{cmCrossId}
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmCross" >
+    insert into T_CM_CROSS (CM_CROSS_ID, CM_CROSS_NAME, CREAT_PEOPLE, CREAT_PEOPLE_ORG, CREAT_TIME, 
+      CHECK_PEOPLE, CHECK_PEOPLE_ORG, USE_STATUS, CHECK_TIME, CM_ORIGINAL_CROSS_ID, 
+      CHECK_FLAG,CM_VERSION_ID,THROUGH_LINE,TOKEN_PSG_BUREAU,HIGHLINE_FLAG)
+    values (#{cmCrossId}, #{cmCrossName}, #{creatPeople}, #{creatPeopleOrg}, #{creatTime}, 
+      #{checkPeople}, #{checkPeopleOrg}, #{useStatus}, #{checkTime}, #{cmOriginalCrossId}, 
+      #{checkFlag},#{cmVersionId},#{throughline},#{tokenpsgbureau}),#{highlineflag}
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmCross" >
+    insert into T_CM_CROSS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmCrossId != null" >
+        CM_CROSS_ID,
+      </if>
+      <if test="cmCrossName != null" >
+        CM_CROSS_NAME,
+      </if>
+      <if test="creatPeople != null" >
+        CREAT_PEOPLE,
+      </if>
+      <if test="creatPeopleOrg != null" >
+        CREAT_PEOPLE_ORG,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="checkPeople != null" >
+        CHECK_PEOPLE,
+      </if>
+      <if test="checkPeopleOrg != null" >
+        CHECK_PEOPLE_ORG,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME,
+      </if>
+      <if test="cmOriginalCrossId != null" >
+        CM_ORIGINAL_CROSS_ID,
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG,
+      </if>
+      <if test="cmVersionId != null" >
+        CM_VERSION_ID,
+      </if>
+      <if test="throughline != null" >
+        THROUGH_LINE,
+      </if>
+      <if test="tokenpsgbureau != null" >
+        TOKEN_PSG_BUREAU,
+      </if>
+      <if test="highlineflag != null" >
+        HIGHLINE_FLAG,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmCrossId != null" >
+        #{cmCrossId},
+      </if>
+      <if test="cmCrossName != null" >
+        #{cmCrossName},
+      </if>
+      <if test="creatPeople != null" >
+        #{creatPeople},
+      </if>
+      <if test="creatPeopleOrg != null" >
+        #{creatPeopleOrg},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime},
+      </if>
+      <if test="checkPeople != null" >
+        #{checkPeople},
+      </if>
+      <if test="checkPeopleOrg != null" >
+        #{checkPeopleOrg},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime},
+      </if>
+      <if test="cmOriginalCrossId != null" >
+        #{cmOriginalCrossId},
+      </if>
+      <if test="checkFlag != null" >
+        #{checkFlag},
+      </if>
+      <if test="cmVersionId != null" >
+        #{cmVersionId},
+      </if>
+      <if test="throughline != null" >
+        #{throughline},
+      </if>
+      <if test="tokenpsgbureau != null" >
+        #{tokenpsgbureau},
+      </if>
+      <if test="highlineflag != null" >
+        #{highlineflag},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmCross" >
+    update T_CM_CROSS
+    <set >
+      <if test="cmCrossName != null" >
+        CM_CROSS_NAME = #{cmCrossName},
+      </if>
+      <if test="creatPeople != null" >
+        CREAT_PEOPLE = #{creatPeople},
+      </if>
+      <if test="creatPeopleOrg != null" >
+        CREAT_PEOPLE_ORG = #{creatPeopleOrg},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime},
+      </if>
+      <if test="checkPeople != null" >
+        CHECK_PEOPLE = #{checkPeople},
+      </if>
+      <if test="checkPeopleOrg != null" >
+        CHECK_PEOPLE_ORG = #{checkPeopleOrg},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME = #{checkTime},
+      </if>
+      <if test="cmOriginalCrossId != null" >
+        CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId},
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG = #{checkFlag},
+      </if>
+      <if test="cmVersionId != null" >
+        CM_VERSION_ID = #{cmVersionId},
+      </if>
+      <if test="throughline != null" >
+        THROUGH_LINE = #{throughline},
+      </if>
+      <if test="tokenpsgbureau != null" >
+        TOKEN_PSG_BUREAU = #{tokenpsgbureau},
+      </if>
+      <if test="highlineflag != null" >
+        HIGHLINE_FLAG = #{highlineflag},
+      </if>
+    </set>
+    where CM_CROSS_ID = #{cmCrossId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmCross" >
+    update T_CM_CROSS
+    set CM_CROSS_NAME = #{cmCrossName},
+      CREAT_PEOPLE = #{creatPeople},
+      CREAT_PEOPLE_ORG = #{creatPeopleOrg},
+      CREAT_TIME = #{creatTime},
+      CHECK_PEOPLE = #{checkPeople},
+      CHECK_PEOPLE_ORG = #{checkPeopleOrg},
+      USE_STATUS = #{useStatus},
+      CHECK_TIME = #{checkTime},
+      CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId},
+      CHECK_FLAG = #{checkFlag}
+      CM_VERSION_ID = #{cmVersionId}
+      THROUGH_LINE = #{throughline}
+      TOKEN_PSG_BUREAU = #{tokenpsgbureau}
+      HIGHLINE_FLAG = #{highlineflag}
+    where CM_CROSS_ID = #{cmCrossId}
+  </update>
+  
+  
+  <select id="getCmUnitCrossInfo" parameterType="map" resultType="map">
+
+  select * from (select ROWNUM  num,  m.*          
+  from (  
+    select 
+     	a.CM_CROSS_ID as cmCrossId, a.CM_CROSS_NAME as cmCrossName ,b.CREAT_PEOPLE as creatPeople,b.CREAT_PEOPLE_ORG as creatPeopleOrg,b.CREAT_TIME as creatTime,b.CHECK_PEOPLE as checkPeople,    
+  		b.CHECK_PEOPLE_ORG as checkPeopleOrg, b.USE_STATUS as useStatus, b.CHECK_TIME as checkTime, b.CM_ORIGINAL_CROSS_ID as cmOriginalCrossId,b.CHECK_FLAG as checkFlag,
+  		b.THROUGH_LINE as throughline, b.TOKEN_VEH_BUREAU as tokenVehBureau, b.HIGHLINE_FLAG as highlineFlag ,b.cm_version_id as cmVersionId  ,b.RELEVANT_BUREAU as relevAntBureau,
+  		b.GROUP_TOTAL_NBR as grouptotalnbr,b.PAIR_NBR as pairnbr,b.COMMONLINE_RULE as commonlineRule,b.APPOINT_WEEK as appointWeek,b.APPOINT_DAY as appointDay,b.APPOINT_PERIOD as appointPeriod,b.HIGHLINE_RULE as highlineRule 
+    from T_CM_CROSS a,T_CM_ORIGINAL_CROSS b  
+    <where>
+   		 a.CM_ORIGINAL_CROSS_ID = b.CM_ORIGINAL_CROSS_ID
+    	 <if test="chartId != null and chartId != '' ">
+	   		 and b.CM_VERSION_ID = #{chartId}
+	    </if>
+	    <if test="trainNbr != null and trainNbr != '' ">
+	    	and  a.CM_CROSS_NAME like '%${trainNbr}%' 
+	    </if>
+	    <if test="selfRelevant != null and selfRelevant !='' ">
+	     	and  b.RELEVANT_BUREAU like '%${selfRelevant}%'  
+		</if>
+		<if test="input_cross_chart_id != null and input_cross_chart_id != '' ">
+	    	and  b.TOKEN_VEH_BUREAU = #{input_cross_chart_id} 
+	    </if>
+	    <if test="highlineFlag != null and highlineFlag != '' ">
+	    	and  b.HIGHLINE_FLAG = #{highlineFlag} 
+	    </if>
+ 	    order by b.CREAT_TIME desc) m ) where num >=#{rownumstart} AND num
+ 		&lt;=#{rownumend}
+    </where>
+  </select>
+
+  <select id="getUnitCrossInfoCount" parameterType="map"
+		resultType="map">
+		select count(*) as count from T_CM_CROSS a,T_CM_ORIGINAL_CROSS b 
+	    <where>
+	    	 a.CM_ORIGINAL_CROSS_ID = b.CM_ORIGINAL_CROSS_ID
+    	 	<if test="chartId != null and chartId != '' ">
+	   		 and b.CM_VERSION_ID = #{chartId}
+	    	</if>
+		    <if test="trainNbr != null and trainNbr != '' ">
+		    	and  a.CM_CROSS_NAME like '%${trainNbr}%' 
+		    </if>
+		    <if test="selfRelevant != null and selfRelevant !='' ">
+		     	and  b.RELEVANT_BUREAU like '%${selfRelevant}%'
+			</if>
+			<if test="input_cross_chart_id != null and input_cross_chart_id != '' ">
+		    	and  b.TOKEN_VEH_BUREAU = #{input_cross_chart_id} 
+		    </if>
+		    <if test="highlineFlag != null and highlineFlag != '' ">
+		    	and  b.HIGHLINE_FLAG = #{highlineFlag} 
+		    </if>
+	    </where>
+	</select>
+	
+	  <select id="getUnitCrossTrainInfoCount" parameterType="map"
+		resultType="map">
+		select count(*) as count from T_CM_CROSS a,T_CM_TRAIN b 
+		where  a.CM_CROSS_ID = #{cmCrossId}
+		and    a.CM_CROSS_ID = b.CM_CROSS_ID
+	</select>
+	
+	<select id="selectPhyCrossByCmCrossId" resultMap="BaseResultMap" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmCross" >
+	    select 
+		  c.cm_cross_id,        
+		  c.cm_cross_name,       
+		  c.creat_people,        
+		  c.creat_people_org,     
+		  c.creat_time,           
+		  c.check_people,         
+		  c.check_people_org,    
+		  c.use_status,          
+		  c.check_time,          
+		  c.cm_original_cross_id, 
+		  c.check_flag,           
+		  c.cm_version_id,        
+		  c.through_line,        
+		  c.token_psg_bureau,     
+		  c.cm_phy_cross_id,       
+		  c.group_sn        
+		from (select 
+		  a.cm_cross_id,        
+		  a.cm_cross_name,       
+		  a.creat_people,        
+		  a.creat_people_org,     
+		  a.creat_time,           
+		  a.check_people,         
+		  a.check_people_org,    
+		  a.use_status,          
+		  a.check_time,          
+		  a.cm_original_cross_id, 
+		  a.check_flag,           
+		  a.cm_version_id,        
+		  a.through_line,        
+		  a.token_psg_bureau,     
+		  b.cm_phy_cross_id,        
+		  b.group_sn        
+		 from T_CM_CROSS a,T_CM_PHY_CROSS b where a.cm_cross_id = #{cmCrossId} and a.CM_CROSS_ID = b.CM_CROSS_ID) c,
+		T_CM_PHY_CROSS_TRAIN d,T_CM_TRAIN e
+		where c.CM_PHY_CROSS_ID = d.CM_PHY_CROSS_ID
+		and d.CM_TRAIN_ID = e.CM_TRAIN_ID 
+    </select>
+    
+    <delete id="deleteCmUnitCrossInfoForCrossIds" parameterType="map">
+		delete from T_CM_CROSS where CM_CROSS_ID in (${cmCrossId})
+	</delete>
+	
+	<select id="getTrainTimeInfoByTrainIdFromTrainlineJbt"
+		parameterType="string" resultType="org.railway.com.trainplan.entity.TrainTimeInfoJbt">
+ <![CDATA[
+		 select  rownum-1 rn,T5.* from
+		(
+		select
+		case 
+		   when 
+		    INSTR(T4.STNTYPE,'<始发>')>0
+		    THEN 'SFZ'
+		    WHEN
+		    INSTR(T4.STNTYPE,'<终到>')>0
+		    THEN 'ZDZ'
+		    WHEN 
+		    INSTR(T4.STNTYPE,'<经由>')>0
+		    THEN
+		      CASE 
+		        WHEN 
+		          (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=T4.stnname) >0 
+		        THEN 'FJK'
+		        WHEN T4.ARRTIME=T4.DPTTIME
+		        THEN 'BTZ'
+		        ELSE 'TZ'
+		      END
+		end stationFlag ,
+		
+		T4.*
+		FROM (
+			select 
+			t2.BASE_TRAIN_ID as trainlineTempId,
+			t2.childIndex,
+			t2.STNNAME,
+			t2.bureauShortName,
+			t2.STNBUREAUFULL,
+			t2.ARRTIMEALL,
+			t2.DPTTIMEALL,
+			t2.ARRTIME,
+			t2.DPTTIME,
+			t2.stnType,
+			t2.sourceDay,
+			t2.sourceDay as arrRunDays,
+			t2.targetDay,
+			t2.TRACKNAME,
+			t2.targetDay as runDays,
+			T2.BUREAUID,
+			T2.NODEID,
+			T2.NODENAME,
+			t2.arrTrainNbr,
+			t2.dptTrainNbr,
+			t2.platForm,
+			T2.jobs,
+			T2.jobs as jobsValue
+		    ,t2.nodeStationId
+		    ,t2.nodeStationName
+		    ,t2.nodeTdcsId
+		    ,t2.nodeTdcsName
+			  from (
+			        SELECT t.parent_id AS BASE_TRAIN_ID,
+			               t.parent_name as TRAINNBR,
+			               T.CHILD_INDEX AS childIndex,
+			               T.NAME AS STNNAME,
+			               T.BUREAU_SHORT_NAME AS bureauShortName,
+			               T.Bureau_Name as STNBUREAUFULL,
+			               TO_CHAR(T.SOURCE_TIME, 'yyyy-MM-dd hh24:mi:SS') AS ARRTIMEALL,
+			               TO_CHAR(T.TARGET_TIME, 'yyyy-MM-dd hh24:mi:SS') AS DPTTIMEALL,
+			               TO_CHAR(T.SOURCE_TIME, 'hh24:mi:SS') AS ARRTIME,
+			               TO_CHAR(T.TARGET_TIME, 'hh24:mi:SS') AS DPTTIME,
+			               JOBS as stnType,
+			               t.SOURCE_TIME_SCHEDULE_DATES sourceDay,
+			               t.TARGET_TIME_SCHEDULE_DATES targetDay,
+			               T.TRACK_NAME AS TRACKNAME,
+			               t.BUREAU_ID  AS BUREAUID,
+			               t.NODE_ID    AS NODEID,
+                           t.NODE_NAME  AS NODENAME,
+                           t.SOURCE_PARENT_NAME as arrTrainNbr,
+                           t.TARGET_PARENT_NAME as dptTrainNbr,
+                           t.PLATFORM_NAME platForm,
+                           t.jobs
+					       ,T.Node_Station_Id nodeStationId
+					       ,T.Node_Station_Name nodeStationName
+					       ,T.Node_Tdcs_Id nodeTdcsId
+					       ,T.Node_Tdcs_Name nodeTdcsName
+
+			          FROM JHPT_JBT.m_trainline_item_temp T
+			      ) t2,
+			       (select t.id BASE_TRAIN_ID
+			          from JHPT_JBT.m_trainline_temp t
+			         where 1=1) t1
+			 where t1.BASE_TRAIN_ID = t2.BASE_TRAIN_ID and t1.BASE_TRAIN_ID=#{baseTrainId}
+			 order by t1.BASE_TRAIN_ID, childIndex
+			 ) T4
+		 ) T5
+   ]]>
+	</select> <!-- where t.BUSINESS = '客运' -->
+	
+	<select id="getTrainTimeInfoByTrainIdFromTrainlineJbtNp" parameterType="string" resultType="org.railway.com.trainplan.entity.TrainTimeInfoJbt">
+	 <![CDATA[select case
+         when INSTR(T4.STNTYPE, '<始发>') > 0 THEN
+          '0'
+         WHEN INSTR(T4.STNTYPE, '<终到>') > 0 THEN
+          '0'
+         WHEN INSTR(T4.STNTYPE, '<经由>') > 0 THEN
+          CASE
+            WHEN (SELECT COUNT(*)
+                    FROM JHPT_JCSJ.ZDFJK T3
+                   WHERE T3.CNAME = T4.stnname) > 0 THEN
+             'FJK'
+            WHEN T4.ARRTIME = T4.DPTTIME THEN
+             'BT'
+            ELSE
+             'TZ'
+          END
+       end stationFlag,
+       
+       T4.*
+  FROM (select t2.BASE_TRAIN_ID   as trainlineTempId,
+               t2.childIndex,
+               t2.STNNAME,
+               t2.bureauShortName,
+               t2.STNBUREAUFULL,
+               t2.ARRTIMEALL,
+               t2.DPTTIMEALL,
+               t2.ARRTIME,
+               t2.DPTTIME,
+               t2.stnType,
+               t2.sourceDay,
+               t2.sourceDay       as arrRunDays,
+               t2.targetDay,
+               t2.TRACKNAME,
+               t2.targetDay       as runDays,
+               T2.BUREAUID,
+               T2.NODEID,
+               T2.NODENAME,
+               t2.arrTrainNbr,
+               t2.dptTrainNbr,
+               t2.platForm,
+               T2.jobs,
+               T2.jobs            as jobsValue,
+               t2.nodeStationId,
+               t2.nodeStationName,
+               t2.nodeTdcsId,
+               t2.nodeTdcsName
+          from (SELECT t.parent_id AS BASE_TRAIN_ID,
+                       t.parent_name as TRAINNBR,
+                       T.CHILD_INDEX AS childIndex,
+                       T.NAME AS STNNAME,
+                       T.BUREAU_SHORT_NAME AS bureauShortName,
+                       T.Bureau_Name as STNBUREAUFULL,
+                       TO_CHAR(T.SOURCE_TIME, 'yyyy-MM-dd hh24:mi:SS') AS ARRTIMEALL,
+                       TO_CHAR(T.TARGET_TIME, 'yyyy-MM-dd hh24:mi:SS') AS DPTTIMEALL,
+                       TO_CHAR(T.SOURCE_TIME, 'hh24:mi:SS') AS ARRTIME,
+                       TO_CHAR(T.TARGET_TIME, 'hh24:mi:SS') AS DPTTIME,
+                       JOBS as stnType,
+                       t.SOURCE_TIME_SCHEDULE_DATES sourceDay,
+                       t.TARGET_TIME_SCHEDULE_DATES targetDay,
+                       T.TRACK_NAME AS TRACKNAME,
+                       t.BUREAU_ID AS BUREAUID,
+                       t.NODE_ID AS NODEID,
+                       t.NODE_NAME AS NODENAME,
+                       t.SOURCE_PARENT_NAME as arrTrainNbr,
+                       t.TARGET_PARENT_NAME as dptTrainNbr,
+                       t.PLATFORM_NAME platForm,
+                       t.jobs,
+                       T.Node_Station_Id nodeStationId,
+                       T.Node_Station_Name nodeStationName,
+                       T.Node_Tdcs_Id nodeTdcsId,
+                       T.Node_Tdcs_Name nodeTdcsName
+                
+                  FROM JHPT_JBT.m_trainline_item_temp T) t2,
+               (select t.id BASE_TRAIN_ID
+                  from JHPT_JBT.m_trainline_temp t
+                 where 1 = 1) t1
+         where t1.BASE_TRAIN_ID = t2.BASE_TRAIN_ID
+           and t1.BASE_TRAIN_ID = #{baseTrainId}
+         order by t1.BASE_TRAIN_ID, childIndex) T4
+	]]>
+	</select>
+  	<select id="getHomePageSum"
+		parameterType="map" resultType="map">
+ <![CDATA[
+select a.TOKEN_VEH_BUREAU,b.ysc,a.alljl from 
+(SELECT TOKEN_VEH_BUREAU , count(*) as alljl
+  FROM T_CM_ORIGINAL_CROSS
+ GROUP BY TOKEN_VEH_BUREAU)  a,(
+SELECT TOKEN_VEH_BUREAU, count(*) as ysc
+  FROM T_CM_CROSS tcc
+  LEFT JOIN T_CM_ORIGINAL_CROSS tcoc
+    ON tcc.CM_ORIGINAL_CROSS_ID = tcoc.CM_ORIGINAL_CROSS_ID
+ GROUP BY tcoc.TOKEN_VEH_BUREAU) b where a.TOKEN_VEH_BUREAU=b.TOKEN_VEH_BUREAU
+   ]]>
+	</select>
+	  	<select id="getHomePageSumZtjl"
+		parameterType="map" resultType="map">
+ <![CDATA[
+	select TOKEN_VEH_BUREAU, count(1) ztjl
+  from T_CM_ORIGINAL_CROSS ss
+ where ss.token_veh_bureau != ss.RELEVANT_BUREAU
+   and ss.token_veh_bureau is not null
+ group by TOKEN_VEH_BUREAU
+ ]]>
+	</select>
+		  	<select id="getHomePageSumZtysc"
+		parameterType="map" resultType="map">
+ <![CDATA[
+	SELECT TOKEN_VEH_BUREAU, count(1) as ztysc
+  FROM T_CM_CROSS tcc
+  LEFT JOIN T_CM_ORIGINAL_CROSS tcoc
+    ON tcc.CM_ORIGINAL_CROSS_ID = tcoc.CM_ORIGINAL_CROSS_ID
+ where tcoc.token_veh_bureau != tcoc.RELEVANT_BUREAU
+   and tcoc.token_veh_bureau is not null
+ group by TOKEN_VEH_BUREAU
+ ]]>
+	</select>
+
+ 	<select id="getHomePageSumGljl"
+		parameterType="map" resultType="map">
+ <![CDATA[
+	select TOKEN_VEH_BUREAU, count(1) gljl
+  from T_CM_ORIGINAL_CROSS ss
+ where ss.token_veh_bureau = ss.RELEVANT_BUREAU
+   and ss.token_veh_bureau is not null
+ group by TOKEN_VEH_BUREAU
+ ]]>
+	</select>
+ 	<select id="getHomePageSumGlysc"
+		parameterType="map" resultType="map">
+ <![CDATA[
+	SELECT TOKEN_VEH_BUREAU, count(1) as glysc
+  FROM T_CM_CROSS tcc
+  LEFT JOIN T_CM_ORIGINAL_CROSS tcoc
+    ON tcc.CM_ORIGINAL_CROSS_ID = tcoc.CM_ORIGINAL_CROSS_ID
+ where tcoc.token_veh_bureau = tcoc.RELEVANT_BUREAU
+   and tcoc.token_veh_bureau is not null
+ group by TOKEN_VEH_BUREAU
+ ]]>
+	</select>
+
+	
+</mapper>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>基本交路数据管理</title>
+<link rel="icon" sizes="192x192" href="../style/images/logo128.png">
+<link rel="stylesheet" type="text/css" href="../style/themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="../style/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../style/main.css">
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/userLogin/loadUser.js"></script>
+<script type="text/javascript">
+var n= 1;
+function extoptab(x) {
+	  if (x != n){
+		 document.getElementById('toptab' + x).className = 'top_btn_on'  ;
+		if (n!=0){ document.getElementById('toptab' + n).className = 'top_btn'  ;
+		}
+		 n = x;
+		}
+	  }
+function Choice(strUrl){
+	document.getElementById('main').src = strUrl;
+	}
+</script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'north',border:false" class="subtop_div">
+    <div class="subsystit">基本交路数据管理</div>
+    	<div class="topmenu">
+    	 <div id="toptab1" class="top_btn_on" onClick="extoptab(1);Choice('/trainplan/cmcross/pageIndex/query');return false">首页</div>
+		<div id="toptab2" class="top_btn" onClick="extoptab(2);Choice('/trainplan/cmcross/pageIndex/check');return false">核对交路单元</div>
+		<div id="toptab3" class="top_btn" onClick="extoptab(3);Choice('/trainplan/cmOriginalCross/pageIndex/check');return false">核对对数表</div>
+   		<div id="toptab4" class="top_btn" onClick="extoptab(4);Choice('/trainplan/cmOriginalCross/pageIndex/crossTrain');return false">客运对数表</div>
+
+			 
+          
+<!--             <div id="toptab3" class="top_btn" onClick="extoptab(3);Choice('/trainplan/cross/original_cross_import');return false">对数表导入</div> -->
+          
+       </div>
+<div class="top_right_user2"><span id="loadUserSpan"></span></div>
+</div>
+<div data-options="region:'center',border:false">
+        <iframe id="main"  src="/trainplan/cmcross/pageIndex/query" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+        </div>
+</div>
+</body>
+</html>

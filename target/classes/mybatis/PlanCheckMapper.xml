@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.PlanCheckDao">
+
+	<select id="getPlanCheckByMap" parameterType="map" resultType="map">
+		select a.plan_check_id,a.check_bureau,a.check_state
+		from plan_check a
+		where 1=1
+		<if test="check_his_flag != null">
+			and a.check_his_flag = #{check_his_flag}
+		</if>
+		<if test="plan_cross_id != null">
+			and a.plan_cross_id = #{plan_cross_id}
+		</if>
+		<if test="cmd_tel_id != null">
+			and a.cmd_tel_id = #{cmd_tel_id}
+		</if>
+
+		order by a.check_time desc
+	</select>
+
+	<select id="getcheckStateByPlanCrossId" parameterType="map" resultType="map">
+		select b.check_bureau,b.check_state
+		from plan_check b
+		inner join (select a.check_bureau, max(a.check_time) check_time
+		from plan_check a
+		where a.check_his_flag = 0
+		<if test="cmdTelId != null">
+			and a.cmd_tel_id = #{cmdTelId}
+		</if>
+		<if test="planCrossId != null">
+			and a.plan_cross_id = #{planCrossId}
+		</if>
+		<if test="checkBureau != null">
+			and a.check_bureau = #{checkBureau}
+		</if>
+		<!-- 
+		<if test="checkState != null">
+			and a.check_state = #{checkState}
+		</if>
+		 -->
+		<if test="checkHisFlag != null">
+			 and a.check_his_flag = #{checkHisFlag}
+		</if>
+		group by a.check_bureau) c on c.check_bureau = b.check_bureau
+		and c.check_time = b.check_time
+		where 1=1 
+		<if test="cmdTelId != null">
+			and b.cmd_tel_id = #{cmdTelId}
+		</if>
+		<if test="planCrossId != null">
+			and b.plan_cross_id = #{planCrossId}
+		</if>
+		<if test="checkState != null">
+			and b.check_state = #{checkState}
+		</if>
+		order by b.check_time desc
+	</select>
+
+</mapper> 
+

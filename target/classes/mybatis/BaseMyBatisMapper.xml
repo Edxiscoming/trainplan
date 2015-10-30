@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.CrossMybatisDao">
+	<update id="updateCrossPlanDayGap" parameterType="map">
+		UPDATE BASE_CROSS_TRAIN
+		SET DAY_GAP=${value}
+		<if test="end_date != null">
+			,end_date = to_char((to_date(${end_date},'yyyy-MM-dd')+${value}+(select a.END_DATE-a.RUN_DATE from BASE_CROSS_TRAIN a where a.BASE_CROSS_TRAIN_ID = #{planId})),'yyyyMMdd')
+			
+		</if>
+		<if test="run_date != null">
+			,run_date = to_char((to_date(${end_date},'yyyy-MM-dd')+${value}),'yyyyMMdd')
+		</if>
+		WHERE BASE_CROSS_TRAIN_ID=#{planId}
+	</update>
+	
+    <select id="getBaseCrossById" parameterType="string" resultType="map">
+        select a.run_date,a.end_date,a.BASE_CROSS_ID
+		from base_cross_train a 
+		where 1=1 
+        and base_cross_train_id=#{planid}
+    </select>
+	<update id="updateBaseCrossById" parameterType="map">
+		update base_cross a set a.cross_start_date = #{cross_start_date, jdbcType=VARCHAR},a.cross_end_date = #{cross_end_date, jdbcType=VARCHAR}
+		where a.base_cross_id = #{id, jdbcType=VARCHAR}
+	</update>
+    
+	
+    <!-- 根据基本图列车id查询列车有效期 -->
+    <select id="getPeriodTimdByCrossTrainId" parameterType="string" resultType="map">
+        SELECT 
+<!-- 	        TO_CHAR(SOURCE_TIME, 'yyyymmdd') AS SOURCE_TIME,  -->
+<!-- 	        TO_CHAR(TARGET_TIME, 'yyyymmdd') AS TARGET_TIME -->
+<!--         FROM jhpt_jbt.M_TRAINLINE_TEMP_ACTIVITY WHERE PARENT_ID = #{crossTrainId} -->
+	        TO_CHAR(EXECUTION_SOURCE_TIME, 'yyyymmdd') AS SOURCE_TIME, 
+	        TO_CHAR(EXECUTION_TARGET_TIME, 'yyyymmdd') AS TARGET_TIME
+        FROM jhpt_jbt.M_TRAINLINE_TEMP WHERE ID = #{crossTrainId}
+    </select>
+    
+     <select id="searchPeriod" parameterType="map" resultType="org.railway.com.trainplan.entity.TrainActivityPeriod">
+     
+<!--      SELECT a.PARENT_ID as baseTrainId,
+       TO_CHAR(a.SOURCE_TIME, 'yyyymmdd') as sourceTime,
+       TO_CHAR(a.TARGET_TIME, 'yyyymmdd') as targetTime,
+       b.base_cross_train_id
+  FROM jhpt_jbt.M_TRAINLINE_TEMP_ACTIVITY a 
+  left join base_cross_train b on b.base_train_id = a.parent_id 
+     WHERE a.PARENT_ID IN 
+     (SELECT ID FROM jhpt_jbt.M_TRAINLINE_TEMP WHERE "NAME" = #{trainNbr} and PARENT_NAME = #{chartName})
+
+ -->
+
+     SELECT a.ID as baseTrainId,
+       TO_CHAR(a.EXECUTION_SOURCE_TIME, 'yyyymmdd') as sourceTime,
+       TO_CHAR(a.EXECUTION_TARGET_TIME, 'yyyymmdd') as targetTime
+       <!-- ,b.base_cross_train_id -->
+  FROM jhpt_jbt.M_TRAINLINE_TEMP a 
+  <!-- left join base_cross_train b on b.base_train_id = a.id --> 
+     WHERE a.NAME = #{trainNbr} and a.PARENT_NAME = #{chartName}
+   <!-- order by b.update_time -->
+    </select>
+    
+    <select id="getUnitCrossTrainByMap" parameterType="string" resultType="java.util.Map">
+		select a.group_serial_nbr,a.train_sort,a.group_gap
+		,a.run_date,a.end_date ,a.train_nbr
+		,a.unit_cross_train_id,a.unit_cross_id,a.day_gap,a.train_sort_base
+		from unit_cross_train a 
+		where 1=1 
+		<if test="unitCrossIds != null">
+			and a.unit_cross_train_id = #{unitCrossIds}
+		</if>
+		<if test="UNIT_CROSS_ID != null">
+			and a.unit_cross_id = #{UNIT_CROSS_ID}
+		</if>
+		<!-- order by a.group_serial_nbr,a.train_sort -->
+		order by a.train_sort,GROUP_SERIAL_NBR
+    </select>
+    
+	<update id="updateUnitCrossByMap" parameterType="map" >
+		update UNIT_CROSS a
+		   set a.cross_start_date = (select b.run_date
+		                               from (select a.run_date
+		                                       from unit_cross_train a
+		                                      where a.unit_cross_id = #{unit_cross_id, jdbcType = VARCHAR}
+		                                      order by a.run_date) b
+		                              where rownum = 1),
+		       a.cross_end_date   = (select b.end_date
+		                               from (select a.end_date
+		                                       from unit_cross_train a
+		                                      where a.unit_cross_id = #{unit_cross_id, jdbcType = VARCHAR}
+		                                      order by a.end_date desc) b
+		                              where rownum = 1)
+		 where a.unit_cross_id = #{unit_cross_id, jdbcType = VARCHAR}
+	</update>
+</mapper> 
+

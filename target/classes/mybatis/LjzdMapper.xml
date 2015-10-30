@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="ljzdDao">
+   <select id="getLjInfo" parameterType="string" resultType="org.railway.com.trainplan.entity.Ljzd">
+		select ljdm, ljpym, ljqc,ljjc 
+		from jhpt_jcsj.ljzd
+		where ljqc=#{ljqc}
+		order by ljdm
+	</select>
+	
+    <select id="getTrainType" parameterType="string" resultType="org.railway.com.trainplan.entity.TrainType">
+        select id,name,pinYinCode,
+               SHORT_NAME as shortName,
+               ZUOYE_DENGJI as zuoyeDengji,
+               LIECHE_DENGJI as liecheDengji,
+               CHECI_BIAOSHI as checiBiaoshi
+        from jhpt_jcsj.v_zd_lieche_leixing where id =#{id}
+    </select>
+    
+    <select id="getFullStationInfo" resultType="org.railway.com.trainplan.entity.Ljzd">
+        select ljdm,ljjc,ljpym,ljqc
+        from jhpt_jcsj.ljzd order by ljdm asc   
+    </select> 
+    
+
+    			
+</mapper>

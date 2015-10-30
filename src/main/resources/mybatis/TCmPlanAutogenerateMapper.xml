@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.operationplan.repository.TCmPlanAutogenerateMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.operationplan.entity.TCmPlanAutogenerate" >
+    <id column="CM_AUTOGEN_ID" property="cmAutogenId" jdbcType="VARCHAR" />
+    <result column="IS_AUTO_GENERATE" property="isAutoGenerate" jdbcType="DECIMAL" />
+    <result column="GENERATE_TIME" property="generateTime" jdbcType="VARCHAR" />
+    <result column="TOKEN_VEH_BUREAU" property="tokenVehBureau" jdbcType="VARCHAR" />
+    <result column="MAINTAIN_DAYS" property="maintainDays" jdbcType="DECIMAL" />
+    <result column="HIGHLINE_FLAG" property="highlineFlag" jdbcType="DECIMAL" />
+    <result column="NOTE" property="note" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_PEOPLE" property="createPeople" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_PEOPLE" property="updatePeople" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CM_AUTOGEN_ID, IS_AUTO_GENERATE, GENERATE_TIME, TOKEN_VEH_BUREAU, MAINTAIN_DAYS, 
+    HIGHLINE_FLAG, NOTE, CREATE_TIME, CREATE_PEOPLE, UPDATE_TIME, UPDATE_PEOPLE, USE_STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_PLAN_AUTOGENERATE
+    where CM_AUTOGEN_ID = #{cmAutogenId}
+  </select>
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_PLAN_AUTOGENERATE
+    where 1=1
+    <if test="tokenVehBureau != null">
+		AND TOKEN_VEH_BUREAU= #{tokenVehBureau}
+	</if>
+	<if test="highlineFlag != null">
+		AND HIGHLINE_FLAG= #{highlineFlag}
+	</if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CM_PLAN_AUTOGENERATE
+    where CM_AUTOGEN_ID = #{cmAutogenId}
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.operationplan.entity.TCmPlanAutogenerate" >
+    insert into T_CM_PLAN_AUTOGENERATE (CM_AUTOGEN_ID, IS_AUTO_GENERATE, GENERATE_TIME, TOKEN_VEH_BUREAU, MAINTAIN_DAYS, 
+      HIGHLINE_FLAG, NOTE, CREATE_TIME, CREATE_PEOPLE, UPDATE_TIME, UPDATE_PEOPLE, 
+      USE_STATUS)
+    values (#{cmAutogenId}, #{isAutoGenerate}, #{generateTime}, #{tokenVehBureau}, #{maintainDays}, 
+      #{highlineFlag}, #{note}, #{createTime}, #{createPeople}, #{updateTime}, #{updatePeople}, 
+      #{useStatus})
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.operationplan.entity.TCmPlanAutogenerate" >
+    insert into T_CM_PLAN_AUTOGENERATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmAutogenId != null" >
+        CM_AUTOGEN_ID,
+      </if>
+      <if test="isAutoGenerate != null" >
+        IS_AUTO_GENERATE,
+      </if>
+      <if test="generateTime != null" >
+        GENERATE_TIME,
+      </if>
+      <if test="tokenVehBureau != null" >
+        TOKEN_VEH_BUREAU,
+      </if>
+      <if test="maintainDays != null" >
+        MAINTAIN_DAYS,
+      </if>
+      <if test="highlineFlag != null" >
+        HIGHLINE_FLAG,
+      </if>
+      <if test="note != null" >
+        NOTE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createPeople != null" >
+        CREATE_PEOPLE,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updatePeople != null" >
+        UPDATE_PEOPLE,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmAutogenId != null" >
+        #{cmAutogenId},
+      </if>
+      <if test="isAutoGenerate != null" >
+        #{isAutoGenerate},
+      </if>
+      <if test="generateTime != null" >
+        #{generateTime},
+      </if>
+      <if test="tokenVehBureau != null" >
+        #{tokenVehBureau},
+      </if>
+      <if test="maintainDays != null" >
+        #{maintainDays},
+      </if>
+      <if test="highlineFlag != null" >
+        #{highlineFlag},
+      </if>
+      <if test="note != null" >
+        #{note},
+      </if>
+      <if test="createTime != null" >
+        #{createTime},
+      </if>
+      <if test="createPeople != null" >
+        #{createPeople},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime},
+      </if>
+      <if test="updatePeople != null" >
+        #{updatePeople},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.operationplan.entity.TCmPlanAutogenerate" >
+    update T_CM_PLAN_AUTOGENERATE
+    <set >
+      <if test="isAutoGenerate != null" >
+        IS_AUTO_GENERATE = #{isAutoGenerate},
+      </if>
+      <if test="generateTime != null" >
+        GENERATE_TIME = #{generateTime},
+      </if>
+      <if test="tokenVehBureau != null" >
+        TOKEN_VEH_BUREAU = #{tokenVehBureau},
+      </if>
+      <if test="maintainDays != null" >
+        MAINTAIN_DAYS = #{maintainDays},
+      </if>
+      <if test="highlineFlag != null" >
+        HIGHLINE_FLAG = #{highlineFlag},
+      </if>
+      <if test="note != null" >
+        NOTE = #{note},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime},
+      </if>
+      <if test="createPeople != null" >
+        CREATE_PEOPLE = #{createPeople},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime},
+      </if>
+      <if test="updatePeople != null" >
+        UPDATE_PEOPLE = #{updatePeople},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+    </set>
+    where CM_AUTOGEN_ID = #{cmAutogenId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.operationplan.entity.TCmPlanAutogenerate" >
+    update T_CM_PLAN_AUTOGENERATE
+    set IS_AUTO_GENERATE = #{isAutoGenerate},
+      GENERATE_TIME = #{generateTime},
+      TOKEN_VEH_BUREAU = #{tokenVehBureau},
+      MAINTAIN_DAYS = #{maintainDays},
+      HIGHLINE_FLAG = #{highlineFlag},
+      NOTE = #{note},
+      CREATE_TIME = #{createTime},
+      CREATE_PEOPLE = #{createPeople},
+      UPDATE_TIME = #{updateTime},
+      UPDATE_PEOPLE = #{updatePeople},
+      USE_STATUS = #{useStatus}
+    where CM_AUTOGEN_ID = #{cmAutogenId}
+  </update>
+</mapper>

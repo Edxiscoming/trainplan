@@ -1,0 +1,11 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<section class="leftMenu" style="display:none" id="getBase">    
+  <ul class="nav nav-pills nav-stacked" role="tablist">                         
+         <li class="active" id="getBase2"><a href="${ctx}/jbtcx?type=jbt" target="contentFrame">查基本图</a></li>
+  </ul>
+</section>    
+<section class="leftMenu" style="display:none" id="getMsg">    
+  <ul class="nav nav-pills nav-stacked" role="tablist">                         
+         <li class="active" id="getBase2"><a href="${ctx}/msg" target="contentFrame">消息管理</a></li>
+  </ul>
+</section>             

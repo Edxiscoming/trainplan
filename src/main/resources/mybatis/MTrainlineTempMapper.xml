@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.basicmap.original.repository.MTrainlineTempMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.basicmap.original.entity.MTrainlineTemp" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="VEHICLE_TYPE" property="vehicleType" jdbcType="VARCHAR" />
+    <result column="HIGH_SPEED" property="highSpeed" jdbcType="VARCHAR" />
+    <result column="BUSINESS" property="business" jdbcType="VARCHAR" />
+    <result column="ROUTE_ID" property="routeId" jdbcType="VARCHAR" />
+    <result column="ROUTE_NAME" property="routeName" jdbcType="VARCHAR" />
+    <result column="SOURCE_BUREAU_ID" property="sourceBureauId" jdbcType="VARCHAR" />
+    <result column="SOURCE_BUREAU_NAME" property="sourceBureauName" jdbcType="VARCHAR" />
+    <result column="SOURCE_BUREAU_SHORT_NAME" property="sourceBureauShortName" jdbcType="VARCHAR" />
+    <result column="SOURCE_NODE_STATION_ID" property="sourceNodeStationId" jdbcType="VARCHAR" />
+    <result column="SOURCE_NODE_STATION_NAME" property="sourceNodeStationName" jdbcType="VARCHAR" />
+    <result column="SOURCE_NODE_ID" property="sourceNodeId" jdbcType="VARCHAR" />
+    <result column="SOURCE_NODE_NAME" property="sourceNodeName" jdbcType="VARCHAR" />
+    <result column="SOURCE_NODE_TDCS_ID" property="sourceNodeTdcsId" jdbcType="VARCHAR" />
+    <result column="SOURCE_NODE_TDCS_NAME" property="sourceNodeTdcsName" jdbcType="VARCHAR" />
+    <result column="TARGET_BUREAU_ID" property="targetBureauId" jdbcType="VARCHAR" />
+    <result column="TARGET_BUREAU_NAME" property="targetBureauName" jdbcType="VARCHAR" />
+    <result column="TARGET_BUREAU_SHORT_NAME" property="targetBureauShortName" jdbcType="VARCHAR" />
+    <result column="TARGET_NODE_STATION_ID" property="targetNodeStationId" jdbcType="VARCHAR" />
+    <result column="TARGET_NODE_STATION_NAME" property="targetNodeStationName" jdbcType="VARCHAR" />
+    <result column="TARGET_NODE_ID" property="targetNodeId" jdbcType="VARCHAR" />
+    <result column="TARGET_NODE_NAME" property="targetNodeName" jdbcType="VARCHAR" />
+    <result column="TARGET_NODE_TDCS_ID" property="targetNodeTdcsId" jdbcType="VARCHAR" />
+    <result column="TARGET_NODE_TDCS_NAME" property="targetNodeTdcsName" jdbcType="VARCHAR" />
+    <result column="SOURCE_TIME" property="sourceTime" jdbcType="TIMESTAMP" />
+    <result column="SOURCE_TIME_SCHEDULE_DATES" property="sourceTimeScheduleDates" jdbcType="DECIMAL" />
+    <result column="SOURCE_TIME_SCHEDULE_HOUR" property="sourceTimeScheduleHour" jdbcType="DECIMAL" />
+    <result column="SOURCE_TIME_SCHEDULE_MINUTE" property="sourceTimeScheduleMinute" jdbcType="DECIMAL" />
+    <result column="SOURCE_TIME_SCHEDULE_SECOND" property="sourceTimeScheduleSecond" jdbcType="DECIMAL" />
+    <result column="TARGET_TIME" property="targetTime" jdbcType="TIMESTAMP" />
+    <result column="TARGET_TIME_SCHEDULE_DATES" property="targetTimeScheduleDates" jdbcType="DECIMAL" />
+    <result column="TARGET_TIME_SCHEDULE_HOUR" property="targetTimeScheduleHour" jdbcType="DECIMAL" />
+    <result column="TARGET_TIME_SCHEDULE_MINUTE" property="targetTimeScheduleMinute" jdbcType="DECIMAL" />
+    <result column="TARGET_TIME_SCHEDULE_SECOND" property="targetTimeScheduleSecond" jdbcType="DECIMAL" />
+    <result column="ROUTE_BUREAU_SHORT_NAMES" property="routeBureauShortNames" jdbcType="VARCHAR" />
+    <result column="ORIGIN" property="origin" jdbcType="VARCHAR" />
+    <result column="ORIGIN_ID" property="originId" jdbcType="VARCHAR" />
+    <result column="ORIGIN_NAME" property="originName" jdbcType="VARCHAR" />
+    <result column="EXECUTION_ALGORITHM_ID" property="executionAlgorithmId" jdbcType="VARCHAR" />
+    <result column="EXECUTION_ALGORITHM_NAME" property="executionAlgorithmName" jdbcType="VARCHAR" />
+    <result column="EXECUTION_ALGORITHM_CLASS_NAME" property="executionAlgorithmClassName" jdbcType="VARCHAR" />
+    <result column="EXECUTION_SOURCE_TIME" property="executionSourceTime" jdbcType="TIMESTAMP" />
+    <result column="EXECUTION_TARGET_TIME" property="executionTargetTime" jdbcType="TIMESTAMP" />
+    <result column="CHECKED" property="checked" jdbcType="VARCHAR" />
+    <result column="CHECK_STATE" property="checkState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+  
+    ID, NAME, DESCRIPTION, PARENT_ID, PARENT_NAME, TYPE_ID, TYPE_NAME, VEHICLE_TYPE, 
+    HIGH_SPEED, BUSINESS, ROUTE_ID, ROUTE_NAME, SOURCE_BUREAU_ID, SOURCE_BUREAU_NAME, 
+    SOURCE_BUREAU_SHORT_NAME, SOURCE_NODE_STATION_ID, SOURCE_NODE_STATION_NAME, SOURCE_NODE_ID, 
+    SOURCE_NODE_NAME, SOURCE_NODE_TDCS_ID, SOURCE_NODE_TDCS_NAME, TARGET_BUREAU_ID, TARGET_BUREAU_NAME, 
+    TARGET_BUREAU_SHORT_NAME, TARGET_NODE_STATION_ID, TARGET_NODE_STATION_NAME, TARGET_NODE_ID, 
+    TARGET_NODE_NAME, TARGET_NODE_TDCS_ID, TARGET_NODE_TDCS_NAME, SOURCE_TIME, SOURCE_TIME_SCHEDULE_DATES, 
+    SOURCE_TIME_SCHEDULE_HOUR, SOURCE_TIME_SCHEDULE_MINUTE, SOURCE_TIME_SCHEDULE_SECOND, 
+    TARGET_TIME, TARGET_TIME_SCHEDULE_DATES, TARGET_TIME_SCHEDULE_HOUR, TARGET_TIME_SCHEDULE_MINUTE, 
+    TARGET_TIME_SCHEDULE_SECOND, ROUTE_BUREAU_SHORT_NAMES, ORIGIN, ORIGIN_ID, ORIGIN_NAME, 
+    EXECUTION_ALGORITHM_ID, EXECUTION_ALGORITHM_NAME, EXECUTION_ALGORITHM_CLASS_NAME, 
+    EXECUTION_SOURCE_TIME, EXECUTION_TARGET_TIME, CHECKED, CHECK_STATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from jhpt_jbt.M_TRAINLINE_TEMP
+    where ID = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from jhpt_jbt.M_TRAINLINE_TEMP
+    where ID = #{id}
+  </delete>
+  <select id="queryViaBureauByTrainNames" parameterType="java.util.List" resultType="String">
+    select route_bureau_short_names from jhpt_jbt.M_TRAINLINE_TEMP where 
+    <foreach collection="list" item="item" open="(" separator="or" close=")">
+    	name = #{item.name} and parent_id = #{item.versionId}
+    </foreach>
+  </select>
+    <select id="queryAllTrainList" resultMap="BaseResultMap" parameterType="map">
+    select 
+    <include refid="Base_Column_List" />
+    from jhpt_jbt.M_TRAINLINE_TEMP where 1=1 AND ROWNUM &lt;= 100
+    <if test="trainName != null and trainName !=''">
+			AND NAME = #{trainName}
+	</if>
+	<if test="versionId != null">
+			AND PARENT_ID = #{versionId}
+	</if>
+  </select>
+  
+     <select id="queryVagueAllTrainList" resultMap="BaseResultMap" parameterType="map">
+    select 
+    <include refid="Base_Column_List" />
+    from jhpt_jbt.M_TRAINLINE_TEMP where 1=1 AND ROWNUM &lt;= 100
+    <if test="trainName != null">
+			AND NAME like '%${trainName}%'
+	</if>
+	<if test="versionId != null">
+			AND PARENT_ID = #{versionId}
+	</if>
+  </select>
+  
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="map">
+    select 
+    <include refid="Base_Column_List" />
+    from jhpt_jbt.M_TRAINLINE_TEMP where 1=1
+    <if test="trainName != null">
+			AND NAME = #{trainName}
+	</if>
+	<if test="versionId != null">
+			AND PARENT_ID = #{versionId}
+	</if>
+  </select>
+  
+  <insert id="insert" parameterType="com.railway.basicmap.original.entity.MTrainlineTemp" >
+    insert into jhpt_jbt.M_TRAINLINE_TEMP (ID, NAME, DESCRIPTION, PARENT_ID, PARENT_NAME, TYPE_ID, TYPE_NAME, 
+      VEHICLE_TYPE, HIGH_SPEED, BUSINESS, ROUTE_ID, ROUTE_NAME, SOURCE_BUREAU_ID, 
+      SOURCE_BUREAU_NAME, SOURCE_BUREAU_SHORT_NAME, SOURCE_NODE_STATION_ID, SOURCE_NODE_STATION_NAME, 
+      SOURCE_NODE_ID, SOURCE_NODE_NAME, SOURCE_NODE_TDCS_ID, SOURCE_NODE_TDCS_NAME, 
+      TARGET_BUREAU_ID, TARGET_BUREAU_NAME, TARGET_BUREAU_SHORT_NAME, TARGET_NODE_STATION_ID, 
+      TARGET_NODE_STATION_NAME, TARGET_NODE_ID, TARGET_NODE_NAME, TARGET_NODE_TDCS_ID, 
+      TARGET_NODE_TDCS_NAME, SOURCE_TIME, SOURCE_TIME_SCHEDULE_DATES, SOURCE_TIME_SCHEDULE_HOUR, 
+      SOURCE_TIME_SCHEDULE_MINUTE, SOURCE_TIME_SCHEDULE_SECOND, TARGET_TIME, TARGET_TIME_SCHEDULE_DATES, 
+      TARGET_TIME_SCHEDULE_HOUR, TARGET_TIME_SCHEDULE_MINUTE, TARGET_TIME_SCHEDULE_SECOND, 
+      ROUTE_BUREAU_SHORT_NAMES, ORIGIN, ORIGIN_ID, ORIGIN_NAME, EXECUTION_ALGORITHM_ID, 
+      EXECUTION_ALGORITHM_NAME, EXECUTION_ALGORITHM_CLASS_NAME, EXECUTION_SOURCE_TIME, 
+      EXECUTION_TARGET_TIME, CHECKED, CHECK_STATE)
+    values (#{id}, #{name}, #{description}, #{parentId}, #{parentName}, #{typeId}, #{typeName}, 
+      #{vehicleType}, #{highSpeed}, #{business}, #{routeId}, #{routeName}, #{sourceBureauId}, 
+      #{sourceBureauName}, #{sourceBureauShortName}, #{sourceNodeStationId}, #{sourceNodeStationName}, 
+      #{sourceNodeId}, #{sourceNodeName}, #{sourceNodeTdcsId}, #{sourceNodeTdcsName}, 
+      #{targetBureauId}, #{targetBureauName}, #{targetBureauShortName}, #{targetNodeStationId}, 
+      #{targetNodeStationName}, #{targetNodeId}, #{targetNodeName}, #{targetNodeTdcsId}, 
+      #{targetNodeTdcsName}, #{sourceTime}, #{sourceTimeScheduleDates}, #{sourceTimeScheduleHour}, 
+      #{sourceTimeScheduleMinute}, #{sourceTimeScheduleSecond}, #{targetTime}, #{targetTimeScheduleDates}, 
+      #{targetTimeScheduleHour}, #{targetTimeScheduleMinute}, #{targetTimeScheduleSecond}, 
+      #{routeBureauShortNames}, #{origin}, #{originId}, #{originName}, #{executionAlgorithmId}, 
+      #{executionAlgorithmName}, #{executionAlgorithmClassName}, #{executionSourceTime}, 
+      #{executionTargetTime}, #{checked}, #{checkState})
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.basicmap.original.entity.MTrainlineTemp" >
+    insert into jhpt_jbt.M_TRAINLINE_TEMP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="parentName != null" >
+        PARENT_NAME,
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME,
+      </if>
+      <if test="vehicleType != null" >
+        VEHICLE_TYPE,
+      </if>
+      <if test="highSpeed != null" >
+        HIGH_SPEED,
+      </if>
+      <if test="business != null" >
+        BUSINESS,
+      </if>
+      <if test="routeId != null" >
+        ROUTE_ID,
+      </if>
+      <if test="routeName != null" >
+        ROUTE_NAME,
+      </if>
+      <if test="sourceBureauId != null" >
+        SOURCE_BUREAU_ID,
+      </if>
+      <if test="sourceBureauName != null" >
+        SOURCE_BUREAU_NAME,
+      </if>
+      <if test="sourceBureauShortName != null" >
+        SOURCE_BUREAU_SHORT_NAME,
+      </if>
+      <if test="sourceNodeStationId != null" >
+        SOURCE_NODE_STATION_ID,
+      </if>
+      <if test="sourceNodeStationName != null" >
+        SOURCE_NODE_STATION_NAME,
+      </if>
+      <if test="sourceNodeId != null" >
+        SOURCE_NODE_ID,
+      </if>
+      <if test="sourceNodeName != null" >
+        SOURCE_NODE_NAME,
+      </if>
+      <if test="sourceNodeTdcsId != null" >
+        SOURCE_NODE_TDCS_ID,
+      </if>
+      <if test="sourceNodeTdcsName != null" >
+        SOURCE_NODE_TDCS_NAME,
+      </if>
+      <if test="targetBureauId != null" >
+        TARGET_BUREAU_ID,
+      </if>
+      <if test="targetBureauName != null" >
+        TARGET_BUREAU_NAME,
+      </if>
+      <if test="targetBureauShortName != null" >
+        TARGET_BUREAU_SHORT_NAME,
+      </if>
+      <if test="targetNodeStationId != null" >
+        TARGET_NODE_STATION_ID,
+      </if>
+      <if test="targetNodeStationName != null" >
+        TARGET_NODE_STATION_NAME,
+      </if>
+      <if test="targetNodeId != null" >
+        TARGET_NODE_ID,
+      </if>
+      <if test="targetNodeName != null" >
+        TARGET_NODE_NAME,
+      </if>
+      <if test="targetNodeTdcsId != null" >
+        TARGET_NODE_TDCS_ID,
+      </if>
+      <if test="targetNodeTdcsName != null" >
+        TARGET_NODE_TDCS_NAME,
+      </if>
+      <if test="sourceTime != null" >
+        SOURCE_TIME,
+      </if>
+      <if test="sourceTimeScheduleDates != null" >
+        SOURCE_TIME_SCHEDULE_DATES,
+      </if>
+      <if test="sourceTimeScheduleHour != null" >
+        SOURCE_TIME_SCHEDULE_HOUR,
+      </if>
+      <if test="sourceTimeScheduleMinute != null" >
+        SOURCE_TIME_SCHEDULE_MINUTE,
+      </if>
+      <if test="sourceTimeScheduleSecond != null" >
+        SOURCE_TIME_SCHEDULE_SECOND,
+      </if>
+      <if test="targetTime != null" >
+        TARGET_TIME,
+      </if>
+      <if test="targetTimeScheduleDates != null" >
+        TARGET_TIME_SCHEDULE_DATES,
+      </if>
+      <if test="targetTimeScheduleHour != null" >
+        TARGET_TIME_SCHEDULE_HOUR,
+      </if>
+      <if test="targetTimeScheduleMinute != null" >
+        TARGET_TIME_SCHEDULE_MINUTE,
+      </if>
+      <if test="targetTimeScheduleSecond != null" >
+        TARGET_TIME_SCHEDULE_SECOND,
+      </if>
+      <if test="routeBureauShortNames != null" >
+        ROUTE_BUREAU_SHORT_NAMES,
+      </if>
+      <if test="origin != null" >
+        ORIGIN,
+      </if>
+      <if test="originId != null" >
+        ORIGIN_ID,
+      </if>
+      <if test="originName != null" >
+        ORIGIN_NAME,
+      </if>
+      <if test="executionAlgorithmId != null" >
+        EXECUTION_ALGORITHM_ID,
+      </if>
+      <if test="executionAlgorithmName != null" >
+        EXECUTION_ALGORITHM_NAME,
+      </if>
+      <if test="executionAlgorithmClassName != null" >
+        EXECUTION_ALGORITHM_CLASS_NAME,
+      </if>
+      <if test="executionSourceTime != null" >
+        EXECUTION_SOURCE_TIME,
+      </if>
+      <if test="executionTargetTime != null" >
+        EXECUTION_TARGET_TIME,
+      </if>
+      <if test="checked != null" >
+        CHECKED,
+      </if>
+      <if test="checkState != null" >
+        CHECK_STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="description != null" >
+        #{description},
+      </if>
+      <if test="parentId != null" >
+        #{parentId},
+      </if>
+      <if test="parentName != null" >
+        #{parentName},
+      </if>
+      <if test="typeId != null" >
+        #{typeId},
+      </if>
+      <if test="typeName != null" >
+        #{typeName},
+      </if>
+      <if test="vehicleType != null" >
+        #{vehicleType},
+      </if>
+      <if test="highSpeed != null" >
+        #{highSpeed},
+      </if>
+      <if test="business != null" >
+        #{business},
+      </if>
+      <if test="routeId != null" >
+        #{routeId},
+      </if>
+      <if test="routeName != null" >
+        #{routeName},
+      </if>
+      <if test="sourceBureauId != null" >
+        #{sourceBureauId},
+      </if>
+      <if test="sourceBureauName != null" >
+        #{sourceBureauName},
+      </if>
+      <if test="sourceBureauShortName != null" >
+        #{sourceBureauShortName},
+      </if>
+      <if test="sourceNodeStationId != null" >
+        #{sourceNodeStationId},
+      </if>
+      <if test="sourceNodeStationName != null" >
+        #{sourceNodeStationName},
+      </if>
+      <if test="sourceNodeId != null" >
+        #{sourceNodeId},
+      </if>
+      <if test="sourceNodeName != null" >
+        #{sourceNodeName},
+      </if>
+      <if test="sourceNodeTdcsId != null" >
+        #{sourceNodeTdcsId},
+      </if>
+      <if test="sourceNodeTdcsName != null" >
+        #{sourceNodeTdcsName},
+      </if>
+      <if test="targetBureauId != null" >
+        #{targetBureauId},
+      </if>
+      <if test="targetBureauName != null" >
+        #{targetBureauName},
+      </if>
+      <if test="targetBureauShortName != null" >
+        #{targetBureauShortName},
+      </if>
+      <if test="targetNodeStationId != null" >
+        #{targetNodeStationId},
+      </if>
+      <if test="targetNodeStationName != null" >
+        #{targetNodeStationName},
+      </if>
+      <if test="targetNodeId != null" >
+        #{targetNodeId},
+      </if>
+      <if test="targetNodeName != null" >
+        #{targetNodeName},
+      </if>
+      <if test="targetNodeTdcsId != null" >
+        #{targetNodeTdcsId},
+      </if>
+      <if test="targetNodeTdcsName != null" >
+        #{targetNodeTdcsName},
+      </if>
+      <if test="sourceTime != null" >
+        #{sourceTime},
+      </if>
+      <if test="sourceTimeScheduleDates != null" >
+        #{sourceTimeScheduleDates},
+      </if>
+      <if test="sourceTimeScheduleHour != null" >
+        #{sourceTimeScheduleHour},
+      </if>
+      <if test="sourceTimeScheduleMinute != null" >
+        #{sourceTimeScheduleMinute},
+      </if>
+      <if test="sourceTimeScheduleSecond != null" >
+        #{sourceTimeScheduleSecond},
+      </if>
+      <if test="targetTime != null" >
+        #{targetTime},
+      </if>
+      <if test="targetTimeScheduleDates != null" >
+        #{targetTimeScheduleDates},
+      </if>
+      <if test="targetTimeScheduleHour != null" >
+        #{targetTimeScheduleHour},
+      </if>
+      <if test="targetTimeScheduleMinute != null" >
+        #{targetTimeScheduleMinute},
+      </if>
+      <if test="targetTimeScheduleSecond != null" >
+        #{targetTimeScheduleSecond},
+      </if>
+      <if test="routeBureauShortNames != null" >
+        #{routeBureauShortNames},
+      </if>
+      <if test="origin != null" >
+        #{origin},
+      </if>
+      <if test="originId != null" >
+        #{originId},
+      </if>
+      <if test="originName != null" >
+        #{originName},
+      </if>
+      <if test="executionAlgorithmId != null" >
+        #{executionAlgorithmId},
+      </if>
+      <if test="executionAlgorithmName != null" >
+        #{executionAlgorithmName},
+      </if>
+      <if test="executionAlgorithmClassName != null" >
+        #{executionAlgorithmClassName},
+      </if>
+      <if test="executionSourceTime != null" >
+        #{executionSourceTime},
+      </if>
+      <if test="executionTargetTime != null" >
+        #{executionTargetTime},
+      </if>
+      <if test="checked != null" >
+        #{checked},
+      </if>
+      <if test="checkState != null" >
+        #{checkState},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.basicmap.original.entity.MTrainlineTemp" >
+    update jhpt_jbt.M_TRAINLINE_TEMP
+    <set >
+      <if test="name != null" >
+        NAME = #{name},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description},
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId},
+      </if>
+      <if test="parentName != null" >
+        PARENT_NAME = #{parentName},
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID = #{typeId},
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME = #{typeName},
+      </if>
+      <if test="vehicleType != null" >
+        VEHICLE_TYPE = #{vehicleType},
+      </if>
+      <if test="highSpeed != null" >
+        HIGH_SPEED = #{highSpeed},
+      </if>
+      <if test="business != null" >
+        BUSINESS = #{business},
+      </if>
+      <if test="routeId != null" >
+        ROUTE_ID = #{routeId},
+      </if>
+      <if test="routeName != null" >
+        ROUTE_NAME = #{routeName},
+      </if>
+      <if test="sourceBureauId != null" >
+        SOURCE_BUREAU_ID = #{sourceBureauId},
+      </if>
+      <if test="sourceBureauName != null" >
+        SOURCE_BUREAU_NAME = #{sourceBureauName},
+      </if>
+      <if test="sourceBureauShortName != null" >
+        SOURCE_BUREAU_SHORT_NAME = #{sourceBureauShortName},
+      </if>
+      <if test="sourceNodeStationId != null" >
+        SOURCE_NODE_STATION_ID = #{sourceNodeStationId},
+      </if>
+      <if test="sourceNodeStationName != null" >
+        SOURCE_NODE_STATION_NAME = #{sourceNodeStationName},
+      </if>
+      <if test="sourceNodeId != null" >
+        SOURCE_NODE_ID = #{sourceNodeId},
+      </if>
+      <if test="sourceNodeName != null" >
+        SOURCE_NODE_NAME = #{sourceNodeName},
+      </if>
+      <if test="sourceNodeTdcsId != null" >
+        SOURCE_NODE_TDCS_ID = #{sourceNodeTdcsId},
+      </if>
+      <if test="sourceNodeTdcsName != null" >
+        SOURCE_NODE_TDCS_NAME = #{sourceNodeTdcsName},
+      </if>
+      <if test="targetBureauId != null" >
+        TARGET_BUREAU_ID = #{targetBureauId},
+      </if>
+      <if test="targetBureauName != null" >
+        TARGET_BUREAU_NAME = #{targetBureauName},
+      </if>
+      <if test="targetBureauShortName != null" >
+        TARGET_BUREAU_SHORT_NAME = #{targetBureauShortName},
+      </if>
+      <if test="targetNodeStationId != null" >
+        TARGET_NODE_STATION_ID = #{targetNodeStationId},
+      </if>
+      <if test="targetNodeStationName != null" >
+        TARGET_NODE_STATION_NAME = #{targetNodeStationName},
+      </if>
+      <if test="targetNodeId != null" >
+        TARGET_NODE_ID = #{targetNodeId},
+      </if>
+      <if test="targetNodeName != null" >
+        TARGET_NODE_NAME = #{targetNodeName},
+      </if>
+      <if test="targetNodeTdcsId != null" >
+        TARGET_NODE_TDCS_ID = #{targetNodeTdcsId},
+      </if>
+      <if test="targetNodeTdcsName != null" >
+        TARGET_NODE_TDCS_NAME = #{targetNodeTdcsName},
+      </if>
+      <if test="sourceTime != null" >
+        SOURCE_TIME = #{sourceTime},
+      </if>
+      <if test="sourceTimeScheduleDates != null" >
+        SOURCE_TIME_SCHEDULE_DATES = #{sourceTimeScheduleDates},
+      </if>
+      <if test="sourceTimeScheduleHour != null" >
+        SOURCE_TIME_SCHEDULE_HOUR = #{sourceTimeScheduleHour},
+      </if>
+      <if test="sourceTimeScheduleMinute != null" >
+        SOURCE_TIME_SCHEDULE_MINUTE = #{sourceTimeScheduleMinute},
+      </if>
+      <if test="sourceTimeScheduleSecond != null" >
+        SOURCE_TIME_SCHEDULE_SECOND = #{sourceTimeScheduleSecond},
+      </if>
+      <if test="targetTime != null" >
+        TARGET_TIME = #{targetTime},
+      </if>
+      <if test="targetTimeScheduleDates != null" >
+        TARGET_TIME_SCHEDULE_DATES = #{targetTimeScheduleDates},
+      </if>
+      <if test="targetTimeScheduleHour != null" >
+        TARGET_TIME_SCHEDULE_HOUR = #{targetTimeScheduleHour},
+      </if>
+      <if test="targetTimeScheduleMinute != null" >
+        TARGET_TIME_SCHEDULE_MINUTE = #{targetTimeScheduleMinute},
+      </if>
+      <if test="targetTimeScheduleSecond != null" >
+        TARGET_TIME_SCHEDULE_SECOND = #{targetTimeScheduleSecond},
+      </if>
+      <if test="routeBureauShortNames != null" >
+        ROUTE_BUREAU_SHORT_NAMES = #{routeBureauShortNames},
+      </if>
+      <if test="origin != null" >
+        ORIGIN = #{origin},
+      </if>
+      <if test="originId != null" >
+        ORIGIN_ID = #{originId},
+      </if>
+      <if test="originName != null" >
+        ORIGIN_NAME = #{originName},
+      </if>
+      <if test="executionAlgorithmId != null" >
+        EXECUTION_ALGORITHM_ID = #{executionAlgorithmId},
+      </if>
+      <if test="executionAlgorithmName != null" >
+        EXECUTION_ALGORITHM_NAME = #{executionAlgorithmName},
+      </if>
+      <if test="executionAlgorithmClassName != null" >
+        EXECUTION_ALGORITHM_CLASS_NAME = #{executionAlgorithmClassName},
+      </if>
+      <if test="executionSourceTime != null" >
+        EXECUTION_SOURCE_TIME = #{executionSourceTime},
+      </if>
+      <if test="executionTargetTime != null" >
+        EXECUTION_TARGET_TIME = #{executionTargetTime},
+      </if>
+      <if test="checked != null" >
+        CHECKED = #{checked},
+      </if>
+      <if test="checkState != null" >
+        CHECK_STATE = #{checkState},
+      </if>
+    </set>
+    where ID = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.basicmap.original.entity.MTrainlineTemp" >
+    update jhpt_jbt.M_TRAINLINE_TEMP
+    set NAME = #{name},
+      DESCRIPTION = #{description},
+      PARENT_ID = #{parentId},
+      PARENT_NAME = #{parentName},
+      TYPE_ID = #{typeId},
+      TYPE_NAME = #{typeName},
+      VEHICLE_TYPE = #{vehicleType},
+      HIGH_SPEED = #{highSpeed},
+      BUSINESS = #{business},
+      ROUTE_ID = #{routeId},
+      ROUTE_NAME = #{routeName},
+      SOURCE_BUREAU_ID = #{sourceBureauId},
+      SOURCE_BUREAU_NAME = #{sourceBureauName},
+      SOURCE_BUREAU_SHORT_NAME = #{sourceBureauShortName},
+      SOURCE_NODE_STATION_ID = #{sourceNodeStationId},
+      SOURCE_NODE_STATION_NAME = #{sourceNodeStationName},
+      SOURCE_NODE_ID = #{sourceNodeId},
+      SOURCE_NODE_NAME = #{sourceNodeName},
+      SOURCE_NODE_TDCS_ID = #{sourceNodeTdcsId},
+      SOURCE_NODE_TDCS_NAME = #{sourceNodeTdcsName},
+      TARGET_BUREAU_ID = #{targetBureauId},
+      TARGET_BUREAU_NAME = #{targetBureauName},
+      TARGET_BUREAU_SHORT_NAME = #{targetBureauShortName},
+      TARGET_NODE_STATION_ID = #{targetNodeStationId},
+      TARGET_NODE_STATION_NAME = #{targetNodeStationName},
+      TARGET_NODE_ID = #{targetNodeId},
+      TARGET_NODE_NAME = #{targetNodeName},
+      TARGET_NODE_TDCS_ID = #{targetNodeTdcsId},
+      TARGET_NODE_TDCS_NAME = #{targetNodeTdcsName},
+      SOURCE_TIME = #{sourceTime},
+      SOURCE_TIME_SCHEDULE_DATES = #{sourceTimeScheduleDates},
+      SOURCE_TIME_SCHEDULE_HOUR = #{sourceTimeScheduleHour},
+      SOURCE_TIME_SCHEDULE_MINUTE = #{sourceTimeScheduleMinute},
+      SOURCE_TIME_SCHEDULE_SECOND = #{sourceTimeScheduleSecond},
+      TARGET_TIME = #{targetTime},
+      TARGET_TIME_SCHEDULE_DATES = #{targetTimeScheduleDates},
+      TARGET_TIME_SCHEDULE_HOUR = #{targetTimeScheduleHour},
+      TARGET_TIME_SCHEDULE_MINUTE = #{targetTimeScheduleMinute},
+      TARGET_TIME_SCHEDULE_SECOND = #{targetTimeScheduleSecond},
+      ROUTE_BUREAU_SHORT_NAMES = #{routeBureauShortNames},
+      ORIGIN = #{origin},
+      ORIGIN_ID = #{originId},
+      ORIGIN_NAME = #{originName},
+      EXECUTION_ALGORITHM_ID = #{executionAlgorithmId},
+      EXECUTION_ALGORITHM_NAME = #{executionAlgorithmName},
+      EXECUTION_ALGORITHM_CLASS_NAME = #{executionAlgorithmClassName},
+      EXECUTION_SOURCE_TIME = #{executionSourceTime},
+      EXECUTION_TARGET_TIME = #{executionTargetTime},
+      CHECKED = #{checked},
+      CHECK_STATE = #{checkState}
+    where ID = #{id}
+  </update>
+</mapper>

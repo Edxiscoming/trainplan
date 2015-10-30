@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.UnitCrossDao">
+
+    <resultMap id="unitCross" type="org.railway.com.trainplan.entity.UnitCross">
+        <id column="UNIT_CROSS_ID" property="unitCrossId"/>
+        <result column="BASE_CROSS_ID" property="baseCrossId"/>
+        <result column="BASE_CHART_ID" property="baseChartId"/>
+        <result column="BASE_CHART_NAME" property="baseChartName"/>
+        <result column="CROSS_START_DATE" property="crossStartDate"/>
+        <result column="CROSS_END_DATE" property="crossEndDate"/>
+        <result column="CROSS_NAME" property="crossName"/>
+        <result column="CROSS_SPARE_NAME" property="crossSpareName"/>
+        <result column="ALTERNATE_DATE" property="alternateDate"/>
+        <result column="ALTERNATE_TRAIN_NBR" property="alternateTrainNbr"/>
+        <result column="UC_SPARE_FLAG" property="spareFlag"/>
+        <result column="CUT_OLD" property="cutOld"/>
+        <result column="GROUP_TOTAL_NBR" property="groupTotalNbr"/>
+        <result column="PAIR_NBR" property="pairNbr"/>
+        <result column="UC_HIGHLINE_FLAG" property="highlineFlag"/>
+        <result column="UC_HIGHLINE_RULE" property="highlineRule"/>
+        <result column="UC_COMMONLINE_RULE" property="commonlineRule"/>
+        <result column="UC_APPOINT_WEEK" property="appointWeek"/>
+        <result column="UC_APPOINT_DAY" property="appointDay"/>
+        <result column="APPOINT_PERIOD" property="appointPeriod"/>
+        <result column="CROSS_SECTION" property="crossSection"/>
+        <result column="THROUGH_LINE" property="throughLine"/>
+        <result column="UC_START_BUREAU" property="startBureau"/>
+        <result column="RELEVANT_BUREAU" property="relevantBureau"/>
+        <result column="TOKEN_VEH_BUREAU" property="tokenVehBureau"/>
+        <result column="TOKEN_VEH_DEPT" property="tokenVehDept"/>
+        <result column="TOKEN_VEH_DEPOT" property="tokenVehDepot"/>
+        <result column="TOKEN_PSG_BUREAU" property="tokenPsgBureau"/>
+        <result column="TOKEN_PSG_DEPT" property="tokenPsgDept"/>
+        <result column="LOCO_TYPE" property="locoType"/>
+        <result column="CRH_TYPE" property="crhType"/>
+        <result column="ELEC_SUPPLY" property="elecSupply"/>
+        <result column="DEJ_COLLECT" property="dejCollect"/>
+        <result column="AIR_CONDITION" property="airCondition"/>
+        <result column="NOTE" property="note"/>
+        <result column="CREAT_PEOPLE" property="createPeople"/>
+        <result column="CREAT_PEOPLE_ORG" property="createPeopleOrg"/>
+        <result column="CREAT_TIME" property="createTime"/>
+        <result column="CHECK_PEOPLE" property="checkPeople"/>
+        <result column="CHECK_PEOPLE_ORG" property="checkPeopleOrg"/>
+        <result column="CHECK_TIME" property="checkTime"/>
+        <result column="CREAT_CROSS_PEOPLE" property="createCrossPeople"/>
+        <result column="CREAT_CROSS_PEOPLE_ORG" property="createCrossPeopleOrg"/>
+        <result column="CREAT_CROSS_TIME" property="createCrossTime"/>
+        <result column="PLAN_CROSS_ID" property="planCrossId"/>
+        <collection property="unitCrossTrainList" resultMap="org.railway.com.trainplan.repository.mybatis.UnitCrossTrainDao.unitCrossTrain"/>
+    </resultMap>
+
+    <select id="findUnitCrossBySchemaId" parameterType="java.util.Map" resultMap="unitCross">
+        SELECT
+        UC.UNIT_CROSS_ID AS UNIT_CROSS_ID,
+        UC.BASE_CROSS_ID AS BASE_CROSS_ID,
+        UC.BASE_CHART_ID AS BASE_CHART_ID,
+        UC.BASE_CHART_NAME AS BASE_CHART_NAME,
+        UC.CROSS_START_DATE AS CROSS_START_DATE,
+        UC.CROSS_END_DATE AS CROSS_END_DATE,
+        UC.CROSS_NAME AS CROSS_NAME,
+        UC.CROSS_SPARE_NAME AS CROSS_SPARE_NAME,
+        UC.ALTERNATE_DATE AS ALTERNATE_DATE,
+        UC.ALTERNATE_TRAIN_NBR AS ALTERNATE_TRAIN_NBR,
+        UC.SPARE_FLAG AS UC_SPARE_FLAG,
+        UC.CUT_OLD AS CUT_OLD,
+        UC.GROUP_TOTAL_NBR AS GROUP_TOTAL_NBR,
+        UC.PAIR_NBR AS PAIR_NBR,
+        UC.HIGHLINE_FLAG AS UC_HIGHLINE_FLAG,
+        UC.HIGHLINE_RULE AS UC_HIGHLINE_RULE,
+        UC.COMMONLINE_RULE AS UC_COMMONLINE_RULE,
+        UC.APPOINT_WEEK AS UC_APPOINT_WEEK,
+        UC.APPOINT_DAY AS UC_APPOINT_DAY,
+        UC.APPOINT_PERIOD AS APPOINT_PERIOD,
+        UC.CROSS_SECTION AS CROSS_SECTION,
+        UC.THROUGH_LINE AS THROUGH_LINE,
+        UC.START_BUREAU AS UC_START_BUREAU,
+        UC.RELEVANT_BUREAU AS RELEVANT_BUREAU,
+        UC.TOKEN_VEH_BUREAU AS TOKEN_VEH_BUREAU,
+        UC.TOKEN_VEH_DEPT AS TOKEN_VEH_DEPT,
+        UC.TOKEN_VEH_DEPOT AS TOKEN_VEH_DEPOT,
+        UC.TOKEN_PSG_BUREAU AS TOKEN_PSG_BUREAU,
+        UC.TOKEN_PSG_DEPT AS TOKEN_PSG_DEPT,
+        UC.LOCO_TYPE AS LOCO_TYPE,
+        UC.CRH_TYPE AS CRH_TYPE,
+        UC.ELEC_SUPPLY AS ELEC_SUPPLY,
+        UC.DEJ_COLLECT AS DEJ_COLLECT,
+        UC.AIR_CONDITION AS AIR_CONDITION,
+        UC.NOTE AS NOTE,
+        UC.CREAT_PEOPLE AS CREAT_PEOPLE,
+        UC.CREAT_PEOPLE_ORG AS CREAT_PEOPLE_ORG,
+        TO_CHAR(UC.CREAT_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CREAT_TIME,
+        UC.CHECK_PEOPLE AS CHECK_PEOPLE,
+        UC.CHECK_PEOPLE_ORG AS CHECK_PEOPLE_ORG,
+        TO_CHAR(UC.CHECK_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CHECK_TIME,
+        UC.CREAT_CROSS_PEOPLE AS CREAT_CROSS_PEOPLE,
+        UC.CREAT_CROSS_PEOPLE_ORG AS CREAT_CROSS_PEOPLE_ORG,
+        TO_CHAR(UC.CREAT_CROSS_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CREAT_CROSS_TIME,
+        PC.PLAN_CROSS_ID AS PLAN_CROSS_ID,
+        UCT.UNIT_CROSS_TRAIN_ID AS UNIT_CROSS_TRAIN_ID,
+        UCT.UNIT_CROSS_ID AS UCT_UNIT_CROSS_ID,
+        UCT.GROUP_SERIAL_NBR AS GROUP_SERIAL_NBR,
+        UCT.GROUP_GAP AS GROUP_GAP,
+        UCT.MARSHALLING_NAME AS MARSHALLING_NAME,
+        UCT.TRAIN_SORT AS TRAIN_SORT,
+        UCT.TRAIN_NBR AS TRAIN_NBR,
+        UCT.BASE_TRAIN_ID AS BASE_TRAIN_ID,
+        UCT.START_STN AS START_STN,
+        UCT.START_BUREAU AS UCT_START_BUREAU,
+        UCT.END_STN AS END_STN,
+        UCT.END_BUREAU AS END_BUREAU,
+        UCT.DAY_GAP AS DAY_GAP,
+        UCT.ALTERNATE_TRAIN_NBR AS ALTERNATE_TRAIN_NBR,
+        UCT.ALTERNATE_TIME AS ALTERNATE_TIME,
+        UCT.SPARE_FLAG AS UCT_SPARE_FLAG,
+        UCT.SPARE_APPLY_FLAG AS SPARE_APPLY_FLAG,
+        UCT.HIGHLINE_FLAG AS UCT_HIGHLINE_FLAG,
+        UCT.HIGHLINE_RULE AS UCT_HIGHLINE_RULE,
+        UCT.COMMONLINE_RULE AS UCT_COMMONLINE_RULE,
+        UCT.APPOINT_WEEK AS UCT_APPOINT_WEEK,
+        UCT.APPOINT_DAY AS UCT_APPOINT_DAY,
+        UCT.RUN_DATE AS RUN_DATE,
+        UCT.END_DATE AS END_DATE
+        FROM UNIT_CROSS UC LEFT JOIN UNIT_CROSS_TRAIN UCT ON UC.UNIT_CROSS_ID = UCT.UNIT_CROSS_ID
+        LEFT JOIN PLAN_CROSS PC ON UC.UNIT_CROSS_ID = PC.UNIT_CROSS_ID
+        WHERE UC.BASE_CHART_ID = #{baseChartId}
+        AND UC.TOKEN_VEH_BUREAU = #{tokenVehBureau}
+        <if test="crossNames != null">
+            AND UC.CROSS_NAME IN
+            <foreach collection="crossNames" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ORDER BY UC.UNIT_CROSS_ID, UCT.GROUP_SERIAL_NBR, UCT.TRAIN_SORT
+    </select>
+
+    <select id="findUnitCrossByName" parameterType="string" resultMap="unitCross">
+        SELECT
+        UC.UNIT_CROSS_ID AS UNIT_CROSS_ID,
+        UC.BASE_CROSS_ID AS BASE_CROSS_ID,
+        UC.BASE_CHART_ID AS BASE_CHART_ID,
+        UC.BASE_CHART_NAME AS BASE_CHART_NAME,
+        UC.CROSS_START_DATE AS CROSS_START_DATE,
+        UC.CROSS_END_DATE AS CROSS_END_DATE,
+        UC.CROSS_NAME AS CROSS_NAME,
+        UC.CROSS_SPARE_NAME AS CROSS_SPARE_NAME,
+        UC.ALTERNATE_DATE AS ALTERNATE_DATE,
+        UC.ALTERNATE_TRAIN_NBR AS ALTERNATE_TRAIN_NBR,
+        UC.SPARE_FLAG AS UC_SPARE_FLAG,
+        UC.CUT_OLD AS CUT_OLD,
+        UC.GROUP_TOTAL_NBR AS GROUP_TOTAL_NBR,
+        UC.PAIR_NBR AS PAIR_NBR,
+        UC.HIGHLINE_FLAG AS UC_HIGHLINE_FLAG,
+        UC.HIGHLINE_RULE AS UC_HIGHLINE_RULE,
+        UC.COMMONLINE_RULE AS UC_COMMONLINE_RULE,
+        UC.APPOINT_WEEK AS UC_APPOINT_WEEK,
+        UC.APPOINT_DAY AS UC_APPOINT_DAY,
+        UC.APPOINT_PERIOD AS APPOINT_PERIOD,
+        UC.CROSS_SECTION AS CROSS_SECTION,
+        UC.THROUGH_LINE AS THROUGH_LINE,
+        UC.START_BUREAU AS UC_START_BUREAU,
+        UC.RELEVANT_BUREAU AS RELEVANT_BUREAU,
+        UC.TOKEN_VEH_BUREAU AS TOKEN_VEH_BUREAU,
+        UC.TOKEN_VEH_DEPT AS TOKEN_VEH_DEPT,
+        UC.TOKEN_VEH_DEPOT AS TOKEN_VEH_DEPOT,
+        UC.TOKEN_PSG_BUREAU AS TOKEN_PSG_BUREAU,
+        UC.TOKEN_PSG_DEPT AS TOKEN_PSG_DEPT,
+        UC.LOCO_TYPE AS LOCO_TYPE,
+        UC.CRH_TYPE AS CRH_TYPE,
+        UC.ELEC_SUPPLY AS ELEC_SUPPLY,
+        UC.DEJ_COLLECT AS DEJ_COLLECT,
+        UC.AIR_CONDITION AS AIR_CONDITION,
+        UC.NOTE AS NOTE,
+        UC.CREAT_PEOPLE AS CREAT_PEOPLE,
+        UC.CREAT_PEOPLE_ORG AS CREAT_PEOPLE_ORG,
+        TO_CHAR(UC.CREAT_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CREAT_TIME,
+        UC.CHECK_PEOPLE AS CHECK_PEOPLE,
+        UC.CHECK_PEOPLE_ORG AS CHECK_PEOPLE_ORG,
+        TO_CHAR(UC.CHECK_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CHECK_TIME,
+        UC.CREAT_CROSS_PEOPLE AS CREAT_CROSS_PEOPLE,
+        UC.CREAT_CROSS_PEOPLE_ORG AS CREAT_CROSS_PEOPLE_ORG,
+        TO_CHAR(UC.CREAT_CROSS_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CREAT_CROSS_TIME,
+        PC.PLAN_CROSS_ID AS PLAN_CROSS_ID,
+        UCT.UNIT_CROSS_TRAIN_ID AS UNIT_CROSS_TRAIN_ID,
+        UCT.UNIT_CROSS_ID AS UCT_UNIT_CROSS_ID,
+        UCT.GROUP_SERIAL_NBR AS GROUP_SERIAL_NBR,
+        UCT.GROUP_GAP AS GROUP_GAP,
+        UCT.MARSHALLING_NAME AS MARSHALLING_NAME,
+        UCT.TRAIN_SORT AS TRAIN_SORT,
+        UCT.TRAIN_NBR AS TRAIN_NBR,
+        UCT.BASE_TRAIN_ID AS BASE_TRAIN_ID,
+        UCT.START_STN AS START_STN,
+        UCT.START_BUREAU AS UCT_START_BUREAU,
+        UCT.END_STN AS END_STN,
+        UCT.END_BUREAU AS END_BUREAU,
+        UCT.DAY_GAP AS DAY_GAP,
+        UCT.ALTERNATE_TRAIN_NBR AS ALTERNATE_TRAIN_NBR,
+        UCT.ALTERNATE_TIME AS ALTERNATE_TIME,
+        UCT.SPARE_FLAG AS UCT_SPARE_FLAG,
+        UCT.SPARE_APPLY_FLAG AS SPARE_APPLY_FLAG,
+        UCT.HIGHLINE_FLAG AS UCT_HIGHLINE_FLAG,
+        UCT.HIGHLINE_RULE AS UCT_HIGHLINE_RULE,
+        UCT.COMMONLINE_RULE AS UCT_COMMONLINE_RULE,
+        UCT.APPOINT_WEEK AS UCT_APPOINT_WEEK,
+        UCT.APPOINT_DAY AS UCT_APPOINT_DAY,
+        UCT.RUN_DATE AS RUN_DATE,
+        UCT.END_DATE AS END_DATE
+        FROM UNIT_CROSS UC LEFT JOIN UNIT_CROSS_TRAIN UCT ON UC.UNIT_CROSS_ID = UCT.UNIT_CROSS_ID
+        LEFT JOIN PLAN_CROSS PC ON UC.UNIT_CROSS_ID = PC.UNIT_CROSS_ID
+        WHERE UC.CROSS_NAME = #{unitCrossName} AND PC.PLAN_CROSS_ID IS NOT NULL
+        ORDER BY UC.UNIT_CROSS_ID, UCT.GROUP_SERIAL_NBR, UCT.TRAIN_SORT
+    </select>
+
+    <select id="findById" parameterType="string" resultMap="unitCross">
+        SELECT
+        UC.UNIT_CROSS_ID AS UNIT_CROSS_ID,
+        UC.BASE_CROSS_ID AS BASE_CROSS_ID,
+        UC.BASE_CHART_ID AS BASE_CHART_ID,
+        UC.BASE_CHART_NAME AS BASE_CHART_NAME,
+        UC.CROSS_START_DATE AS CROSS_START_DATE,
+        UC.CROSS_END_DATE AS CROSS_END_DATE,
+        UC.CROSS_NAME AS CROSS_NAME,
+        UC.CROSS_SPARE_NAME AS CROSS_SPARE_NAME,
+        UC.ALTERNATE_DATE AS ALTERNATE_DATE,
+        UC.ALTERNATE_TRAIN_NBR AS ALTERNATE_TRAIN_NBR,
+        UC.SPARE_FLAG AS UC_SPARE_FLAG,
+        UC.CUT_OLD AS CUT_OLD,
+        UC.GROUP_TOTAL_NBR AS GROUP_TOTAL_NBR,
+        UC.PAIR_NBR AS PAIR_NBR,
+        UC.HIGHLINE_FLAG AS UC_HIGHLINE_FLAG,
+        UC.HIGHLINE_RULE AS UC_HIGHLINE_RULE,
+        UC.COMMONLINE_RULE AS UC_COMMONLINE_RULE,
+        UC.APPOINT_WEEK AS UC_APPOINT_WEEK,
+        UC.APPOINT_DAY AS UC_APPOINT_DAY,
+        UC.APPOINT_PERIOD AS APPOINT_PERIOD,
+        UC.CROSS_SECTION AS CROSS_SECTION,
+        UC.THROUGH_LINE AS THROUGH_LINE,
+        UC.START_BUREAU AS UC_START_BUREAU,
+        UC.RELEVANT_BUREAU AS RELEVANT_BUREAU,
+        UC.TOKEN_VEH_BUREAU AS TOKEN_VEH_BUREAU,
+        UC.TOKEN_VEH_DEPT AS TOKEN_VEH_DEPT,
+        UC.TOKEN_VEH_DEPOT AS TOKEN_VEH_DEPOT,
+        UC.TOKEN_PSG_BUREAU AS TOKEN_PSG_BUREAU,
+        UC.TOKEN_PSG_DEPT AS TOKEN_PSG_DEPT,
+        UC.LOCO_TYPE AS LOCO_TYPE,
+        UC.CRH_TYPE AS CRH_TYPE,
+        UC.ELEC_SUPPLY AS ELEC_SUPPLY,
+        UC.DEJ_COLLECT AS DEJ_COLLECT,
+        UC.AIR_CONDITION AS AIR_CONDITION,
+        UC.NOTE AS NOTE,
+        UC.CREAT_PEOPLE AS CREAT_PEOPLE,
+        UC.CREAT_PEOPLE_ORG AS CREAT_PEOPLE_ORG,
+        TO_CHAR(UC.CREAT_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CREAT_TIME,
+        UC.CHECK_PEOPLE AS CHECK_PEOPLE,
+        UC.CHECK_PEOPLE_ORG AS CHECK_PEOPLE_ORG,
+        TO_CHAR(UC.CHECK_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CHECK_TIME,
+        UC.CREAT_CROSS_PEOPLE AS CREAT_CROSS_PEOPLE,
+        UC.CREAT_CROSS_PEOPLE_ORG AS CREAT_CROSS_PEOPLE_ORG,
+        TO_CHAR(UC.CREAT_CROSS_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CREAT_CROSS_TIME,
+        PC.PLAN_CROSS_ID AS PLAN_CROSS_ID,
+        UCT.UNIT_CROSS_TRAIN_ID AS UNIT_CROSS_TRAIN_ID,
+        UCT.UNIT_CROSS_ID AS UCT_UNIT_CROSS_ID,
+        UCT.GROUP_SERIAL_NBR AS GROUP_SERIAL_NBR,
+        UCT.GROUP_GAP AS GROUP_GAP,
+        UCT.MARSHALLING_NAME AS MARSHALLING_NAME,
+        UCT.TRAIN_SORT AS TRAIN_SORT,
+        UCT.TRAIN_NBR AS TRAIN_NBR,
+        UCT.BASE_TRAIN_ID AS BASE_TRAIN_ID,
+        UCT.START_STN AS START_STN,
+        UCT.START_BUREAU AS UCT_START_BUREAU,
+        UCT.END_STN AS END_STN,
+        UCT.END_BUREAU AS END_BUREAU,
+        UCT.DAY_GAP AS DAY_GAP,
+        UCT.ALTERNATE_TRAIN_NBR AS ALTERNATE_TRAIN_NBR,
+        UCT.ALTERNATE_TIME AS ALTERNATE_TIME,
+        UCT.SPARE_FLAG AS UCT_SPARE_FLAG,
+        UCT.SPARE_APPLY_FLAG AS SPARE_APPLY_FLAG,
+        UCT.HIGHLINE_FLAG AS UCT_HIGHLINE_FLAG,
+        UCT.HIGHLINE_RULE AS UCT_HIGHLINE_RULE,
+        UCT.COMMONLINE_RULE AS UCT_COMMONLINE_RULE,
+        UCT.APPOINT_WEEK AS UCT_APPOINT_WEEK,
+        UCT.APPOINT_DAY AS UCT_APPOINT_DAY,
+        UCT.RUN_DATE AS RUN_DATE,
+        UCT.END_DATE AS END_DATE
+        FROM UNIT_CROSS UC LEFT JOIN UNIT_CROSS_TRAIN UCT ON UC.UNIT_CROSS_ID = UCT.UNIT_CROSS_ID
+        LEFT JOIN PLAN_CROSS PC ON UC.UNIT_CROSS_ID = PC.UNIT_CROSS_ID
+        WHERE UC.UNIT_CROSS_ID = #{unitCrossId}
+        ORDER BY UC.UNIT_CROSS_ID, UCT.GROUP_SERIAL_NBR, UCT.TRAIN_SORT
+    </select>
+    
+        <select id="findByName" parameterType="string" resultMap="unitCross">
+        SELECT
+        UC.UNIT_CROSS_ID AS UNIT_CROSS_ID,
+        UC.BASE_CROSS_ID AS BASE_CROSS_ID,
+        UC.BASE_CHART_ID AS BASE_CHART_ID,
+        UC.BASE_CHART_NAME AS BASE_CHART_NAME,
+        UC.CROSS_START_DATE AS CROSS_START_DATE,
+        UC.CROSS_END_DATE AS CROSS_END_DATE,
+        UC.CROSS_NAME AS CROSS_NAME,
+        UC.CROSS_SPARE_NAME AS CROSS_SPARE_NAME,
+        UC.ALTERNATE_DATE AS ALTERNATE_DATE,
+        UC.ALTERNATE_TRAIN_NBR AS ALTERNATE_TRAIN_NBR,
+        UC.SPARE_FLAG AS UC_SPARE_FLAG,
+        UC.CUT_OLD AS CUT_OLD,
+        UC.GROUP_TOTAL_NBR AS GROUP_TOTAL_NBR,
+        UC.PAIR_NBR AS PAIR_NBR,
+        UC.HIGHLINE_FLAG AS UC_HIGHLINE_FLAG,
+        UC.HIGHLINE_RULE AS UC_HIGHLINE_RULE,
+        UC.COMMONLINE_RULE AS UC_COMMONLINE_RULE,
+        UC.APPOINT_WEEK AS UC_APPOINT_WEEK,
+        UC.APPOINT_DAY AS UC_APPOINT_DAY,
+        UC.APPOINT_PERIOD AS APPOINT_PERIOD,
+        UC.CROSS_SECTION AS CROSS_SECTION,
+        UC.THROUGH_LINE AS THROUGH_LINE,
+        UC.START_BUREAU AS UC_START_BUREAU,
+        UC.RELEVANT_BUREAU AS RELEVANT_BUREAU,
+        UC.TOKEN_VEH_BUREAU AS TOKEN_VEH_BUREAU,
+        UC.TOKEN_VEH_DEPT AS TOKEN_VEH_DEPT,
+        UC.TOKEN_VEH_DEPOT AS TOKEN_VEH_DEPOT,
+        UC.TOKEN_PSG_BUREAU AS TOKEN_PSG_BUREAU,
+        UC.TOKEN_PSG_DEPT AS TOKEN_PSG_DEPT,
+        UC.LOCO_TYPE AS LOCO_TYPE,
+        UC.CRH_TYPE AS CRH_TYPE,
+        UC.ELEC_SUPPLY AS ELEC_SUPPLY,
+        UC.DEJ_COLLECT AS DEJ_COLLECT,
+        UC.AIR_CONDITION AS AIR_CONDITION,
+        UC.NOTE AS NOTE,
+        UC.CREAT_PEOPLE AS CREAT_PEOPLE,
+        UC.CREAT_PEOPLE_ORG AS CREAT_PEOPLE_ORG,
+        TO_CHAR(UC.CREAT_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CREAT_TIME,
+        UC.CHECK_PEOPLE AS CHECK_PEOPLE,
+        UC.CHECK_PEOPLE_ORG AS CHECK_PEOPLE_ORG,
+        TO_CHAR(UC.CHECK_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CHECK_TIME,
+        UC.CREAT_CROSS_PEOPLE AS CREAT_CROSS_PEOPLE,
+        UC.CREAT_CROSS_PEOPLE_ORG AS CREAT_CROSS_PEOPLE_ORG,
+        TO_CHAR(UC.CREAT_CROSS_TIME, 'yyyy-mm-dd hh24:mi:ss') AS CREAT_CROSS_TIME,
+        PC.PLAN_CROSS_ID AS PLAN_CROSS_ID,
+        UCT.UNIT_CROSS_TRAIN_ID AS UNIT_CROSS_TRAIN_ID,
+        UCT.UNIT_CROSS_ID AS UCT_UNIT_CROSS_ID,
+        UCT.GROUP_SERIAL_NBR AS GROUP_SERIAL_NBR,
+        UCT.GROUP_GAP AS GROUP_GAP,
+        UCT.MARSHALLING_NAME AS MARSHALLING_NAME,
+        UCT.TRAIN_SORT AS TRAIN_SORT,
+        UCT.TRAIN_NBR AS TRAIN_NBR,
+        UCT.BASE_TRAIN_ID AS BASE_TRAIN_ID,
+        UCT.START_STN AS START_STN,
+        UCT.START_BUREAU AS UCT_START_BUREAU,
+        UCT.END_STN AS END_STN,
+        UCT.END_BUREAU AS END_BUREAU,
+        UCT.DAY_GAP AS DAY_GAP,
+        UCT.ALTERNATE_TRAIN_NBR AS ALTERNATE_TRAIN_NBR,
+        UCT.ALTERNATE_TIME AS ALTERNATE_TIME,
+        UCT.SPARE_FLAG AS UCT_SPARE_FLAG,
+        UCT.SPARE_APPLY_FLAG AS SPARE_APPLY_FLAG,
+        UCT.HIGHLINE_FLAG AS UCT_HIGHLINE_FLAG,
+        UCT.HIGHLINE_RULE AS UCT_HIGHLINE_RULE,
+        UCT.COMMONLINE_RULE AS UCT_COMMONLINE_RULE,
+        UCT.APPOINT_WEEK AS UCT_APPOINT_WEEK,
+        UCT.APPOINT_DAY AS UCT_APPOINT_DAY,
+        UCT.RUN_DATE AS RUN_DATE,
+        UCT.END_DATE AS END_DATE
+        FROM UNIT_CROSS UC LEFT JOIN UNIT_CROSS_TRAIN UCT ON UC.UNIT_CROSS_ID = UCT.UNIT_CROSS_ID
+        LEFT JOIN PLAN_CROSS PC ON UC.CROSS_NAME = PC.CROSS_NAME
+        WHERE UC.CROSS_NAME = #{crossName}
+        ORDER BY UC.UNIT_CROSS_ID, UCT.GROUP_SERIAL_NBR, UCT.TRAIN_SORT
+    </select>
+    
+    <select id="getCountForUnitPlanCross"  parameterType="string" resultType="map">
+    select count(unit_cross_id) as count from  plan_cross where unit_cross_id=#{unitPlanCrossId}
+    
+    </select>
+    
+    <delete id="deleteUnitCrossByBaseCrossId" parameterType="map">
+		DELETE from unit_cross u where u.BASE_CROSS_ID=#{baseCrossId}
+	</delete>
+	
+	  <delete id="deleteUnitCrossTrainByBaseCrossId" parameterType="map">
+		DELETE from unit_cross_train t where t.UNIT_CROSS_ID = ( select t.UNIT_CROSS_ID from unit_cross u where u.BASE_CROSS_ID=#{baseCrossId} )
+	</delete>
+    
+</mapper> 

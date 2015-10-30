@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.CmdPlanDao">
+
+
+
+	<select id="findPlanTrainListByBureauAndRunDate" parameterType="map" resultType="org.railway.com.trainplan.entity.PlanTrainCMD">
+		select 
+		t.run_date runDate, 
+		t.train_nbr trainNbr, 
+		t.plan_train_id planTrainId, 
+		t.pre_train_id preTrainId, 
+		t.next_train_id nextTrainId, 
+		t.plan_cross_id planCrossId, 
+		t.group_serial_nbr groupSerialNbr, 
+		t.plan_train_sign planTrainSign, 
+		t.train_sort trainSort, 
+		t.pass_bureau passBureau, 
+		t.start_stn startStn, 
+		t.end_stn endStn, 
+		t.CREAT_TYPE creatType, 
+		t.start_time startTime, 
+		t.base_train_id baseTrainId, 
+		t.cmd_shortinfo cmdShortInfo, 
+		t.tel_shortinfo telShortInfo,
+		t.token_psg_bureau tokenPsgBureau, 
+		t.token_veh_bureau tokenVehBureau 
+		from plan_train t
+		 where t.pass_bureau like '%${bureuaName}%'
+		 and to_char(t.start_time,'yyyyMMdd') &lt;= #{runDate}
+		 and #{runDate} &lt;= to_char(t.end_time,'yyyyMMdd')
+		 and instr(t.highline_flag, '0') = 0
+		 order by t.plan_cross_id, t.train_sort, t.plan_train_sign
+	</select>
+
+	<select id="findCompareModelByBureauAndRunDate" parameterType="map" resultType="org.railway.com.trainplan.entity.CompareModel">
+		select t.stn_bureau bureau, 
+		min(t.arr_time) minArriveDate
+<!-- 		,  -->
+<!-- 		to_char(max(t.dpt_time),'yyyy-MM-dd hh24:mi:ss') maxDepartDateStr  -->
+		from plan_train_stn t 
+		where t.stn_bureau = #{bureuaName} and t.plan_train_id = #{planTrainId} group by t.stn_bureau
+	</select>
+	<select id="findCompareModelByBureauAndRunDateBaseId" parameterType="map" resultType="org.railway.com.trainplan.entity.CompareModel">
+		select temp.bureau bureau, 
+		min(temp.sourceDates) minArriveDate
+<!-- 		,  -->
+<!-- 		max(temp.targetDates) maxDepartDate  -->
+		from (select t.bureau_short_name bureau,
+					(to_date(Concat( #{runDate},to_char(t.source_time, 'hh24:mi:ss')), 'yyyyMMDD hh24:mi:ss') + t.source_time_schedule_dates) sourceDates,
+					(to_date(Concat( #{runDate} ,to_char(t.target_time, 'hh24:mi:ss')), 'yyyyMMDD hh24:mi:ss') + t.target_time_schedule_dates) targetDates
+					from jhpt_jbt.m_trainline_item_temp t where t.bureau_short_name = #{bureuaName} and t.parent_id = #{baseTrainId} 
+					order by t.child_index) temp  group by temp.bureau
+	</select>
+	<select id="findCrossNameFromDicRelaCrossPostByOffset" parameterType="string" resultType="org.railway.com.trainplan.entity.DicRelaCrossPost">
+		select distinct t.cross_name crossName, 
+		t.loaddate_offset loaddateOffset 
+		from dic_rela_cross_post t where t.loaddate_offset &lt;> 0 and t.bureau = #{bureuaCode}
+	</select>
+	<select id="findPlanTrainByCrossFirstTrainNbrAndRunDate" parameterType="map" resultType="org.railway.com.trainplan.entity.PlanTrainCMD">
+		select distinct t.run_date runDate, 
+			t.train_nbr trainNbr, 
+			t.plan_train_id planTrainId, 
+			t.pre_train_id preTrainId, 
+			t.next_train_id nextTrainId, 
+			t.plan_cross_id planCrossId, 
+			t.group_serial_nbr groupSerialNbr, 
+			t.plan_train_sign planTrainSign, 
+			t.train_sort trainSort, 
+			t.pass_bureau passBureau, 
+			t.start_stn startStn, 
+			t.end_stn endStn, 
+			t.creat_type createType, 
+			t.start_time startTime, 
+			t.base_train_id baseTrainId, 
+			t.cmd_shortinfo cmdShortInfo, 
+			t.tel_shortinfo telShortInfo,
+			t.token_psg_bureau tokenPsgBureau, 
+			t.token_veh_bureau tokenVehBureau
+			from plan_train t
+			where t.train_nbr = #{trainNbr} and t.run_date = #{time}
+			order by t.plan_cross_id, t.train_sort, t.plan_train_sign
+	</select>
+	<select id="findPlanCrossByPlanCrossId" parameterType="map" resultType="org.railway.com.trainplan.entity.PlanCrossCmd">
+		select t.base_cross_id baseCrossId, 
+		t.cross_name crossName, 
+		t.spare_flag spareFlag, 
+		t.relevant_bureau relevantBureau, 
+		t.token_veh_bureau tokenVehBureau, 
+		t.token_veh_dept tokenVehDept, 
+		t.token_psg_bureau tokenPsgBureau, 
+		t.token_psg_dept tokenPsgDept, 
+		t.crh_type crhType, 
+		r.bureau rBureau
+		from plan_cross t left join dic_rela_cross_post r on t.cross_name = r.cross_name 
+		where instr(t.highline_flag, 1) > 0 and t.plan_cross_id = #{planCrossId}
+	</select>
+	<select id="findPlanCrossByPlanCrossId2" parameterType="map" resultType="org.railway.com.trainplan.entity.PlanCrossCmd">
+		select t.base_cross_id baseCrossId, 
+		t.cross_name crossName, 
+		t.spare_flag spareFlag, 
+		t.relevant_bureau relevantBureau, 
+		r.through_line throughLine, 
+		t.token_veh_bureau tokenVehBureau, 
+		t.token_veh_dept tokenVehDept, 
+		r.depot_name tokenVehDepot, 
+		t.token_psg_bureau tokenPsgBureau, 
+		t.token_psg_dept tokenPsgDept, 
+		t.crh_type crhType, 
+		r.bureau rBureau, 
+		r.post_id postId, 
+		r.post_name postName 
+		from plan_cross t left join dic_rela_cross_post r on t.cross_name = r.cross_name 
+		where (instr(t.highline_flag, '1') > 0 or instr(t.highline_flag, '2') > 0) and t.plan_cross_id = #{planCrossId}
+	</select>
+	
+	<select id="findPlanTrainListByPlanTrainId" parameterType="string" resultType="org.railway.com.trainplan.entity.PlanTrainCMD">
+		select t.run_date runDate, 
+		t.train_nbr trainNbr, 
+		t.plan_train_id planTrainId, 
+		t.base_train_id baseTrainId,
+		t.pre_train_id preTrainId, 
+		t.next_train_id nextTrainId, 
+		t.plan_cross_id planCrossId, 
+		t.group_serial_nbr groupSerialNbr, 
+		t.plan_train_sign planTrainSign, 
+		t.train_sort trainSort, 
+		t.pass_bureau passBureau, 
+		t.start_stn startStn, 
+		t.end_stn endStn, 
+		t.creat_type createType, 
+		t.start_time startTime, 
+		t.cmd_shortinfo cmdShortInfo, 
+		t.tel_shortinfo telShortInfo,
+		t.token_psg_bureau tokenPsgBureau, 
+		t.token_veh_bureau tokenVehBureau 
+		from plan_train t
+		where t.plan_train_id = #{trainId}
+	</select>
+	<insert id="insertHighlineCross" parameterType="org.railway.com.trainplan.entity.HighlineCrossCmd">
+		insert into highline_cross  
+		(
+		highline_cross_id, 
+		plan_cross_id, 
+		base_cross_id, 
+		cross_name, 
+		cross_bureau ,
+		cross_start_date, 
+		cross_end_date, 
+		cross_start_stn, 
+		cross_end_stn, 
+		spare_flag, 
+		relevant_bureau, 
+		through_line, 
+		token_veh_bureau, 
+		token_veh_depot, 
+		token_veh_dept, 
+		token_psg_bureau, 
+		token_psg_dept, 
+		crh_type, 
+		cross_date, 
+		creat_reason, 
+		post_id, 
+		post_name, 
+		creat_time, 
+		cross_check_type, 
+		vehicle_sub_type, 
+		vehicle_check_type)
+		values(
+		#{highlineCrossId,jdbcType=VARCHAR},
+		#{planCrossId,jdbcType=VARCHAR},
+		#{baseCrossId,jdbcType=VARCHAR},
+		#{crossName,jdbcType=VARCHAR},
+		#{crossBureau,jdbcType=VARCHAR},
+		#{crossStartDate,jdbcType=VARCHAR},
+		#{crossEndDate,jdbcType=VARCHAR},
+		#{crossStartStn,jdbcType=VARCHAR},
+		#{crossEndStn,jdbcType=VARCHAR},
+		#{spareFlag,jdbcType=VARCHAR},
+		#{relevantBureau,jdbcType=VARCHAR},
+		#{throughLine,jdbcType=VARCHAR},
+		#{tokenVehBureau,jdbcType=VARCHAR},
+		#{tokenVehDepot,jdbcType=VARCHAR},
+		#{tokenVehDept,jdbcType=VARCHAR},
+		#{tokenPsgBureau,jdbcType=VARCHAR},
+		#{tokenPsgDept,jdbcType=VARCHAR},
+		#{crhType,jdbcType=VARCHAR},
+		#{crossDate,jdbcType=VARCHAR},
+		#{creatReason,jdbcType=VARCHAR},
+		#{postId,jdbcType=VARCHAR},
+		#{postName,jdbcType=VARCHAR},
+		sysdate,
+		0,
+		0,
+		0
+		)
+	</insert>
+	<insert id="insertHighlineCrossTrain" parameterType="org.railway.com.trainplan.entity.HighlineCrossTrain">
+		insert into highline_cross_train 
+		(highline_train_id,
+		highline_cross_id, 
+		plan_train_id,
+		train_sort,
+		train_nbr,run_date)
+		values
+		(#{highlineTrainId,jdbcType=VARCHAR},
+		#{highlineCrossId,jdbcType=VARCHAR},
+		#{planTrainId,jdbcType=VARCHAR},
+		#{trainSort,jdbcType=VARCHAR},
+		#{trainNbr,jdbcType=VARCHAR},
+		#{runDate,jdbcType=VARCHAR})
+	</insert>
+
+	<update id="updateHighlineCrossVehicleByHistory" parameterType="map">
+		update highline_cross a set 
+		a.vehicle1 = (select b.vehicle1 from highline_cross b where b.cross_name = a.cross_name and b.cross_bureau = a.cross_bureau and b.cross_start_date = a.cross_start_date and b.vehicle1 is not null and rownum =1), 
+		a.vehicle2 = (select b.vehicle2 from highline_cross b where b.cross_name = a.cross_name and b.cross_bureau = a.cross_bureau and b.cross_start_date = a.cross_start_date and b.vehicle2 is not null and rownum =1) 
+		where to_date(a.cross_start_date, 'yyyymmdd') &lt; to_date(a.cross_date, 'yyyymmdd') and a.cross_date = #{runDate} and a.cross_bureau = #{bureuaCode}
+	</update>
+
+	<delete id="deleteHighlineDataByRundateAndBureauCode" parameterType="map">
+		delete from highline_cross t where t.cross_date = #{runDate} and t.cross_bureau = #{bureauCode}
+	</delete> 
+</mapper>
+

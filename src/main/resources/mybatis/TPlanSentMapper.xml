@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.dayplan.repository.TPlanSentMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanSent" >
+    <id column="PLAN_SENT_ID" property="planSentId" jdbcType="VARCHAR" />
+    <result column="PLAN_TRAIN_ID" property="planTrainId" jdbcType="VARCHAR" />
+    <result column="CROSS_NAME" property="crossName" jdbcType="VARCHAR" />
+    <result column="RUN_DATE" property="runDate" jdbcType="VARCHAR" />
+    <result column="TRAIN_NBR" property="trainNbr" jdbcType="VARCHAR" />
+    <result column="PRE_TRAIN_ID" property="preTrainId" jdbcType="VARCHAR" />
+    <result column="NEXT_TRAIN_ID" property="nextTrainId" jdbcType="VARCHAR" />
+    <result column="SENT_TIME" property="sentTime" jdbcType="VARCHAR" />
+    <result column="SENT_PEOPLE" property="sentPeople" jdbcType="VARCHAR" />
+    <result column="SENT_PEOPLE_ORG" property="sentPeopleOrg" jdbcType="VARCHAR" />
+    <result column="SENT_PEOPLE_BUREAU" property="sentPeopleBureau" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PLAN_SENT_ID, PLAN_TRAIN_ID, CROSS_NAME, RUN_DATE, TRAIN_NBR, PRE_TRAIN_ID, NEXT_TRAIN_ID, 
+    SENT_TIME, SENT_PEOPLE, SENT_PEOPLE_ORG, SENT_PEOPLE_BUREAU, USE_STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_PLAN_SENT
+    where PLAN_SENT_ID = #{planSentId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_PLAN_SENT
+    where PLAN_SENT_ID = #{planSentId}
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanSent" >
+    insert into T_PLAN_SENT (PLAN_SENT_ID, PLAN_TRAIN_ID, CROSS_NAME, RUN_DATE, TRAIN_NBR, PRE_TRAIN_ID, 
+      NEXT_TRAIN_ID, SENT_TIME, SENT_PEOPLE, SENT_PEOPLE_ORG, SENT_PEOPLE_BUREAU, 
+      USE_STATUS)
+    values (#{planSentId}, #{planTrainId}, #{crossName}, #{runDate}, #{trainNbr}, #{preTrainId}, 
+      #{nextTrainId}, #{sentTime}, #{sentPeople}, #{sentPeopleOrg}, #{sentPeopleBureau}, 
+      #{useStatus})
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanSent" >
+    insert into T_PLAN_SENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="planSentId != null" >
+        PLAN_SENT_ID,
+      </if>
+      <if test="planTrainId != null" >
+        PLAN_TRAIN_ID,
+      </if>
+      <if test="crossName != null" >
+        CROSS_NAME,
+      </if>
+      <if test="runDate != null" >
+        RUN_DATE,
+      </if>
+      <if test="trainNbr != null" >
+        TRAIN_NBR,
+      </if>
+      <if test="preTrainId != null" >
+        PRE_TRAIN_ID,
+      </if>
+      <if test="nextTrainId != null" >
+        NEXT_TRAIN_ID,
+      </if>
+      <if test="sentTime != null" >
+        SENT_TIME,
+      </if>
+      <if test="sentPeople != null" >
+        SENT_PEOPLE,
+      </if>
+      <if test="sentPeopleOrg != null" >
+        SENT_PEOPLE_ORG,
+      </if>
+      <if test="sentPeopleBureau != null" >
+        SENT_PEOPLE_BUREAU,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="planSentId != null" >
+        #{planSentId},
+      </if>
+      <if test="planTrainId != null" >
+        #{planTrainId},
+      </if>
+      <if test="crossName != null" >
+        #{crossName},
+      </if>
+      <if test="runDate != null" >
+        #{runDate},
+      </if>
+      <if test="trainNbr != null" >
+        #{trainNbr},
+      </if>
+      <if test="preTrainId != null" >
+        #{preTrainId},
+      </if>
+      <if test="nextTrainId != null" >
+        #{nextTrainId},
+      </if>
+      <if test="sentTime != null" >
+        #{sentTime},
+      </if>
+      <if test="sentPeople != null" >
+        #{sentPeople},
+      </if>
+      <if test="sentPeopleOrg != null" >
+        #{sentPeopleOrg},
+      </if>
+      <if test="sentPeopleBureau != null" >
+        #{sentPeopleBureau},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanSent" >
+    update T_PLAN_SENT
+    <set >
+      <if test="planTrainId != null" >
+        PLAN_TRAIN_ID = #{planTrainId},
+      </if>
+      <if test="crossName != null" >
+        CROSS_NAME = #{crossName},
+      </if>
+      <if test="runDate != null" >
+        RUN_DATE = #{runDate},
+      </if>
+      <if test="trainNbr != null" >
+        TRAIN_NBR = #{trainNbr},
+      </if>
+      <if test="preTrainId != null" >
+        PRE_TRAIN_ID = #{preTrainId},
+      </if>
+      <if test="nextTrainId != null" >
+        NEXT_TRAIN_ID = #{nextTrainId},
+      </if>
+      <if test="sentTime != null" >
+        SENT_TIME = #{sentTime},
+      </if>
+      <if test="sentPeople != null" >
+        SENT_PEOPLE = #{sentPeople},
+      </if>
+      <if test="sentPeopleOrg != null" >
+        SENT_PEOPLE_ORG = #{sentPeopleOrg},
+      </if>
+      <if test="sentPeopleBureau != null" >
+        SENT_PEOPLE_BUREAU = #{sentPeopleBureau},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+    </set>
+    where PLAN_SENT_ID = #{planSentId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanSent" >
+    update T_PLAN_SENT
+    set PLAN_TRAIN_ID = #{planTrainId},
+      CROSS_NAME = #{crossName},
+      RUN_DATE = #{runDate},
+      TRAIN_NBR = #{trainNbr},
+      PRE_TRAIN_ID = #{preTrainId},
+      NEXT_TRAIN_ID = #{nextTrainId},
+      SENT_TIME = #{sentTime},
+      SENT_PEOPLE = #{sentPeople},
+      SENT_PEOPLE_ORG = #{sentPeopleOrg},
+      SENT_PEOPLE_BUREAU = #{sentPeopleBureau},
+      USE_STATUS = #{useStatus}
+    where PLAN_SENT_ID = #{planSentId}
+  </update>
+</mapper>

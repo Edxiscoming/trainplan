@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.PlanLineStatDao">
+
+	<resultMap id="planLineStat" type="org.railway.com.trainplan.entity.PlanLineStat">
+		<id column="ID" property="id" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="FLAG" property="flag" />
+	</resultMap>
+
+	<resultMap id="planLineHourCount"
+		type="org.railway.com.trainplan.entity.PlanLineHourCount">
+		<id column="time" property="time" />
+		<result column="count" property="count" />
+	</resultMap>
+
+	<insert id="insertStat" parameterType="planLineStat">
+		insert into
+		PLAN_LINE_STATISTIC
+		(ID,CREATE_TIME,FLAG)values(SEQ_PLAN_LINE_STATISTIC.nextVal,sysdate,#{flag})
+	</insert>
+
+<!-- 	<select id="getHourCount" resultMap="planLineHourCount"> -->
+<!-- 		select A.sdate time , B.count -->
+<!-- 		from -->
+<!-- 		(SELECT to_char(to_date(to_char(sysdate-1,'yyyy-mm-dd hh24'), 'yyyy-mm-dd -->
+<!-- 		hh24') + (ROWNUM - 1) / 24,'yyyy-mm-dd hh24') sdate FROM dual -->
+<!-- 		CONNECT BY ROWNUM &lt;= (to_date(to_char(sysdate,'yyyy-mm-dd hh24'), 'yyyy-mm-dd -->
+<!-- 		hh24') - to_date(to_char(sysdate-1,'yyyy-mm-dd hh24'), 'yyyy-mm-dd -->
+<!-- 		hh24')) * 24 + 1) A -->
+<!-- 		left join -->
+<!-- 		(SELECT TO_CHAR(P.CREATE_TIME,'yyyy-mm-dd hh24') TIME,COUNT(*) count -->
+<!-- 		FROM PLAN_LINE_STATISTIC P -->
+<!-- 		WHERE P.CREATE_TIME >= SYSDATE-12 -->
+ 			
+<!-- 		GROUP BY TO_CHAR(P.CREATE_TIME,'yyyy-mm-dd hh24') -->
+<!-- 		ORDER BY TO_CHAR(P.CREATE_TIME,'yyyy-mm-dd hh24') ASC NULLS LAST ) B on -->
+<!-- 		A.sdate =B.TIME -->
+<!-- 		ORDER BY time ASC NULLS LAST  -->
+<!-- 	</select> -->
+	
+		<select id="getHourCount" parameterType="map" resultMap="planLineHourCount">
+		select A.sdate time , B.count
+		from
+		(SELECT to_char(to_date(
+		<choose>
+                 <when test="startDate!=null"> #{startDate}</when>
+                 <otherwise>to_char(sysdate-1,'yyyy-mm-dd hh24')</otherwise>
+             </choose>		 
+		,'yyyy-mm-dd hh24') + (ROWNUM - 1) / 24,'yyyy-mm-dd hh24') sdate FROM dual
+		CONNECT BY ROWNUM &lt;= (to_date(
+		<choose>
+			<when test="endDate!=null"> #{endDate}</when>
+                 <otherwise>to_char(sysdate,'yyyy-mm-dd hh24')</otherwise>
+         </choose>	
+		, 'yyyy-mm-dd
+		hh24') - to_date(
+				<choose>
+                 <when test="startDate!=null"> #{startDate}</when>
+                 <otherwise>to_char(sysdate-1,'yyyy-mm-dd hh24')</otherwise>
+             </choose>	
+		, 'yyyy-mm-dd hh24'))* 24 + 1) A
+		left join
+		(SELECT TO_CHAR(P.CREATE_TIME,'yyyy-mm-dd hh24') TIME,COUNT(*) count
+		FROM PLAN_LINE_STATISTIC P
+		WHERE P.CREATE_TIME >= SYSDATE-12
+		
+		GROUP BY TO_CHAR(P.CREATE_TIME,'yyyy-mm-dd hh24')
+		ORDER BY TO_CHAR(P.CREATE_TIME,'yyyy-mm-dd hh24') ASC NULLS LAST ) B on
+		A.sdate =B.TIME
+		ORDER BY time ASC NULLS LAST 
+	</select>
+
+</mapper> 

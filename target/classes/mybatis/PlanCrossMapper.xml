@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.PlanCrossDao">
+
+    <resultMap id="planCross" type="org.railway.com.trainplan.entity.PlanCross">
+        <id column="UNIT_CROSS_ID" property="unitCrossId"/>
+        <result column="GROUP_TOTAL_NBR" property="groupTotalNbr"/>
+        <result column="PLAN_CROSS_ID" property="planCrossId"/>
+        <result column="GROUP_SERIAL_NBR" property="groupSerialNbr"/>
+        <result column="MARSHALLING_NAME" property="marshallingName"/>
+        <result column="TRAIN_SORT" property="trainSort"/>
+        <result column="BASE_CHART_ID" property="baseChartId"/>
+        <result column="CROSS_START_DATE" property="crossStartDate"/>
+        <result column="CROSS_END_DATE" property="crossEndDate"/>
+        <result column="CM_CROSS_ID" property="cmCrossId"/>
+        <collection property="unitCrossTrainList" resultMap="org.railway.com.trainplan.repository.mybatis.UnitCrossTrainDao.unitCrossTrain"/>
+    </resultMap>
+
+    <resultMap id="planCrossInfo" type="org.railway.com.trainplan.entity.PlanCrossInfo">
+        <id column="PLAN_CROSS_ID" property="planCrossId"/>
+        <result column="UNIT_CROSS_ID" property="unitCrossId"/>
+        <result column="BASE_CROSS_ID" property="baseCrossId"/>
+        <result column="BASE_CHART_ID" property="baseChartId"/>
+        <result column="BASE_CHART_NAME" property="baseChartName"/>
+        <result column="CROSS_START_DATE" property="crossStartDate"/>
+        <result column="CROSS_END_DATE" property="crossEndDate"/>
+        <result column="CROSS_NAME" property="crossName"/>
+        <result column="CROSS_SPARE_NAME" property="crossSpareName"/>
+        <result column="SPARE_FLAG" property="spareFlag"/>
+        <result column="GROUP_TOTAL_NBR" property="groupTotalNbr"/>
+        <result column="PAIR_NBR" property="pairNbr"/>
+        <result column="HIGHLINE_FLAG" property="highlineFlag"/>
+        <result column="HIGHLINE_RULE" property="highlineRule"/>
+        <result column="COMMONLINE_RULE" property="commonlineRule"/>
+        <result column="APPOINT_WEEK" property="appointWeek"/>
+        <result column="APPOINT_DAY" property="appointDay"/>
+        <result column="CROSS_SECTION" property="crossSection"/>
+        <result column="THROUGH_LINE" property="throughLine"/>
+        <result column="START_BUREAU" property="startBureau"/>
+        <result column="TOKEN_VEH_BUREAU" property="tokenVehBureau"/>
+        <result column="TOKEN_VEH_DEPT" property="tokenVehDept"/>
+        <result column="TOKEN_VEH_DEPOT" property="tokenVehDepot"/>
+        <result column="TOKEN_PSG_BUREAU" property="tokenPsgBureau"/>
+        <result column="TOKEN_PSG_DEPT" property="tokenPsgDept"/>
+        <result column="IS_AUTO_GENERATE" property="isAutoGenerate"/>
+        <result column="LOCO_TYPE" property="locoType"/>
+        <result column="CRH_TYPE" property="crhType"/>
+        <result column="ELEC_SUPPLY" property="elecSupply"/>
+        <result column="DEJ_COLLECT" property="dejCollect"/>
+        <result column="AIR_CONDITION" property="airCondition"/>
+        <result column="NOTE" property="note"/>
+        <result column="RELEVANT_BUREAU" property="relevantBureau"/>
+        <result column="CM_CROSS_ID" property="cmCrossId"/>
+    </resultMap>
+
+    <insert id="save" parameterType="org.railway.com.trainplan.entity.PlanCrossInfo">
+        insert into plan_cross
+        (
+        PLAN_CROSS_ID,
+        UNIT_CROSS_ID,
+        BASE_CROSS_ID,
+        BASE_CHART_ID,
+        BASE_CHART_NAME,
+        CROSS_START_DATE,
+        CROSS_END_DATE,
+        CROSS_NAME,
+        CROSS_SPARE_NAME,
+        SPARE_FLAG,
+        GROUP_TOTAL_NBR,
+        PAIR_NBR,
+        HIGHLINE_FLAG,
+        HIGHLINE_RULE,
+        COMMONLINE_RULE,
+        APPOINT_WEEK,
+        APPOINT_DAY,
+        CROSS_SECTION,
+        THROUGH_LINE,
+        START_BUREAU,
+        TOKEN_VEH_BUREAU,
+        TOKEN_VEH_DEPT,
+        TOKEN_VEH_DEPOT,
+        TOKEN_PSG_BUREAU,
+        TOKEN_PSG_DEPT,
+        LOCO_TYPE,
+        CRH_TYPE,
+        ELEC_SUPPLY,
+        DEJ_COLLECT,
+        AIR_CONDITION,
+        NOTE,
+        RELEVANT_BUREAU,
+        IS_AUTO_GENERATE,
+        CM_CROSS_ID,
+        CREAT_TIME
+        ) VALUES(
+	       #{planCrossId,jdbcType=VARCHAR},
+	       #{unitCrossId,jdbcType=VARCHAR},
+	       #{baseCrossId,jdbcType=VARCHAR},
+	       #{baseChartId,jdbcType=VARCHAR},
+	       #{baseChartName,jdbcType=VARCHAR},
+	       #{crossStartDate,jdbcType=VARCHAR},
+	       #{crossEndDate,jdbcType=VARCHAR},
+	       #{crossName,jdbcType=VARCHAR},
+	       #{crossSpareName,jdbcType=VARCHAR},
+	       #{spareFlag,jdbcType=VARCHAR},
+	        #{groupTotalNbr,jdbcType=NUMERIC},
+	        #{pairNbr,jdbcType=VARCHAR},
+	        #{highlineFlag,jdbcType=VARCHAR},
+	        #{highlineRule,jdbcType=VARCHAR},
+	        #{commonlineRule,jdbcType=VARCHAR},
+	        #{appointWeek,jdbcType=VARCHAR},
+	        #{appointDay,jdbcType=VARCHAR},
+	        #{crossSection,jdbcType=VARCHAR},
+	        #{throughLine,jdbcType=VARCHAR},
+	        #{startBureau,jdbcType=VARCHAR},
+	        #{tokenVehBureau,jdbcType=VARCHAR},
+	        #{tokenVehDept,jdbcType=VARCHAR},
+	        #{tokenVehDepot,jdbcType=VARCHAR},
+	        #{tokenPsgBureau,jdbcType=VARCHAR},
+	        #{tokenPsgDept,jdbcType=VARCHAR},
+	        #{locoType,jdbcType=VARCHAR},
+	        #{crhType,jdbcType=VARCHAR},
+	        #{elecSupply,jdbcType=NUMERIC},
+	        #{dejCollect,jdbcType=NUMERIC},
+	        #{airCondition,jdbcType=NUMERIC},
+	        #{note,jdbcType=VARCHAR},
+	        #{relevantBureau,jdbcType=VARCHAR},
+	        #{isAutoGenerate,jdbcType=NUMERIC},
+	        #{cmCrossId,jdbcType=VARCHAR},
+	        sysdate
+        )
+    </insert>
+
+    <update id="update" parameterType="org.railway.com.trainplan.entity.PlanCrossInfo">
+        UPDATE PLAN_CROSS
+        SET UNIT_CROSS_ID = #{unitCrossId,jdbcType=VARCHAR},
+        BASE_CROSS_ID = #{baseCrossId,jdbcType=VARCHAR},
+        BASE_CHART_ID = #{baseChartId,jdbcType=VARCHAR},
+        BASE_CHART_NAME = #{baseChartName,jdbcType=VARCHAR},
+        CROSS_START_DATE = #{crossStartDate,jdbcType=VARCHAR},
+        CROSS_END_DATE = #{crossEndDate,jdbcType=VARCHAR},
+        CROSS_NAME = #{crossName,jdbcType=VARCHAR},
+        CROSS_SPARE_NAME = #{crossSpareName,jdbcType=VARCHAR},
+        SPARE_FLAG = #{spareFlag,jdbcType=VARCHAR},
+        GROUP_TOTAL_NBR = #{groupTotalNbr,jdbcType=NUMERIC},
+        PAIR_NBR = #{pairNbr,jdbcType=VARCHAR},
+        HIGHLINE_FLAG = #{highlineFlag,jdbcType=VARCHAR},
+        IS_AUTO_GENERATE = #{isAutoGenerate,jdbcType=NUMERIC},
+        HIGHLINE_RULE = #{highlineRule,jdbcType=VARCHAR},
+        COMMONLINE_RULE = #{commonlineRule,jdbcType=VARCHAR},
+        APPOINT_WEEK = #{appointWeek,jdbcType=VARCHAR},
+        APPOINT_DAY = #{appointDay,jdbcType=VARCHAR},
+        CROSS_SECTION = #{crossSection,jdbcType=VARCHAR},
+        THROUGH_LINE = #{throughLine,jdbcType=VARCHAR},
+        START_BUREAU = #{startBureau,jdbcType=VARCHAR},
+        TOKEN_VEH_BUREAU = #{tokenVehBureau,jdbcType=VARCHAR},
+        TOKEN_VEH_DEPT = #{tokenVehDept,jdbcType=VARCHAR},
+        TOKEN_VEH_DEPOT = #{tokenVehDepot,jdbcType=VARCHAR},
+        TOKEN_PSG_BUREAU = #{tokenPsgBureau,jdbcType=VARCHAR},
+        TOKEN_PSG_DEPT = #{tokenPsgDept,jdbcType=VARCHAR},
+        LOCO_TYPE = #{locoType,jdbcType=VARCHAR},
+        CRH_TYPE = #{crhType,jdbcType=VARCHAR},
+        ELEC_SUPPLY = #{elecSupply,jdbcType=NUMERIC},
+        DEJ_COLLECT = #{dejCollect,jdbcType=NUMERIC},
+        AIR_CONDITION = #{airCondition,jdbcType=NUMERIC},
+        NOTE = #{note,jdbcType=VARCHAR},
+        RELEVANT_BUREAU = #{relevantBureau,jdbcType=VARCHAR},
+        CM_CROSS_ID = #{cmCrossId,jdbcType=VARCHAR}
+        where PLAN_CROSS_ID = #{planCrossId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteById" parameterType="string">
+    	delete from PLAN_CROSS
+    		where PLAN_CROSS_ID = #{planCrossId}
+    </delete>
+
+    <select id="findByUnitCrossId" parameterType="string" resultMap="planCrossInfo">
+        SELECT PLAN_CROSS_ID,
+        UNIT_CROSS_ID,
+        BASE_CROSS_ID,
+        BASE_CHART_ID,
+        BASE_CHART_NAME,
+        CROSS_START_DATE,
+        CROSS_END_DATE,
+        CROSS_NAME,
+        CROSS_SPARE_NAME,
+        SPARE_FLAG,
+        GROUP_TOTAL_NBR,
+        PAIR_NBR,
+        HIGHLINE_FLAG,
+        HIGHLINE_RULE,
+        COMMONLINE_RULE,
+        APPOINT_WEEK,
+        APPOINT_DAY,
+        CROSS_SECTION,
+        THROUGH_LINE,
+        START_BUREAU,
+        TOKEN_VEH_BUREAU,
+        TOKEN_VEH_DEPT,
+        TOKEN_VEH_DEPOT,
+        TOKEN_PSG_BUREAU,
+        TOKEN_PSG_DEPT,
+        LOCO_TYPE,
+        CRH_TYPE,
+        ELEC_SUPPLY,
+        DEJ_COLLECT,
+        AIR_CONDITION,
+        NOTE,
+        RELEVANT_BUREAU,
+        IS_AUTO_GENERATE,
+        CM_CROSS_ID,
+        CREAT_TIME
+        FROM PLAN_CROSS
+        WHERE UNIT_CROSS_ID = #{unitCrossId}
+    </select>
+
+    <select id="findByUnitCrossName" parameterType="map" resultMap="planCrossInfo">
+        SELECT PLAN_CROSS_ID,
+            UNIT_CROSS_ID,
+	        BASE_CROSS_ID,
+	        BASE_CHART_ID,
+	        BASE_CHART_NAME,
+	        CROSS_START_DATE,
+	        CROSS_END_DATE,
+	        CROSS_NAME,
+	        CROSS_SPARE_NAME,
+	        SPARE_FLAG,
+	        GROUP_TOTAL_NBR,
+	        PAIR_NBR,
+	        HIGHLINE_FLAG,
+	        HIGHLINE_RULE,
+	        COMMONLINE_RULE,
+	        APPOINT_WEEK,
+	        APPOINT_DAY,
+	        CROSS_SECTION,
+	        THROUGH_LINE,
+	        START_BUREAU,
+	        TOKEN_VEH_BUREAU,
+	        TOKEN_VEH_DEPT,
+	        TOKEN_VEH_DEPOT,
+	        TOKEN_PSG_BUREAU,
+	        TOKEN_PSG_DEPT,
+	        LOCO_TYPE,
+	        CRH_TYPE,
+	        ELEC_SUPPLY,
+	        DEJ_COLLECT,
+	        AIR_CONDITION,
+	        NOTE,
+	        RELEVANT_BUREAU,
+	        CM_CROSS_ID
+        FROM PLAN_CROSS
+        WHERE CROSS_NAME = #{unitCrossName}
+    </select>
+    
+        <select id="findByParamMap" parameterType="map" resultMap="planCrossInfo">
+        SELECT PLAN_CROSS_ID,
+            UNIT_CROSS_ID,
+	        BASE_CROSS_ID,
+	        BASE_CHART_ID,
+	        BASE_CHART_NAME,
+	        CROSS_START_DATE,
+	        CROSS_END_DATE,
+	        CROSS_NAME,
+	        CROSS_SPARE_NAME,
+	        SPARE_FLAG,
+	        GROUP_TOTAL_NBR,
+	        PAIR_NBR,
+	        HIGHLINE_FLAG,
+	        HIGHLINE_RULE,
+	        COMMONLINE_RULE,
+	        APPOINT_WEEK,
+	        APPOINT_DAY,
+	        CROSS_SECTION,
+	        THROUGH_LINE,
+	        START_BUREAU,
+	        TOKEN_VEH_BUREAU,
+	        TOKEN_VEH_DEPT,
+	        TOKEN_VEH_DEPOT,
+	        TOKEN_PSG_BUREAU,
+	        TOKEN_PSG_DEPT,
+	        LOCO_TYPE,
+	        CRH_TYPE,
+	        ELEC_SUPPLY,
+	        DEJ_COLLECT,
+	        AIR_CONDITION,
+	        NOTE,
+	        RELEVANT_BUREAU,
+	        CM_CROSS_ID
+        FROM PLAN_CROSS
+        WHERE CROSS_NAME = #{unitCrossName}
+        AND BASE_CHART_ID = #{baseChartId}
+    </select>
+
+    <select id="findById" parameterType="string" resultMap="planCrossInfo">
+        SELECT PLAN_CROSS_ID,
+        UNIT_CROSS_ID,
+        BASE_CROSS_ID,
+        BASE_CHART_ID,
+        BASE_CHART_NAME,
+        CROSS_START_DATE,
+        CROSS_END_DATE,
+        CROSS_NAME,
+        CROSS_SPARE_NAME,
+        SPARE_FLAG,
+        GROUP_TOTAL_NBR,
+        PAIR_NBR,
+        HIGHLINE_FLAG,
+        HIGHLINE_RULE,
+        COMMONLINE_RULE,
+        APPOINT_WEEK,
+        APPOINT_DAY,
+        CROSS_SECTION,
+        THROUGH_LINE,
+        START_BUREAU,
+        TOKEN_VEH_BUREAU,
+        IS_AUTO_GENERATE,
+        TOKEN_VEH_DEPT,
+        TOKEN_VEH_DEPOT,
+        TOKEN_PSG_BUREAU,
+        TOKEN_PSG_DEPT,
+        LOCO_TYPE,
+        CRH_TYPE,
+        ELEC_SUPPLY,
+        DEJ_COLLECT,
+        AIR_CONDITION,
+        NOTE,
+        RELEVANT_BUREAU,
+        CM_CROSS_ID
+        FROM PLAN_CROSS
+        WHERE PLAN_CROSS_ID = #{planCrossId}
+    </select>
+    
+    <select id="getCorssNameById" parameterType="string" resultType="string">
+    	select a.cross_name
+    	from plan_cross a
+	 	where 1 = 1
+   		and a.plan_cross_id = #{planCrossId}
+    </select>
+</mapper> 

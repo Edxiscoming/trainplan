@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.HighLineCrewDao">
+
+
+	
+    <select id="findOne" parameterType="map" resultType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+        SELECT 
+	       HLC.HIGHLINE_CREW_ID AS crewHighlineId, 
+	       HLC.CREW_DATE AS crewDate, 
+	       HLC.CREW_BUREAU AS crewBureau, 
+	       HLC.CREW_TYPE AS crewType, 
+	       HLC.CREW_CROSS AS crewCross,
+	       HLC.CREW_GROUP AS crewGroup,
+	       HLC.THROUGH_LINE AS throughLine,
+	       HLC.NAME1 AS name1,
+	       HLC.TEL1 AS tel1, 
+	       HLC.IDENTITY1 AS identity1,
+	       HLC.NAME2 AS name2, 
+	       HLC.TEL2 AS tel2, 
+	       HLC.IDENTITY2 AS identity2, 
+	       HLC.NOTE AS note , 
+	       HLC.RECORD_PEOPLE AS recordPeople, 
+	       HLC.RECORD_PEOPLE_ORG AS recordPeopleOrg,
+	       HLC.RECORD_TIME AS recordTime , 
+	       HLC.SUBMIT_TYPE AS submitType,
+	       HLC.SORT_ID AS sortId
+        FROM HIGHLINE_CREW HLC WHERE HLC.HIGHLINE_CREW_ID = #{crewHighlineId}
+    </select>
+
+
+    <select id="findList" parameterType="map" resultType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+        SELECT 
+           HLC.HIGHLINE_CREW_ID AS crewHighlineId, 
+	       HLC.CREW_DATE AS crewDate, 
+	       HLC.CREW_BUREAU AS crewBureau, 
+	       HLC.CREW_TYPE AS crewType, 
+	       HLC.CREW_CROSS AS crewCross,
+	       HLC.CREW_GROUP AS crewGroup,
+	       HLC.THROUGH_LINE AS throughLine,
+	       HLC.NAME1 AS name1,
+	       HLC.TEL1 AS tel1, 
+	       HLC.IDENTITY1 AS identity1,
+	       HLC.NAME2 AS name2, 
+	       HLC.TEL2 AS tel2, 
+	       HLC.IDENTITY2 AS identity2, 
+	       HLC.NOTE AS note , 
+	       HLC.RECORD_PEOPLE AS recordPeople, 
+	       HLC.RECORD_PEOPLE_ORG AS recordPeopleOrg,
+	       HLC.RECORD_TIME AS recordTime , 
+	       HLC.SUBMIT_TYPE AS submitType,
+	       HLC.SORT_ID AS sortId
+        FROM HIGHLINE_CREW HLC WHERE CREW_DATE=#{crewDate}
+        <if test="crewType !=null and crewType != '' ">
+           AND CREW_TYPE=#{crewType}
+        </if>
+          <!-- 记录人所属单位 -->
+	    <if test="recordPeopleOrg !=null and recordPeopleOrg !='' ">
+	      AND RECORD_PEOPLE_ORG = #{recordPeopleOrg}
+        </if>
+        order by sortId desc
+         
+    </select>
+
+  <select id="findListAll" parameterType="map" resultType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+        SELECT 
+           HLC.HIGHLINE_CREW_ID AS crewHighlineId, 
+	       HLC.CREW_DATE AS crewDate, 
+	       HLC.CREW_BUREAU AS crewBureau, 
+	       HLC.CREW_TYPE AS crewType, 
+	       HLC.CREW_CROSS AS crewCross,
+	       HLC.CREW_GROUP AS crewGroup,
+	       HLC.THROUGH_LINE AS throughLine,
+	       HLC.NAME1 AS name1,
+	       HLC.TEL1 AS tel1, 
+	       HLC.IDENTITY1 AS identity1,
+	       HLC.NAME2 AS name2, 
+	       HLC.TEL2 AS tel2, 
+	       HLC.IDENTITY2 AS identity2, 
+	       HLC.NOTE AS note , 
+	       HLC.RECORD_PEOPLE AS recordPeople, 
+	       HLC.RECORD_PEOPLE_ORG AS recordPeopleOrg,
+	       HLC.RECORD_TIME AS recordTime , 
+	       HLC.SUBMIT_TYPE AS submitType,
+	       HLC.SORT_ID AS sortId
+        FROM HIGHLINE_CREW HLC WHERE CREW_DATE=#{crewDate}
+        <if test="crewType !=null and crewType != '' ">
+           AND CREW_TYPE=#{crewType}
+        </if>
+        order by sortId desc
+         
+    </select>
+
+
+  <select id="getMaxSortId" parameterType="map" resultType="java.lang.Integer">
+     SELECT nvl(max(h.SORT_ID),0) maxid FROM HIGHLINE_CREW h
+    </select>
+
+
+    <delete id="delete" parameterType="map">
+        DELETE FROM HIGHLINE_CREW HLC WHERE HLC.HIGHLINE_CREW_ID in (#{crewHighlineId})
+    </delete>
+
+    <insert id="addCrew" parameterType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+        INSERT INTO HIGHLINE_CREW(HIGHLINE_CREW_ID, CREW_DATE, CREW_BUREAU, CREW_TYPE, CREW_CROSS,
+        CREW_GROUP, THROUGH_LINE, NAME1, TEL1, IDENTITY1, NAME2, TEL2, IDENTITY2, NOTE, RECORD_PEOPLE,
+        RECORD_PEOPLE_ORG, RECORD_TIME, SUBMIT_TYPE,SORT_ID) VALUES (
+            #{crewHighlineId, jdbcType=VARCHAR}, #{crewDate, jdbcType=VARCHAR}, #{crewBureau, jdbcType=VARCHAR},
+            #{crewType, jdbcType=VARCHAR}, #{crewCross, jdbcType=VARCHAR}, #{crewGroup, jdbcType=VARCHAR},
+            #{throughLine, jdbcType=VARCHAR}, #{name1, jdbcType=VARCHAR}, #{tel1, jdbcType=VARCHAR},
+            #{identity1, jdbcType=VARCHAR}, #{name2, jdbcType=VARCHAR}, #{tel2, jdbcType=VARCHAR},
+            #{identity2, jdbcType=VARCHAR}, #{note, jdbcType=VARCHAR}, #{recordPeople, jdbcType=VARCHAR},
+            #{recordPeopleOrg, jdbcType=VARCHAR}, sysdate, #{submitType, jdbcType=NUMERIC},#{sortId, jdbcType=NUMERIC}
+        )
+    </insert>
+
+    <update id="update" parameterType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+        UPDATE  HIGHLINE_CREW
+        SET 
+       <choose>
+          <when test="crewDate == null">CREW_DATE = '',</when>
+          <otherwise>CREW_DATE = #{crewDate},</otherwise>
+       </choose>
+       <choose>
+          <when test="crewBureau == null">CREW_BUREAU ='',</when>
+          <otherwise> CREW_BUREAU = #{crewBureau},</otherwise>
+       </choose>
+       <choose>
+          <when test="crewType == null">CREW_TYPE = '',</when>
+          <otherwise>CREW_TYPE = #{crewType},</otherwise>
+       </choose>
+       <choose>
+          <when test="crewCross == null">CREW_CROSS ='',</when>
+          <otherwise>CREW_CROSS = #{crewCross},</otherwise>
+       </choose>
+        <choose>
+          <when test="crewGroup == null">CREW_GROUP ='',</when>
+          <otherwise>CREW_GROUP = #{crewGroup},</otherwise>
+       </choose>
+      <choose>
+          <when test="throughLine == null">THROUGH_LINE = '',</when>
+          <otherwise>THROUGH_LINE = #{throughLine},</otherwise>
+       </choose>
+      <choose>
+          <when test="name1 == null">NAME1 = '',</when>
+          <otherwise>NAME1 = #{name1},</otherwise>
+       </choose>
+         <choose>
+          <when test="tel1 == null">TEL1 = '',</when>
+          <otherwise>TEL1 = #{tel1},</otherwise>
+       </choose>
+      <choose>
+          <when test="identity1 == null">IDENTITY1 = '',</when>
+          <otherwise>IDENTITY1 = #{identity1},</otherwise>
+       </choose>
+      <choose>
+          <when test="name2 == null">NAME2 ='',</when>
+          <otherwise>NAME2 = #{name2},</otherwise>
+       </choose>
+      <choose>
+          <when test="tel2 == null">TEL2 ='',</when>
+          <otherwise>TEL2 = #{tel2},</otherwise>
+       </choose>   
+       <choose>
+          <when test="identity2 == null">IDENTITY2 ='',</when>
+          <otherwise>IDENTITY2 = #{identity2},</otherwise>
+       </choose>
+      <choose>
+          <when test="note == null">NOTE = '',</when>
+          <otherwise>NOTE = #{note},</otherwise>
+       </choose>         
+      <choose>
+          <when test="recordPeople == null">RECORD_PEOPLE ='',</when>
+          <otherwise>RECORD_PEOPLE = #{recordPeople},</otherwise>
+       </choose>
+      <choose>
+          <when test="recordPeopleOrg == null">RECORD_PEOPLE_ORG ='',</when>
+          <otherwise>RECORD_PEOPLE_ORG = #{recordPeopleOrg},</otherwise>
+       </choose>         
+       <choose>
+          <when test="submitType == null">SUBMIT_TYPE = ''</when>
+          <otherwise>SUBMIT_TYPE = #{submitType},</otherwise>
+       </choose>  
+        <choose>
+          <when test="sortId == null">SORT_ID = ''</when>
+          <otherwise>SORT_ID = #{sortId}</otherwise>
+       </choose>       
+        WHERE HIGHLINE_CREW_ID = #{crewHighlineId}
+    </update>
+    
+     <!-- 查询所有的乘务组编号(默认最近一周) -->
+     <select id="findHighlineCrewListForWeek" parameterType="map" resultType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+				SELECT    
+				  HIGHLINE_CREW_ID AS crewHighlineId,
+				  CREW_DATE AS crewDate,
+				  CREW_BUREAU AS crewBureau,
+				  CREW_TYPE AS crewType,
+				  CREW_CROSS AS crewCross,
+				  CREW_GROUP AS crewGroup,
+				  THROUGH_LINE AS throughLine,
+				  NAME1 AS name1,
+				  TEL1 AS tel1,
+				  IDENTITY1 AS identity1,
+				  NAME2 AS name2,
+				  TEL2 AS tel2,
+				  IDENTITY2 AS  identity2,
+				  NOTE AS note,
+				  RECORD_PEOPLE AS recordPeople,
+				  RECORD_PEOPLE_ORG AS recordPeopleOrg,
+				  RECORD_TIME AS recordTime,
+				  SUBMIT_TYPE AS submitType
+				  FROM
+				  HIGHLINE_CREW
+				  WHERE  CREW_DATE &gt;=#{startDate} AND CREW_DATE &lt;=#{endDate}
+				
+   </select>
+    
+    <!-- 通过run_date（必输）和train_nbr（非必输）查询表plan_train -->
+     <select id="findRunPlanList" parameterType="map" resultType="org.railway.com.trainplan.entity.RunPlan">
+		SELECT P.*
+		FROM 
+		(
+			SELECT M.*, ROWNUM NUM
+			FROM (
+					    
+				 SELECT   
+				 PLAN_TRAIN_ID AS planTrainId,
+				 PLAN_TRAIN_SIGN AS planTrainSign,
+				 PLAN_CROSS_ID AS planCrossId,
+				 MARSHALLING_NAME AS marshallingName,
+				 GROUP_SERIAL_NBR AS groupSerialNbr,
+				 TRAIN_SORT AS trainSort,
+				 PRE_TRAIN_ID AS preTrainId,
+				 NEXT_TRAIN_ID AS nextTrainId,
+				 RUN_DATE AS runDate,
+				 TRAIN_NBR AS trainNbr,
+				 to_char(START_TIME,'yyyy-MM-dd hh24:mi:SS') AS startTimeStr,
+				 to_char(END_TIME,'yyyy-MM-dd hh24:mi:SS') AS endTimeStr,
+				 START_BUREAU AS startBureauShortName,
+				 START_BUREAU_FULL AS startBureauFullName,
+				 START_STN AS startStn,
+				 END_BUREAU AS endBureauShortName,
+				 END_BUREAU_FULL AS endBureauFullName,
+				 END_STN AS endStn,
+				 PASS_BUREAU AS passBureau,
+				 TRAIN_SCOPE AS trainScope,
+				 TRAIN_TYPE_ID AS trainTypeId,
+				 HIGHLINE_FLAG AS highLineFlag,
+				 BASE_CHART_ID AS baseChartId,
+				 BASE_TRAIN_ID AS baseTrainId,
+				 HIGHLINE_RULE AS hightLineRule,
+				 COMMONLINE_RULE AS commonLineRule,
+				 APPOINT_WEEK AS appointWeek,
+				 APPOINT_DAY AS appointDay,
+				 DAY_GAP AS dayGap,
+				 SPARE_FLAG AS spareFlag,
+				 SPARE_APPLY_FLAG AS spareApplyFlag,
+				 CREAT_TYPE AS createType,
+				 CREAT_TIME AS createDateTime,
+				 CHECK_LEV1_TYPE AS checkLev1Type,
+				 CHECK_LEV2_TYPE AS checkLev2Type,
+				 DAILYPLAN_TIMES AS dailyPlanTimes,
+				 DAILYPLAN_FLAG AS dailyPlanFlag
+				 
+				 FROM PLAN_TRAIN WHERE 
+				  <choose>
+			        <when test="bureau !=null and bureau !='' ">  PASS_BUREAU LIKE '%${bureau}%'</when>
+			        <otherwise> 1=1 </otherwise>
+			     </choose>
+				 AND RUN_DATE=#{runDate}  
+				 <if test="trainNbr !=null and trainNbr !='' ">
+				     AND TRAIN_NBR=#{trainNbr}
+				  </if>
+				  <choose>
+			        <when test="highlineFlag != null and highlineFlag != ''">  AND HIGHLINE_FLAG = #{highlineFlag}</when>
+			        <otherwise>  AND HIGHLINE_FLAG IN ('0','2')</otherwise>
+			     </choose>
+                 order by TRAIN_NBR
+			)M
+		) P
+		WHERE P.NUM>=${rownumstart} AND P.NUM &lt;=${rownumend}
+			     
+   </select>
+
+
+    <select id="findRunPlanList_COUNT" parameterType="map" resultType="java.lang.Integer">
+    	SELECT COUNT(PLAN_TRAIN_ID) FROM PLAN_TRAIN 
+    	WHERE 1=1 AND RUN_DATE = #{runDate}
+	   	 <if test="trainNbr !=null and trainNbr !='' ">
+			AND TRAIN_NBR=#{trainNbr}
+		 </if>
+    </select>
+    
+    
+    
+    <!-- 通过run_date（必输）和train_nbr（非必输）查询表plan_train -->
+     <select id="findRunPlanListBureau" parameterType="map" resultType="org.railway.com.trainplan.entity.RunPlan">
+		SELECT P.*
+		FROM 
+		(
+			SELECT M.*, ROWNUM NUM
+			FROM (
+					    
+				 SELECT   
+				 PLAN_TRAIN_ID AS planTrainId,
+				 PLAN_TRAIN_SIGN AS planTrainSign,
+				 PLAN_CROSS_ID AS planCrossId,
+				 MARSHALLING_NAME AS marshallingName,
+				 GROUP_SERIAL_NBR AS groupSerialNbr,
+				 TRAIN_SORT AS trainSort,
+				 PRE_TRAIN_ID AS preTrainId,
+				 NEXT_TRAIN_ID AS nextTrainId,
+				 RUN_DATE AS runDate,
+				 TRAIN_NBR AS trainNbr,
+				 to_char(START_TIME,'yyyy-MM-dd hh24:mi:SS') AS startTimeStr,
+				 to_char(END_TIME,'yyyy-MM-dd hh24:mi:SS') AS endTimeStr,
+				 START_BUREAU AS startBureauShortName,
+				 START_BUREAU_FULL AS startBureauFullName,
+				 START_STN AS startStn,
+				 END_BUREAU AS endBureauShortName,
+				 END_BUREAU_FULL AS endBureauFullName,
+				 END_STN AS endStn,
+				 PASS_BUREAU AS passBureau,
+				 TRAIN_SCOPE AS trainScope,
+				 TRAIN_TYPE_ID AS trainTypeId,
+				 HIGHLINE_FLAG AS highLineFlag,
+				 BASE_CHART_ID AS baseChartId,
+				 BASE_TRAIN_ID AS baseTrainId,
+				 HIGHLINE_RULE AS hightLineRule,
+				 COMMONLINE_RULE AS commonLineRule,
+				 APPOINT_WEEK AS appointWeek,
+				 APPOINT_DAY AS appointDay,
+				 DAY_GAP AS dayGap,
+				 SPARE_FLAG AS spareFlag,
+				 SPARE_APPLY_FLAG AS spareApplyFlag,
+				 CREAT_TYPE AS createType,
+				 CREAT_TIME AS createDateTime,
+				 CHECK_LEV1_TYPE AS checkLev1Type,
+				 CHECK_LEV2_TYPE AS checkLev2Type,
+				 DAILYPLAN_TIMES AS dailyPlanTimes,
+				 DAILYPLAN_FLAG AS dailyPlanFlag
+				 
+				 FROM PLAN_TRAIN WHERE 
+				  <choose>
+			        <when test="bureau !=null and bureau !='' ">  PASS_BUREAU LIKE '%${bureau}%'</when>
+			     </choose>
+			     <choose>
+			        <when test="highlineFlag != null and highlineFlag != ''">  AND HIGHLINE_FLAG = #{highlineFlag}</when>
+			        <otherwise>  AND HIGHLINE_FLAG IN ('0','2')</otherwise>
+			     </choose>
+			      AND RUN_DATE=#{runDate}  
+                 order by TRAIN_NBR
+			)M
+		) P
+		WHERE P.NUM>=${rownumstart} AND P.NUM &lt;=${rownumend}
+			     
+   </select>
+    
+    
+    
+   <select id="findRunPlanListBureau_COUNT" parameterType="map" resultType="java.lang.Integer">
+    	SELECT COUNT(PLAN_TRAIN_ID) FROM PLAN_TRAIN 
+    	WHERE 
+    	 <choose>
+	        <when test="bureau !=null and bureau !='' ">  PASS_BUREAU = #{bureau}</when>
+	     </choose>
+    	 AND RUN_DATE=#{runDate}  
+    </select>
+    
+    
+    
+     
+    <!-- 查询所有的乘务组编号 -->
+     <select id="findHighlineCrewListForAll" parameterType="map" resultType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+				SELECT    
+				  HIGHLINE_CREW_ID AS crewHighlineId,
+				  CREW_DATE AS crewDate,
+				  CREW_BUREAU AS crewBureau,
+				  CREW_TYPE AS crewType,
+				  CREW_CROSS AS crewCross,
+				  CREW_GROUP AS crewGroup,
+				  THROUGH_LINE AS throughLine,
+				  NAME1 AS name1,
+				  TEL1 AS tel1,
+				  IDENTITY1 AS identity1,
+				  NAME2 AS name2,
+				  TEL2 AS tel2,
+				  IDENTITY2 AS  identity2,
+				  NOTE AS note,
+				  RECORD_PEOPLE AS recordPeople,
+				  RECORD_PEOPLE_ORG AS recordPeopleOrg,
+				  RECORD_TIME AS recordTime,
+				  SUBMIT_TYPE AS submitType
+				  FROM
+				  HIGHLINE_CREW
+				
+   </select>
+    
+    
+    
+    <!-- 通过run_date（必输）和train_nbr（非必输）查询表plan_train -->
+     <select id="findHighlineCrewList" parameterType="map" resultType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+		SELECT P.*
+		FROM 
+		(
+			SELECT M.*, ROWNUM NUM
+			FROM (
+					    
+				SELECT    
+				  HIGHLINE_CREW_ID AS crewHighlineId,
+				  CREW_DATE AS crewDate,
+				  CREW_BUREAU AS crewBureau,
+				  CREW_TYPE AS crewType,
+				  CREW_CROSS AS crewCross,
+				  CREW_GROUP AS crewGroup,
+				  THROUGH_LINE AS throughLine,
+				  NAME1 AS name1,
+				  TEL1 AS tel1,
+				  IDENTITY1 AS identity1,
+				  NAME2 AS name2,
+				  TEL2 AS tel2,
+				  IDENTITY2 AS  identity2,
+				  NOTE AS note,
+				  RECORD_PEOPLE AS recordPeople,
+				  RECORD_PEOPLE_ORG AS recordPeopleOrg,
+				  RECORD_TIME AS recordTime,
+				  SUBMIT_TYPE AS submitType,
+				  SORT_ID AS sortId
+				FROM HIGHLINE_CREW WHERE CREW_DATE=#{crewDate}
+				<if test="crewType !=null and crewType !='' ">
+				 AND CREW_TYPE=#{crewType}
+				</if>
+				<if test="crewGroup !=null and crewGroup !='' ">
+				 AND CREW_GROUP=#{crewGroup}
+				</if>
+			    <if test="trainNbr !=null and trainNbr !='' ">
+			     AND '-'||CREW_CROSS||'-' LIKE #{trainNbr}
+		        </if>
+		        <if test="name1 !=null and name1 !='' ">
+				 AND NAME1 = #{name1}
+				</if>
+		        <!-- 记录人所属单位 -->
+			    <if test="recordPeopleOrg !=null and recordPeopleOrg !='' ">
+			     AND RECORD_PEOPLE_ORG = #{recordPeopleOrg}
+		        </if>
+		        
+                ORDER BY sortId desc
+			)M
+		) P
+		WHERE P.NUM>=${rownumstart} AND P.NUM &lt;=${rownumend}
+		ORDER BY  sortId desc
+   </select>
+
+
+    <select id="findHighlineCrewList_COUNT" parameterType="map" resultType="java.lang.Integer">
+    	SELECT COUNT(HIGHLINE_CREW_ID) FROM HIGHLINE_CREW 
+    	WHERE 1=1 AND CREW_DATE = #{crewDate} 
+    	<if test="crewType !=null ">
+		AND CREW_TYPE=#{crewType}
+		</if>
+    </select>
+    
+    
+    <update id="updateSubmitType"  parameterType="map">
+       UPDATE HIGHLINE_CREW  SET SUBMIT_TYPE=1 WHERE CREW_DATE=#{crewDate} AND CREW_TYPE=#{crewType} and highline_crew_id= #{id}
+    
+    </update>
+    
+    <delete id="deleteHighlineCrewForCrewDate" parameterType="map">
+       DELETE FROM HIGHLINE_CREW WHERE CREW_DATE=#{crewDate} AND CREW_TYPE=#{crewType} AND  RECORD_PEOPLE=#{recordPepole}
+    </delete>
+    
+    <select id="getRecordPeopleOrgList" parameterType="map" resultType="org.railway.com.trainplan.service.dto.OptionDto">
+		select O.CREW_BUREAU, 
+				O.RECORD_PEOPLE_ORG as code ,
+				O.RECORD_PEOPLE_ORG as name ,
+				P.LJPYM				bureauCode,
+				P.LJDM
+		FROM 
+			(select T.CREW_BUREAU, 
+			T.RECORD_PEOPLE_ORG 
+			from HIGHLINE_CREW T
+			WHERE T.RECORD_PEOPLE_ORG is not null
+			group by T.CREW_BUREAU,T.RECORD_PEOPLE_ORG
+			) O,
+			JHPT_JCSJ.LJZD P
+		where P.LJJC=O.CREW_BUREAU
+		ORDER BY P.LJDM,O.RECORD_PEOPLE_ORG
+
+    </select>
+    
+      <select id="getHighlineCrewBaseInfoForPage_COUNT" parameterType="map" resultType="java.lang.Integer">
+    	SELECT COUNT(HIGHLINE_CREW_ID) FROM HIGHLINE_CREW WHERE 1=1 AND SUBMIT_TYPE = 1
+   	        <if test="crewStartDate !=null and crewStartDate !='' ">
+			  AND CREW_DATE >=#{crewStartDate} 
+			</if>
+			<if test="crewEndDate !=null and crewEndDate !='' ">
+			 AND CREW_DATE &lt;=#{crewEndDate}
+			</if>
+			<if test="crewType != 'all' ">
+			  AND CREW_TYPE=#{crewType}
+			</if>
+			<if test="crewBureau != null and crewBureau!=''  ">
+			  AND CREW_BUREAU=#{crewBureau}
+			</if>
+			<if test="recordPeopleOrg != 'all' ">
+			  AND  RECORD_PEOPLE_ORG=#{recordPeopleOrg}
+			</if>
+			<if test="trainNbr !=null and trainNbr !='' ">
+			  AND CREW_CROSS LIKE '%${trainNbr}%'
+			</if>
+			<if test="name !=null and name !='' ">
+			AND (NAME1 LIKE '%${name}%' OR NAME2 LIKE '%${name}%' )
+			</if>
+    </select>
+    
+    <select id="getHighlineCrewBaseInfoForPage" parameterType="map" resultType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+    	SELECT P.*
+		FROM 
+		(
+			SELECT M.*, ROWNUM NUM
+			FROM (
+              SELECT    
+				  HIGHLINE_CREW_ID AS crewHighlineId,
+				  CREW_DATE AS crewDate,
+				  CREW_BUREAU AS crewBureau,
+				  CREW_TYPE AS crewType,
+				  CREW_CROSS AS crewCross,
+				  CREW_GROUP AS crewGroup,
+				  THROUGH_LINE AS throughLine,
+				  NAME1 AS name1,
+				  TEL1 AS tel1,
+				  IDENTITY1 AS identity1,
+				  NAME2 AS name2,
+				  TEL2 AS tel2,
+				  IDENTITY2 AS  identity2,
+				  NOTE AS note,
+				  RECORD_PEOPLE AS recordPeople,
+				  RECORD_PEOPLE_ORG AS recordPeopleOrg,
+				  RECORD_TIME AS recordTime,
+				  SUBMIT_TYPE AS submitType,
+				  SORT_ID AS sortId
+				
+				FROM HIGHLINE_CREW WHERE 1=1  AND SUBMIT_TYPE = 1
+				<if test="crewStartDate !=null and crewStartDate !='' ">
+				  AND CREW_DATE >=#{crewStartDate} 
+				</if>
+				<if test="crewEndDate !=null and crewEndDate !='' ">
+				 AND CREW_DATE &lt;=#{crewEndDate}
+				</if>
+				<if test="crewType != 'all' ">
+				  AND CREW_TYPE=#{crewType}
+				</if>
+				<if test="crewBureau != null and crewBureau!=''  ">
+				  AND CREW_BUREAU=#{crewBureau}
+				</if>
+				<if test="recordPeopleOrg != 'all' ">
+				  AND  RECORD_PEOPLE_ORG=#{recordPeopleOrg}
+				</if>
+				<if test="trainNbr !=null and trainNbr !='' ">
+				  AND CREW_CROSS LIKE '%${trainNbr}%'
+				</if>
+				<if test="name !=null and name !='' ">
+				AND (NAME1 LIKE '%${name}%' OR NAME2 LIKE '%${name}%' )
+				</if>
+				ORDER BY sortId desc
+			)M
+		) P
+		WHERE P.NUM>=${rownumstart} AND P.NUM &lt;=${rownumend}
+    </select>
+    
+    
+    <select id="getHighlineCrewBaseInfo" parameterType="map" resultType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+              SELECT    
+				  HIGHLINE_CREW_ID AS crewHighlineId,
+				  CREW_DATE AS crewDate,
+				  CREW_BUREAU AS crewBureau,
+				  CREW_TYPE AS crewType,
+				  CREW_CROSS AS crewCross,
+				  CREW_GROUP AS crewGroup,
+				  THROUGH_LINE AS throughLine,
+				  NAME1 AS name1,
+				  TEL1 AS tel1,
+				  IDENTITY1 AS identity1,
+				  NAME2 AS name2,
+				  TEL2 AS tel2,
+				  IDENTITY2 AS  identity2,
+				  NOTE AS note,
+				  RECORD_PEOPLE AS recordPeople,
+				  RECORD_PEOPLE_ORG AS recordPeopleOrg,
+				  RECORD_TIME AS recordTime,
+				  SUBMIT_TYPE AS submitType,
+				  SORT_ID AS sortId
+				
+				FROM HIGHLINE_CREW WHERE 1=1  AND SUBMIT_TYPE = 1
+				<if test="crewStartDate !=null and crewStartDate != '' ">
+				  AND CREW_DATE >=#{crewStartDate} 
+				</if>
+				<if test="crewEndDate !=null and crewEndDate !='' ">
+				 AND CREW_DATE &lt;=#{crewEndDate}
+				</if>
+				<if test="crewType != 'all' ">
+				  AND CREW_TYPE=#{crewType}
+				</if>
+				<choose>
+			        <when test="crewBureau != null and crewBureau != ''">  AND CREW_BUREAU=#{crewBureau}</when>
+			     </choose>
+				<if test="recordPeopleOrg != 'all' ">
+				  AND  RECORD_PEOPLE_ORG=#{recordPeopleOrg}
+				</if>
+				<if test="crewCross !=null and crewCross !='' ">
+				  AND CREW_CROSS LIKE '%${crewCross}%'
+				</if>
+				<if test="name !=null and name !='' ">
+				AND (NAME1 LIKE '%${name}%' OR NAME2 LIKE '%${name}%' )
+				</if>
+				order by sortId desc
+    </select>
+    
+    <select id="getHighlineCrewForCrewDateAndTrainNbr" parameterType="map" resultType="org.railway.com.trainplan.entity.HighLineCrewInfo">
+        select  A.* from
+	      (select  '-'||crew_cross||'-' as crewCross1,
+	        CREW_CROSS AS crewCross,
+	        HIGHLINE_CREW_ID  as crewHighlineId,
+	        CREW_DATE as crewDate,
+	        CREW_BUREAU as crewBureau,
+	        CREW_TYPE as crewType,
+	        CREW_GROUP as crewGroup,
+	        THROUGH_LINE as throughLine,
+	        NAME1 as name1,
+	        TEL1 as tel1,
+	        IDENTITY1 as identity1,
+	        NAME2 as name2,
+	        TEL2 as tel2,
+	        IDENTITY2 as identity2,
+	        NOTE as note,
+	        RECORD_PEOPLE as recordPeople,
+	        RECORD_PEOPLE_ORG as recordPeopleOrg,
+	        RECORD_TIME as recordTime,
+	        SUBMIT_TYPE AS submitType
+	      
+	      from highline_crew ) A  WHERE A.crewDate=#{crewDate} AND A.submitType=${submitType} AND A.crewCross1 LIKE '%-${trainNbr}-%'
+      
+    
+    
+    </select>
+</mapper> 

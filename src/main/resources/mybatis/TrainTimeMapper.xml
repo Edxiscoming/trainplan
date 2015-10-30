@@ -1,0 +1,1013 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="trainTimeDao">
+	<select id="getTrainTimeInfoByTrainId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.TrainTimeInfo">
+ <![CDATA[
+		 select  * from
+		(
+		select
+		case 
+		   when 
+		    INSTR(T4.STNTYPE,'<始发>')>0
+		    THEN 'SFZ'
+		    WHEN
+		    INSTR(T4.STNTYPE,'<终到>')>0
+		    THEN 'ZDZ'
+		    WHEN 
+		    INSTR(T4.STNTYPE,'<经由>')>0
+		    THEN
+		      CASE 
+		        WHEN 
+		          (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=T4.stnname) >0 
+		        THEN 'FJK'
+		        WHEN T4.ARRTIME=T4.DPTTIME
+		        THEN 'BTZ'
+		        ELSE 'TZ'
+		      END
+		end stationFlag ,
+		
+		T4.*
+		FROM (
+			select 
+			t2.BASE_TRAIN_ID as trainlineTempId,
+			t2.childIndex,
+			t2.STNNAME,
+			t2.bureauShortName,
+			t2.STNBUREAUFULL,
+			t2.ARRTIMEALL,
+			t2.DPTTIMEALL,
+			t2.ARRTIME,
+			t2.DPTTIME,
+			t2.stnType,
+			t2.sourceDay,
+			t2.sourceDay as arrRunDays,
+			t2.targetDay,
+			t2.TRACKNAME,
+			t2.targetDay as runDays,
+			T2.BUREAUID,
+			T2.NODEID,
+			T2.NODENAME,
+			T2.arrTrainNbr,
+            T2.dptTrainNbr,
+            T2.platForm,
+			T2.jobs
+		    ,t2.nodeStationId
+		    ,t2.nodeStationName
+		    ,t2.nodeTdcsId
+		    ,t2.nodeTdcsName
+			  from (
+			        SELECT t.parent_id AS BASE_TRAIN_ID,
+			               t.parent_name as TRAINNBR,
+			               T.CHILD_INDEX AS childIndex,
+			               T.NAME AS STNNAME,
+			               T.BUREAU_SHORT_NAME AS bureauShortName,
+			               T.Bureau_Name as STNBUREAUFULL,
+			               TO_CHAR(T.SOURCE_TIME, 'yyyy-MM-dd hh24:mi:SS') AS ARRTIMEALL,
+			               TO_CHAR(T.TARGET_TIME, 'yyyy-MM-dd hh24:mi:SS') AS DPTTIMEALL,
+			               TO_CHAR(T.SOURCE_TIME, 'hh24:mi:SS') AS ARRTIME,
+			               TO_CHAR(T.TARGET_TIME, 'hh24:mi:SS') AS DPTTIME,
+			               JOBS as stnType,
+			               t.SOURCE_TIME_SCHEDULE_DATES sourceDay,
+			               t.TARGET_TIME_SCHEDULE_DATES targetDay,
+			               T.TRACK_NAME AS TRACKNAME,
+			               t.BUREAU_ID  AS BUREAUID,
+			               t.NODE_ID    AS NODEID,
+                           t.NODE_NAME  AS NODENAME,
+                           t.SOURCE_PARENT_NAME as arrTrainNbr,
+                           t.TARGET_PARENT_NAME as dptTrainNbr,
+                           t.PLATFORM_NAME platForm,
+                           t.jobs
+					       ,T.Node_Station_Id nodeStationId
+					       ,T.Node_Station_Name nodeStationName
+					       ,T.Node_Tdcs_Id nodeTdcsId
+					       ,T.Node_Tdcs_Name nodeTdcsName
+
+			          FROM JHPT_JBT.m_trainline_item_temp T
+			      ) t2,
+			       (select t.id BASE_TRAIN_ID
+			          from JHPT_JBT.m_trainline_temp t
+			         where 1=1) t1
+			 where t1.BASE_TRAIN_ID = t2.BASE_TRAIN_ID and t1.BASE_TRAIN_ID=#{baseTrainId}
+			 order by t1.BASE_TRAIN_ID, childIndex
+			 ) T4
+		 )
+   ]]>
+	</select> <!-- where t.BUSINESS = '客运' -->
+	<select id="getTrainTimeInfoByTrainIdFromTrainlineJbt"
+		parameterType="string" resultType="org.railway.com.trainplan.entity.TrainTimeInfoJbt">
+ <![CDATA[
+		 select  rownum-1 rn,T5.* from
+		(
+		select
+		case 
+		   when 
+		    INSTR(T4.STNTYPE,'<始发>')>0
+		    THEN 'SFZ'
+		    WHEN
+		    INSTR(T4.STNTYPE,'<终到>')>0
+		    THEN 'ZDZ'
+		    WHEN 
+		    INSTR(T4.STNTYPE,'<经由>')>0
+		    THEN
+		      CASE 
+		        WHEN 
+		          (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=T4.stnname) >0 
+		        THEN 'FJK'
+		        WHEN T4.ARRTIME=T4.DPTTIME
+		        THEN 'BTZ'
+		        ELSE 'TZ'
+		      END
+		end stationFlag ,
+		
+		T4.*
+		FROM (
+			select 
+			t2.BASE_TRAIN_ID as trainlineTempId,
+			t2.childIndex,
+			t2.STNNAME,
+			t2.bureauShortName,
+			t2.STNBUREAUFULL,
+			t2.ARRTIMEALL,
+			t2.DPTTIMEALL,
+			t2.ARRTIME,
+			t2.DPTTIME,
+			t2.stnType,
+			t2.sourceDay,
+			t2.sourceDay as arrRunDays,
+			t2.targetDay,
+			t2.TRACKNAME,
+			t2.targetDay as runDays,
+			T2.BUREAUID,
+			T2.NODEID,
+			T2.NODENAME,
+			t2.arrTrainNbr,
+			t2.dptTrainNbr,
+			t2.platForm,
+			T2.jobs,
+			T2.jobs as jobsValue
+		    ,t2.nodeStationId
+		    ,t2.nodeStationName
+		    ,t2.nodeTdcsId
+		    ,t2.nodeTdcsName
+			  from (
+			        SELECT t.parent_id AS BASE_TRAIN_ID,
+			               t.parent_name as TRAINNBR,
+			               T.CHILD_INDEX AS childIndex,
+			               T.NAME AS STNNAME,
+			               T.BUREAU_SHORT_NAME AS bureauShortName,
+			               T.Bureau_Name as STNBUREAUFULL,
+			               TO_CHAR(T.SOURCE_TIME, 'yyyy-MM-dd hh24:mi:SS') AS ARRTIMEALL,
+			               TO_CHAR(T.TARGET_TIME, 'yyyy-MM-dd hh24:mi:SS') AS DPTTIMEALL,
+			               TO_CHAR(T.SOURCE_TIME, 'hh24:mi:SS') AS ARRTIME,
+			               TO_CHAR(T.TARGET_TIME, 'hh24:mi:SS') AS DPTTIME,
+			               JOBS as stnType,
+			               t.SOURCE_TIME_SCHEDULE_DATES sourceDay,
+			               t.TARGET_TIME_SCHEDULE_DATES targetDay,
+			               T.TRACK_NAME AS TRACKNAME,
+			               t.BUREAU_ID  AS BUREAUID,
+			               t.NODE_ID    AS NODEID,
+                           t.NODE_NAME  AS NODENAME,
+                           t.SOURCE_PARENT_NAME as arrTrainNbr,
+                           t.TARGET_PARENT_NAME as dptTrainNbr,
+                           t.PLATFORM_NAME platForm,
+                           t.jobs
+					       ,T.Node_Station_Id nodeStationId
+					       ,T.Node_Station_Name nodeStationName
+					       ,T.Node_Tdcs_Id nodeTdcsId
+					       ,T.Node_Tdcs_Name nodeTdcsName
+
+			          FROM JHPT_JBT.m_trainline_item_temp T
+			      ) t2,
+			       (select t.id BASE_TRAIN_ID
+			          from JHPT_JBT.m_trainline_temp t
+			         where 1=1) t1
+			 where t1.BASE_TRAIN_ID = t2.BASE_TRAIN_ID and t1.BASE_TRAIN_ID=#{baseTrainId}
+			 order by t1.BASE_TRAIN_ID, childIndex
+			 ) T4
+		 ) T5
+   ]]>
+	</select> <!-- where t.BUSINESS = '客运' -->
+
+
+	<select id="getPlanTrainStnInfoForPlanTrainId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.TrainTimeInfo">
+
+		SELECT
+		B.PLAN_TRAIN_STN_ID AS planTrainStnId ,
+		B.PLAN_TRAIN_ID,
+		B.STN_SORT stnSort,
+		B.STN_NAME AS stnName,
+		B.STN_BUREAU AS bureauShortName ,
+		B.STN_BUREAU_FULL,
+		B.ARR_TRAIN_NBR,
+		B.DPT_TRAIN_NBR,
+		B.ARR_TIME AS arrTime,
+		B.DPT_TIME AS dptTime,
+		B.BASE_ARR_TIME,
+		B.BASE_DPT_TIME,
+		B.UP_DOWN,
+		B.TRACK_NBR,
+		B.TRACK_NAME AS trackName,
+		B.PLATFORM,
+		B.PSG_FLG,
+		B.LOCO_FLAG,
+		B.TEC_TYPE,
+		B.STN_TYPE,
+		B.BOUNDARY_IN_OUT,
+		B.RUN_DAYS AS runDays,
+		B.ARR_RUN_DAYS AS arrRunDays,
+		CASE WHEN B.STN_NAME = A.START_STN THEN 'SFZ'
+		WHEN B.STN_NAME = A.END_STN THEN 'ZDZ'
+		WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=B.STN_NAME)
+		>0 THEN 'FJK'
+		WHEN B.ARR_TIME = B.DPT_TIME THEN 'BTZ'
+		ELSE 'TZ'
+		END stationFlag
+		FROM PLAN_TRAIN_STN B,PLAN_TRAIN A WHERE A.PLAN_TRAIN_ID = B.PLAN_TRAIN_ID
+		AND A.PLAN_TRAIN_ID= #{planTrainId}
+		ORDER BY B.STN_SORT
+
+
+
+	</select>
+
+	<!-- 从原始图获取列车时刻表 -->
+	<select id="getTrainTimeInfoByPlanTrainId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.BaseCrossTrainInfoTime">
+	<![CDATA[
+	 select
+	  case 
+	   when 
+	    INSTR(T1.STNTYPE,'<始发>')>0 OR  INSTR(T1.STNTYPE,'<终到>')>0
+	    THEN '0'
+	    WHEN 
+	    INSTR(T1.STNTYPE,'<经由>')>0
+	    THEN
+	      CASE 
+	        WHEN 
+	          (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=T1.stn_name) >0 
+	        THEN 'FJK'
+	        WHEN T1.ARR_TIME=T1.DPT_TIME
+	        THEN 'BT'
+	        ELSE 'TZ'
+	      END
+		end stationType ,
+		T1.BASE_TRAIN_ID ,
+		T1.STN_SORT AS stnSort,
+		T1.STN_NAME AS stnName,
+		T1.STN_BUREAU ,
+		T1.STN_BUREAU bureauShortName,
+		T1.STN_BUREAU_FULL  ,
+		T1.ARR_TIME AS arrTime ,
+		T1.DPT_TIME AS dptTime,
+		T1.run_days AS runDays,
+		T1.stnType AS stnType,
+		T1.TRACK_NAME AS trackName
+	
+		FROM
+		(
+		 SELECT t.ID,
+		         t.parent_id      BASE_TRAIN_ID,
+		         T.CHILD_INDEX    STN_SORT,
+		         T.NAME           STN_NAME,
+		         T.BUREAU_SHORT_NAME STN_BUREAU,
+		         T.Bureau_Name    STN_BUREAU_FULL,
+		       TO_CHAR(T.SOURCE_TIME, 'yyyy-MM-dd hh24:mi:SS')  ARR_TIME,
+		       TO_CHAR(T.TARGET_TIME, 'yyyy-MM-dd hh24:mi:SS')  DPT_TIME,
+		         t.TARGET_TIME_SCHEDULE_DATES run_days,
+		          JOBS             stnType,
+		         T.TRACK_NAME     
+		    FROM JHPT_JBT.m_trainline_item_temp T
+		   
+		    WHERE t.parent_id =#{planTrainId}
+	
+		)T1 order by T1.STN_SORT
+	
+	]]>
+
+	</select>
+
+	<select id="getTrainTimeInfoByPlanTrainIdjy" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.TrainTimeInfo">
+ <![CDATA[
+			select *
+  from (select case
+                 when INSTR(T4.STNTYPE,'<始发>')>0 THEN
+                  'SFZ'
+                 WHEN INSTR(T4.STNTYPE,'<终到>')>0 THEN
+                  'ZDZ'
+                 WHEN INSTR(T4.STNTYPE,'<经由>')>0 THEN
+                  CASE
+                 WHEN (SELECT COUNT(*)
+                         FROM JHPT_JCSJ.ZDFJK T3
+                        WHERE T3.CNAME = T4.stnname) > 0 THEN
+                  'FJK'
+                 WHEN T4.ARRTIME = T4.DPTTIME THEN
+                  'BTZ'
+                 ELSE
+                  'TZ'
+               END end stationFlag,
+               T4.*
+          FROM (select t2.childIndex,
+                       t2.STNNAME,
+                       t2.bureauShortName,
+                       t2.STNBUREAUFULL,
+                       t2.ARRTIME,
+                       t2.DPTTIME,
+                       t2.stnType,
+                       t2.sourceDay,
+                       t2.targetDay,
+                       t2.TRACKNAME,
+                       t2.targetDay as runDays,
+                       T2.BUREAUID,
+                       T2.NODEID,
+                       T2.NODENAME,
+                       T2.jobs
+                  from (SELECT t.parent_id AS BASE_TRAIN_ID,
+                               t.parent_name as TRAINNBR,
+                               T.CHILD_INDEX AS childIndex,
+                               T.Node_Name AS STNNAME,
+                               T.BUREAU_SHORT_NAME AS bureauShortName,
+                               T.Bureau_Name as STNBUREAUFULL,
+                               TO_CHAR(T.SOURCE_TIME, 'yyyy-MM-dd hh24:mi') AS ARRTIME,
+                               TO_CHAR(T.TARGET_TIME, 'yyyy-MM-dd hh24:mi') AS DPTTIME,
+                               JOBS as stnType,
+                               t.SOURCE_TIME_SCHEDULE_DATES sourceDay,
+                               t.TARGET_TIME_SCHEDULE_DATES targetDay,
+                               T.TRACK_NAME AS TRACKNAME,
+                               t.BUREAU_ID AS BUREAUID,
+                               t.NODE_ID AS NODEID,
+                               t.NODE_NAME AS NODENAME,
+                               t.jobs
+                          FROM JHPT_JBT.m_trainline_item T) t2,
+                       (select t.id BASE_TRAIN_ID
+                          from JHPT_JBT.m_trainline t
+                         where 1=1) t1
+                 where t1.BASE_TRAIN_ID = t2.BASE_TRAIN_ID
+                   and t1.BASE_TRAIN_ID =
+                       #{trainId}
+                 order by t1.BASE_TRAIN_ID, childIndex) T4)
+				
+		]]>
+	</select><!-- t.BUSINESS = '客运' -->
+
+
+
+	<select id="getTrainTimeInfoByPlanTrainIdgt" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.TrainTimeInfo">
+ <![CDATA[
+			select *
+  from (select case
+                 when INSTR(T4.STNTYPE,'<始发>')>0 THEN
+                  'SFZ'
+                 WHEN INSTR(T4.STNTYPE,'<终到>')>0 THEN
+                  'ZDZ'
+                 WHEN INSTR(T4.STNTYPE,'<经由>')>0 THEN
+                  CASE
+                 WHEN (SELECT COUNT(*)
+                         FROM JHPT_JCSJ.ZDFJK T3
+                        WHERE T3.CNAME = T4.stnname) > 0 THEN
+                  'FJK'
+                 WHEN T4.ARRTIME = T4.DPTTIME THEN
+                  'BTZ'
+                 ELSE
+                  'TZ'
+               END end stationFlag,
+               T4.*
+          FROM (select t2.childIndex,
+                       t2.STNNAME,
+                       t2.bureauShortName,
+                       t2.STNBUREAUFULL,
+                       t2.ARRTIME,
+                       t2.DPTTIME,
+                       t2.stnType,
+                       t2.sourceDay,
+                       t2.targetDay,
+                       t2.TRACKNAME,
+                       t2.targetDay as runDays,
+                       T2.BUREAUID,
+                       T2.NODEID,
+                       T2.NODENAME,
+                       T2.jobs
+                  from (SELECT t.parent_id AS BASE_TRAIN_ID,
+                               t.parent_name as TRAINNBR,
+                               T.CHILD_INDEX AS childIndex,
+                               T.Node_Name AS STNNAME,
+                               T.BUREAU_SHORT_NAME AS bureauShortName,
+                               T.Bureau_Name as STNBUREAUFULL,
+                               TO_CHAR(T.SOURCE_TIME, 'yyyy-MM-dd hh24:mi') AS ARRTIME,
+                               TO_CHAR(T.TARGET_TIME, 'yyyy-MM-dd hh24:mi') AS DPTTIME,
+                               JOBS as stnType,
+                               t.SOURCE_TIME_SCHEDULE_DATES sourceDay,
+                               t.TARGET_TIME_SCHEDULE_DATES targetDay,
+                               T.TRACK_NAME AS TRACKNAME,
+                               t.BUREAU_ID AS BUREAUID,
+                               t.NODE_ID AS NODEID,
+                               t.NODE_NAME AS NODENAME,
+                               t.jobs
+                          FROM JHPT_JBT.m_trainline_item T) t2,
+                       (select t.id BASE_TRAIN_ID
+                          from JHPT_JBT.m_trainline t
+                         where 1=1) t1
+                 where t1.BASE_TRAIN_ID = t2.BASE_TRAIN_ID
+                   and t1.BASE_TRAIN_ID =
+                       #{trainId}
+                 order by t1.BASE_TRAIN_ID, childIndex) T4)
+				
+		]]>
+	</select><!-- t.BUSINESS = '客运' -->
+	<select id="getPlanLineTrainTimeInfoByTrainId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.TrainTimeInfo">
+		select * from
+		(SELECT T1.*,
+		CASE
+		WHEN T1.STNTYPE='0'
+		THEN 'SFZ'
+		WHEN T1.STNTYPE='2'
+		THEN 'ZDZ'
+		WHEN T1.STNTYPE='1'
+		THEN
+		CASE
+		WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=T1.nodeName)
+		>0
+		THEN 'FJK'
+		WHEN T1.ARRTIME=T1.DPTTIME
+		THEN 'BTZ'
+		ELSE 'TZ'
+		END
+		END stationFlag
+		FROM
+		(SELECT B.PLAN_TRAIN_STN_ID AS PLANTRAINSTNID,
+		A.TRAIN_NBR,
+		TO_CHAR(A.START_TIME,'yyyy-MM-dd hh24:mi:SS') AS STARTTIME,
+		TO_CHAR(A.END_TIME,'yyyy-MM-dd hh24:mi:SS') AS ENDTIME,
+		A.START_STN,
+		A.END_STN,
+		B.STN_SORT AS childIndex,
+		B.STN_NAME AS STNNAME,
+		B.node_Name nodeName,
+		B.STN_BUREAU AS bureauShortName,
+		B.STN_BUREAU_FULL AS STNBUREAUFULL,
+		TO_CHAR(B.ARR_TIME,'yyyy-MM-dd hh24:mi:SS') AS ARRTIME,
+		TO_CHAR(B.DPT_TIME,'yyyy-MM-dd hh24:mi:SS') AS DPTTIME,
+		B.RUN_DAYS AS RUNDAYS,
+		B.ARR_RUN_DAYS as arrRunDays,
+		B.TRACK_NAME AS TRACKNAME,
+		B.ARR_TRAIN_NBR as arrTrainNbr,
+		B.DPT_TRAIN_NBR as dptTrainNbr,
+		to_char(B.PLATFORM) as platForm,
+		B.jobs,
+		CASE
+		WHEN A.START_STN=B.node_name
+		THEN '0'
+		WHEN A.END_STN=B.node_name
+		THEN '2'
+		ELSE '1'
+		END STNTYPE
+		FROM PLAN_TRAIN A,
+		PLAN_TRAIN_STN B
+		WHERE A.PLAN_TRAIN_ID = B.PLAN_TRAIN_ID
+		AND B.PLAN_TRAIN_ID = #{planTrainId}
+		AND A.BASE_TRAIN_ID is Null
+		ORDER BY ARRTIME
+		) T1
+		UNION ALL
+		SELECT T2.*,
+		CASE
+		WHEN T2.STNTYPE='0'
+		THEN 'SFZ'
+		WHEN T2.STNTYPE='2'
+		THEN 'ZDZ'
+		WHEN T2.STNTYPE='1'
+		THEN
+		CASE
+		WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=T2.nodeName)
+		>0
+		THEN 'FJK'
+		WHEN T2.ARRTIME=T2.DPTTIME
+		THEN 'BTZ'
+		ELSE 'TZ'
+		END
+		END stationFlag
+		FROM
+		(SELECT M.ID AS PLANTRAINSTNID,
+		A.TRAIN_NBR,
+		TO_CHAR(A.START_TIME,'yyyy-MM-dd hh24:mi:SS') AS STARTTIME,
+		TO_CHAR(A.END_TIME,'yyyy-MM-dd hh24:mi:SS') AS ENDTIME,
+		A.START_STN,
+		A.END_STN,
+		M.CHILD_INDEX AS childIndex,
+		M.NAME AS STNNAME,
+		M.node_name nodeName,
+		M.BUREAU_SHORT_NAME AS bureauShortName,
+		M.BUREAU_NAME AS STNBUREAUFULL,
+		<!-- to_char(to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd 
+			hh24:mi:ss')+ceil(to_number(A.START_TIME-to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd 
+			hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'))),'yyyy-mm-dd hh24:mi:ss') as ARRTIME, -->
+		<!-- to_char(to_date(to_char(M.TARGET_TIME,'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd 
+			hh24:mi:ss')+ceil(to_number(A.START_TIME-to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd 
+			hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'))),'yyyy-mm-dd hh24:mi:ss') as DPTTIME, -->
+		TO_CHAR(to_date( to_char(A.START_TIME,'yyyy-MM-dd') ||
+		TO_CHAR(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss')
+		ARRTIME,
+		TO_CHAR(to_date( to_char(A.START_TIME,'yyyy-MM-dd') ||
+		TO_CHAR(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss')
+		DPTTIME,
+
+		M.TARGET_TIME_SCHEDULE_DATES AS RUNDAYS,
+		M.SOURCE_TIME_SCHEDULE_DATES as arrRunDays,
+		M.TRACK_NAME AS TRACKNAME,
+		M.SOURCE_PARENT_NAME as arrTrainNbr,
+		M.TARGET_PARENT_NAME as dptTrainNbr,
+		M.PLATFORM_NAME as platForm,
+		M.jobs,
+		CASE
+		WHEN A.START_STN=M.NAME
+		THEN '0'
+		WHEN A.END_STN=M.NAME
+		THEN '2'
+		ELSE '1'
+		END STNTYPE
+		FROM PLAN_TRAIN A,
+		jhpt_jbt.M_TRAINLINE_ITEM_TEMP M
+		WHERE A.BASE_TRAIN_ID = M.PARENT_ID
+		AND A.PLAN_TRAIN_ID = #{planTrainId}
+		AND A.BASE_TRAIN_ID is not Null
+		ORDER BY ARRTIME
+		) T2 ) ORDER BY childIndex
+	</select>
+	<select id="getTrainLineTimes" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.TrainTimeInfo">
+ <![CDATA[
+				select *
+  from (select case
+                 when INSTR(T4.STNTYPE,'<始发>')>0 THEN
+                  'SFZ'
+                 WHEN INSTR(T4.STNTYPE,'<终到>')>0 THEN
+                  'ZDZ'
+                 WHEN INSTR(T4.STNTYPE,'<经由>')>0 THEN
+                  CASE
+                 WHEN (SELECT COUNT(*)
+                         FROM JHPT_JCSJ.ZDFJK T3
+                        WHERE T3.CNAME = T4.stnname) > 0 THEN
+                  'FJK'
+                 WHEN T4.ARRTIME = T4.DPTTIME THEN
+                  'BTZ'
+                 ELSE
+                  'TZ'
+               END end stationFlag,
+               T4.*
+          FROM (select t2.childIndex,
+                       t2.STNNAME,
+                       t2.bureauShortName,
+                       t2.STNBUREAUFULL,
+                       t2.ARRTIME,
+                       t2.DPTTIME,
+                       t2.stnType,
+                       t2.sourceDay,
+                       t2.targetDay,
+                       t2.TRACKNAME,
+                       t2.targetDay as runDays,
+                       T2.BUREAUID,
+                       T2.NODEID,
+                       T2.NODENAME,
+                       T2.arrTrainNbr,
+                       T2.dptTrainNbr,
+                       T2.platForm,
+                       T2.jobs
+                  from (SELECT t.parent_id AS BASE_TRAIN_ID,
+                               t.parent_name as TRAINNBR,
+                               T.CHILD_INDEX AS childIndex,
+                               T.node_name AS STNNAME,
+                               T.BUREAU_SHORT_NAME AS bureauShortName,
+                               T.Bureau_Name as STNBUREAUFULL,
+                               TO_CHAR(T.SOURCE_TIME, 'yyyy-mm-dd hh24:mi:ss') AS ARRTIME,
+                               TO_CHAR(T.TARGET_TIME, 'yyyy-mm-dd hh24:mi:ss') AS DPTTIME,
+                               JOBS as stnType,
+                               t.SOURCE_TIME_SCHEDULE_DATES sourceDay,
+                               t.TARGET_TIME_SCHEDULE_DATES targetDay,
+                               T.TRACK_NAME AS TRACKNAME,
+                               t.BUREAU_ID AS BUREAUID,
+                               t.NODE_ID AS NODEID,
+                               t.NODE_NAME AS NODENAME,
+                               t.SOURCE_PARENT_NAME as arrTrainNbr,
+	                           t.TARGET_PARENT_NAME as dptTrainNbr,
+	                           t.PLATFORM_NAME platForm,
+                               t.jobs
+                          FROM JHPT_JBT.m_trainline_item T) t2,
+                       (select t.id BASE_TRAIN_ID
+                          from JHPT_JBT.m_trainline t
+                         where 1=1) t1
+                 where t1.BASE_TRAIN_ID = t2.BASE_TRAIN_ID
+                   and t1.BASE_TRAIN_ID =
+                       #{trainId}
+                 order by t1.BASE_TRAIN_ID, childIndex) T4)
+				
+		]]>
+	</select><!-- t.BUSINESS = '客运' -->
+
+	<update id="editPlanLineTrainTimes" parameterType="map">
+		UPDATE PLAN_TRAIN_STN T SET
+		T.ARR_TIME = TO_DATE(#{arrTime},'yyyy-MM-dd hh24:mi:SS'),
+		T.DPT_TIME = TO_DATE(#{dptTime},'yyyy-MM-dd hh24:mi:SS'),
+		T.ARR_RUN_DAYS = #{arrRunDays},
+		T.RUN_DAYS = #{runDays},
+		T.TRACK_NAME = #{trackName}
+
+		WHERE T.STN_SORT = #{stnSort}
+		AND T.PLAN_TRAIN_ID IN (SELECT A.PLAN_TRAIN_ID FROM PLAN_TRAIN A WHERE
+		A.RUN_DATE = #{runDate} AND A.TRAIN_NBR=#{trainNbr})
+
+	</update>
+
+
+	<!-- 根据PLAN_TRAIN_ID 更新开行计划 备用及停运标记（1:开行；2:备用；9:停运） 业务要求：将当前运行线id填入上一次生成的运行线ID； 
+		重置“生成运行线、一级审核、二级审核”标记及运行线ID -->
+	<update id="updateSpareFlagByPlanTrainId" parameterType="map">
+		UPDATE PLAN_TRAIN T SET
+		T.SPARE_FLAG = ${spareFlag},
+		T.CHECK_LEV1_TYPE = 0, T.CHECK_LEV1_BUREAU=NULL,
+		T.CHECK_LEV2_TYPE = 0, T.CHECK_LEV2_BUREAU=NULL,
+		T.DAILYPLAN_FLAG = 1,
+		T.DAILYPLAN_ID_LAST = DECODE(T.DAILYPLAN_ID,NULL,T.DAILYPLAN_ID_LAST,T.DAILYPLAN_ID),
+		T.DAILYPLAN_ID = NULL
+		WHERE T.PLAN_TRAIN_ID=#{planTrainId}
+
+	</update>
+	<!-- 根据trainNbr ,runDay 更新开行计划 备用及停运标记（1:开行；2:备用；9:停运） 业务要求：将当前运行线id填入上一次生成的运行线ID； 
+		重置“生成运行线、一级审核、二级审核”标记及运行线ID -->
+	<update id="updateSpareFlagByPlanTrainNbrAndRunDay"
+		parameterType="map">
+		UPDATE PLAN_TRAIN T SET
+		T.SPARE_FLAG = ${spareFlag},
+		T.CHECK_LEV1_TYPE = 0, T.CHECK_LEV1_BUREAU=NULL,
+		T.CHECK_LEV2_TYPE = 0, T.CHECK_LEV2_BUREAU=NULL,
+		T.DAILYPLAN_FLAG = 1,
+		T.DAILYPLAN_ID_LAST = DECODE(T.DAILYPLAN_ID,NULL,T.DAILYPLAN_ID_LAST,T.DAILYPLAN_ID),
+		T.DAILYPLAN_ID = NULL
+		WHERE T.TRAIN_NBR = #{trainNbr} and T.RUN_DATE = #{runDay}
+		<if test="planCrossId != null">
+			and t.plan_cross_id = #{planCrossId}
+		</if>
+		<!-- and t.plan_train_id = #{planTrainId} -->
+		<!-- 
+		<if test="planCrossId == null">
+			and t.plan_train_id = #{planTrainId}
+		</if>
+		 -->
+		<!-- 启动备用判断 -->
+		<!-- 2015-3-19 15:13:45注释 
+		<if test="spareFlag == 1">
+			and T.SPARE_FLAG = 2
+		</if>
+		 -->
+		<if test="oldSpareFlag != null">
+			and T.SPARE_FLAG = #{oldSpareFlag}
+		</if>
+		<!-- 
+		<if test="spareFlag != null">
+			and T.SPARE_FLAG = #{spareFlag}
+		</if>
+ 		-->
+	</update>
+	<!-- 根据RUN_DATE AND TRAIN_NBR 更新开行计划 备用及停运标记（1:开行；2:备用；9:停运） 业务要求：将当前运行线id填入上一次生成的运行线ID；重置“生成运行线、一级审核、二级审核”标记及运行线ID -->
+	<update id="updateSpareFlagByRunDateAndTrainNbr" parameterType="map">
+		UPDATE PLAN_TRAIN T SET
+		<if test="spareFlag !=null and spareFlag!=''">
+			T.SPARE_FLAG = ${spareFlag},
+		</if>
+		T.CHECK_LEV1_TYPE = 0, T.CHECK_LEV1_BUREAU=NULL,
+		T.CHECK_LEV2_TYPE = 0, T.CHECK_LEV2_BUREAU=NULL,
+		T.DAILYPLAN_FLAG = 1,
+		T.DAILYPLAN_ID_LAST = DECODE(T.DAILYPLAN_ID,NULL,T.DAILYPLAN_ID_LAST,T.DAILYPLAN_ID),
+		T.DAILYPLAN_ID = NULL
+		WHERE T.RUN_DATE=#{runDate} AND T.TRAIN_NBR=#{trainNbr}
+
+	</update>
+
+
+
+
+
+	<!-- * 根据PLAN_TRAIN中PLAN_TRAIN_ID查询基本图列车时刻信息 * @param planTrainId (检索条件 
+		必填) * @author denglj * @date 2014-10-27 -->
+	<select id="jbtTrainStnByPlanTrainId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.TrainTimeInfo">
+		select
+		rownum-1 rn,
+		O.PLAN_TRAIN_ID planTrainId,
+		M.ID planTrainStnId,
+		M.NODE_ID nodeId,
+		M.NAME nodeName,
+		M.Bureau_Id bureauId,
+		M.CHILD_INDEX stnSort,
+		M.NAME stnName,
+		M.BUREAU_SHORT_NAME bureauShortName,
+		M.BUREAU_NAME stnBureauFull,
+		M.SOURCE_PARENT_NAME arrTrainNbr,
+		M.TARGET_PARENT_NAME dptTrainNbr,
+		M.JOBS,
+		M.NODE_STATION_ID nodeStationId,
+		M.NODE_STATION_NAME nodeStationName,
+		M.NODE_TDCS_ID nodeTdcsId,
+		M.NODE_TDCS_NAME nodeTdcsName,
+		CASE WHEN M.SOURCE_TIME IS NOT NULL THEN
+		TO_CHAR(TO_DATE(O.RUN_DATE,'YYYY-MM-DD')+M.Source_Time_Schedule_Dates,'YYYY-MM-DD ')||TO_CHAR(M.SOURCE_TIME,'hh24:mi:SS')
+		ELSE
+		TO_CHAR(TO_DATE(O.RUN_DATE,'YYYY-MM-DD')+M.Target_Time_Schedule_Dates,'YYYY-MM-DD ')||TO_CHAR(M.TARGET_TIME,'hh24:mi:SS')
+		END arrTime,
+		CASE WHEN M.TARGET_TIME IS NOT NULL THEN
+		TO_CHAR(TO_DATE(O.RUN_DATE,'YYYY-MM-DD')+M.Target_Time_Schedule_Dates,'YYYY-MM-DD ')||TO_CHAR(M.TARGET_TIME,'hh24:mi:SS')
+		ELSE
+		TO_CHAR(TO_DATE(O.RUN_DATE,'YYYY-MM-DD')+M.Source_Time_Schedule_Dates,'YYYY-MM-DD ')||TO_CHAR(M.SOURCE_TIME,'hh24:mi:SS')
+		END dptTime,
+
+		CASE WHEN M.SOURCE_TIME IS NOT NULL THEN
+		TO_CHAR(TO_DATE(O.RUN_DATE,'YYYY-MM-DD')+M.Source_Time_Schedule_Dates,'YYYY-MM-DD ')||TO_CHAR(M.SOURCE_TIME,'hh24:mi:SS')
+		ELSE
+		TO_CHAR(TO_DATE(O.RUN_DATE,'YYYY-MM-DD')+M.Target_Time_Schedule_Dates,'YYYY-MM-DD ')||TO_CHAR(M.TARGET_TIME,'hh24:mi:SS')
+		END baseArrTime,
+		CASE WHEN M.TARGET_TIME IS NOT NULL THEN
+		TO_CHAR(TO_DATE(O.RUN_DATE,'YYYY-MM-DD')+M.Target_Time_Schedule_Dates,'YYYY-MM-DD ')||TO_CHAR(M.TARGET_TIME,'hh24:mi:SS')
+		ELSE
+		TO_CHAR(TO_DATE(O.RUN_DATE,'YYYY-MM-DD')+M.Source_Time_Schedule_Dates,'YYYY-MM-DD ')||TO_CHAR(M.SOURCE_TIME,'hh24:mi:SS')
+		END baseDptTime,
+		M.TRACK_NAME AS trackName,
+		M.PLATFORM_NAME platForm,
+		M.Source_Time_Schedule_Dates arrRunDays,
+		M.Target_Time_Schedule_Dates runDays,
+		CASE WHEN M.SOURCE_TIME IS NULL THEN 'SFZ'
+		WHEN M.TARGET_TIME IS NULL THEN 'ZDZ'
+		WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=M.NAME) >0
+		THEN 'FJK'
+		WHEN TO_CHAR(M.SOURCE_TIME,'hh24:mi:SS') =
+		TO_CHAR(M.TARGET_TIME,'hh24:mi:SS') THEN 'BTZ'
+		ELSE 'TZ'
+		END stationFlag
+
+		from jhpt_jbt.M_TRAINLINE_ITEM_TEMP M,
+		PLAN_TRAIN O
+		WHERE O.BASE_TRAIN_ID= M.PARENT_ID AND O.Plan_Train_Id =
+		#{planTrainId}
+		ORDER BY M.CHILD_INDEX
+	</select>
+
+
+
+
+
+	<!-- * 根据PLAN_TRAIN中PLAN_TRAIN_ID查询客运列车时刻信息 * @param planTrainId (检索条件 必填) 
+		* @author denglj * @date 2014-10-27 -->
+	<select id="kyTrainStnByPlanTrainId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.TrainTimeInfo">
+
+		SELECT
+		rownum-1 rn,
+		A.PLAN_TRAIN_ID planTrainId,
+		B.PLAN_TRAIN_STN_ID AS planTrainStnId,
+		B.STN_SORT stnSort,
+		B.STN_NAME stnName,
+		B.NODE_ID nodeId,
+		B.NODE_NAME nodeName,
+		B.STN_BUREAU_ID bureauId,
+		B.STN_BUREAU AS bureauShortName ,
+		B.STN_BUREAU_FULL stnBureauFull,
+		B.ARR_TRAIN_NBR arrTrainNbr,
+		B.STN_ID nodeStationId,
+		B.STN_NAME nodeStationName,
+		B.NODE_TDCS_ID nodeTdcsId,
+		B.NODE_TDCS_NAME nodeTdcsName,
+		TO_CHAR(B.ARR_TIME,'YYYY-MM-DD hh24:mi:ss') AS arrTime,
+		TO_CHAR(B.BASE_ARR_TIME,'YYYY-MM-DD hh24:mi:ss') baseArrTime,
+		B.ARR_RUN_DAYS arrRunDays,
+		B.DPT_TRAIN_NBR dptTrainNbr,
+		TO_CHAR(B.DPT_TIME,'YYYY-MM-DD hh24:mi:ss') AS dptTime,
+		TO_CHAR(B.BASE_DPT_TIME,'YYYY-MM-DD hh24:mi:ss') baseDptTime,
+		b.RUN_DAYS runDays,
+		<!-- B.TRACK_NBR , -->
+		B.TRACK_NAME AS trackName,
+		B.platForm,
+		B.JOBS,
+		<!-- B.STN_TYPE stnType, -->
+		<!-- B.PSG_FLG, -->
+		CASE WHEN B.STN_NAME = A.START_STN THEN 'SFZ'
+		WHEN B.STN_NAME = A.END_STN THEN 'ZDZ'
+		WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=B.STN_NAME)
+		>0 THEN 'FJK'
+		WHEN B.ARR_TIME = B.DPT_TIME THEN 'BTZ'
+		ELSE 'TZ'
+		END stationFlag
+		FROM PLAN_TRAIN_STN B,PLAN_TRAIN A
+		WHERE A.PLAN_TRAIN_ID = B.PLAN_TRAIN_ID AND A.PLAN_TRAIN_ID= #{planTrainId}
+		ORDER BY B.STN_SORT
+	</select>
+
+
+
+	<!-- * 根据trainNbr、runDate、startStn、endStn删除PLAN_TRAIN_STN表中列车时刻信息 * @param 
+		runDate (检索条件 必填) * @param trainNbr (检索条件 必填) * @param startStn (检索条件 必填) 
+		* @param endStn (检索条件 必填) * @author denglj * @date 2014-10-28 -->
+	<delete id="deleteTrainlineItemTempByParentId" parameterType="map">
+		DELETE FROM JHPT_JBT.m_trainline_item_temp T WHERE T.parent_id
+		=#{trainlineTempId,jdbcType=VARCHAR}
+	</delete>
+	<!-- * 根据parentId 删除jbt trainlineItemTemp 中得数据 * @author sunt * @date 2015.03.04 -->
+	<delete id="deleteTrainStnByPlanTrainId" parameterType="map">
+		DELETE FROM PLAN_TRAIN_STN T WHERE T.PLAN_TRAIN_ID
+		=#{planTrainId,jdbcType=VARCHAR}
+	</delete>
+
+	<!-- * @author denglj * @date 2014-10-28 -->
+	<insert id="addPlanTrainStn" parameterType="map">
+		INSERT INTO PLAN_TRAIN_STN
+		(
+		PLAN_TRAIN_STN_ID,
+		PLAN_TRAIN_ID,
+		STN_SORT,
+		STN_NAME,
+		NODE_ID,
+		NODE_NAME,
+		STN_BUREAU_ID,
+		STN_BUREAU,
+		STN_BUREAU_FULL,
+		ARR_TRAIN_NBR,
+		ARR_TIME,
+		BASE_ARR_TIME,
+		ARR_RUN_DAYS,
+		DPT_TRAIN_NBR,
+		DPT_TIME,
+		BASE_DPT_TIME,
+		RUN_DAYS,
+		TRACK_NAME,
+		PLATFORM,
+		JOBS,
+		STN_TYPE,
+		STN_ID,
+		NODE_TDCS_ID,
+		NODE_TDCS_NAME
+		)
+		(
+		<foreach collection="trainStnList" item="item" index="index"
+			separator="UNION ALL">
+            <![CDATA[
+	       SELECT 
+	        #{item.planTrainStnId, jdbcType=VARCHAR},
+            #{item.planTrainId, jdbcType=VARCHAR},
+            #{item.stnSort, jdbcType=NUMERIC},
+            #{item.stnName, jdbcType=VARCHAR},
+            #{item.nodeId, jdbcType=VARCHAR},
+            #{item.nodeName, jdbcType=VARCHAR},
+            #{item.bureauId, jdbcType=VARCHAR},
+            #{item.bureauShortName, jdbcType=VARCHAR},
+            #{item.stnBureauFull, jdbcType=VARCHAR},
+            #{item.arrTrainNbr, jdbcType=VARCHAR},
+            TO_DATE(#{item.arrTime},'yyyy-mm-dd hh24:mi:ss'),
+            TO_DATE(#{item.baseArrTime},'yyyy-mm-dd hh24:mi:ss'),
+            #{item.arrRunDays, jdbcType=NUMERIC},
+            #{item.dptTrainNbr, jdbcType=VARCHAR},
+            TO_DATE(#{item.dptTime},'yyyy-mm-dd hh24:mi:ss'),
+            TO_DATE(#{item.baseDptTime},'yyyy-mm-dd hh24:mi:ss'),
+            #{item.runDays, jdbcType=NUMERIC},
+            #{item.trackName, jdbcType=VARCHAR},
+            #{item.platForm, jdbcType=NUMERIC},
+	        #{item.jobs, jdbcType=VARCHAR},
+            #{item.stnType, jdbcType=VARCHAR},
+            #{item.nodeStationId, jdbcType=VARCHAR},
+            #{item.nodeTdcsId, jdbcType=VARCHAR},
+            #{item.nodeTdcsName, jdbcType=VARCHAR}
+            
+            FROM DUAL
+	         ]]>
+		</foreach>
+
+		)
+
+	</insert>
+	<insert id="addTrainlineItemTemps" parameterType="map">
+		INSERT INTO JHPT_JBT.m_trainline_item_temp
+		(
+		id,
+		name,
+		PARENT_ID,
+		PARENT_NAME,
+		CHILD_INDEX,
+		JOBS,
+		BUREAU_ID,
+		BUREAU_NAME,
+		BUREAU_SHORT_NAME,
+		NODE_ID,
+		NODE_NAME,
+		TRACK_NAME,
+		SOURCE_TIME,
+		TARGET_TIME,
+		SOURCE_TIME_SCHEDULE_DATES,
+		SOURCE_TIME_SCHEDULE_HOUR,
+		SOURCE_TIME_SCHEDULE_MINUTE,
+		SOURCE_TIME_SCHEDULE_SECOND,
+		TARGET_TIME_SCHEDULE_DATES,
+		TARGET_TIME_SCHEDULE_HOUR,
+		TARGET_TIME_SCHEDULE_MINUTE,
+		TARGET_TIME_SCHEDULE_SECOND,
+		PLATFORM_NAME,
+		SOURCE_PARENT_NAME,
+		TARGET_PARENT_NAME
+
+		)
+		(
+		<foreach collection="trainTimeList" item="item" index="index"
+			separator="UNION ALL">
+            <![CDATA[
+	       SELECT 
+	        #{item.planTrainStnId, jdbcType=VARCHAR},
+            #{item.stnName, jdbcType=VARCHAR},
+            #{item.trainlineTempId, jdbcType=VARCHAR},
+            #{item.parentNbr, jdbcType=VARCHAR},
+            #{item.childIndex, jdbcType=NUMERIC},
+            #{item.jobs, jdbcType=VARCHAR},
+            #{item.bureauId, jdbcType=VARCHAR},
+            #{item.stnBureauFull, jdbcType=VARCHAR},
+            #{item.bureauShortName, jdbcType=VARCHAR},
+            #{item.nodeId, jdbcType=VARCHAR},
+            #{item.nodeName, jdbcType=VARCHAR},
+            #{item.trackName,  jdbcType=VARCHAR},
+       		TO_DATE(#{item.arrTimeAll, jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss'),
+			TO_DATE(#{item.dptTimeAll, jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss'),
+            #{item.arrRunDays, jdbcType=VARCHAR},
+            #{item.SOURCE_TIME_SCHEDULE_HOUR, jdbcType=VARCHAR},
+            #{item.SOURCE_TIME_SCHEDULE_MINUTE, jdbcType=VARCHAR},
+            #{item.SOURCE_TIME_SCHEDULE_SECOND, jdbcType=VARCHAR},
+            #{item.runDays, jdbcType=VARCHAR},
+            #{item.TARGET_TIME_SCHEDULE_HOUR, jdbcType=VARCHAR},
+            #{item.TARGET_TIME_SCHEDULE_MINUTE, jdbcType=VARCHAR},
+            #{item.TARGET_TIME_SCHEDULE_SECOND, jdbcType=VARCHAR},
+            
+            #{item.platForm, jdbcType=VARCHAR},
+            #{item.arrTrainNbr, jdbcType=VARCHAR},
+            #{item.dptTrainNbr, jdbcType=VARCHAR}
+            FROM DUAL
+	         ]]>
+		</foreach>
+
+		)
+
+	</insert>
+
+
+
+	<!-- 根据planTrainId更新开行计划 用于批量修改列车时刻org.railway.com.trainplan.service.TrainTimeService 
+		- updatePlanLineTrainTimes() 业务要求：将当前运行线id填入上一次生成的运行线ID；重置“生成运行线、一级审核、二级审核”标记、运行线ID、基本图中列车ID 
+		* @author denglj * @date 2014-10-28 -->
+	<update id="resetPlanTrainInfoById" parameterType="map">
+		UPDATE PLAN_TRAIN T SET
+		T.CHECK_LEV1_TYPE = 0, T.CHECK_LEV1_BUREAU=NULL,
+		T.CHECK_LEV2_TYPE = 0, T.CHECK_LEV2_BUREAU=NULL,
+		T.TEL_NAME=#{telName, jdbcType=VARCHAR},
+		T.DAILYPLAN_FLAG = 1,
+		T.DAILYPLAN_ID_LAST = DECODE(T.DAILYPLAN_ID,NULL,T.DAILYPLAN_ID_LAST,T.DAILYPLAN_ID),
+		T.DAILYPLAN_ID = NULL,
+		T.VAILD_STATUS = 0,
+		T.BASE_TRAIN_ID = NULL
+		WHERE T.PLAN_TRAIN_ID=#{planTrainId, jdbcType=VARCHAR}
+
+	</update>
+
+	<update id="updatePlanTrainInfoById" parameterType="map">
+		UPDATE PLAN_TRAIN T SET
+		T.VAILD_STATUS = 0,
+		T.START_STN=#{startStn, jdbcType=VARCHAR},
+		T.END_STN=#{endStn, jdbcType=VARCHAR}
+		WHERE T.PLAN_TRAIN_ID=#{planTrainId, jdbcType=VARCHAR}
+
+	</update>
+
+	<!-- 整组停运 -->
+	<update id="batchUpdatePlanTrainByIdlist" parameterType="map">
+		update plan_train t set
+		t.spare_flag = ${spare_flag},
+		t.check_lev1_type
+		= 0, t.check_lev1_bureau=null,
+		t.check_lev2_type = 0,
+		t.check_lev2_bureau=null,
+		t.dailyplan_flag = 1,
+		t.vaild_status = 0,
+		t.dailyplan_id_last =
+		decode(t.dailyplan_id,null,t.dailyplan_id_last,t.dailyplan_id),
+		t.dailyplan_id = null
+		where t.plan_train_id in
+		<foreach collection="idList" item="list" index="index" open="("
+			close=")" separator=",">
+			#{list}
+		</foreach>
+		<if test="oldSpareFlag != null">
+			and T.SPARE_FLAG = #{oldSpareFlag}
+		</if>
+	</update>
+
+</mapper>

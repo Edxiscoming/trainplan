@@ -1,0 +1,41 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<li>
+    <a class="menu_one"  href="${ctx}/runPlan/runPlanMain?train_type=0" target="contentFrame" onclick="getRunPlan()"><i class="fa fa-outdent"></i>普速开行计划</a>  
+	<!-- <a class="menu_one" href="${ctx}/runPlan/runPlanCreatePl?train_type=0" target="contentFrame onclick="getRunPlan()"><i class="fa fa-outdent"></i>普速开行计划</a> -->
+</li>
+<li>
+    <!-- <a class="menu_one"  href="${ctx}/runPlan/runPlanGt" target="contentFrame" onclick="getRunPlanGt()"><i class="fa fa-indent"></i>高铁开行计划</a> -->
+		<a class="menu_one" href="${ctx}/runPlan/runPlanMain?train_type=1" target="contentFrame" onclick="getRunPlanGt()"><i class="fa fa-outdent"></i>高铁开行计划</a>
+</li>
+<li>
+    <a class="menu_one"  target="_blank" href="http://10.1.186.117:8080/trainlines.jsp"><i class="fa fa-chain"></i>1列车1条线</a>        
+</li>
+<!-- 
+<li>
+    <a class="menu_one"  target="_blank" href="http://10.1.186.117:8080/nodes.jsp" target="contentFrame""><i class="fa fa-book"></i>基础数据</a>
+</li>
+--> 
+<li>
+    <a class="menu_one"  href="http://10.1.186.117:8080/southwest-trainlines-check-all-sub.jsp?bureau=${user.bureauShortName}" target="contentFrame" onclick="getHJbt()"><i class="fa fa-eye"></i>核基本图</a>
+</li>
+<li>
+    <!-- <a class="menu_one"  target="_blank" href="http://10.1.186.117:8080/template-scheme-edit-check.jsp?user_id=${user.username }&user_bureau_name=${user.bureauShortName }&user_name=${user.name }" target="contentFrame"><i class="fa fa-book"></i>基本图</a> -->
+    <a class="menu_one"  href="http://10.1.186.117:8080/template-scheme-edit0-sub.jsp?bureau=${user.bureauShortName}" target="contentFrame" onclick="getEditJbt()"><i class="fa fa-pencil-square-o"></i>改基本图</a>
+</li> 
+<li>
+    <!-- <a class="menu_one"  href="${ctx}/jbtcx?type=jbt" target="contentFrame" onclick="getBase()"><i class="fa fa-book"></i>技术资料</a> 
+    <a class="menu_one"  href="${ctx}/jbtcx?type=jbt" target="contentFrame" onclick="getBase()"><i class="fa fa-list"></i>技术资料</a>   
+    <a class="menu_one"  href="${ctx}/jbtcx?type=jbt" target="contentFrame" onclick="getBase()"><i class="fa fa-list"></i>技术资料</a> -->
+    <a class="menu_one"  href="${ctx}/cmOriginalCross/pageIndex/crossTrain" target="contentFrame" onclick="getBase()"><i class="fa fa-list"></i>对数表</a>
+</li> 
+<!--   
+<li>
+    <a class="menu_one"  href="${ctx}/msg" target="contentFrame" onclick="getMsg()">
+    	<i class="fa fa-envelope-o"></i>我的消息 <span class="badge" id="msgCount">${msgCount }</span>
+    </a>   
+</li>
+-->  
+<li>
+    <!-- <a class="menu_one"  href="http://10.1.191.98/dsp71025/htmlFrame3/index.jsp?menu=menu_kd_kyjhpt" target="contentFrame" onclick="getSReport()"><i class="fa fa-bar-chart-o"></i>统计分析</a> -->
+    <a class="menu_one"  href="http://10.1.191.98/dsp71025/htmlFrame3/index_4_trainplan.jsp?menu=menu_kd_kyjhpt" target="contentFrame" onclick="getSReport()"><i class="fa fa-bar-chart-o"></i>统计分析</a>
+</li>           

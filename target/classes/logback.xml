@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<jmxConfigurator />
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{30} - %line - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/tmp/logs/trainplan.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/tmp/logs/trainplan.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>10</maxHistory>  
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{30} - %line - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!--log4jdbc -->
+	<logger name="jdbc.sqltiming" level="error"/>
+	
+	<!-- springside modules -->
+	<logger name="org.springside.modules" level="error" />
+	
+	<!-- cxf inbound/outbound logger -->
+	<logger name="org.apache.cxf.services" level="error" />
+
+    <logger name="org.springframework" level="error" />
+
+    <logger name="org.mybatis" level="error" />
+
+    <logger name="org.apache.ibatis" level="error"/>
+
+    <logger name="org.hibernate" level="error" />
+
+    <logger name="net.sf" level="error" />
+
+    <logger name="org.apache.shiro" level="error" />
+    
+    <logger name="org.springframework.amqp" level="error" />
+
+	<!-- root -->
+	<root level="error">
+		<appender-ref ref="console" />
+		<appender-ref ref="rollingFile" />
+	</root>
+</configuration>

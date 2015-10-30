@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.comfirmedmap.repository.TCmTrainRuleMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmTrainRule" >
+    <id column="CM_TRAIN_RULE_ID" property="cmTrainRuleId" jdbcType="VARCHAR" />
+    <result column="CM_TRAIN_ID" property="cmTrainId" jdbcType="VARCHAR" />
+    <result column="HIGHLINE_RULE" property="highlineRule" jdbcType="VARCHAR" />
+    <result column="COMMONLINE_RULE" property="commonlineRule" jdbcType="VARCHAR" />
+    <result column="APPOINT_WEEK" property="appointWeek" jdbcType="VARCHAR" />
+    <result column="APPOINT_DAY" property="appointDay" jdbcType="VARCHAR" />
+    <result column="APPOINT_PERIOD" property="appointPeriod" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CM_TRAIN_RULE_ID, CM_TRAIN_ID, HIGHLINE_RULE, COMMONLINE_RULE, APPOINT_WEEK, APPOINT_DAY, 
+    APPOINT_PERIOD, USE_STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_TRAIN_RULE
+    where CM_TRAIN_RULE_ID = #{cmTrainRuleId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CM_TRAIN_RULE
+    where CM_TRAIN_RULE_ID = #{cmTrainRuleId}
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmTrainRule" >
+    insert into T_CM_TRAIN_RULE (CM_TRAIN_RULE_ID, CM_TRAIN_ID, HIGHLINE_RULE, COMMONLINE_RULE, APPOINT_WEEK, 
+      APPOINT_DAY, APPOINT_PERIOD, USE_STATUS)
+    values (#{cmTrainRuleId}, #{cmTrainId}, #{highlineRule}, #{commonlineRule}, #{appointWeek}, 
+      #{appointDay}, #{appointPeriod}, #{useStatus})
+  </insert>
+  
+  
+  <select id="getTCmTrainRule" resultMap="BaseResultMap" parameterType="java.lang.String">
+     select 
+    <include refid="Base_Column_List" />
+    from T_CM_TRAIN_RULE
+    where CM_TRAIN_ID = #{cmTrainId}
+  </select>
+  
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmTrainRule" >
+    insert into T_CM_TRAIN_RULE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmTrainRuleId != null" >
+        CM_TRAIN_RULE_ID,
+      </if>
+      <if test="cmTrainId != null" >
+        CM_TRAIN_ID,
+      </if>
+      <if test="highlineRule != null" >
+        HIGHLINE_RULE,
+      </if>
+      <if test="commonlineRule != null" >
+        COMMONLINE_RULE,
+      </if>
+      <if test="appointWeek != null" >
+        APPOINT_WEEK,
+      </if>
+      <if test="appointDay != null" >
+        APPOINT_DAY,
+      </if>
+      <if test="appointPeriod != null" >
+        APPOINT_PERIOD,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmTrainRuleId != null" >
+        #{cmTrainRuleId},
+      </if>
+      <if test="cmTrainId != null" >
+        #{cmTrainId},
+      </if>
+      <if test="highlineRule != null" >
+        #{highlineRule},
+      </if>
+      <if test="commonlineRule != null" >
+        #{commonlineRule},
+      </if>
+      <if test="appointWeek != null" >
+        #{appointWeek},
+      </if>
+      <if test="appointDay != null" >
+        #{appointDay},
+      </if>
+      <if test="appointPeriod != null" >
+        #{appointPeriod},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmTrainRule" >
+    update T_CM_TRAIN_RULE
+    <set >
+      <if test="cmTrainId != null" >
+        CM_TRAIN_ID = #{cmTrainId},
+      </if>
+      <if test="highlineRule != null" >
+        HIGHLINE_RULE = #{highlineRule},
+      </if>
+      <if test="commonlineRule != null" >
+        COMMONLINE_RULE = #{commonlineRule},
+      </if>
+      <if test="appointWeek != null" >
+        APPOINT_WEEK = #{appointWeek},
+      </if>
+      <if test="appointDay != null" >
+        APPOINT_DAY = #{appointDay},
+      </if>
+      <if test="appointPeriod != null" >
+        APPOINT_PERIOD = #{appointPeriod},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+    </set>
+    where CM_TRAIN_RULE_ID = #{cmTrainRuleId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmTrainRule" >
+    update T_CM_TRAIN_RULE
+    set CM_TRAIN_ID = #{cmTrainId},
+      HIGHLINE_RULE = #{highlineRule},
+      COMMONLINE_RULE = #{commonlineRule},
+      APPOINT_WEEK = #{appointWeek},
+      APPOINT_DAY = #{appointDay},
+      APPOINT_PERIOD = #{appointPeriod},
+      USE_STATUS = #{useStatus}
+    where CM_TRAIN_RULE_ID = #{cmTrainRuleId}
+  </update>
+</mapper>

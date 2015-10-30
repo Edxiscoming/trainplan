@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="crossDictDao">
+
+   <select id="findCrossDictList" resultType="org.railway.com.trainplan.entity.CrossDictInfo">
+		SELECT P.*
+		FROM 
+		(
+			SELECT M.*, ROWNUM NUM
+			FROM (
+					SELECT
+					  A.DRAW_GRAPH_ID   drawGrapId,
+					  A.BASE_CHART_ID   baseChartId,
+					  A.BASE_CHART_NAME baseChartName,
+					  A.BASE_CROSS_ID   baseCrossId,
+					  A.CROSS_NAME      crossName,
+					  B.TOKEN_VEH_BUREAU	ljjm,
+					  (SELECT O.LJJC from jhpt_jcsj.ljzd O WHERE O.LJPYM = B.TOKEN_VEH_BUREAU) ljjc
+					FROM DRAW_GRAPH A 
+					INNER JOIN BASE_CROSS B
+					  	ON A.BASE_CROSS_ID = B.BASE_CROSS_ID
+				   		AND A.BASE_CHART_ID = #{baseChartId}
+				   	
+			   			<if test="crossName != null">
+			            	AND A.CROSS_NAME LIKE '%${crossName}%'
+			        	</if>
+			   			<if test="crossName != null">
+			            	AND B.TOKEN_VEH_BUREAU = #{tokenVehBureau}	<!-- 担当局 -->
+			        	</if>
+			)M
+		) P
+		WHERE P.NUM>=#{rownumstart} AND P.NUM &lt;=#{rownumend}
+   </select>
+
+    <select id="findCrossDictList_COUNT" resultType="java.lang.Integer">
+    	SELECT
+		  COUNT(A.DRAW_GRAPH_ID)
+		  
+		FROM DRAW_GRAPH A 
+		INNER JOIN BASE_CROSS B
+		  	ON A.BASE_CROSS_ID = B.BASE_CROSS_ID
+	   		AND A.BASE_CHART_ID = #{baseChartId}
+	   	
+   			<if test="crossName != null">
+            	AND A.CROSS_NAME LIKE '%${crossName}%'
+        	</if>
+   			<if test="crossName != null">
+            	AND B.TOKEN_VEH_BUREAU = #{tokenVehBureau}	<!-- 担当局 -->
+        	</if>
+    	
+    </select>
+
+
+    <insert id="addCrossDictInfo" parameterType="org.railway.com.trainplan.entity.CrossDictInfo">
+        INSERT INTO DRAW_GRAPH( DRAW_GRAPH_ID,
+								BASE_CHART_ID,
+								BASE_CHART_NAME,
+								BASE_CROSS_ID,
+								CROSS_NAME,
+								CREAT_PEOPLE,
+								CREAT_PEOPLE_ORG,
+								CREAT_TIME,
+								CHECK_PEOPLE,
+								CHECK_PEOPLE_ORG,
+								CHECK_TIME) 
+								VALUES 
+								(
+					            #{drawGrapId, jdbcType=VARCHAR}, 
+					            #{baseChartId, jdbcType=VARCHAR},
+					            #{baseChartName, jdbcType=VARCHAR},
+					            #{baseCrossId, jdbcType=VARCHAR},
+					            #{crossName, jdbcType=VARCHAR}, 
+					            #{createPeople, jdbcType=VARCHAR},
+					            #{createPeopleOrg, jdbcType=VARCHAR}, 
+					            sysdate,
+					            #{checkPeople, jdbcType=VARCHAR}, 
+					            #{checkPeopleOrg, jdbcType=VARCHAR},
+					            sysdate)
+       
+    </insert>
+    
+    
+   <insert id="batchAddCrossDictStnInfo"  parameterType="java.util.Map">
+
+        INSERT INTO DRAW_GRAPH_STN
+        (
+          DRAW_GRAPH_STN_ID,
+		  DRAW_GRAPH_ID,
+		  STN_SORT,
+		  STN_NAME,
+		  HEIGHT_DETAIL,
+		  HEIGHT_SIMPLE,
+		  STN_TYPE
+        )
+        (
+        <foreach collection="trainCrossList" item="item" index="index"
+                 separator="UNION ALL">
+            <![CDATA[
+	       SELECT
+	 
+	       #{item.drawGrapStnId,jdbcType=VARCHAR},
+	       #{item.drawGrapId,jdbcType=VARCHAR},
+	       #{item.stnSort,jdbcType=NUMERIC},
+	       #{item.stnName,jdbcType=VARCHAR},
+	       #{item.heightDetail,jdbcType=NUMERIC},
+	       #{item.heightSimple,jdbcType=NUMERIC},
+	       #{item.stnType,jdbcType=VARCHAR}
+	       from dual
+	         ]]>
+        </foreach>
+
+        )
+
+    </insert>
+    
+    
+    <select id="getDrawGraphForBaseCrossId" parameterType="string" resultType="org.railway.com.trainplan.entity.CrossDictInfo">
+    
+    SELECT 
+	  DRAW_GRAPH_ID AS drawGrapId,
+	  BASE_CHART_ID AS baseChartId,
+	  BASE_CHART_NAME AS baseChartName,
+	  BASE_CROSS_ID AS baseCrossId,
+	  CROSS_NAME AS crossName,
+	  CREAT_PEOPLE AS createPeople,
+	  CREAT_PEOPLE_ORG AS createPeopleOrg,
+	  TO_CHAR(CREAT_TIME,'yyyy-MM-dd hh24:mi:SS') AS createTime,
+	  CHECK_PEOPLE AS checkPeople,
+	  CHECK_PEOPLE_ORG AS checkPeopleOrg,
+	  TO_CHAR(CHECK_TIME,'yyyy-MM-dd hh24:mi:SS') AS checkTime
+   FROM DRAW_GRAPH WHERE BASE_CROSS_ID = #{baseCrossId}
+  </select>
+  
+  
+  <select id="getCrossDictStnForChartId" parameterType="map" resultType="org.railway.com.trainplan.entity.CrossDictStnInfo">
+  
+  SELECT 
+
+	B.DRAW_GRAPH_STN_ID AS drawGrapStnId,
+	B.DRAW_GRAPH_ID AS drawGrapId,
+	B.STN_SORT AS stnSort,
+	B.STN_NAME AS stnName,
+	B.HEIGHT_DETAIL AS heightDetail,
+	B.HEIGHT_SIMPLE AS heightSimple,
+	B.STN_TYPE AS stnType
+
+   FROM DRAW_GRAPH A,DRAW_GRAPH_STN B 
+   WHERE A.DRAW_GRAPH_ID = B.DRAW_GRAPH_ID AND A.CROSS_NAME=#{crossName} AND A.BASE_CHART_ID=#{chartId} ORDER BY STN_SORT
+  
+  </select>
+  
+  
+    <select id="getCrossDictStnByChartId" parameterType="map" resultType="org.railway.com.trainplan.entity.CrossDictStnInfo">
+  
+  SELECT 
+
+	B.DRAW_GRAPH_STN_ID AS drawGrapStnId,
+	B.DRAW_GRAPH_ID AS drawGrapId,
+	B.STN_SORT AS stnSort,
+	B.STN_NAME AS stnName,
+	B.HEIGHT_DETAIL AS heightDetail,
+	B.HEIGHT_SIMPLE AS heightSimple,
+	B.STN_TYPE AS stnType
+
+   FROM DRAW_GRAPH A,DRAW_GRAPH_STN B 
+   WHERE A.DRAW_GRAPH_ID = B.DRAW_GRAPH_ID AND A.CROSS_NAME=#{crossName} AND A.BASE_CHART_ID=#{chartId} ORDER BY STN_SORT
+  
+  </select>
+  
+      <select id="getCrossDictStnByChartIdVehicle" parameterType="map" resultType="org.railway.com.trainplan.entity.CrossDictStnInfo">
+  
+  SELECT 
+
+	B.DRAW_GRAPH_STN_ID AS drawGrapStnId,
+	B.DRAW_GRAPH_ID AS drawGrapId,
+	B.STN_SORT AS stnSort,
+	B.STN_NAME AS stnName,
+	B.HEIGHT_DETAIL AS heightDetail,
+	B.HEIGHT_SIMPLE AS heightSimple,
+	B.STN_TYPE AS stnType
+
+   FROM DRAW_GRAPH A,DRAW_GRAPH_STN B 
+   WHERE A.DRAW_GRAPH_ID = B.DRAW_GRAPH_ID AND A.CROSS_NAME=#{crossName} AND A.BASE_CHART_ID=#{chartId} ORDER BY STN_SORT
+  
+  </select>
+  
+  
+  <select id="getCrossDictStnByChartIdVehicleBy2" parameterType="map" resultType="org.railway.com.trainplan.entity.CrossDictStnInfo">
+  
+  SELECT 
+
+	B.DRAW_GRAPH_STN_ID AS drawGrapStnId,
+	B.DRAW_GRAPH_ID AS drawGrapId,
+	B.STN_SORT AS stnSort,
+	B.STN_NAME AS stnName,
+	B.HEIGHT_DETAIL AS heightDetail,
+	B.HEIGHT_SIMPLE AS heightSimple,
+	B.STN_TYPE AS stnType
+
+   FROM DRAW_GRAPH A,DRAW_GRAPH_STN B 
+   WHERE A.DRAW_GRAPH_ID = B.DRAW_GRAPH_ID AND A.CROSS_NAME=#{crossName} AND A.BASE_CHART_ID=#{chartId} ORDER BY STN_SORT
+  
+  </select>
+  
+  <select id="getCrossDictStnByChartIdVehicleSearch" parameterType="map" resultType="org.railway.com.trainplan.entity.CrossDictStnInfo">
+  
+  SELECT 
+
+	B.DRAW_GRAPH_STN_ID AS drawGrapStnId,
+	B.DRAW_GRAPH_ID AS drawGrapId,
+	B.STN_SORT AS stnSort,
+	B.STN_NAME AS stnName,
+	B.HEIGHT_DETAIL AS heightDetail,
+	B.HEIGHT_SIMPLE AS heightSimple,
+	B.STN_TYPE AS stnType
+
+   FROM DRAW_GRAPH A,DRAW_GRAPH_STN B 
+   WHERE A.DRAW_GRAPH_ID = B.DRAW_GRAPH_ID AND A.CROSS_NAME=#{crossName} AND A.BASE_CHART_ID=#{chartId} ORDER BY STN_SORT
+  
+  </select>
+  
+  <select id="getCrossDictStnForUnitCorssId" parameterType="string" resultType="org.railway.com.trainplan.entity.CrossDictStnInfo">
+     select  C.draw_graph_stn_id as drawGraphStnId,
+             C.draw_graph_id as drawGraphId,
+             C.stn_sort as stnSort,
+             C.height_detail as heightDetail,
+             C.HEIGHT_SIMPLE AS heightSimple,
+             C.stn_type as stnType,
+             C.stn_name as stnName
+     from unit_cross A,draw_graph B,draw_graph_stn C 
+     where A.base_chart_id = B.base_chart_id and A.cross_name = B.cross_name and B.draw_graph_id = C.draw_graph_id  and A.unit_cross_id=#{unitCrossId}  order by stn_sort
+   
+   </select>
+  <select id="getCrossDictStnByDrawGraphId" parameterType="string" resultType="org.railway.com.trainplan.entity.CrossDictStnInfo">
+     select  C.draw_graph_stn_id as drawGraphStnId,
+             C.draw_graph_id as drawGraphId,
+             C.stn_sort as stnSort,
+             C.height_detail as heightDetail,
+             C.HEIGHT_SIMPLE AS heightSimple,
+             C.stn_type as stnType,
+             C.stn_name as stnName
+     from draw_graph_stn C 
+     where  C.draw_graph_id =#{drawGraphId}  order by stn_sort
+   
+   </select>
+   <update id="updateDrawGraphStnByDrawGraphStnId" parameterType="map">
+   		update draw_graph_stn
+   		set
+   		STN_SORT=#{stnSort},
+   		HEIGHT_DETAIL=#{heightDetail}
+   		where DRAW_GRAPH_STN_ID=#{drawGraphStnId}
+   </update>
+   <delete id="deleteCrossDictStnByDrawGraphId" parameterType="string">
+   		delete from draw_graph_stn where draw_graph_id = #{drawGraphId}
+   </delete>
+   <delete id="deleteCrossDictByDrawGraphId" parameterType="string">
+   		delete from draw_graph where draw_graph_id = #{drawGraphId}
+   </delete>
+</mapper>

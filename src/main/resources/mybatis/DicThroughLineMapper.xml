@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="dicThroughLineDao">
+
+  <resultMap id="dicThroughLine" type="org.railway.com.trainplan.entity.DicThroughLine">
+	        <id column="THROUGH_LINE_ID" property="throughLineLineId"/>
+	        <result column="THROUGH_LINE_NAME" property="throughLineName"/>
+	        <result column="BUREAU" property="bureau"/>
+	        <result column="NOTE" property="note"/>
+	         <result column="HIGHLINE_FLAG" property="highline_flag"/>
+	        
+    </resultMap>
+
+      <select id="getDicThroughLine"  parameterType="map" resultType="org.railway.com.trainplan.entity.DicThroughLine">
+        select THROUGH_LINE_ID as throughLineLineId ,THROUGH_LINE_NAME as throughLineName ,BUREAU as bureau,NOTE as note,HIGHLINE_FLAG as highline_flag
+        from DIC_THROUGH_LINE where bureau=#{bureau,jdbcType=VARCHAR} order by throughLineName
+    </select> 
+ 
+       <select id="getThroughLineName"  parameterType="map" resultType="org.railway.com.trainplan.entity.DicThroughLine">
+        select THROUGH_LINE_ID as throughLineLineId ,THROUGH_LINE_NAME as throughLineName ,BUREAU as bureau,NOTE as note,HIGHLINE_FLAG as highline_flag
+        from DIC_THROUGH_LINE where bureau=#{bureau,jdbcType=VARCHAR} order by throughLineName
+    </select> 
+    
+    <select id="isExistDicThroughLine"  parameterType="map" resultType="org.railway.com.trainplan.entity.DicThroughLine">
+        select THROUGH_LINE_ID as throughLineLineId ,THROUGH_LINE_NAME as throughLineName ,BUREAU as bureau,NOTE as note,HIGHLINE_FLAG as highline_flag
+        from DIC_THROUGH_LINE where THROUGH_LINE_NAME=#{throughLineName,jdbcType=VARCHAR} and bureau=#{bureau,jdbcType=VARCHAR}
+    </select> 
+ 
+ 
+   <insert id="insertDicThroughLine"  parameterType="org.railway.com.trainplan.entity.DicThroughLine">
+     insert into DIC_THROUGH_LINE(
+            THROUGH_LINE_ID,
+            THROUGH_LINE_NAME,
+            BUREAU,
+			NOTE,
+			HIGHLINE_FLAG
+		)values(
+		    #{throughLineLineId, jdbcType=VARCHAR},
+		    #{throughLineName, jdbcType=VARCHAR},
+		    #{bureau, jdbcType=VARCHAR},
+		    #{note, jdbcType=VARCHAR},
+		    #{highline_flag, jdbcType=VARCHAR}
+		)
+		
+    
+    </insert>
+
+  <delete id="deleteDicThroughLine"  parameterType="map">
+  
+    DELETE FROM DIC_THROUGH_LINE WHERE THROUGH_LINE_ID = #{dicIds, jdbcType=VARCHAR} 
+    
+  </delete>
+ 
+ 
+ 
+	
+</mapper>

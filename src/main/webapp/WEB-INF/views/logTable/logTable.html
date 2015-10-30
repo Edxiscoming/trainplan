@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>对数表</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html;charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+ 	<link rel="stylesheet" type="text/css" href="../../../assets/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/logTable/logTable.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/logTable/mainCross.css">
+	<script type="text/javascript" src="../../../assets/js/jquery.js"></script>
+	<script type="text/javascript" src="../../../assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../../assets/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../assets/js/logTable/logTable.js"></script>
+  </head>
+  
+  <body class="container-fluid">
+    <div class="div-header row">
+    <div class="col-xs-12">
+  		<span class="pull-left padding-5" style="margin-left: 10px;">方案：</span>
+		<select class="form-control input-sm pull-left"
+			style="width: 280px;" id="cmVersionId">
+			<option value="a47c4b91-5a8f-48e6-abb0-bd9cb4c0ecf3">20150520__0519导入</option>
+			<option value="a47c4b91-5a8f-48e6-abb0-bd9cb4c0ecf3">20150520__0505导入</option>
+			<option value="a47c4b91-5a8f-48e6-abb0-bd9cb4c0ecf3">20150320__0317导入</option>
+			<option value="a47c4b91-5a8f-48e6-abb0-bd9cb4c0ecf3">20150204__2月春运图_0204导入</option>
+			<option value="a47c4b91-5a8f-48e6-abb0-bd9cb4c0ecf3">20150201__2月春运图_0131导入</option>
+		</select>
+		<span class="pull-left padding-5" style="margin-left: 10px;">担当局：</span>
+		<select class="form-control pull-left input-sm" id="headerBureau" style="width: 60px">
+             <option value=""></option>
+             <option value="哈">哈</option>
+             <option value="沈">沈</option>
+             <option value="京">京</option>
+             <option value="太">太</option>
+             <option value="呼">呼</option>
+             <option value="郑">郑</option>
+             <option value="武">武</option>
+             <option value="西">西</option>
+             <option value="济">济</option>
+             <option value="上">上</option>
+             <option value="南">南</option>
+             <option value="广">广</option>
+             <option value="宁">宁</option>
+             <option value="成">成</option>
+             <option value="昆">昆</option>
+             <option value="兰">兰</option>
+             <option value="乌">乌</option>
+             <option value="青">青</option>
+         </select>
+         <div class="pull-right">
+         	<span class="pull-left padding-5">车次：</span>
+         	<input type="text" id="trainNbr" class="input-sm form-control pull-left" style="width: 200px;">
+			<!-- <span class="pull-left padding-5" style="margin-left: 10px;">等级：</span>
+			<select class="form-control input-sm pull-left" id="levelSelect" style="width: 100px;" >
+			<option value="a47c4b91-5a8f-48e6-abb0-bd9cb4c0ecf3">全部0</option>
+			<option value="a47c4b91-5a8f-48e6-abb0-bd9cb4c0ecf3">全部1</option>
+			<option value="a47c4b91-5a8f-48e6-abb0-bd9cb4c0ecf3">全部2</option>
+		</select> -->
+			<a type="button" class="btn btn-default blueBtn btn-sm pull-left"
+					style="margin-left: 20px;" onclick="searchCross();">查询</a>
+         </div>   
+  	</div>
+  	<div class="col-xs-12" style="margin-top:15px;">
+  		<div class="btn-group pull-left" style="margin-left:15px;">
+	    	<button type="button" class="btn btn-default active"  value="0" onclick="searchCross(this.value);">全部</button>
+	        <button type="button" class="btn btn-default"  value="1" onclick="searchCross(this.value);">高铁/动车</button>
+	        <button type="button" class="btn btn-default" value="2" onclick="searchCross(this.value);">普速</button>
+		</div>
+		<div class="pull-right">
+			<a type="button" class="btn btn-default blueBtn btn-sm pull-left" style="margin-left: 20px;" onclick="openimportExlDlg">导入对数表</a>
+			<a type="button" class="btn btn-default greenBtn btn-sm pull-left" style="margin-left: 20px;" onclick="crossManage(0)">新建交路</a>
+			<a type="button" class="btn btn-default blueBtn btn-sm pull-left" style="margin-left: 20px;" onclick="crossManage(1)">管理交路</a>
+			<a type="button" class="btn btn-default redBtn btn-sm pull-left" style="margin-left: 20px;" onclick="">批量删除</a>
+		</div>
+  	</div>
+    </div>
+  	
+     <div class="row" style="margin-top: 15px;">
+        <div class="col-xs-12 left" style="height:800px;float:left;padding-left:30px;border:1px solid;">
+            <table id="crossTable">
+            	<tr onclick="showSlideBlock();"><td>122</td><td>333</td><td>333</td><td>4545</td></tr>
+            	<tr><td>122</td><td>333</td><td>333</td><td>4545</td></tr>
+            	<tr><td>122</td><td>333</td><td>333</td><td>4545</td></tr>
+            	<tr><td>122</td><td>333</td><td>333</td><td>4545</td></tr>
+            	<tr><td>122</td><td>333</td><td>333</td><td>4545</td></tr>
+            </table>
+        </div>
+        <div class="pull-right slideblock " id="trainBlock" style="height: 800px;width:400px;overflow-y: auto;margin-right: 15px;float:right;display:none;z-index:1000; position:absolute;top:120px;right:10px;">
+        <section class="panel panel-default">
+                <div style="height: 35px" class="panel-heading">
+                    <span> <span onclick="closeSlideBlock();" class="closeSlide">&gt;</span>对数表信息</span>
+                    <a class="btn btn-default blueBtn pull-right btn-xs" type="button" onclick="">
+                        取消 
+                    </a>
+                    <a class="btn btn-default greenBtn pull-right btn-xs" type="button" onclick="submitData()">
+                        保存 
+                    </a>
+                </div>
+                <div class="container-fluid" style="border: solid 1px #E0E0E0;">
+                    <form class="form-horizontal" role="form"  id="newCross">
+                   		<input name="trainId" id="trainId" type="hidden">
+                        <div style="padding-top:20px; padding-left:40px;border-width: 1px; border-color: rgb(204, 204, 204); border-style: none none dashed none; ">
+                            <div class="form-group">
+                                <label style="padding-left:28px;" class="control-label pull-left">
+                                    交路：
+                                </label>
+                                <div class="pull-left">
+                                    <input class="form-control input-sm inputColor" style="width: 170px;" name="crossName" id="plan_construction_input_trainNbr" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label style="padding-left:28px;" class="control-label pull-left">
+                                    车次：
+                                </label>
+                                <div class="pull-left">
+                                    <input class="form-control input-sm inputColor" style="width: 170px;" type="text" name="trainName" id="trainName">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label pull-left">
+                                    运行区段：
+                                </label>
+                                <div class="pull-left">
+                                    <input class="form-control input-sm color-27bdaf" style="width: 170px;" type="text" name="crossSection" id="crossSection">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div style="border-width: 1px; border-color: rgb(204, 204, 204); border-style: dashed none; padding: 20px 40px;">
+                             <div class="form-group">
+                                <label style="padding-left:28px;" class="control-label pull-left">
+                                    等级：
+                                </label>
+                                <div class="pull-left">
+                                    <input style="width: 170px;" class="form-control input-sm" type="text" name="crossLevel" id="crossLevel">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label style="padding-left:28px;" class="control-label pull-left">
+                                    对数：
+                                </label>
+                                <div class="pull-left">
+                                    <input style="width: 170px;" class="form-control input-sm" value="1" type="text" name="pairNbr" id="pairNbr">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="padding-left:28px;" class="control-label pull-left">
+                                    担当：
+                                </label>
+                                <div class="pull-left">
+                                    <input class="form-control input-sm inputColor" style="width: 170px;" value="成" type="text" name="tokenVehBureau" id="tokenVehBureau">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label style="padding-left:28px;" class="control-label pull-left">
+                                    经由：
+                                </label>
+                                <div class="pull-left">
+                                    <input class="form-control input-sm inputColor" style="width: 170px;"  type="text" name="throughLine" id="throughLine">
+                                </div>
+
+                            </div>
+                            
+                        </div>
+                        <div style="border-width: 1px; border-color: rgb(204, 204, 204); border-style: dashed none; padding: 20px 40px;">
+                            <div class="form-group" style="padding:10px">
+                                <span style="margin:4px; font-weight:bold; font-size:16px;">开行规律：</span>
+                            </div>
+                            <div class="form-group">
+                                <label style="padding-left:30px;" class="control-label pull-left">
+                                    类型：
+                                </label>
+                                <div class="pull-left">
+                                    <select style="width: 170px" class="form-control input-sm" name="locoType" id="locoType"><option value="0">0:普速</option><option value="1">1:高铁</option><option value="2">2:混合</option></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="padding-left:30px;" class="control-label pull-left">
+                                    数值：
+                                </label>
+                                <div class="pull-left">
+                                    <input class="form-control inputColor" style="width: 170px;" value="1"  type="text" name="" id="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label pull-left">
+                                    交替车次：
+                                </label>
+                                <div class="pull-left">
+                                    <input class="form-control input-sm inputColor" style="width: 170px;" value="K15" type="text" name="alternateTrainNbr" id="alternateTrainNbr">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label pull-left">
+                                    交替日期：
+                                </label>
+                                <div class="pull-left">
+                                    <input class="form-control input-sm inputColor" style="width: 170px;" value="2015-09-21" type="text" name="alternateDate" id="alternateDate">
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div style="padding-top:10px; padding-left:15px;">
+                            <label style="padding-bottom:5px; padding-left:37px;" class="pull-left">
+                                备注：
+                            </label>
+                                <textarea style="width: 170px;" rows="4" class="form-control input-sm color-27bdaf" name="note" id="note"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+        <div class="pull-right slideblock " id="crossBlock" style="height: 800px;width:400px;overflow-y: auto;margin-right: 15px;float:right;display:none;z-index:999; position:absolute;top:120px;right:10px;">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="height:40px;">
+                    <div style="margin-top:5px" class="pull-left"> <span onclick="closeSlideBlock();" class="closeSlide">&gt;</span> 交路信息</div>
+                    <a type="button" class="btn btn-default blueBtn btn-sm pull-right closeBlock" style="margin-left: 20px; margin-top:-5px;">取消</a>
+                    <a class="btn btn-default greenBtn btn-sm pull-right" type="button" style="margin-left: 20px; margin-top:-5px;">保存</a>
+                </div>
+                <div class="panel-body" style="height:700px;">
+                    <div class="row">
+                        <label class="control-label pull-left" style="margin-left:28px; margin-top:4px;">
+                            交路：
+                        </label>
+                        <div class="pull-left">
+                            <input class="form-control inputColor input-sm" style="width: 250px; margin-left:5px;" value="K15-K16" id="cross" disabled>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:10px;">
+                        <button class="btn btn-default btn-sm" style="margin-left:77px;" onclick="openAddTrainDlg();">新增车次</button>
+                    </div>
+                    <DIV style="BORDER-TOP: #00686b 1px dashed; OVERFLOW: hidden; HEIGHT: 1px; margin-top:20px; margin-bottom:20px;"></DIV>
+                    <ul id="numberDetail">
+                        <li>
+                            <div class="row">
+                                <label class="control-label pull-left">车次<span>1</span>：OG112/3</label>
+                                <button class="btn btn-default btn-xs pull-right" style="margin-right:20px;">下移</button>
+                                <button class="btn btn-default btn-xs pull-right" style="margin-right:10px;" disabled>上移</button>
+                                <button class="btn btn-default btn-xs redBtn pull-right" style="margin-right:45px;">删除</button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <label class="control-label pull-left">车次<span>2</span>：OG112/3</label>
+                                <button class="btn btn-default btn-xs pull-right" style="margin-right:20px;">下移</button>
+                                <button class="btn btn-default btn-xs pull-right" style="margin-right:10px;">上移</button>
+                                <button class="btn btn-default btn-xs redBtn pull-right" style="margin-right:45px;">删除</button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <label class="control-label pull-left">车次<span>3</span>：OG112/3</label>
+                                <button class="btn btn-default btn-xs pull-right" style="margin-right:20px;">下移</button>
+                                <button class="btn btn-default btn-xs pull-right" style="margin-right:10px;">上移</button>
+                                <button class="btn btn-default btn-xs redBtn pull-right" style="margin-right:45px;">删除</button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <label class="control-label pull-left">车次<span>4</span>：OG112/3</label>
+                                <button class="btn btn-default btn-xs pull-right" style="margin-right:20px;" disabled>下移</button>
+                                <button class="btn btn-default btn-xs pull-right" style="margin-right:10px;">上移</button>
+                                <button class="btn btn-default btn-xs redBtn pull-right" style="margin-right:45px;">删除</button>
+                            </div>
+                        </li>
+                    </ul>
+                    <DIV style="BORDER-TOP: #00686b 1px dashed; OVERFLOW: hidden; HEIGHT: 1px; margin-top:20px; margin-bottom:20px;"></DIV>
+            	</div>
+     		</div>
+     	</div>
+     </div>
+     <!-- s -->
+     <div id="shadowBlock" style="width:100%;height:100%;z-index:100;background:#ccc;opacity:0.40;display:none;position:absolute;top:0px;left:0px;"></div>
+     <!-- 导入对数表 -->
+     <div id="importExl" title="导入对数表" style="display: none;">
+    	<img id="loading" src="<%=basePath %>/assets/images/loading.gif" style="display:none;"> 
+        <form class="form-horizontal" style="margin-left: 30px;">
+            <div class="form-group">
+                <span class="pull-left padding-5">方案：</span>
+                <select class="form-control input-sm pull-left" style="width: 280px;" id="cmVersionId_dialog">
+                    <option class="templatePlan" style="display:none;"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input id="fileToUpload" type="file" size="45" name="fileToUpload"  name="fileName" accept=".xls,.xlsx"/>
+            </div>
+            <div class="form-group">
+                <a type="button" id="upload_btn" onclick="uploadFile()" class="btn btn-default btn-default blueBtn">导入</a>
+            </div>
+        </form>
+
+    </div>
+    <!-- 查询车次 -->
+     <div id="addTrainDlg" title="导入对数表" style="display: none;">
+    	<img id="loading" src="<%=basePath %>/assets/images/loading.gif" style="display:none;"> 
+    	<input type="hidden" value="" id="trainAdded">
+        <div class="" style="margin-left: 30px; margin-top:15px;">
+            <div class="form-group">
+            	<span class="pull-left padding-5">车次：</span>
+                <input id="trainName" type="text" name="trainName" class="form-control input-sm pull-left" style="width:150px; margin-right:30px;"/>
+                <a type="button"  onclick="searchTrain()" class="btn btn-default btn-default blueBtn">查询</a>
+            </div>
+            <ul id="result" class="container-fluid">
+           		<li class="row"><div class="col-xs-3">车次</div><div class="col-xs-3">始发终到</div><div class="col-xs-3">时刻</div></li>
+           		<li class="row"><div class="col-xs-3">D12</div><div class="col-xs-3">上海~北京</div><div class="col-xs-3">00:20——06:00</div></li>
+           		<li class="row"><div class="col-xs-3">D122</div><div class="col-xs-3">上海~北京</div><div class="col-xs-3">00:20——06:00</div></li>
+           	</ul>
+            <div class="form-group">
+                <a type="button"  onclick="confirmedTrain()" class="btn btn-default btn-default blueBtn">确定</a>
+                <a type="button"  onclick="canselSelect()" class="btn btn-default btn-default">取消</a>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.UnitCrossTrainDao">
+
+    <resultMap id="unitCrossTrain" type="org.railway.com.trainplan.entity.UnitCrossTrain">
+        <id column="UNIT_CROSS_TRAIN_ID" property="unitCrossTrainId"/>
+        <result column="UNIT_CROSS_ID" property="unitCrossId"/>
+        <result column="GROUP_SERIAL_NBR" property="groupSerialNbr"/>
+        <result column="GROUP_GAP" property="groupGap"/>
+        <result column="MARSHALLING_NAME" property="marshallingName"/>
+        <result column="TRAIN_SORT" property="trainSort"/>
+        <result column="TRAIN_NBR" property="trainNbr"/>
+        <result column="BASE_TRAIN_ID" property="baseTrainId"/>
+        <result column="START_STN" property="startStn"/>
+        <result column="UCT_START_BUREAU" property="startBureauCode"/>
+        <result column="END_STN" property="endStn"/>
+        <result column="END_BUREAU" property="endBureauCode"/>
+        <result column="DAY_GAP" property="dayGap"/>
+        <result column="ALTERNATE_TRAIN_NBR" property="alternateTrainNbr"/>
+        <result column="ALTERNATE_TIME" property="alternateDateTime"/>
+        <result column="UCT_SPARE_FLAG" property="spareFlag"/>
+        <result column="SPARE_APPLY_FLAG" property="spareApplyFlag"/>
+        <result column="UCT_HIGHLINE_FLAG" property="highLineFlag"/>
+        <result column="UCT_HIGHLINE_RULE" property="highLineRule"/>
+        <result column="UCT_COMMONLINE_RULE" property="commonLineRule"/>
+        <result column="UCT_APPOINT_WEEK" property="appointWeek"/>
+        <result column="UCT_APPOINT_DAY" property="appointDay"/>
+        <result column="RUN_DATE" property="runDate"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="TRAIN_SORT_BASE" property="trainSortBase"/>
+        <!--<association property="unitCross" resultMap="org.railway.com.trainplan.repository.mybatis.UnitCrossDao.unitCross"/>-->
+    </resultMap>
+    
+    
+<!--     <select id="getUnitCrossTrainByMap" parameterType="map" resultMap="unitCrossTrain">
+	  select a.unit_cross_id, a.start_stn, a.end_stn,a.train_nbr,a.train_sort,a.train_sort_base
+	    from unit_cross_train a
+	   where 1 = 1
+	     and a.group_serial_nbr = 1
+		<if test="unit_cross_id != null">
+			and a.unit_cross_id = #{unit_cross_id}
+		</if> 
+	   order by a.unit_cross_id, a.train_sort_base
+    </select> -->
+    
+        <select id="getUnitCrossTrainByMap" parameterType="map" resultMap="unitCrossTrain">
+	  select a.CM_CROSS_ID as unit_cross_id, 
+	  a.start_stn, a.end_stn,a.train_nbr,a.train_sort,
+	  a.train_sort as train_sort_base
+	    from T_CM_TRAIN a
+	   where 1 = 1
+	   and a.CM_CROSS_ID = #{unit_cross_id}
+	   <!--   and a.group_serial_nbr = 1
+		<if test="unit_cross_id != null">
+			and a.unit_cross_id = #{unit_cross_id}
+		</if>  -->
+	   order by a.cm_cross_id, a.train_sort
+    </select>
+    
+</mapper> 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.MTrainLineDao">
+
+
+	<select id="selectMTrainLineCount" parameterType="string"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM JHPT_JBT.M_TRAINLINE WHERE ID =
+		#{MTrainLineId}
+	</select>
+
+	<select id="selectMTrainLineItemCount" parameterType="string"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM JHPT_JBT.M_TRAINLINE_ITEM WHERE
+		PARENT_ID =
+		#{MTrainLineId}
+	</select>
+
+	<delete id="deleteMTrainLineByMTrainLineId" parameterType="string">
+		DELETE FROM JHPT_JBT.M_TRAINLINE WHERE ID = #{MTrainLineId}
+	</delete>
+
+	<delete id="deleteMTrainLineItemByMTrainLineId" parameterType="string">
+		DELETE FROM JHPT_JBT.M_TRAINLINE_ITEM WHERE PARENT_ID =
+		#{MTrainLineId}
+	</delete>
+
+	<delete id="deleteMTrainLineByCmdId" parameterType="map">
+		delete from jhpt_jbt.m_trainline
+		where
+		id in (
+		select b.plan_train_id from plan_train b
+		where (
+		b.tel_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+		or b.cmd_train_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+		)
+		)
+	</delete>
+
+</mapper>

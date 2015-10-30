@@ -1,0 +1,52 @@
+
+@CHARSET "UTF-8";
+ul {
+	list-style: none;
+}
+#numberDetail li {
+	margin-top: 10px;
+	margin-left: 15px;
+}
+.padding-5{
+    padding:5px 0px;
+}
+.margin-top-5{
+    margin-top:5px;
+}
+
+.div-header{
+    background: #f9f9f9; border-bottom: solid 1px #E0E0E0;
+    padding: 15px 0px;
+}
+
+.closeSlide{
+	cursor: pointer;
+    color: darkgreen;
+    font-weight: 900;
+    margin-right: 10px;
+}
+
+#numberDetail li:first-child button:nth-child(2),
+#numberDetail li:last-child button:last-child{
+	cursor:not-allowed;
+	color:#ccc;
+}
+.trainNo{
+	width: 100px;
+    display: inline-block;
+}
+
+.tab-pane label{
+	font-weight:normal;
+}
+
+#headerBureau{
+	margin-left: 5px;
+    margin-right: 10px;
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    color: blue;
+    font-weight: bold;
+}

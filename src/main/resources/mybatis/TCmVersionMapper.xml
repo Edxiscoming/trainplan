@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.comfirmedmap.repository.TCmVersionMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmVersion" >
+    <id column="CM_VERSION_ID" property="cmVersionId" jdbcType="VARCHAR" />
+    <result column="M_TEMPLATE_SCHEME" property="mTemplateScheme" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="PUBLISH_TIME" property="publishTime" jdbcType="VARCHAR" />
+    <result column="EXECUTION_TIME" property="executionTime" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CM_VERSION_ID, M_TEMPLATE_SCHEME, NAME, DESCRIPTION, PUBLISH_TIME, EXECUTION_TIME, 
+    USE_STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_VERSION
+    where CM_VERSION_ID = #{cmVersionId}
+  </select>
+  <select id="selectByMTemplateScheme" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_VERSION
+    where M_TEMPLATE_SCHEME = #{mTemplateScheme}
+  </select>
+  <select id="queryList" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_VERSION
+    order by EXECUTION_TIME desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CM_VERSION
+    where CM_VERSION_ID = #{cmVersionId}
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmVersion" >
+    insert into T_CM_VERSION (CM_VERSION_ID, M_TEMPLATE_SCHEME, NAME, DESCRIPTION, PUBLISH_TIME, 
+      EXECUTION_TIME, USE_STATUS)
+    values (#{cmVersionId}, #{mTemplateScheme}, #{name}, #{description}, #{publishTime}, 
+      #{executionTime}, #{useStatus})
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmVersion" >
+    insert into T_CM_VERSION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmVersionId != null" >
+        CM_VERSION_ID,
+      </if>
+      <if test="mTemplateScheme != null" >
+        M_TEMPLATE_SCHEME,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME,
+      </if>
+      <if test="executionTime != null" >
+        EXECUTION_TIME,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmVersionId != null" >
+        #{cmVersionId},
+      </if>
+      <if test="mTemplateScheme != null" >
+        #{mTemplateScheme},
+      </if>
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="description != null" >
+        #{description},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime},
+      </if>
+      <if test="executionTime != null" >
+        #{executionTime},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmVersion" >
+    update T_CM_VERSION
+    <set >
+      <if test="mTemplateScheme != null" >
+        M_TEMPLATE_SCHEME = #{mTemplateScheme},
+      </if>
+      <if test="name != null" >
+        NAME = #{name},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description},
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME = #{publishTime},
+      </if>
+      <if test="executionTime != null" >
+        EXECUTION_TIME = #{executionTime},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+    </set>
+    where CM_VERSION_ID = #{cmVersionId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmVersion" >
+    update T_CM_VERSION
+    set M_TEMPLATE_SCHEME = #{mTemplateScheme},
+      NAME = #{name},
+      DESCRIPTION = #{description},
+      PUBLISH_TIME = #{publishTime},
+      EXECUTION_TIME = #{executionTime},
+      USE_STATUS = #{useStatus}
+    where CM_VERSION_ID = #{cmVersionId}
+  </update>
+</mapper>

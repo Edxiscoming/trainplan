@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.comfirmedmap.repository.TPlanTrainMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanTrain" >
+    <id column="PLAN_TRAIN_ID" property="planTrainId" jdbcType="VARCHAR" />
+    <result column="CM_PHY_CROSS_ID" property="cmPhyCrossId" jdbcType="VARCHAR" />
+    <result column="TRAIN_SORT" property="trainSort" jdbcType="DECIMAL" />
+    <result column="RUN_DATE" property="runDate" jdbcType="VARCHAR" />
+    <result column="TRAIN_NBR" property="trainNbr" jdbcType="VARCHAR" />
+    <result column="START_BUREAU_ID" property="startBureauId" jdbcType="VARCHAR" />
+    <result column="START_BUREAU" property="startBureau" jdbcType="VARCHAR" />
+    <result column="START_BUREAU_FULL" property="startBureauFull" jdbcType="VARCHAR" />
+    <result column="START_STATION_STN_ID" property="startStationStnId" jdbcType="VARCHAR" />
+    <result column="START_STATION_STN_NAME" property="startStationStnName" jdbcType="VARCHAR" />
+    <result column="START_STN_ID" property="startStnId" jdbcType="VARCHAR" />
+    <result column="START_STN" property="startStn" jdbcType="VARCHAR" />
+    <result column="START_STN_TDCS_ID" property="startStnTdcsId" jdbcType="VARCHAR" />
+    <result column="START_STN_TDCS_NAME" property="startStnTdcsName" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
+    <result column="END_BUREAU_ID" property="endBureauId" jdbcType="VARCHAR" />
+    <result column="END_BUREAU" property="endBureau" jdbcType="VARCHAR" />
+    <result column="END_BUREAU_FULL" property="endBureauFull" jdbcType="VARCHAR" />
+    <result column="END_STATION_STN_ID" property="endStationStnId" jdbcType="VARCHAR" />
+    <result column="END_STATION_STN_NAME" property="endStationStnName" jdbcType="VARCHAR" />
+    <result column="END_STN_ID" property="endStnId" jdbcType="VARCHAR" />
+    <result column="END_STN" property="endStn" jdbcType="VARCHAR" />
+    <result column="END_STN_TDCS_ID" property="endStnTdcsId" jdbcType="VARCHAR" />
+    <result column="END_STN_TDCS_NAME" property="endStnTdcsName" jdbcType="VARCHAR" />
+    <result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
+    <result column="END_DAYS" property="endDays" jdbcType="VARCHAR" />
+    <result column="PASS_BUREAU" property="passBureau" jdbcType="VARCHAR" />
+    <result column="ROUTE_ID" property="routeId" jdbcType="VARCHAR" />
+    <result column="TRAIN_TYPE_ID" property="trainTypeId" jdbcType="VARCHAR" />
+    <result column="BUSINESS" property="business" jdbcType="VARCHAR" />
+    <result column="HIGHLINE_FLAG" property="highlineFlag" jdbcType="DECIMAL" />
+    <result column="IMPORTANT_FLAG" property="importantFlag" jdbcType="VARCHAR" />
+    <result column="TRAIN_SCOPE" property="trainScope" jdbcType="DECIMAL" />
+    <result column="TOKEN_VEH_BUREAU" property="tokenVehBureau" jdbcType="VARCHAR" />
+    <result column="TOKEN_PSG_BUREAU" property="tokenPsgBureau" jdbcType="VARCHAR" />
+    <result column="MARSHALLING_ID" property="marshallingId" jdbcType="VARCHAR" />
+    <result column="MARSHALLING_NAME" property="marshallingName" jdbcType="VARCHAR" />
+    <result column="TRAIN_CAPACITY" property="trainCapacity" jdbcType="DECIMAL" />
+    <result column="PLAN_TRAIN_SIGN" property="planTrainSign" jdbcType="VARCHAR" />
+    <result column="PRE_TRAIN_ID" property="preTrainId" jdbcType="VARCHAR" />
+    <result column="NEXT_TRAIN_ID" property="nextTrainId" jdbcType="VARCHAR" />
+    <result column="SPARE_FLAG" property="spareFlag" jdbcType="DECIMAL" />
+    <result column="SPARE_APPLY_FLAG" property="spareApplyFlag" jdbcType="DECIMAL" />
+    <result column="CMD_BUREAU" property="cmdBureau" jdbcType="VARCHAR" />
+    <result column="CMD_TXTMLID" property="cmdTxtmlid" jdbcType="DECIMAL" />
+    <result column="CMD_TXTMLITEMID" property="cmdTxtmlitemid" jdbcType="DECIMAL" />
+    <result column="CMD_TRAIN_ID" property="cmdTrainId" jdbcType="VARCHAR" />
+    <result column="CMD_SHORTINFO" property="cmdShortinfo" jdbcType="VARCHAR" />
+    <result column="TEL_BUREAU" property="telBureau" jdbcType="VARCHAR" />
+    <result column="TEL_ID" property="telId" jdbcType="VARCHAR" />
+    <result column="TEL_NAME" property="telName" jdbcType="VARCHAR" />
+    <result column="TEL_SHORTINFO" property="telShortinfo" jdbcType="VARCHAR" />
+    <result column="NOTE" property="note" jdbcType="VARCHAR" />
+    <result column="CREAT_TYPE" property="creatType" jdbcType="DECIMAL" />
+    <result column="CREAT_PEOPLE" property="creatPeople" jdbcType="VARCHAR" />
+    <result column="CREAT_PEOPLE_ORG" property="creatPeopleOrg" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="DAILYPLAN_FLAG" property="dailyplanFlag" jdbcType="VARCHAR" />
+    <result column="DAILYPLAN_TIMES" property="dailyplanTimes" jdbcType="DECIMAL" />
+    <result column="DAILYPLAN_TIME" property="dailyplanTime" jdbcType="VARCHAR" />
+    <result column="DAILYPLAN_ID" property="dailyplanId" jdbcType="VARCHAR" />
+    <result column="DAILYPLAN_ID_LAST" property="dailyplanIdLast" jdbcType="VARCHAR" />
+    <result column="DAILYPLAN_CHECK_BUREAU" property="dailyplanCheckBureau" jdbcType="VARCHAR" />
+    <result column="SENT_BUREAU" property="sentBureau" jdbcType="VARCHAR" />
+    <result column="SENT_BUREAU_HIS" property="sentBureauHis" jdbcType="VARCHAR" />
+    <result column="VAILD_STATUS" property="vaildStatus" jdbcType="DECIMAL" />
+    <result column="CM_TRAIN_ID" property="cmTrainId" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+    <result column="EDIT_FLAG" property="editFlag" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PLAN_TRAIN_ID, CM_PHY_CROSS_ID, TRAIN_SORT, RUN_DATE, TRAIN_NBR, START_BUREAU_ID, 
+    START_BUREAU, START_BUREAU_FULL, START_STATION_STN_ID, START_STATION_STN_NAME, START_STN_ID, 
+    START_STN, START_STN_TDCS_ID, START_STN_TDCS_NAME, START_TIME, END_BUREAU_ID, END_BUREAU, 
+    END_BUREAU_FULL, END_STATION_STN_ID, END_STATION_STN_NAME, END_STN_ID, END_STN, END_STN_TDCS_ID, 
+    END_STN_TDCS_NAME, END_TIME, END_DAYS, PASS_BUREAU, ROUTE_ID, TRAIN_TYPE_ID, BUSINESS, 
+    HIGHLINE_FLAG, IMPORTANT_FLAG, TRAIN_SCOPE, TOKEN_VEH_BUREAU, TOKEN_PSG_BUREAU, MARSHALLING_ID, 
+    MARSHALLING_NAME, TRAIN_CAPACITY, PLAN_TRAIN_SIGN, PRE_TRAIN_ID, NEXT_TRAIN_ID, SPARE_FLAG, 
+    SPARE_APPLY_FLAG, CMD_BUREAU, CMD_TXTMLID, CMD_TXTMLITEMID, CMD_TRAIN_ID, CMD_SHORTINFO, 
+    TEL_BUREAU, TEL_ID, TEL_NAME, TEL_SHORTINFO, NOTE, CREAT_TYPE, CREAT_PEOPLE, CREAT_PEOPLE_ORG, 
+    CREAT_TIME, DAILYPLAN_FLAG, DAILYPLAN_TIMES, DAILYPLAN_TIME, DAILYPLAN_ID, DAILYPLAN_ID_LAST, 
+    DAILYPLAN_CHECK_BUREAU, SENT_BUREAU, SENT_BUREAU_HIS, VAILD_STATUS, CM_TRAIN_ID, 
+    USE_STATUS, EDIT_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_PLAN_TRAIN
+    where PLAN_TRAIN_ID = #{planTrainId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_PLAN_TRAIN
+    where PLAN_TRAIN_ID = #{planTrainId}
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanTrain" >
+    insert into T_PLAN_TRAIN (PLAN_TRAIN_ID, CM_PHY_CROSS_ID, TRAIN_SORT, RUN_DATE, TRAIN_NBR, START_BUREAU_ID, 
+      START_BUREAU, START_BUREAU_FULL, START_STATION_STN_ID, START_STATION_STN_NAME, 
+      START_STN_ID, START_STN, START_STN_TDCS_ID, START_STN_TDCS_NAME, START_TIME, 
+      END_BUREAU_ID, END_BUREAU, END_BUREAU_FULL, END_STATION_STN_ID, END_STATION_STN_NAME, 
+      END_STN_ID, END_STN, END_STN_TDCS_ID, END_STN_TDCS_NAME, END_TIME, END_DAYS, 
+      PASS_BUREAU, ROUTE_ID, TRAIN_TYPE_ID, BUSINESS, HIGHLINE_FLAG, IMPORTANT_FLAG, 
+      TRAIN_SCOPE, TOKEN_VEH_BUREAU, TOKEN_PSG_BUREAU, MARSHALLING_ID, MARSHALLING_NAME, 
+      TRAIN_CAPACITY, PLAN_TRAIN_SIGN, PRE_TRAIN_ID, NEXT_TRAIN_ID, SPARE_FLAG, 
+      SPARE_APPLY_FLAG, CMD_BUREAU, CMD_TXTMLID, CMD_TXTMLITEMID, CMD_TRAIN_ID, 
+      CMD_SHORTINFO, TEL_BUREAU, TEL_ID, TEL_NAME, TEL_SHORTINFO, NOTE, 
+      CREAT_TYPE, CREAT_PEOPLE, CREAT_PEOPLE_ORG, CREAT_TIME, DAILYPLAN_FLAG, 
+      DAILYPLAN_TIMES, DAILYPLAN_TIME, DAILYPLAN_ID, DAILYPLAN_ID_LAST, DAILYPLAN_CHECK_BUREAU, 
+      SENT_BUREAU, SENT_BUREAU_HIS, VAILD_STATUS, CM_TRAIN_ID, USE_STATUS, EDIT_FLAG
+      )
+    values (#{planTrainId}, #{cmPhyCrossId}, #{trainSort}, #{runDate}, #{trainNbr}, #{startBureauId}, 
+      #{startBureau}, #{startBureauFull}, #{startStationStnId}, #{startStationStnName}, 
+      #{startStnId}, #{startStn}, #{startStnTdcsId}, #{startStnTdcsName}, #{startTime}, 
+      #{endBureauId}, #{endBureau}, #{endBureauFull}, #{endStationStnId}, #{endStationStnName}, 
+      #{endStnId}, #{endStn}, #{endStnTdcsId}, #{endStnTdcsName}, #{endTime}, #{endDays}, 
+      #{passBureau}, #{routeId}, #{trainTypeId}, #{business}, #{highlineFlag}, #{importantFlag}, 
+      #{trainScope}, #{tokenVehBureau}, #{tokenPsgBureau}, #{marshallingId}, #{marshallingName}, 
+      #{trainCapacity}, #{planTrainSign}, #{preTrainId}, #{nextTrainId}, #{spareFlag}, 
+      #{spareApplyFlag}, #{cmdBureau}, #{cmdTxtmlid}, #{cmdTxtmlitemid}, #{cmdTrainId}, 
+      #{cmdShortinfo}, #{telBureau}, #{telId}, #{telName}, #{telShortinfo}, #{note}, 
+      #{creatType}, #{creatPeople}, #{creatPeopleOrg}, #{creatTime}, #{dailyplanFlag}, 
+      #{dailyplanTimes}, #{dailyplanTime}, #{dailyplanId}, #{dailyplanIdLast}, #{dailyplanCheckBureau}, 
+      #{sentBureau}, #{sentBureauHis}, #{vaildStatus}, #{cmTrainId}, #{useStatus}, #{editFlag}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanTrain" >
+    insert into T_PLAN_TRAIN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="planTrainId != null" >
+        PLAN_TRAIN_ID,
+      </if>
+      <if test="cmPhyCrossId != null" >
+        CM_PHY_CROSS_ID,
+      </if>
+      <if test="trainSort != null" >
+        TRAIN_SORT,
+      </if>
+      <if test="runDate != null" >
+        RUN_DATE,
+      </if>
+      <if test="trainNbr != null" >
+        TRAIN_NBR,
+      </if>
+      <if test="startBureauId != null" >
+        START_BUREAU_ID,
+      </if>
+      <if test="startBureau != null" >
+        START_BUREAU,
+      </if>
+      <if test="startBureauFull != null" >
+        START_BUREAU_FULL,
+      </if>
+      <if test="startStationStnId != null" >
+        START_STATION_STN_ID,
+      </if>
+      <if test="startStationStnName != null" >
+        START_STATION_STN_NAME,
+      </if>
+      <if test="startStnId != null" >
+        START_STN_ID,
+      </if>
+      <if test="startStn != null" >
+        START_STN,
+      </if>
+      <if test="startStnTdcsId != null" >
+        START_STN_TDCS_ID,
+      </if>
+      <if test="startStnTdcsName != null" >
+        START_STN_TDCS_NAME,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="endBureauId != null" >
+        END_BUREAU_ID,
+      </if>
+      <if test="endBureau != null" >
+        END_BUREAU,
+      </if>
+      <if test="endBureauFull != null" >
+        END_BUREAU_FULL,
+      </if>
+      <if test="endStationStnId != null" >
+        END_STATION_STN_ID,
+      </if>
+      <if test="endStationStnName != null" >
+        END_STATION_STN_NAME,
+      </if>
+      <if test="endStnId != null" >
+        END_STN_ID,
+      </if>
+      <if test="endStn != null" >
+        END_STN,
+      </if>
+      <if test="endStnTdcsId != null" >
+        END_STN_TDCS_ID,
+      </if>
+      <if test="endStnTdcsName != null" >
+        END_STN_TDCS_NAME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="endDays != null" >
+        END_DAYS,
+      </if>
+      <if test="passBureau != null" >
+        PASS_BUREAU,
+      </if>
+      <if test="routeId != null" >
+        ROUTE_ID,
+      </if>
+      <if test="trainTypeId != null" >
+        TRAIN_TYPE_ID,
+      </if>
+      <if test="business != null" >
+        BUSINESS,
+      </if>
+      <if test="highlineFlag != null" >
+        HIGHLINE_FLAG,
+      </if>
+      <if test="importantFlag != null" >
+        IMPORTANT_FLAG,
+      </if>
+      <if test="trainScope != null" >
+        TRAIN_SCOPE,
+      </if>
+      <if test="tokenVehBureau != null" >
+        TOKEN_VEH_BUREAU,
+      </if>
+      <if test="tokenPsgBureau != null" >
+        TOKEN_PSG_BUREAU,
+      </if>
+      <if test="marshallingId != null" >
+        MARSHALLING_ID,
+      </if>
+      <if test="marshallingName != null" >
+        MARSHALLING_NAME,
+      </if>
+      <if test="trainCapacity != null" >
+        TRAIN_CAPACITY,
+      </if>
+      <if test="planTrainSign != null" >
+        PLAN_TRAIN_SIGN,
+      </if>
+      <if test="preTrainId != null" >
+        PRE_TRAIN_ID,
+      </if>
+      <if test="nextTrainId != null" >
+        NEXT_TRAIN_ID,
+      </if>
+      <if test="spareFlag != null" >
+        SPARE_FLAG,
+      </if>
+      <if test="spareApplyFlag != null" >
+        SPARE_APPLY_FLAG,
+      </if>
+      <if test="cmdBureau != null" >
+        CMD_BUREAU,
+      </if>
+      <if test="cmdTxtmlid != null" >
+        CMD_TXTMLID,
+      </if>
+      <if test="cmdTxtmlitemid != null" >
+        CMD_TXTMLITEMID,
+      </if>
+      <if test="cmdTrainId != null" >
+        CMD_TRAIN_ID,
+      </if>
+      <if test="cmdShortinfo != null" >
+        CMD_SHORTINFO,
+      </if>
+      <if test="telBureau != null" >
+        TEL_BUREAU,
+      </if>
+      <if test="telId != null" >
+        TEL_ID,
+      </if>
+      <if test="telName != null" >
+        TEL_NAME,
+      </if>
+      <if test="telShortinfo != null" >
+        TEL_SHORTINFO,
+      </if>
+      <if test="note != null" >
+        NOTE,
+      </if>
+      <if test="creatType != null" >
+        CREAT_TYPE,
+      </if>
+      <if test="creatPeople != null" >
+        CREAT_PEOPLE,
+      </if>
+      <if test="creatPeopleOrg != null" >
+        CREAT_PEOPLE_ORG,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="dailyplanFlag != null" >
+        DAILYPLAN_FLAG,
+      </if>
+      <if test="dailyplanTimes != null" >
+        DAILYPLAN_TIMES,
+      </if>
+      <if test="dailyplanTime != null" >
+        DAILYPLAN_TIME,
+      </if>
+      <if test="dailyplanId != null" >
+        DAILYPLAN_ID,
+      </if>
+      <if test="dailyplanIdLast != null" >
+        DAILYPLAN_ID_LAST,
+      </if>
+      <if test="dailyplanCheckBureau != null" >
+        DAILYPLAN_CHECK_BUREAU,
+      </if>
+      <if test="sentBureau != null" >
+        SENT_BUREAU,
+      </if>
+      <if test="sentBureauHis != null" >
+        SENT_BUREAU_HIS,
+      </if>
+      <if test="vaildStatus != null" >
+        VAILD_STATUS,
+      </if>
+      <if test="cmTrainId != null" >
+        CM_TRAIN_ID,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+      <if test="editFlag != null" >
+        EDIT_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="planTrainId != null" >
+        #{planTrainId},
+      </if>
+      <if test="cmPhyCrossId != null" >
+        #{cmPhyCrossId},
+      </if>
+      <if test="trainSort != null" >
+        #{trainSort},
+      </if>
+      <if test="runDate != null" >
+        #{runDate},
+      </if>
+      <if test="trainNbr != null" >
+        #{trainNbr},
+      </if>
+      <if test="startBureauId != null" >
+        #{startBureauId},
+      </if>
+      <if test="startBureau != null" >
+        #{startBureau},
+      </if>
+      <if test="startBureauFull != null" >
+        #{startBureauFull},
+      </if>
+      <if test="startStationStnId != null" >
+        #{startStationStnId},
+      </if>
+      <if test="startStationStnName != null" >
+        #{startStationStnName},
+      </if>
+      <if test="startStnId != null" >
+        #{startStnId},
+      </if>
+      <if test="startStn != null" >
+        #{startStn},
+      </if>
+      <if test="startStnTdcsId != null" >
+        #{startStnTdcsId},
+      </if>
+      <if test="startStnTdcsName != null" >
+        #{startStnTdcsName},
+      </if>
+      <if test="startTime != null" >
+        #{startTime},
+      </if>
+      <if test="endBureauId != null" >
+        #{endBureauId},
+      </if>
+      <if test="endBureau != null" >
+        #{endBureau},
+      </if>
+      <if test="endBureauFull != null" >
+        #{endBureauFull},
+      </if>
+      <if test="endStationStnId != null" >
+        #{endStationStnId},
+      </if>
+      <if test="endStationStnName != null" >
+        #{endStationStnName},
+      </if>
+      <if test="endStnId != null" >
+        #{endStnId},
+      </if>
+      <if test="endStn != null" >
+        #{endStn},
+      </if>
+      <if test="endStnTdcsId != null" >
+        #{endStnTdcsId},
+      </if>
+      <if test="endStnTdcsName != null" >
+        #{endStnTdcsName},
+      </if>
+      <if test="endTime != null" >
+        #{endTime},
+      </if>
+      <if test="endDays != null" >
+        #{endDays},
+      </if>
+      <if test="passBureau != null" >
+        #{passBureau},
+      </if>
+      <if test="routeId != null" >
+        #{routeId},
+      </if>
+      <if test="trainTypeId != null" >
+        #{trainTypeId},
+      </if>
+      <if test="business != null" >
+        #{business},
+      </if>
+      <if test="highlineFlag != null" >
+        #{highlineFlag},
+      </if>
+      <if test="importantFlag != null" >
+        #{importantFlag},
+      </if>
+      <if test="trainScope != null" >
+        #{trainScope},
+      </if>
+      <if test="tokenVehBureau != null" >
+        #{tokenVehBureau},
+      </if>
+      <if test="tokenPsgBureau != null" >
+        #{tokenPsgBureau},
+      </if>
+      <if test="marshallingId != null" >
+        #{marshallingId},
+      </if>
+      <if test="marshallingName != null" >
+        #{marshallingName},
+      </if>
+      <if test="trainCapacity != null" >
+        #{trainCapacity},
+      </if>
+      <if test="planTrainSign != null" >
+        #{planTrainSign},
+      </if>
+      <if test="preTrainId != null" >
+        #{preTrainId},
+      </if>
+      <if test="nextTrainId != null" >
+        #{nextTrainId},
+      </if>
+      <if test="spareFlag != null" >
+        #{spareFlag},
+      </if>
+      <if test="spareApplyFlag != null" >
+        #{spareApplyFlag},
+      </if>
+      <if test="cmdBureau != null" >
+        #{cmdBureau},
+      </if>
+      <if test="cmdTxtmlid != null" >
+        #{cmdTxtmlid},
+      </if>
+      <if test="cmdTxtmlitemid != null" >
+        #{cmdTxtmlitemid},
+      </if>
+      <if test="cmdTrainId != null" >
+        #{cmdTrainId},
+      </if>
+      <if test="cmdShortinfo != null" >
+        #{cmdShortinfo},
+      </if>
+      <if test="telBureau != null" >
+        #{telBureau},
+      </if>
+      <if test="telId != null" >
+        #{telId},
+      </if>
+      <if test="telName != null" >
+        #{telName},
+      </if>
+      <if test="telShortinfo != null" >
+        #{telShortinfo},
+      </if>
+      <if test="note != null" >
+        #{note},
+      </if>
+      <if test="creatType != null" >
+        #{creatType},
+      </if>
+      <if test="creatPeople != null" >
+        #{creatPeople},
+      </if>
+      <if test="creatPeopleOrg != null" >
+        #{creatPeopleOrg},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime},
+      </if>
+      <if test="dailyplanFlag != null" >
+        #{dailyplanFlag},
+      </if>
+      <if test="dailyplanTimes != null" >
+        #{dailyplanTimes},
+      </if>
+      <if test="dailyplanTime != null" >
+        #{dailyplanTime},
+      </if>
+      <if test="dailyplanId != null" >
+        #{dailyplanId},
+      </if>
+      <if test="dailyplanIdLast != null" >
+        #{dailyplanIdLast},
+      </if>
+      <if test="dailyplanCheckBureau != null" >
+        #{dailyplanCheckBureau},
+      </if>
+      <if test="sentBureau != null" >
+        #{sentBureau},
+      </if>
+      <if test="sentBureauHis != null" >
+        #{sentBureauHis},
+      </if>
+      <if test="vaildStatus != null" >
+        #{vaildStatus},
+      </if>
+      <if test="cmTrainId != null" >
+        #{cmTrainId},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+      <if test="editFlag != null" >
+        #{editFlag},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanTrain" >
+    update T_PLAN_TRAIN
+    <set >
+      <if test="cmPhyCrossId != null" >
+        CM_PHY_CROSS_ID = #{cmPhyCrossId},
+      </if>
+      <if test="trainSort != null" >
+        TRAIN_SORT = #{trainSort},
+      </if>
+      <if test="runDate != null" >
+        RUN_DATE = #{runDate},
+      </if>
+      <if test="trainNbr != null" >
+        TRAIN_NBR = #{trainNbr},
+      </if>
+      <if test="startBureauId != null" >
+        START_BUREAU_ID = #{startBureauId},
+      </if>
+      <if test="startBureau != null" >
+        START_BUREAU = #{startBureau},
+      </if>
+      <if test="startBureauFull != null" >
+        START_BUREAU_FULL = #{startBureauFull},
+      </if>
+      <if test="startStationStnId != null" >
+        START_STATION_STN_ID = #{startStationStnId},
+      </if>
+      <if test="startStationStnName != null" >
+        START_STATION_STN_NAME = #{startStationStnName},
+      </if>
+      <if test="startStnId != null" >
+        START_STN_ID = #{startStnId},
+      </if>
+      <if test="startStn != null" >
+        START_STN = #{startStn},
+      </if>
+      <if test="startStnTdcsId != null" >
+        START_STN_TDCS_ID = #{startStnTdcsId},
+      </if>
+      <if test="startStnTdcsName != null" >
+        START_STN_TDCS_NAME = #{startStnTdcsName},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime},
+      </if>
+      <if test="endBureauId != null" >
+        END_BUREAU_ID = #{endBureauId},
+      </if>
+      <if test="endBureau != null" >
+        END_BUREAU = #{endBureau},
+      </if>
+      <if test="endBureauFull != null" >
+        END_BUREAU_FULL = #{endBureauFull},
+      </if>
+      <if test="endStationStnId != null" >
+        END_STATION_STN_ID = #{endStationStnId},
+      </if>
+      <if test="endStationStnName != null" >
+        END_STATION_STN_NAME = #{endStationStnName},
+      </if>
+      <if test="endStnId != null" >
+        END_STN_ID = #{endStnId},
+      </if>
+      <if test="endStn != null" >
+        END_STN = #{endStn},
+      </if>
+      <if test="endStnTdcsId != null" >
+        END_STN_TDCS_ID = #{endStnTdcsId},
+      </if>
+      <if test="endStnTdcsName != null" >
+        END_STN_TDCS_NAME = #{endStnTdcsName},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime},
+      </if>
+      <if test="endDays != null" >
+        END_DAYS = #{endDays},
+      </if>
+      <if test="passBureau != null" >
+        PASS_BUREAU = #{passBureau},
+      </if>
+      <if test="routeId != null" >
+        ROUTE_ID = #{routeId},
+      </if>
+      <if test="trainTypeId != null" >
+        TRAIN_TYPE_ID = #{trainTypeId},
+      </if>
+      <if test="business != null" >
+        BUSINESS = #{business},
+      </if>
+      <if test="highlineFlag != null" >
+        HIGHLINE_FLAG = #{highlineFlag},
+      </if>
+      <if test="importantFlag != null" >
+        IMPORTANT_FLAG = #{importantFlag},
+      </if>
+      <if test="trainScope != null" >
+        TRAIN_SCOPE = #{trainScope},
+      </if>
+      <if test="tokenVehBureau != null" >
+        TOKEN_VEH_BUREAU = #{tokenVehBureau},
+      </if>
+      <if test="tokenPsgBureau != null" >
+        TOKEN_PSG_BUREAU = #{tokenPsgBureau},
+      </if>
+      <if test="marshallingId != null" >
+        MARSHALLING_ID = #{marshallingId},
+      </if>
+      <if test="marshallingName != null" >
+        MARSHALLING_NAME = #{marshallingName},
+      </if>
+      <if test="trainCapacity != null" >
+        TRAIN_CAPACITY = #{trainCapacity},
+      </if>
+      <if test="planTrainSign != null" >
+        PLAN_TRAIN_SIGN = #{planTrainSign},
+      </if>
+      <if test="preTrainId != null" >
+        PRE_TRAIN_ID = #{preTrainId},
+      </if>
+      <if test="nextTrainId != null" >
+        NEXT_TRAIN_ID = #{nextTrainId},
+      </if>
+      <if test="spareFlag != null" >
+        SPARE_FLAG = #{spareFlag},
+      </if>
+      <if test="spareApplyFlag != null" >
+        SPARE_APPLY_FLAG = #{spareApplyFlag},
+      </if>
+      <if test="cmdBureau != null" >
+        CMD_BUREAU = #{cmdBureau},
+      </if>
+      <if test="cmdTxtmlid != null" >
+        CMD_TXTMLID = #{cmdTxtmlid},
+      </if>
+      <if test="cmdTxtmlitemid != null" >
+        CMD_TXTMLITEMID = #{cmdTxtmlitemid},
+      </if>
+      <if test="cmdTrainId != null" >
+        CMD_TRAIN_ID = #{cmdTrainId},
+      </if>
+      <if test="cmdShortinfo != null" >
+        CMD_SHORTINFO = #{cmdShortinfo},
+      </if>
+      <if test="telBureau != null" >
+        TEL_BUREAU = #{telBureau},
+      </if>
+      <if test="telId != null" >
+        TEL_ID = #{telId},
+      </if>
+      <if test="telName != null" >
+        TEL_NAME = #{telName},
+      </if>
+      <if test="telShortinfo != null" >
+        TEL_SHORTINFO = #{telShortinfo},
+      </if>
+      <if test="note != null" >
+        NOTE = #{note},
+      </if>
+      <if test="creatType != null" >
+        CREAT_TYPE = #{creatType},
+      </if>
+      <if test="creatPeople != null" >
+        CREAT_PEOPLE = #{creatPeople},
+      </if>
+      <if test="creatPeopleOrg != null" >
+        CREAT_PEOPLE_ORG = #{creatPeopleOrg},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime},
+      </if>
+      <if test="dailyplanFlag != null" >
+        DAILYPLAN_FLAG = #{dailyplanFlag},
+      </if>
+      <if test="dailyplanTimes != null" >
+        DAILYPLAN_TIMES = #{dailyplanTimes},
+      </if>
+      <if test="dailyplanTime != null" >
+        DAILYPLAN_TIME = #{dailyplanTime},
+      </if>
+      <if test="dailyplanId != null" >
+        DAILYPLAN_ID = #{dailyplanId},
+      </if>
+      <if test="dailyplanIdLast != null" >
+        DAILYPLAN_ID_LAST = #{dailyplanIdLast},
+      </if>
+      <if test="dailyplanCheckBureau != null" >
+        DAILYPLAN_CHECK_BUREAU = #{dailyplanCheckBureau},
+      </if>
+      <if test="sentBureau != null" >
+        SENT_BUREAU = #{sentBureau},
+      </if>
+      <if test="sentBureauHis != null" >
+        SENT_BUREAU_HIS = #{sentBureauHis},
+      </if>
+      <if test="vaildStatus != null" >
+        VAILD_STATUS = #{vaildStatus},
+      </if>
+      <if test="cmTrainId != null" >
+        CM_TRAIN_ID = #{cmTrainId},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+      <if test="editFlag != null" >
+        EDIT_FLAG = #{editFlag},
+      </if>
+    </set>
+    where PLAN_TRAIN_ID = #{planTrainId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanTrain" >
+    update T_PLAN_TRAIN
+    set CM_PHY_CROSS_ID = #{cmPhyCrossId},
+      TRAIN_SORT = #{trainSort},
+      RUN_DATE = #{runDate},
+      TRAIN_NBR = #{trainNbr},
+      START_BUREAU_ID = #{startBureauId},
+      START_BUREAU = #{startBureau},
+      START_BUREAU_FULL = #{startBureauFull},
+      START_STATION_STN_ID = #{startStationStnId},
+      START_STATION_STN_NAME = #{startStationStnName},
+      START_STN_ID = #{startStnId},
+      START_STN = #{startStn},
+      START_STN_TDCS_ID = #{startStnTdcsId},
+      START_STN_TDCS_NAME = #{startStnTdcsName},
+      START_TIME = #{startTime},
+      END_BUREAU_ID = #{endBureauId},
+      END_BUREAU = #{endBureau},
+      END_BUREAU_FULL = #{endBureauFull},
+      END_STATION_STN_ID = #{endStationStnId},
+      END_STATION_STN_NAME = #{endStationStnName},
+      END_STN_ID = #{endStnId},
+      END_STN = #{endStn},
+      END_STN_TDCS_ID = #{endStnTdcsId},
+      END_STN_TDCS_NAME = #{endStnTdcsName},
+      END_TIME = #{endTime},
+      END_DAYS = #{endDays},
+      PASS_BUREAU = #{passBureau},
+      ROUTE_ID = #{routeId},
+      TRAIN_TYPE_ID = #{trainTypeId},
+      BUSINESS = #{business},
+      HIGHLINE_FLAG = #{highlineFlag},
+      IMPORTANT_FLAG = #{importantFlag},
+      TRAIN_SCOPE = #{trainScope},
+      TOKEN_VEH_BUREAU = #{tokenVehBureau},
+      TOKEN_PSG_BUREAU = #{tokenPsgBureau},
+      MARSHALLING_ID = #{marshallingId},
+      MARSHALLING_NAME = #{marshallingName},
+      TRAIN_CAPACITY = #{trainCapacity},
+      PLAN_TRAIN_SIGN = #{planTrainSign},
+      PRE_TRAIN_ID = #{preTrainId},
+      NEXT_TRAIN_ID = #{nextTrainId},
+      SPARE_FLAG = #{spareFlag},
+      SPARE_APPLY_FLAG = #{spareApplyFlag},
+      CMD_BUREAU = #{cmdBureau},
+      CMD_TXTMLID = #{cmdTxtmlid},
+      CMD_TXTMLITEMID = #{cmdTxtmlitemid},
+      CMD_TRAIN_ID = #{cmdTrainId},
+      CMD_SHORTINFO = #{cmdShortinfo},
+      TEL_BUREAU = #{telBureau},
+      TEL_ID = #{telId},
+      TEL_NAME = #{telName},
+      TEL_SHORTINFO = #{telShortinfo},
+      NOTE = #{note},
+      CREAT_TYPE = #{creatType},
+      CREAT_PEOPLE = #{creatPeople},
+      CREAT_PEOPLE_ORG = #{creatPeopleOrg},
+      CREAT_TIME = #{creatTime},
+      DAILYPLAN_FLAG = #{dailyplanFlag},
+      DAILYPLAN_TIMES = #{dailyplanTimes},
+      DAILYPLAN_TIME = #{dailyplanTime},
+      DAILYPLAN_ID = #{dailyplanId},
+      DAILYPLAN_ID_LAST = #{dailyplanIdLast},
+      DAILYPLAN_CHECK_BUREAU = #{dailyplanCheckBureau},
+      SENT_BUREAU = #{sentBureau},
+      SENT_BUREAU_HIS = #{sentBureauHis},
+      VAILD_STATUS = #{vaildStatus},
+      CM_TRAIN_ID = #{cmTrainId},
+      USE_STATUS = #{useStatus},
+      EDIT_FLAG = #{editFlag}
+    where PLAN_TRAIN_ID = #{planTrainId}
+  </update>
+</mapper>

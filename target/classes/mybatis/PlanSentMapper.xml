@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.PlanSentDao">
+
+    <insert id="insertPlanSent" parameterType="map">
+    	insert
+		into plan_sent
+		  (
+		    plan_sent_id,plan_cross_id,plan_train_id,
+		    cross_name,run_date,train_nbr,
+		    pre_train_id,next_train_id,sent_time,
+		      sent_people,sent_people_org,sent_people_bureau
+		  )
+		  values
+		  (
+		    #{plan_sent_id, jdbcType=VARCHAR},#{plan_cross_id, jdbcType=VARCHAR},#{plan_train_id, jdbcType=VARCHAR},
+		    #{cross_name, jdbcType=VARCHAR},#{run_date, jdbcType=VARCHAR},#{train_nbr, jdbcType=VARCHAR},
+		    #{pre_train_id, jdbcType=VARCHAR},#{next_train_id, jdbcType=VARCHAR},to_date(#{sent_time},'yyyy-MM-dd hh24:mi:ss'),
+		    #{sent_people, jdbcType=VARCHAR},#{sent_people_org, jdbcType=VARCHAR},#{sent_people_bureau, jdbcType=VARCHAR}
+		  )
+    </insert>
+
+	<!-- 查询落成记录 -->
+    <select id="getPlanSentByMap" parameterType="map" resultType="org.railway.com.trainplan.entity.PlanSent">
+        select a.run_date,a.train_nbr,a.cross_name,a.sent_people_bureau,to_char(a.sent_time,'yyyy-MM-dd HH24:mm:ss') sent_time
+		,a.sent_people,a.sent_people_org,a.plan_train_id,a.pre_train_id,a.next_train_id 
+		from plan_sent a 
+		where 1=1
+		<if test="sent_people_bureau != null">
+			and a.sent_people_bureau like '%${sent_people_bureau}%' 
+		</if>
+		<if test="plan_train_Id != null">
+			and a.plan_train_id = #{plan_train_Id}
+		</if> 
+		order by a.sent_time asc
+    </select>
+
+</mapper> 
+

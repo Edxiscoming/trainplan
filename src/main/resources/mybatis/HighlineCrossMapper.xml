@@ -1,0 +1,1223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="highlineCrossDao">
+
+
+
+	<resultMap id="trainSubInfo"
+		type="org.railway.com.trainplan.entity.HighlineTrainRunLine">
+		<id column="planTrainId" property="planTrainId" />
+		<result column="trainNbr" property="trainNbr" />
+		<result column="highLineTrainId" property="highLineTrainId" />
+		<result column="passBureau" property="passBureau" />
+		<result column="creatReason" property="createReason" />
+		<collection property="highlineTrainTimeList" resultMap="trainSubInfoTime" />
+	</resultMap>
+
+	<resultMap id="trainSubInfoTime"
+		type="org.railway.com.trainplan.entity.HighlineTrainRunLineTime">
+		<id column="planTrainStnId" property="planTrainStnId" />
+		<result column="stnName" property="stnName" />
+		<result column="stnSort" property="stnSort" />
+		<result column="arrTime" property="arrTime" />
+		<result column="dptTime" property="dptTime" />
+		<result column="trainNbr" property="trainNbr" />
+	</resultMap>
+
+
+	<resultMap id="highlineThroughInfo"
+		type="org.railway.com.trainplan.entity.HighlineThroughlineInfo">
+		<id column="throughLine" property="throughLine" />
+		<collection property="listCrossInfo" resultMap="highlineCrossInfo" />
+	</resultMap>
+
+	<resultMap id="highlineCrossInfo"
+		type="org.railway.com.trainplan.entity.HighlineCrossInfo">
+		<id column="highLineCrossId" property="highLineCrossId" />
+		<result column="planCrossId" property="planCrossId" />
+		<result column="crossName" property="crossName" />
+		<result column="crossStartDate" property="crossStartDate" />
+		<result column="crossEndDate" property="crossEndDate" />
+		<result column="crossStartStn" property="crossStartStn" />
+		<result column="crossEndStn" property="crossEndStn" />
+		<result column="spareFlag" property="spareFlag" />
+		<result column="relevantBureau" property="relevantBureau" />
+		<result column="tokenVehBureau" property="tokenVehBureau" />
+		<result column="tokenVehDept" property="tokenVehDept" />
+		<result column="tokenPsgBureau" property="tokenPsgBureau" />
+		<result column="tokenPsgDept" property="tokenPsgDept" />
+		<result column="crhType" property="crhType" />
+		<result column="vehicle1" property="vehicle1" />
+		<result column="vehicle2" property="vehicle2" />
+		<result column="note" property="note" />
+		<result column="creatPeople" property="creatPeople" />
+		<result column="creatPeopleOrg" property="creatPeopleOrg" />
+		<result column="creatTime" property="creatTime" />
+		<result column="throughLine" property="throughLine" />
+		<result column="postId" property="postId" />
+		<result column="postName" property="postName" />
+		<result column="crossBureau" property="crossBureau" />
+		<result column="createReason" property="createReason" />
+		<result column="vehicleSubType" property="vehicleSubType" />
+		<result column="vehicleSubPeople" property="vehicleSubPeople" />
+		<result column="vehicleSubPeopleOrg" property="vehicleSubPeopleOrg" />
+		<result column="vehicleSubTime" property="vehicleSubTime" />
+		<result column="vehicleCheckType" property="vehicleCheckType" />
+		<result column="vehicleCheckPeople" property="vehicleCheckPeople" />
+		<result column="vehicleCheckPeopleOrg" property="vehicleCheckPeopleOrg" />
+		<result column="vehicleCheckTime" property="vehicleCheckTime" />
+		<result column="crossCheckType" property="crossCheckType" />
+		<result column="crossCheckPeople" property="crossCheckPeople" />
+		<result column="crossCheckPeopleOrg" property="crossCheckPeopleOrg" />
+		<result column="crossCheckTime" property="crossCheckTime" />
+	</resultMap>
+
+	<select id="getHighlineThroughCrossInfo" parameterType="org.railway.com.trainplan.entity.HighlineCrossInfo"
+		resultMap="highlineThroughInfo">
+		SELECT
+		t.HIGHLINE_CROSS_ID AS highlineCrossId,
+		t.PLAN_CROSS_ID AS
+		planCrossId,
+		t.CROSS_START_DATE AS crossStartDate,
+		t.CROSS_END_DATE AS
+		crossEndDate,
+		t.CROSS_START_STN AS crossStartStn,
+		t.CROSS_END_STN AS
+		crossEndStn,
+		t.CROSS_NAME AS crossName,
+		t.SPARE_FLAG AS spareFlag,
+		t.RELEVANT_BUREAU AS relevantBureau,
+		t.TOKEN_VEH_BUREAU AS
+		tokenVehBureau,
+		t.TOKEN_VEH_DEPT AS tokenVehDept,
+		t.TOKEN_VEH_DEPOT AS
+		tokenVehDepot,
+		t.TOKEN_PSG_BUREAU AS tokenPsgBureau ,
+		t.TOKEN_PSG_DEPT
+		AS tokenPsgDept,
+		t.CRH_TYPE AS crhType,
+		t.VEHICLE1 AS vehicle1,
+		t.VEHICLE2 AS vehicle2,
+		t.NOTE AS note,
+		t.CREAT_PEOPLE AS creatPeople,
+		t.CREAT_PEOPLE_ORG AS creatPeopleOrg ,
+		t.CREAT_TIME AS creatTime,
+		t.THROUGH_LINE AS throughLine,
+		t.POST_ID AS postId,
+		t.POST_Name AS
+		postName,
+		t.CROSS_BUREAU AS crossBureau,
+		t.CREAT_REASON AS createReason,
+		t.VEHICLE_SUB_TYPE AS vehicleSubType,
+		t.VEHICLE_SUB_PEOPLE AS
+		vehicleSubPeople,
+		t.VEHICLE_SUB_PEOPLE_ORG AS vehicleSubPeopleOrg,
+		TO_CHAR(t.VEHICLE_SUB_TIME,'yyyy-MM-dd hh24:mi:SS') AS vehicleSubTime,
+		t.VEHICLE_CHECK_TYPE AS vehicleCheckType,
+		t.VEHICLE_CHECK_PEOPLE AS
+		vehicleCheckPeople,
+		t.VEHICLE_CHECK_PEOPLE_ORG AS
+		vehicleCheckPeopleOrg,
+		TO_CHAR(t.VEHICLE_CHECK_TIME,'yyyy-MM-dd
+		hh24:mi:SS') AS vehicleCheckTime,
+		t.CROSS_CHECK_TYPE AS crossCheckType,
+		t.CROSS_CHECK_PEOPLE AS crossCheckPeople,
+		t.CROSS_CHECK_PEOPLE_ORG AS
+		crossCheckPeopleOrg,
+		TO_CHAR(t.CROSS_CHECK_TIME,'yyyy-MM-dd
+		hh24:mi:SS') AS crossCheckTime
+		FROM HIGHLINE_CROSS T WHERE 1=1
+		<if test="crossBureau != null and crossBureau !='' ">
+			AND T.CROSS_BUREAU = #{crossBureau}
+		</if>
+		<if test="crossStartDate != null and crossStartDate != '' ">
+			AND T.CROSS_DATE = #{crossStartDate}
+		</if>
+		ORDER BY t.TOKEN_VEH_BUREAU,t.CROSS_NAME
+	</select>
+
+	<select id="getHighlineCrossInfo" parameterType="org.railway.com.trainplan.entity.HighlineCrossInfo"
+		resultType="org.railway.com.trainplan.entity.HighlineCrossInfo">
+		SELECT
+		t.HIGHLINE_CROSS_ID AS highlineCrossId,
+		t.PLAN_CROSS_ID AS
+		planCrossId,
+		t.CROSS_START_DATE AS crossStartDate,
+		t.CROSS_END_DATE AS
+		crossEndDate,
+		t.CROSS_START_STN AS crossStartStn,
+		t.CROSS_END_STN AS
+		crossEndStn,
+		t.CROSS_NAME AS crossName,
+		t.SPARE_FLAG AS spareFlag,
+		t.RELEVANT_BUREAU AS relevantBureau,
+		t.TOKEN_VEH_BUREAU AS
+		tokenVehBureau,
+		t.TOKEN_VEH_DEPT AS tokenVehDept,
+		t.TOKEN_VEH_DEPOT AS
+		tokenVehDepot,
+		t.TOKEN_PSG_BUREAU AS tokenPsgBureau ,
+		t.TOKEN_PSG_DEPT
+		AS tokenPsgDept,
+		t.CRH_TYPE AS crhType,
+		t.VEHICLE1 AS vehicle1,
+		t.VEHICLE2 AS vehicle2,
+		t.NOTE AS note,
+		t.CREAT_PEOPLE AS creatPeople,
+		t.CREAT_PEOPLE_ORG AS creatPeopleOrg ,
+		t.CREAT_TIME AS creatTime,
+		t.THROUGH_LINE AS throughLine,
+		t.POST_ID AS postId,
+		t.POST_Name AS
+		postName,
+		t.CROSS_BUREAU AS crossBureau,
+		t.CREAT_REASON AS createReason,
+		t.VEHICLE_SUB_TYPE AS vehicleSubType,
+		t.VEHICLE_SUB_PEOPLE AS
+		vehicleSubPeople,
+		t.VEHICLE_SUB_PEOPLE_ORG AS vehicleSubPeopleOrg,
+		TO_CHAR(t.VEHICLE_SUB_TIME,'yyyy-MM-dd hh24:mi:SS') AS vehicleSubTime,
+		t.VEHICLE_CHECK_TYPE AS vehicleCheckType,
+		t.VEHICLE_CHECK_PEOPLE AS
+		vehicleCheckPeople,
+		t.VEHICLE_CHECK_PEOPLE_ORG AS
+		vehicleCheckPeopleOrg,
+		TO_CHAR(t.VEHICLE_CHECK_TIME,'yyyy-MM-dd
+		hh24:mi:SS') AS vehicleCheckTime,
+		t.CROSS_CHECK_TYPE AS crossCheckType,
+		t.CROSS_CHECK_PEOPLE AS crossCheckPeople,
+		t.CROSS_CHECK_PEOPLE_ORG AS
+		crossCheckPeopleOrg,
+		TO_CHAR(t.CROSS_CHECK_TIME,'yyyy-MM-dd
+		hh24:mi:SS') AS crossCheckTime
+		FROM HIGHLINE_CROSS T WHERE 1=1
+		<if test="crossBureau != null and crossBureau !='' ">
+			AND T.CROSS_BUREAU = #{crossBureau}
+		</if>
+		<if test="crossStartDate != null and crossStartDate != '' ">
+			AND T.CROSS_START_DATE = #{crossStartDate}
+		</if>
+		<if test="crossDate != null and crossDate != '' ">
+			AND T.CROSS_DATE = #{crossDate}
+		</if>
+
+
+	</select>
+
+	<!-- <select id="getHighlineTrainTimeForHighlineCrossId" parameterType="map" 
+		resultMap="trainSubInfo"> SELECT B.PLAN_TRAIN_ID AS planTrainId, B.HIGHLINE_TRAIN_ID 
+		AS highLineTrainId, C.TRAIN_NBR AS trainNbr, C.PASS_BUREAU AS passBureau, 
+		D.PLAN_TRAIN_STN_ID AS planTrainStnId, D.STN_SORT AS stnSort, D.STN_NAME 
+		AS stnName, TO_CHAR(D.ARR_TIME,'yyyy-MM-dd hh24:mi:SS') AS ARRTIME, TO_CHAR(D.DPT_TIME,'yyyy-MM-dd 
+		hh24:mi:SS') AS DPTTIME FROM HIGHLINE_CROSS A,HIGHLINE_CROSS_TRAIN B,PLAN_TRAIN 
+		C,PLAN_TRAIN_STN D WHERE A.HIGHLINE_CROSS_ID = B.HIGHLINE_CROSS_ID AND B.PLAN_TRAIN_ID 
+		= C.PLAN_TRAIN_ID AND C.PLAN_TRAIN_ID = D.PLAN_TRAIN_ID AND A.HIGHLINE_CROSS_ID=#{highlineCrossId} 
+		ORDER BY B.TRAIN_SORT,D.STN_SORT </select> -->
+	<select id="getHighlineTrainTimeForHighlineCrossId"
+		parameterType="map" resultMap="trainSubInfo">
+
+		SELECT
+		B.PLAN_TRAIN_ID AS planTrainId,
+		B.HIGHLINE_TRAIN_ID AS
+		highLineTrainId,
+		B.TRAIN_SORT AS trainSort,
+		C.TRAIN_NBR AS trainNbr,
+		D
+		.ID AS planTrainStnId,
+		C.PASS_BUREAU AS passBureau,
+		D .CHILD_INDEX AS
+		stnSort,
+		D .NODE_NAME AS stnName,
+		<!-- decode(TO_CHAR(D .SOURCE_TIME, 'yyyy-mm-dd hh24:mi:SS'),null,TO_CHAR(D 
+			.TARGET_TIME, 'yyyy-mm-dd hh24:mi:SS'),TO_CHAR(D .SOURCE_TIME, 'yyyy-mm-dd 
+			hh24:mi:SS')) AS ARRTIME, -->
+		<!-- decode(TO_CHAR(D .TARGET_TIME, 'yyyy-mm-dd hh24:mi:SS'),null,TO_CHAR(D 
+			.SOURCE_TIME, 'yyyy-mm-dd hh24:mi:SS'),TO_CHAR(D .TARGET_TIME, 'yyyy-mm-dd 
+			hh24:mi:SS')) AS DPTTIME, -->
+		to_char(c.START_TIME, 'yyyy-MM-dd') || ' ' || decode(TO_CHAR(D
+		.SOURCE_TIME, 'yyyy-mm-dd hh24:mi:SS'),null,TO_CHAR(D .TARGET_TIME,
+		'hh24:mi:SS'),TO_CHAR(D .SOURCE_TIME, 'hh24:mi:SS')) AS ARRTIME,
+		to_char(c.START_TIME, 'yyyy-MM-dd') || ' ' || decode(TO_CHAR(D
+		.TARGET_TIME, 'yyyy-mm-dd hh24:mi:SS'),null,TO_CHAR(D .SOURCE_TIME,
+		'hh24:mi:SS'),TO_CHAR(D .TARGET_TIME, 'hh24:mi:SS')) AS DPTTIME,
+		(CASE
+		WHEN C.CREAT_TYPE =0 THEN '基本图'
+		WHEN C.CREAT_TYPE =1 THEN '基本图'
+		WHEN
+		C.CREAT_TYPE =2 THEN C.TEL_SHORTINFO
+		WHEN C.CREAT_TYPE =3 THEN
+		C.CMD_SHORTINFO
+		ELSE '' END
+		) creatReason
+		FROM
+		HIGHLINE_CROSS A,
+		HIGHLINE_CROSS_TRAIN B,
+		PLAN_TRAIN C,
+		JHPT_JBT.M_TRAINLINE_ITEM_TEMP D,
+		JHPT_JBT.M_TRAINLINE_TEMP E
+		WHERE
+		A .HIGHLINE_CROSS_ID =
+		B.HIGHLINE_CROSS_ID
+		AND B.PLAN_TRAIN_ID = C.PLAN_TRAIN_ID
+		AND
+		C.BASE_TRAIN_ID = E.ID
+		AND E.ID = D.PARENT_ID
+		AND A .HIGHLINE_CROSS_ID =
+		#{highlineCrossId}
+		AND C.BASE_TRAIN_ID IS NOT NULL
+
+		UNION ALL
+
+		SELECT
+		B.PLAN_TRAIN_ID AS planTrainId,
+		B.HIGHLINE_TRAIN_ID AS highLineTrainId,
+		B.TRAIN_SORT AS trainSort,
+		C.TRAIN_NBR AS trainNbr,
+		D .PLAN_TRAIN_STN_ID
+		AS planTrainStnId,
+		C.PASS_BUREAU AS passBureau,
+		D .STN_SORT AS stnSort,
+		D .NODE_NAME AS stnName,
+		decode(TO_CHAR(D .ARR_TIME, 'yyyy-mm-dd
+		hh24:mi:SS'),null,TO_CHAR(D .DPT_TIME,
+		'yyyy-mm-dd
+		hh24:mi:SS'),TO_CHAR(D .ARR_TIME, 'yyyy-mm-dd
+		hh24:mi:SS')) AS ARRTIME,
+		decode(TO_CHAR(D .DPT_TIME, 'yyyy-mm-dd hh24:mi:SS'),null,TO_CHAR(D
+		.ARR_TIME,
+		'yyyy-mm-dd hh24:mi:SS'),TO_CHAR(D .DPT_TIME, 'yyyy-mm-dd
+		hh24:mi:SS')) AS DPTTIME,
+		(CASE
+		WHEN C.CREAT_TYPE =0 THEN '基本图'
+		WHEN
+		C.CREAT_TYPE =1 THEN '基本图'
+		WHEN C.CREAT_TYPE =2 THEN C.TEL_SHORTINFO
+		WHEN C.CREAT_TYPE =3 THEN C.CMD_SHORTINFO
+		ELSE '' END
+		) creatReason
+		FROM
+		HIGHLINE_CROSS A,
+		HIGHLINE_CROSS_TRAIN B,
+		PLAN_TRAIN C,
+		PLAN_TRAIN_STN D
+		WHERE
+		A .HIGHLINE_CROSS_ID = B.HIGHLINE_CROSS_ID
+		AND B.PLAN_TRAIN_ID =
+		C.PLAN_TRAIN_ID
+		AND C.PLAN_TRAIN_ID = D .PLAN_TRAIN_ID
+		AND A
+		.HIGHLINE_CROSS_ID = #{highlineCrossId}
+
+		ORDER BY
+		trainSort,
+		stnSort
+
+	</select>
+
+
+	<select id="getHighlineCrossList" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.HighlineCrossInfo">
+		SELECT
+		<!-- 部门条件控制填报操作权限 -->
+		<if test="userDeptName != null and userDeptName!=''">
+			DECODE(t.TOKEN_VEH_DEPOT,#{userDeptName},'1','0')
+			isEnable,
+		</if>
+		<!-- 岗位条件控制审核操作权限 -->
+		<if test="userPostId != null and userPostId!=''">
+			DECODE(t.POST_ID,#{userPostId},'1','0') isEnable,
+		</if>
+
+		t.HIGHLINE_CROSS_ID AS highlineCrossId,
+		t.PLAN_CROSS_ID AS planCrossId,
+		t.CROSS_START_DATE AS crossStartDate,
+		t.CROSS_END_DATE AS crossEndDate,
+		t.CROSS_START_STN AS crossStartStn,
+		t.CROSS_END_STN AS crossEndStn,
+		t.CROSS_NAME AS crossName,
+		t.SPARE_FLAG AS spareFlag,
+		t.RELEVANT_BUREAU
+		AS relevantBureau,
+		t.TOKEN_VEH_BUREAU AS tokenVehBureau,
+		t.TOKEN_VEH_DEPT AS tokenVehDept,
+		t.TOKEN_VEH_DEPOT AS tokenVehDepot,
+		t.TOKEN_PSG_BUREAU AS tokenPsgBureau ,
+		t.TOKEN_PSG_DEPT AS
+		tokenPsgDept,
+		t.CRH_TYPE AS crhType,
+		t.VEHICLE1 AS vehicle1,
+		t.VEHICLE2
+		AS vehicle2,
+		t.NOTE AS note,
+		t.CROSS_DATE AS crossDate,
+		t.CREAT_PEOPLE AS
+		creatPeople,
+		t.CREAT_PEOPLE_ORG AS creatPeopleOrg ,
+		t.CREAT_TIME AS
+		creatTime,
+		t.THROUGH_LINE AS throughLine,
+		t.POST_ID AS postId,
+		t.POST_Name AS postName,
+		t.CROSS_BUREAU AS crossBureau,
+		t.CREAT_REASON
+		AS createReason,
+		t.VEHICLE_SUB_TYPE AS vehicleSubType,
+		t.VEHICLE_SUB_PEOPLE AS vehicleSubPeople,
+		t.VEHICLE_SUB_PEOPLE_ORG AS
+		vehicleSubPeopleOrg,
+		TO_CHAR(t.VEHICLE_SUB_TIME,'yyyy-MM-dd
+		hh24:mi:SS') AS vehicleSubTime,
+		t.VEHICLE_CHECK_TYPE AS
+		vehicleCheckType,
+		t.VEHICLE_CHECK_PEOPLE AS vehicleCheckPeople,
+		t.VEHICLE_CHECK_PEOPLE_ORG AS vehicleCheckPeopleOrg,
+		TO_CHAR(t.VEHICLE_CHECK_TIME,'yyyy-MM-dd hh24:mi:SS') AS
+		vehicleCheckTime,
+		t.CROSS_CHECK_TYPE AS crossCheckType,
+		t.CROSS_CHECK_PEOPLE AS crossCheckPeople,
+		t.CROSS_CHECK_PEOPLE_ORG AS
+		crossCheckPeopleOrg,
+		TO_CHAR(t.CROSS_CHECK_TIME,'yyyy-MM-dd
+		hh24:mi:SS') AS crossCheckTime
+		FROM HIGHLINE_CROSS t WHERE t.CROSS_DATE
+		= #{crossDate}
+		<if test="tokenVehBureau != null and tokenVehBureau != '' ">
+			and t.TOKEN_VEH_BUREAU=#{tokenVehBureau}
+		</if>
+		<if test="trainNbr != null and trainNbr != '' ">
+			and t.CROSS_NAME like '%${trainNbr}%'
+		</if>
+		<if test="throughLine != null and throughLine != '' ">
+			and t.THROUGH_LINE=#{throughLine}
+		</if>
+		<if test="tokenVehDepot != null and tokenVehDepot != '' ">
+			and t.TOKEN_VEH_DEPOT=#{tokenVehDepot}
+		</if>
+		<if test="crossBureau != null and crossBureau !='' ">
+			and t.cross_bureau = #{crossBureau}
+		</if>
+		<if test="postName != null and postName !='' ">
+			and t.POST_NAME = #{postName}
+		</if>
+		<if test="crossCheckType != null and crossCheckType !='' ">
+			and t.CROSS_CHECK_TYPE = ${crossCheckType}
+		</if>
+		<if test="vehicleSubType != null and vehicleSubType !='' ">
+			and t.VEHICLE_SUB_TYPE = ${vehicleSubType}
+		</if>
+		<if test="vehicleCheckType != null and vehicleCheckType !='' ">
+			and t.VEHICLE_CHECK_TYPE = ${vehicleCheckType}
+		</if>
+		ORDER BY t.CROSS_NAME
+	</select>
+
+	<select id="getHighlineCrossTrainList" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.HighLineCrossTrainInfo">
+		SELECT
+		HIGHLINE_TRAIN_ID AS highlineTrainId,
+		HIGHLINE_CROSS_ID AS highlineCrossId,
+		PLAN_TRAIN_ID AS planTrainId,
+		TRAIN_SORT AS trainSort,
+		TRAIN_NBR AS
+		trainNbr,
+		RUN_DATE AS runDate
+		FROM
+		HIGHLINE_CROSS_TRAIN WHERE HIGHLINE_CROSS_ID =#{highlineCrossId}
+	</select>
+
+
+	<select id="getHighlineCrossTrainBaseInfoList" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.HighlineCrossTrainBaseInfo">
+		SELECT
+		B.TRAIN_NBR As trainNbr,
+		C.START_STN As startStn,
+		TO_CHAR(C.START_TIME,'yyyy-MM-dd
+		hh24:mi:SS') AS startTime,
+		C.END_STN As
+		endStn,
+		C.START_BUREAU AS
+		startStnBureau,
+		C.END_BUREAU AS endStnBureau,
+		TO_CHAR(C.END_TIME,'yyyy-MM-dd hh24:mi:SS') AS
+		endTime
+		FROM
+		HIGHLINE_CROSS A,HIGHLINE_CROSS_TRAIN B,PLAN_TRAIN C
+		WHERE
+		A.HIGHLINE_CROSS_ID=B.HIGHLINE_CROSS_ID AND
+		B.PLAN_TRAIN_ID=C.PLAN_TRAIN_ID AND
+		A.HIGHLINE_CROSS_ID=#{highlineCrossId} order by starttime
+
+	</select>
+
+
+
+	<delete id="deleteHighlienCrossTrainForHighlineCrossId"
+		parameterType="map">
+		DELETE FROM HIGHLINE_CROSS_TRAIN
+		WHERE HIGHLINE_CROSS_ID
+		in (${highlineCrossIds})
+	</delete>
+
+
+	<delete id="deleteHighlienCrossForHighlineCrossId"
+		parameterType="map">
+		DELETE FROM HIGHLINE_CROSS
+		WHERE HIGHLINE_CROSS_ID in
+		(${highlineCrossIds})
+	</delete>
+
+	<update id="updateHighLineVehicle" parameterType="map">
+		UPDATE HIGHLINE_CROSS
+		SET
+		<choose>
+			<when test="vehicle1 == null">VEHICLE1 = '',</when>
+			<otherwise>VEHICLE1 = #{vehicle1},</otherwise>
+		</choose>
+		<choose>
+			<when test="vehicle2 == null">VEHICLE2 = ''</when>
+			<otherwise>VEHICLE2 = #{vehicle2}</otherwise>
+		</choose>
+		WHERE HIGHLINE_CROSS_ID = #{highlineCrossId}
+	</update>
+
+	<update id="updateHighLineCrossId" parameterType="map">
+		UPDATE
+		HIGHLINE_CROSS_TRAIN
+		SET HIGHLINE_CROSS_ID=#{highLineCrossId}
+		WHERE
+		HIGHLINE_TRAIN_ID=#{highLineTrainId}
+	</update>
+	<update id="updateHiglineCheckInfo" parameterType="map">
+		UPDATE
+		HIGHLINE_CROSS
+		SET
+		CHECK_TYPE=${checkType},
+		CHECK_PEOPLE=#{checkPeople},
+		CHECK_PEOPLE_ORG=#{checkPeopleOrg},
+		CHECK_TIME=sysdate
+
+		WHERE
+		HIGHLINE_CROSS_ID IN (${highlineCrossIds})
+
+	</update>
+
+	<update id="updateHighlineCrossInfo" parameterType="org.railway.com.trainplan.entity.HighlineCrossInfo">
+		UPDATE HIGHLINE_CROSS
+		<if test="vehicleSubPeople != null and vehicleSubPeople != '' ">
+			SET
+			VEHICLE_SUB_TYPE = ${vehicleSubType},
+			VEHICLE_SUB_PEOPLE = #{vehicleSubPeople},
+			VEHICLE_SUB_PEOPLE_ORG =
+			#{vehicleSubPeopleOrg},
+			VEHICLE_SUB_TIME = sysdate
+		</if>
+		<if test="vehicleCheckPeople != null and vehicleCheckPeople != '' ">
+			SET
+			VEHICLE_CHECK_TYPE = ${vehicleCheckType},
+			VEHICLE_CHECK_PEOPLE =#{vehicleCheckPeople},
+			VEHICLE_CHECK_PEOPLE_ORG
+			=#{vehicleCheckPeopleOrg},
+			VEHICLE_CHECK_TIME = sysdate
+
+		</if>
+
+		<if test="crossCheckPeople != null and crossCheckPeople != '' ">
+			SET
+			CROSS_CHECK_TYPE = ${crossCheckType},
+			CROSS_CHECK_PEOPLE = #{crossCheckPeople},
+			CROSS_CHECK_PEOPLE_ORG =
+			#{crossCheckPeopleOrg},
+			CROSS_CHECK_TIME= sysdate
+		</if>
+		WHERE CROSS_DATE = #{crossStartDate} AND CROSS_BUREAU = #{crossBureau}
+	</update>
+
+
+	<select id="getThroughLine" resultType="org.railway.com.trainplan.service.dto.OptionDto">
+		select distinct THROUGH_LINE as name, bureau bureauCode from
+		dic_rela_cross_post where THROUGH_LINE IS NOT NULL
+		<if test="bureauCode != null and bureauCode!=''">
+			and bureau=#{bureauCode}
+		</if>
+	</select>
+
+	<select id="getLJPYMbyLJJC" parameterType="String" resultType="String">
+		select LJPYM from jhpt_jcsj.ljzd where LJJC=#{bureauShortName}
+	</select>
+
+	<select id="getCrhType" resultType="org.railway.com.trainplan.service.dto.OptionDto">
+		select distinct CRH_TYPE as
+		name from dic_crh_group
+	</select>
+
+	<select id="getVehicles" resultType="org.railway.com.trainplan.service.dto.OptionDto">
+		select GROUP_ID AS
+		code,GROUP_NBR as name,CRH_TYPE AS crhType from
+		dic_crh_group
+	</select>
+
+
+	<select id="getDepot" resultType="org.railway.com.trainplan.service.dto.OptionDto">
+		<!-- 2015-4-21 14:54:19，使用哲哥提供的 -->
+		<!-- select distinct DEPOT_ID as code, depot_name as name, Bureau bureauCode,Bureau_Sort 
+			from dic_crh_depot T WHERE 1=1 <if test="bureauCode != null"> and T.Bureau=#{bureauCode} 
+			</if> order by T.Bureau_Sort,T.depot_id -->
+		select t3.ljpym code, T2.ACC_NAME name
+		from orga.ACCOUNT t2,
+		orga.department t3
+		left join jhpt_jcsj.ljzd a on a.ljpym = t3.ljpym
+		where t2.acc_id in
+		(select t1.acc_id
+		from
+		orga.ACC_ROL_RELA t1
+		where t1.rol_id in
+		(select t.rol_id
+		from orga.ROLE t
+		where t.rol_name like '站段动车所'))
+		and t2.fenlei01 = t3.dep_id
+		order by
+		decode(t3.ljpym, 'V', 1, 2), a.ljdm,T2.ACC_NAME
+	</select>
+	<select id="getAcc" parameterType="map"
+		resultType="org.railway.com.trainplan.service.dto.OptionDto">
+		select t3.ljpym as bureauCode, t2.acc_id as code,T2.ACC_NAME as name
+		from ORGA.ACCOUNT t2,ORGA.department t3
+		left join jhpt_jcsj.ljzd a on a.ljpym = t3.ljpym 
+		where t2.acc_id in (select
+		t1.acc_id from ORGA.ACC_ROL_RELA t1 where t1.rol_id in (select
+		t.rol_id from ORGA.ROLE t where t.rol_name like '铁路局动车调'))
+		<!-- select t3.ljpym as bureauCode, t2.acc_id as code,T2.ACC_NAME as name 
+			from tds1adm.ACCOUNT t2,tds1adm.department t3 where t2.acc_id in (select 
+			t1.acc_id from tds1adm.ACC_ROL_RELA t1 where t1.rol_id in (select t.rol_id 
+			from tds1adm.ROLE t where t.rol_name like '铁路局动车调')) -->
+		and t2.fenlei01 = t3.dep_id 
+<!-- select t3.ljpym as bureauCode, t2.acc_id 
+			as code,T2.ACC_NAME as name from tds1adm.ACCOUNT t2,tds1adm.department t3 
+			where t2.acc_id in (select t1.acc_id from tds1adm.ACC_ROL_RELA t1 where t1.rol_id 
+			in (select t.rol_id from tds1adm.ROLE t where t.rol_name like '铁路局动车调')) -->
+		<if test="bureauCode != null">
+			and t3.ljpym=#{bureauCode}
+		</if>
+
+		<!-- order by t2.acc_id -->
+		 order by decode(t3.ljpym, 'V', 1, 2), a.ljdm,T2.ACC_NAME
+	</select>
+
+	<delete id="deleteHighLineForDate" parameterType="map">
+		delete from
+		HIGHLINE_CROSS where CROSS_BUREAU= #{crossBureau} and
+		CROSS_START_DATE=#{startDate}
+
+	</delete>
+
+
+
+	<!-- 根据路局、开行日期yyyy-MM-dd查询高铁开行计划 -->
+	<resultMap id="planTrainInfo"
+		type="org.railway.com.trainplan.service.dto.PlanTrainDto">
+		<id column="PLAN_TRAIN_ID" property="planTrainId" />
+		<result column="TRAIN_NBR" property="trainNbr" />
+		<result column="START_STN" property="startStn" />
+		<result column="START_BUREAU" property="startBureau" />
+		<result column="START_TIME" property="startTime" />
+		<result column="END_STN" property="endStn" />
+		<result column="END_BUREAU" property="endBureau" />
+		<result column="END_TIME" property="endTime" />
+		<result column="END_DAYS" property="endDays" />
+		<result column="PASS_BUREAU" property="passBureau" />
+		<result column="PLAN_CROSS_ID" property="planCrossId" />
+		<result column="RUN_TYPE" property="runType" />
+		<result column="RUN_TYPE_CODE" property="runTypeCode" />
+		<result column="CREAT_TYPE" property="creatType" />
+		<result column="laiyuan" property="laiyuan" />
+		<result column="spareFlagTxt" property="spareFlagTxt" />
+		<result column="TRAIN_TYPE_SHORTNAME" property="trainTypeShortName" />
+		<result column="HIGHLINE_FLAG" property="highLineFlag" />
+		<collection property="planTrainStnList" resultMap="planTrainStnList" />
+	</resultMap>
+	<resultMap id="planTrainStnList"
+		type="org.railway.com.trainplan.service.dto.PlanTrainStnDto">
+		<id column="PLAN_TRAIN_STN_ID" property="planTrainStnId" />
+		<result column="STN_NAME" property="stnName" />
+		<result column="ARR_TIME" property="arrTime" />
+		<result column="DPT_TIME" property="dptTime" />
+		<result column="STN_SORT" property="stnSort" />
+		<result column="STN_BUREAU" property="stnBureau" />
+		<result column="ISFDZ" property="isfdz" />
+		<result column="ISFJK" property="isfjk" />
+	</resultMap>
+	<select id="getHighLinePlanByBureau" parameterType="map"
+		resultMap="planTrainInfo">
+		select * from (
+		select *
+		from (select
+		t.TRAIN_NBR,
+		t.START_STN,
+		TO_CHAR(T.START_TIME, 'yyyy-MM-dd hh24:mi:ss') START_TIME,
+		t.END_STN,
+		TO_CHAR(T.END_TIME, 'yyyy-MM-dd hh24:mi:ss') END_TIME,
+		t.END_DAYS,
+		t.PASS_BUREAU,
+		t.PLAN_TRAIN_ID,
+		t.PLAN_CROSS_ID,
+		t.START_BUREAU,
+		t.END_BUREAU,
+		t.HIGHLINE_FLAG,
+		case when T.CREAT_TYPE = 0 OR
+		T.CREAT_TYPE = 1
+		then t.tel_name
+		when t.creat_type =2
+		then
+		t.tel_shortinfo
+		when t.creat_type=3
+		then t.cmd_shortinfo
+		end as laiyuan,
+		(case
+		when t.creat_type =0 then '3'
+		when t.creat_type =1 then '3'
+		when
+		t.creat_type =2 then '2'
+		when t.creat_type =3 then '1'
+		ELSE '' END )
+		laiyuan1,
+		( CASE
+		WHEN t.SPARE_FLAG =1 THEN '开行'
+		WHEN t.SPARE_FLAG =2 THEN
+		'备用'
+		WHEN t.SPARE_FLAG =9 THEN '停运'
+		ELSE '' END ) spareFlagTxt,
+		(CASE
+		WHEN t.START_BUREAU =#{bureauName} AND T.END_BUREAU
+		&lt;>#{bureauName}
+		THEN 'SFJC'
+		WHEN t.START_BUREAU &lt;>#{bureauName} AND T.END_BUREAU
+		=#{bureauName}
+		THEN 'JRZD'
+		WHEN t.START_BUREAU &lt;>#{bureauName} AND
+		T.END_BUREAU &lt;>
+		#{bureauName} THEN 'JRJC'
+		WHEN t.START_BUREAU
+		=#{bureauName} AND T.END_BUREAU =#{bureauName} THEN
+		'SFZD'
+		ELSE '' END
+		)
+		RUN_TYPE_CODE,
+		(CASE WHEN t.START_BUREAU =#{bureauName} AND
+		T.END_BUREAU
+		&lt;>#{bureauName} THEN '始发交出'
+		WHEN t.START_BUREAU
+		&lt;>#{bureauName} AND T.END_BUREAU =#{bureauName}
+		THEN '接入终到'
+		WHEN
+		t.START_BUREAU &lt;>#{bureauName} AND T.END_BUREAU &lt;>
+		#{bureauName}
+		THEN '接入交出'
+		WHEN t.START_BUREAU =#{bureauName} AND T.END_BUREAU
+		=#{bureauName} THEN
+		'始发终到'
+		ELSE '' END
+		) RUN_TYPE,
+		(CASE WHEN
+		T.CREAT_TYPE=0 OR T.CREAT_TYPE=1 THEN 'TD'
+		WHEN T.CREAT_TYPE=2 OR
+		T.CREAT_TYPE=3 THEN 'LK'
+		ELSE '' END
+		) CREAT_TYPE,
+
+
+		A.PLAN_TRAIN_STN_ID,
+		A.STN_NAME,
+		TO_CHAR(A.ARR_TIME, 'yyyy-MM-dd hh24:mi:ss') ARR_TIME,
+		TO_CHAR(A.DPT_TIME, 'yyyy-MM-dd hh24:mi:ss') DPT_TIME,
+		A.STN_SORT,
+		A.STN_BUREAU,
+		decode(a.stn_name, t.start_stn, 'SFZ', t.end_stn, 'ZDZ',
+		'other') ISFDZ,
+		case when a.stn_name in (select k.cname from
+		jhpt_jcsj.zdfjk k where K.ssj
+		= #{bureauCode} or K.lj = #{bureauCode})
+		then '1' else '0' end ISFJK,
+		(select Q.SHORT_NAME from
+		JHPT_JBT.M_TRAINLINE_TYPE Q WHERE
+		Q.ID=T.TRAIN_TYPE_ID)
+		TRAIN_TYPE_SHORTNAME
+		from plan_train_stn A, plan_train T
+		where
+		t.plan_train_id = a.plan_train_id
+		AND T.BASE_TRAIN_ID IS NULL
+		and
+		to_char(t.start_time, 'yyyy-MM-dd') &lt;= #{runDate} and #{runDate}
+		&lt;= to_char(t.end_time, 'yyyy-MM-dd')
+		and t.pass_bureau like
+		'%${bureauName}%'
+		<!-- AND T.HIGHLINE_FLAG = '1' -->
+		<choose>
+			<when test="highlineFlag != null"> AND t.HIGHLINE_FLAG = #{highlineFlag}</when>
+			<otherwise> AND t.HIGHLINE_FLAG IN ('0','2')</otherwise>
+		</choose>
+		) o
+		where (o.isfdz &lt;> 'other' or o.isfjk = '1')
+		<!-- TD：图定 LK：临客 -->
+		<if test="creatType != null and creatType != '' ">
+			AND O.CREAT_TYPE = #{creatType}
+		</if>
+
+		<!-- ''、G、C、D、DJ（动检）、KS(空送=回送+回场)、回场、回送、通勤、F（折返）、OTHER（其他） -->
+		<if test="trainTypeShortName != null and trainTypeShortName != '' ">
+			<choose>
+				<when test="trainTypeShortName == 'KS'">
+					AND (O.TRAIN_TYPE_SHORTNAME = '回场' or
+					O.TRAIN_TYPE_SHORTNAME = '回送' )
+				</when>
+
+				<when test="highlineFlag == null and trainTypeShortName == 'OTHER'">
+					AND O.TRAIN_TYPE_SHORTNAME NOT
+					IN('K','T','Y','Z','回场','回送','通勤','F')
+				</when>
+
+				<when test="highlineFlag != null and trainTypeShortName == 'OTHER'">
+					AND O.TRAIN_TYPE_SHORTNAME NOT
+					IN('G','C','D','DJ','回场','回送','通勤','F')
+				</when>
+
+
+				<!-- <when test="trainTypeShortName == 'OTHER'"> AND O.TRAIN_TYPE_SHORTNAME 
+					NOT IN('G','C','D','DJ','回场','回送','通勤','F') </when> -->
+				<otherwise>
+					AND O.TRAIN_TYPE_SHORTNAME = #{trainTypeShortName}
+				</otherwise>
+			</choose>
+		</if>
+
+		<!-- (SFZD：始发终到 SFJC：始发交出 JRZD：接入交出 JRJC：接入终到) -->
+		<if test="runTypeCode != null and runTypeCode != '' ">
+			AND INSTR(O.RUN_TYPE_CODE,#{runTypeCode})>0
+		</if>
+
+		<!-- (SF：始发 JR：接入 JC：交出 ZD：终到) -->
+		<if test="stnNameTreeRunType != null and stnNameTreeRunType != '' ">
+			<choose>
+				<when test="stnNameTreeRunType == 'SF'">
+					AND O.START_BUREAU = #{bureauName}
+					AND
+					INSTR(O.RUN_TYPE_CODE,#{stnNameTreeRunType})>0
+				</when>
+				<when test="stnNameTreeRunType == 'ZD'">
+					AND O.END_BUREAU = #{bureauName}
+					AND
+					INSTR(O.RUN_TYPE_CODE,#{stnNameTreeRunType})>0
+				</when>
+				<otherwise>
+					AND INSTR(O.RUN_TYPE_CODE,#{stnNameTreeRunType})>0
+				</otherwise>
+			</choose>
+
+		</if>
+		<if test="stnName != null and stnName != '' ">
+			AND O.STN_NAME = #{stnName}
+		</if>
+		<if test="trainNbr != null and trainNbr != '' ">
+			AND O.TRAIN_NBR = #{trainNbr}
+		</if>
+		UNION ALL
+
+		select *
+		from (select
+		t.TRAIN_NBR,
+		t.START_STN,
+		TO_CHAR(T.START_TIME, 'yyyy-MM-dd hh24:mi:ss') START_TIME,
+		t.END_STN,
+		TO_CHAR(T.END_TIME, 'yyyy-MM-dd hh24:mi:ss') END_TIME,
+		t.END_DAYS,
+		t.PASS_BUREAU,
+		t.PLAN_TRAIN_ID,
+		t.PLAN_CROSS_ID,
+		t.START_BUREAU,
+		t.END_BUREAU,
+		t.HIGHLINE_FLAG,
+		case when T.CREAT_TYPE = 0 OR
+		T.CREAT_TYPE = 1
+		then '基本图'
+		when t.creat_type =2
+		then t.tel_shortinfo
+		when t.creat_type=3
+		then t.cmd_shortinfo
+		end as laiyuan,
+		(case
+		when
+		t.creat_type =0 then '3'
+		when t.creat_type =1 then '3'
+		when t.creat_type
+		=2 then '2'
+		when t.creat_type =3 then '1'
+		ELSE '' END ) laiyuan1,
+		( CASE
+		WHEN t.SPARE_FLAG =1 THEN '开行'
+		WHEN t.SPARE_FLAG =2 THEN '备用'
+		WHEN
+		t.SPARE_FLAG =9 THEN '停运'
+		ELSE '' END ) spareFlagTxt,
+		(CASE WHEN
+		t.START_BUREAU =#{bureauName} AND T.END_BUREAU
+		&lt;>#{bureauName} THEN
+		'SFJC'
+		WHEN t.START_BUREAU &lt;>#{bureauName} AND T.END_BUREAU
+		=#{bureauName}
+		THEN 'JRZD'
+		WHEN t.START_BUREAU &lt;>#{bureauName} AND
+		T.END_BUREAU &lt;>
+		#{bureauName} THEN 'JRJC'
+		WHEN t.START_BUREAU
+		=#{bureauName} AND T.END_BUREAU =#{bureauName} THEN
+		'SFZD'
+		ELSE '' END
+		)
+		RUN_TYPE_CODE,
+		(CASE WHEN t.START_BUREAU =#{bureauName} AND
+		T.END_BUREAU
+		&lt;>#{bureauName} THEN '始发交出'
+		WHEN t.START_BUREAU
+		&lt;>#{bureauName} AND T.END_BUREAU =#{bureauName}
+		THEN '接入终到'
+		WHEN
+		t.START_BUREAU &lt;>#{bureauName} AND T.END_BUREAU &lt;>
+		#{bureauName}
+		THEN '接入交出'
+		WHEN t.START_BUREAU =#{bureauName} AND T.END_BUREAU
+		=#{bureauName} THEN
+		'始发终到'
+		ELSE '' END
+		) RUN_TYPE,
+		(CASE WHEN
+		T.CREAT_TYPE=0 OR T.CREAT_TYPE=1 THEN 'TD'
+		WHEN T.CREAT_TYPE=2 OR
+		T.CREAT_TYPE=3 THEN 'LK'
+		ELSE '' END
+		) CREAT_TYPE,
+
+		M.ID as
+		PLAN_TRAIN_STN_ID,
+		M.NAME as STN_NAME,
+		<!-- to_char(to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd 
+			hh24:mi:ss')+ceil(to_number(T.START_TIME-to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd 
+			hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'))),'yyyy-mm-dd hh24:mi:ss') ARR_TIME, -->
+		<!-- to_char(to_date(to_char(M.TARGET_TIME,'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd 
+			hh24:mi:ss')+ceil(to_number(T.START_TIME-to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd 
+			hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'))),'yyyy-mm-dd hh24:mi:ss') DPT_TIME, -->
+
+		TO_CHAR(to_date( to_char(T.START_TIME,'yyyy-MM-dd') ||
+		TO_CHAR(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss')
+		ARR_TIME,
+		TO_CHAR(to_date( to_char(T.START_TIME,'yyyy-MM-dd') ||
+		TO_CHAR(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss')
+		DPT_TIME,
+
+
+		M.CHILD_INDEX as STN_SORT,
+		M.BUREAU_SHORT_NAME as STN_BUREAU,
+		decode(substr(M.JOBS,0,4), '&lt;始发>', 'SFZ', '&lt;终到>',
+		'ZDZ','&lt;经由>','other','other') ISFDZ,
+		CASE
+		WHEN M.NAME IN (SELECT
+		k.cname FROM jhpt_jcsj.zdfjk k WHERE K.ssj =
+		#{bureauCode} OR K.lj =
+		#{bureauCode})
+		THEN '1'
+		ELSE '0'
+		END ISFJK,
+		(select Q.SHORT_NAME from
+		JHPT_JBT.M_TRAINLINE_TYPE Q WHERE
+		Q.ID=T.TRAIN_TYPE_ID)
+		TRAIN_TYPE_SHORTNAME
+		from jhpt_jbt.M_TRAINLINE_ITEM_TEMP M, plan_train
+		T
+		where T.BASE_TRAIN_ID = M.PARENT_ID
+		AND T.BASE_TRAIN_ID IS NOT NULL
+		and to_char(t.start_time, 'yyyy-MM-dd') &lt;= #{runDate} and
+		#{runDate}
+		&lt;= to_char(t.end_time, 'yyyy-MM-dd')
+		and t.pass_bureau
+		like '%${bureauName}%'
+		<choose>
+			<when test="highlineFlag != null"> AND t.HIGHLINE_FLAG = #{highlineFlag}</when>
+			<otherwise> AND t.HIGHLINE_FLAG IN ('0','2')</otherwise>
+		</choose>
+		) o
+		where (o.isfdz &lt;> 'other' or o.isfjk = '1')
+		<!-- TD：图定 LK：临客 -->
+		<if test="creatType != null and creatType != '' ">
+			AND O.CREAT_TYPE = #{creatType}
+		</if>
+
+		<!-- ''、G、C、D、DJ（动检）、KS(空送=回送+回场)、回场、回送、通勤、F（折返）、OTHER（其他） -->
+		<if test="trainTypeShortName != null and trainTypeShortName != '' ">
+			<choose>
+				<when test="trainTypeShortName == 'KS'">
+					AND (O.TRAIN_TYPE_SHORTNAME = '回场' or
+					O.TRAIN_TYPE_SHORTNAME = '回送' )
+				</when>
+
+				<when test="highlineFlag == null and trainTypeShortName == 'OTHER'">
+					AND O.TRAIN_TYPE_SHORTNAME NOT
+					IN('K','T','Y','Z','回场','回送','通勤','F')
+				</when>
+
+				<when test="highlineFlag != null and trainTypeShortName == 'OTHER'">
+					AND O.TRAIN_TYPE_SHORTNAME NOT
+					IN('G','C','D','DJ','回场','回送','通勤','F')
+				</when>
+
+
+				<!-- <when test="trainTypeShortName == 'OTHER'"> AND O.TRAIN_TYPE_SHORTNAME 
+					NOT IN('G','C','D','DJ','回场','回送','通勤','F') </when> -->
+				<otherwise>
+					AND O.TRAIN_TYPE_SHORTNAME = #{trainTypeShortName}
+				</otherwise>
+			</choose>
+		</if>
+
+		<!-- (SFZD：始发终到 SFJC：始发交出 JRZD：接入交出 JRJC：接入终到) -->
+		<if test="runTypeCode != null and runTypeCode != '' ">
+			AND INSTR(O.RUN_TYPE_CODE,#{runTypeCode})>0
+		</if>
+
+		<!-- (SF：始发 JR：接入 JC：交出 ZD：终到) -->
+		<if test="stnNameTreeRunType != null and stnNameTreeRunType != '' ">
+			<choose>
+				<when test="stnNameTreeRunType == 'SF'">
+					AND O.START_BUREAU = #{bureauName}
+					AND
+					INSTR(O.RUN_TYPE_CODE,#{stnNameTreeRunType})>0
+				</when>
+				<when test="stnNameTreeRunType == 'ZD'">
+					AND O.END_BUREAU = #{bureauName}
+					AND
+					INSTR(O.RUN_TYPE_CODE,#{stnNameTreeRunType})>0
+				</when>
+				<otherwise>
+					AND INSTR(O.RUN_TYPE_CODE,#{stnNameTreeRunType})>0
+				</otherwise>
+			</choose>
+
+		</if>
+		<if test="stnName != null and stnName != '' ">
+			AND O.STN_NAME = #{stnName}
+		</if>
+		<if test="trainNbr != null and trainNbr != '' ">
+			AND O.TRAIN_NBR = #{trainNbr}
+		</if>
+		) order by
+		decode(laiyuan1,'1',1,'2',2,'3',3),decode(spareFlagTxt,'开行',1,'备用',2,'停运',3),train_nbr
+		<!-- order by o.train_nbr, -->
+		<!-- o.plan_train_id, o.stn_sort -->
+	</select>
+	<!-- 根据路局、开行日期yyyy-MM-dd查询高铁开行计划 end -->
+
+
+	<!-- 根据 PLAN_TRAIN_ID查询基本图高铁车底信息 -->
+	<select id="getHighLineVehInfoForJbt" parameterType="map"
+		resultType="org.railway.com.trainplan.service.dto.HighLinePlanVehicleDto">
+		SELECT N.TOKEN_VEH_BUREAU_CODE tokenVehBureauCode,
+		N.TOKEN_VEH_BUREAU_NAME tokenVehBureauName,
+		N.TOKEN_VEH_DEPT
+		tokenVehDept,
+		N.TOKEN_VEH_DEPOT tokenVehDepot,
+		N.CROSS_SECTION
+		crossSection,
+		M.CROSS_NAME crossName,
+		M.CRH_TYPE crhType,
+		M.VEHICLE1
+		vehicle1,
+		M.VEHICLE2 vehicle2
+		FROM
+		(
+		SELECT A.TOKEN_VEH_BUREAU
+		TOKEN_VEH_BUREAU_CODE,
+		(SELECT P.LJJC FROM JHPT_JCSJ.LJZD P WHERE
+		P.LJPYM=A.TOKEN_VEH_BUREAU)
+		TOKEN_VEH_BUREAU_NAME,
+		A.TOKEN_VEH_DEPT,
+		A.TOKEN_VEH_DEPOT, A.CROSS_SECTION,B.PLAN_TRAIN_ID
+		FROM PLAN_CROSS A,
+		PLAN_TRAIN B
+		WHERE A.PLAN_CROSS_ID = B.PLAN_CROSS_ID
+		AND B.PLAN_TRAIN_ID
+		= #{planTrainId}
+		)N
+
+		LEFT JOIN (SELECT J.CROSS_NAME, J.CRH_TYPE,
+		J.VEHICLE1, J.VEHICLE2,
+		K.PLAN_TRAIN_ID
+		FROM HIGHLINE_CROSS J,
+		HIGHLINE_CROSS_TRAIN K
+		WHERE K.HIGHLINE_CROSS_ID = J.HIGHLINE_CROSS_ID
+		AND J.VEHICLE_CHECK_TYPE = 1
+		AND K.PLAN_TRAIN_ID =#{planTrainId}
+		) M
+		ON
+		M.PLAN_TRAIN_ID = N.PLAN_TRAIN_ID
+	</select>
+	<!-- 根据 PLAN_TRAIN_ID查询基本图高铁车底信息 end -->
+
+
+	<!-- 根据 PLAN_TRAIN_ID查询临客高铁车底信息 -->
+	<select id="getHighLineVehInfoForLk" parameterType="map"
+		resultType="org.railway.com.trainplan.service.dto.HighLinePlanVehicleDto">
+		SELECT N.TOKEN_VEH_BUREAU_CODE tokenVehBureauCode,
+		N.TOKEN_VEH_BUREAU_NAME tokenVehBureauName,
+		N.CROSS_SECTION
+		crossSection,
+		M.TOKEN_VEH_DEPT tokenVehDept,
+		M.TOKEN_VEH_DEPOT
+		tokenVehDepot,
+		M.CROSS_NAME crossName,
+		M.CRH_TYPE crhType,
+		M.VEHICLE1
+		vehicle1,
+		M.VEHICLE2 vehicle2
+		FROM
+		(
+		SELECT
+		A.PLAN_TRAIN_ID,
+		(SELECT P.LJPYM
+		FROM JHPT_JCSJ.LJZD P WHERE P.LJJC=A.TOKEN_VEH_BUREAU)
+		TOKEN_VEH_BUREAU_CODE,
+		A.TOKEN_VEH_BUREAU TOKEN_VEH_BUREAU_NAME,
+		(A.START_STN || '～' ||A.END_STN) CROSS_SECTION
+		FROM PLAN_TRAIN A
+		WHERE
+		A.PLAN_TRAIN_ID =#{planTrainId}
+		)N
+
+		LEFT JOIN (SELECT
+		J.TOKEN_VEH_DEPT,J.TOKEN_VEH_DEPOT,J.CROSS_NAME,
+		J.CRH_TYPE,
+		J.VEHICLE1, J.VEHICLE2, K.PLAN_TRAIN_ID
+		FROM HIGHLINE_CROSS J,
+		HIGHLINE_CROSS_TRAIN K
+		WHERE K.HIGHLINE_CROSS_ID = J.HIGHLINE_CROSS_ID
+		AND J.VEHICLE_CHECK_TYPE = 1
+		AND K.PLAN_TRAIN_ID =#{planTrainId}
+		) M
+		ON
+		M.PLAN_TRAIN_ID = N.PLAN_TRAIN_ID
+	</select>
+	<!-- 根据 PLAN_TRAIN_ID查询临客高铁车底信息 end -->
+
+
+	<!-- 根据groupNbr车组类型 查询车型基础信息 -->
+	<select id="getCrhVehInfoByGroupNbr" parameterType="map"
+		resultType="org.railway.com.trainplan.service.dto.VehicleDto">
+		SELECT
+		A.VEHICLE_SORT vehicleSort,
+		A.VEHICLE_TYPE
+		vehicleType,
+		A.VEHICLE_CAPACITY vehicleCapacity
+		FROM DIC_CRH_VEHICLE A
+		WHERE A.GROUP_NBR=#{groupNbr}
+		ORDER BY A.VEHICLE_SORT
+	</select>
+	<!-- 根据crhType车型 查询车型基础信息 end -->
+
+
+
+
+
+	<!-- 根据 PLAN_CROSS_ID、trainNbr、CREW_DATE、CREW_BUREAU查询基本图高铁乘务信息 -->
+	<select id="getHighLineCrewInfoForJbt" parameterType="map"
+		resultType="map">
+		SELECT N.TOKEN_PSG_BUREAU,
+		N.TOKEN_PSG_BUREAU_NAME,
+		N.TOKEN_PSG_DEPT,
+		M.*
+		FROM
+		(
+		SELECT B.TOKEN_PSG_BUREAU,
+		(SELECT P.LJJC FROM
+		JHPT_JCSJ.LJZD P WHERE P.LJPYM=B.TOKEN_PSG_BUREAU)
+		TOKEN_PSG_BUREAU_NAME,
+		B.TOKEN_PSG_DEPT,
+		B.PLAN_CROSS_ID
+		FROM PLAN_CROSS
+		B
+		WHERE B.PLAN_CROSS_ID =#{planCrossId}
+		)N
+		LEFT JOIN (SELECT
+		#{planCrossId} PLAN_CROSS_ID,
+		A.NAME1,
+		A.TEL1,
+		A.IDENTITY1,
+		A.NAME2,
+		A.TEL2,
+		A.IDENTITY2,
+		A.RECORD_PEOPLE_ORG,
+		A.CREW_CROSS,
+		A.CREW_TYPE
+		FROM
+		HIGHLINE_CREW A
+		WHERE A.SUBMIT_TYPE = 1
+		AND '-'||A.CREW_CROSS||'-' LIKE
+		'%${trainNbr}%'
+		AND A.CREW_DATE = #{crewDate}
+		AND
+		A.CREW_BUREAU=#{bureauName}
+		) M
+		ON N.PLAN_CROSS_ID=M.PLAN_CROSS_ID
+		ORDER
+		BY M.CREW_TYPE
+	</select>
+	<!-- 根据 PLAN_CROSS_ID、trainNbr、CREW_DATE、CREW_BUREAU查询基本图高铁乘务信息 end -->
+
+
+	<!-- 根据 PLAN_TRAIN_ID、trainNbr、CREW_DATE、CREW_BUREAU查询临客高铁乘务信息 -->
+	<select id="getHighLineCrewInfoForLk" parameterType="map"
+		resultType="map">
+		SELECT N.TOKEN_PSG_BUREAU,
+		N.TOKEN_PSG_BUREAU_NAME,
+		N.TOKEN_PSG_DEPT,
+		M.*
+		FROM
+		(
+		SELECT B.TOKEN_PSG_BUREAU,
+		(SELECT P.LJJC FROM
+		JHPT_JCSJ.LJZD P WHERE P.LJPYM=B.TOKEN_PSG_BUREAU)
+		TOKEN_PSG_BUREAU_NAME,
+		#{planTrainId} PLAN_TRAIN_ID,
+		'' TOKEN_PSG_DEPT
+		FROM PLAN_TRAIN B
+		WHERE B.PLAN_TRAIN_ID =#{planTrainId}
+		)N
+		LEFT JOIN
+		(SELECT
+		#{planTrainId} PLAN_TRAIN_ID,
+		A.NAME1,
+		A.TEL1,
+		A.IDENTITY1,
+		A.NAME2,
+		A.TEL2,
+		A.IDENTITY2,
+		A.RECORD_PEOPLE_ORG,
+		A.CREW_CROSS,
+		A.CREW_TYPE
+		FROM HIGHLINE_CREW A
+		WHERE A.SUBMIT_TYPE = 1
+		AND
+		'-'||A.CREW_CROSS||'-' LIKE '%${trainNbr}%'
+		AND A.CREW_DATE =
+		#{crewDate}
+		AND A.CREW_BUREAU=#{bureauName}
+		) M
+		ON
+		N.PLAN_TRAIN_ID=M.PLAN_TRAIN_ID
+		ORDER BY M.CREW_TYPE
+	</select>
+	<!-- 根据 PLAN_CROSS_ID、trainNbr、CREW_DATE、CREW_BUREAU查询临客高铁乘务信息 end -->
+
+
+</mapper>

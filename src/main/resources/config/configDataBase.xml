@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataBaseSet>
+    <!--哈尔滨 -->
+	<DataBase>
+		<bureau>B</bureau>
+		<url>jdbc:oracle:thin:@10.16.2.26:1521:hjyd1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>ljd_ml</user>
+		<password>ljd_ml</password>
+		<plancmdpostname>哈局客服调</plancmdpostname>
+	</DataBase>
+	<!--沈阳 -->
+	<DataBase>
+		<bureau>T</bureau>
+		<url>jdbc:oracle:thin:@10.32.2.204:1521:dd2</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>沈局高铁计划调</plancmdpostname>
+	</DataBase>
+    <!--北京 -->
+	<DataBase>
+		<bureau>P</bureau>
+		<url>jdbc:oracle:thin:@10.64.2.143:1521/kz10g</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>ljd_ml</user>
+		<password>ljd_ml</password>
+		<plancmdpostname>京局高铁计划调</plancmdpostname>
+	</DataBase>
+    <!--太原 -->
+	<DataBase>
+		<bureau>V</bureau>
+		<url>jdbc:oracle:thin:@10.72.2.62:1521:o5901</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>太局高铁计划调</plancmdpostname>
+	</DataBase>
+	<!--呼和 -->
+	<DataBase>
+		<bureau>C</bureau>
+		<url>jdbc:oracle:thin:@10.94.2.115:1521:rac9i1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>呼局高铁计划调</plancmdpostname>
+	</DataBase>
+	<!--郑州 -->
+	<DataBase>
+		<bureau>F</bureau>
+		<url>jdbc:oracle:thin:@10.96.2.206:1521:ddxt1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>郑局高铁计划调</plancmdpostname>
+	</DataBase>
+	<!--武汉 -->
+	<DataBase>
+		<bureau>N</bureau>
+		<url>jdbc:oracle:thin:@10.102.2.193:1521:oradd1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>武局高铁计划调</plancmdpostname>
+	</DataBase>
+	<!--西安 -->
+	<DataBase>
+		<bureau>Y</bureau>
+		<url>jdbc:oracle:thin:@10.106.2.102:1521:ora11g1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>西局高铁计划调</plancmdpostname>
+	</DataBase>
+    <!--济南 -->
+	<DataBase>
+		<bureau>K</bureau>
+		<url>jdbc:oracle:thin:@10.112.37.90:1521:kzyd1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>ljd_ml</user>
+		<password>ljd_ml</password>
+		<plancmdpostname>济局高铁计划调</plancmdpostname>
+	</DataBase>
+	<!--上海 -->
+	<DataBase>
+		<bureau>H</bureau>
+		<url>jdbc:oracle:thin:@10.128.2.132:1521:ddxt1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>ljd_ml</user>
+		<password>ljd_ml</password>
+		<plancmdpostname>上局高铁计划调</plancmdpostname>
+	</DataBase>
+	<!--南昌 -->
+	<DataBase>
+		<bureau>G</bureau>
+		<url>jdbc:oracle:thin:@10.158.2.16:1521/tdms</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>南局高铁计划调</plancmdpostname>
+	</DataBase>
+    <!--广铁 -->
+    <DataBase>
+		<bureau>Q</bureau>
+		<url>jdbc:oracle:thin:@10.160.3.80:1521/ddxtdb</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>广局高铁计划调</plancmdpostname>
+	</DataBase>
+    <!--南宁 -->
+	<DataBase>
+		<bureau>Z</bureau>
+		<url>jdbc:oracle:thin:@10.190.2.33:1521:ljddora1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>宁局高铁计划调</plancmdpostname>
+	</DataBase>
+	<!--成都 -->
+	<DataBase>
+		<bureau>W</bureau>
+		<url>jdbc:oracle:thin:@10.192.2.35:1521:orcl</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>成局高铁计划调</plancmdpostname>
+	</DataBase>
+	<!--昆明 -->
+	<DataBase>
+		<bureau>M</bureau>
+		<url>jdbc:oracle:thin:@10.206.2.178:1521:app1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>昆局高铁计划调</plancmdpostname>
+	</DataBase>
+	<!--兰州 -->
+	<DataBase>
+		<bureau>J</bureau>
+		<url>jdbc:oracle:thin:@10.208.3.156:1521/orcl</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>兰局高铁计划调</plancmdpostname>
+	</DataBase>
+	<!--乌鲁木齐 -->
+	<DataBase>
+		<bureau>R</bureau>
+		<url>jdbc:oracle:thin:@10.224.3.66:1521:dd9i1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>乌局高铁计划调</plancmdpostname>
+	</DataBase>
+    <!--青藏 -->
+	<DataBase>
+		<bureau>O</bureau>
+		<url>jdbc:oracle:thin:@10.216.2.62:1521:dd1</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>tds1ml1</user>
+		<password>tds1ml1</password>
+		<plancmdpostname>乌局高铁计划调</plancmdpostname>
+	</DataBase>
+	
+	<!--铁总 -->
+	<DataBase>
+		<bureau>TDB</bureau>
+		<url>jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.1.187.33)(PORT = 1521)) (ADDRESS = (PROTOCOL = TCP)(HOST = 10.1.187.41)(PORT = 1521)) )(CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = ddxt1)))</url>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<user>jhpt_ky</user>
+		<password>jhpt_ky</password>
+	</DataBase>
+	
+</DataBaseSet>
+
+

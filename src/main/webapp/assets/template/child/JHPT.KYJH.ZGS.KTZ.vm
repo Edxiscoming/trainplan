@@ -1,0 +1,62 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+    
+        <section class="leftMenu" style="display:none" id="runPlan">
+           <ul class="nav nav-pills nav-stacked" role="tablist">
+                <li class ="active" id="runPlan2"><a style="width: 100%;" href="${ctx}/runPlan" target="contentFrame" >管理图定</a></li>
+                <li><a style="width: 100%;" href="${ctx}/runPlan/runPlanCreate?train_type=0" target="contentFrame">图定生成</a></li>  
+                <li><a style="width: 100%;" href="${ctx}/runPlanLk/mainPage?train_type=0" target="contentFrame">管理临客</a></li>
+                <li><a style="width: 100%;" href="${ctx}/runPlanLk/addPage?train_type=0" target="contentFrame">临客加开</a></li>
+                <li><a style="width: 100%;" href="${ctx}/runPlanLk/stopPage?train_type=0" target="contentFrame">临客停运</a></li>
+                <li><a style="width: 100%;" href="${ctx}/runPlan/runPlanLineCreate?train_type=0" target="contentFrame">发布计划</a></li>
+                <!-- <li><a style="width: 100%;" href="${ctx}/audit?train_type=0" target="contentFrame">核对计划</a></li> -->
+         <li><a style="width: 100%;" href="${ctx}/audit/cbPlan?train_type=0" target="contentFrame">差别计划</a></li>          
+           </ul>
+        </section>
+
+        <section class="leftMenu" style="display:none" id="runPlanGt">
+           <ul class="nav nav-pills nav-stacked" role="tablist">
+                 <li class ="active" id ="runPlanGt2"><a style="width: 100%;" href="${ctx}/runPlan/runPlanGt" target="contentFrame">管理图定</a></li>
+                 <li><a style="width: 100%;" href="${ctx}/runPlan/runPlanCreate?train_type=1" target="contentFrame">图定生成</a></li>                        
+                 <li><a style="width: 100%;" href="${ctx}/runPlanLk/mainPage?train_type=1" target="contentFrame">管理临客</a></li>
+                 <li><a style="width: 100%;" href="${ctx}/runPlanLk/addPageGT?train_type=1" target="contentFrame">临客加开</a></li>
+                 <li><a style="width: 100%;" href="${ctx}/runPlanLk/stopPageGT?train_type=1" target="contentFrame">临客停运</a></li>
+                 <li><a style="width: 100%;" href="${ctx}/runPlan/runPlanHighLineCreate" target="contentFrame">发布计划</a></li>
+                 <!-- <li><a style="width: 100%;" href="${ctx}/audit?train_type=1" target="contentFrame">核对计划</a></li> -->
+         <li><a style="width: 100%;" href="${ctx}/audit/cbPlan?train_type=1" target="contentFrame">差别计划</a></li>                                     
+           </ul>
+        </section>
+         
+        <section class="leftMenu" style="display:none" id="overplan">
+          <ul class="nav nav-pills nav-stacked" role="tablist">             
+                <li class="active" id="overplan2"><a style="width: 100%;" href="${ctx}/audit?train_type=2" target="contentFrame">落成计划</a></li>
+                <li><a style="width: 100%;" href="${ctx}/crew/page/cz/jy" target="contentFrame">填报车长</a></li>
+                <li><a style="width: 100%;" href="${ctx}/crew/page/sj/jy" target="contentFrame">填报司机</a></li>                    
+          </ul>
+        </section>
+       
+        <section class="leftMenu" style="display:none" id="overplanGt">  
+         <ul class="nav nav-pills nav-stacked" role="tablist">                        
+                <li class="active" id="overplanGt2"><a style="width: 100%;" href="${ctx}/audit?train_type=3" target="contentFrame">落成计划</a></li>
+                <li><a style="width: 100%;" href="${ctx}/highLine" target="contentFrame" >车底交路</a></li>
+                <li><a style="width: 100%;" href="${ctx}/highLine/vehicleCheck" target="contentFrame" >车底运用</a></li>
+                <li><a style="width: 100%;" href="${ctx}/highLine/vehicle" target="contentFrame">填报车底</a></li> 
+                <li><a style="width: 100%;" href="${ctx}/crew/page/cz" target="contentFrame">填报车长</a></li>   
+                <li><a style="width: 100%;" href="${ctx}/crew/page/sj" target="contentFrame">填报司机</a></li>   
+                <li><a style="width: 100%;" href="${ctx}/crew/page/jxs" target="contentFrame">报机械师</a></li>   
+         </ul>
+       </section>
+       
+       <section class="leftMenu" style="display:none" id="getBase">    
+         <ul class="nav nav-pills nav-stacked" role="tablist">                         
+                <li class="active" id="getBase2"><a href="${ctx}/jbtcx?type=jbt" target="contentFrame">查基本图</a></li>
+                <li><a href="${ctx}/cross" target="contentFrame">管对数表</a></li>
+                <li><a href="${ctx}/cross/unit" target="contentFrame">交路单元</a></li>  
+         </ul>
+       </section> 
+       
+		<section class="leftMenu" style="display:none" id="getMsg">    
+		  <ul class="nav nav-pills nav-stacked" role="tablist">                         
+		         <li class="active" id="getBase2"><a href="${ctx}/msg" target="contentFrame">消息管理</a></li>
+		  </ul>
+		</section>

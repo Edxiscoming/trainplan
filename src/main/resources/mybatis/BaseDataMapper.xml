@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.BureauDao">
+    <select id="getBureauList" resultType="map">
+        SELECT CZSJ, CZSM, SJSXSJ, LJDM, LJPYM, LJQC, LJJC FROM JHPT_JCSJ.LJZD ORDER BY LJDM
+    </select>
+    <select id="getAllBureauShortName" resultType="String">
+        select WM_CONCAT(LJJC) from JHPT_JCSJ.LJZD
+    </select>
+        <select id="getShortBureauNameByCode" resultType="String">
+        select LJJC from JHPT_JCSJ.LJZD where LJPYM = #{bureauCode}
+    </select>
+</mapper> 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="NodeDao">
+    <select id="getFullNodeInfo" resultType="org.railway.com.trainplan.entity.Node">
+    
+    
+    select  t.id,                                
+t.name,                             
+t.description,               
+t.pinyin,                         
+t.shortName,                  
+t.telegraphCode,          
+t.code,                             
+t.marks,                           
+t.bureauId,                    
+t.bureauName,                
+t.bureauShortName,     
+t.southwestNodeId,     
+t.southwestNodeName, 
+t.tdmsNodeId,               
+t.tdmsNodeName,           
+t.tdcsNodeId,               
+t.tdcsNodeName,           
+t.pinyinInitials         
+    
+    from 
+    
+      (  select ID as id,
+               NAME as name,
+               DESCRIPTION as description,
+               PINYIN as pinyin,
+               SHORT_NAME as shortName,
+               TELEGRAPH_CODE as telegraphCode,
+               CODE as code,
+               MARKS as marks,
+               BUREAU_ID as bureauId,
+               BUREAU_NAME as bureauName,
+               BUREAU_SHORT_NAME as bureauShortName,
+               SOUTHWEST_NODE_ID as southwestNodeId,
+               SOUTHWEST_NODE_NAME as southwestNodeName,
+               TDMS_NODE_ID as tdmsNodeId,
+               TDMS_NODE_NAME as tdmsNodeName,
+               TDCS_NODE_ID as tdcsNodeId,
+               TDCS_NODE_NAME as tdcsNodeName,
+               PINYIN_INITIALS as pinyinInitials
+<!--         from JHPT_JBT.M_NODE  WHERE MARKS = '&lt;车站&gt;' order by   PINYIN)t order by t.name -->
+        from JHPT_JBT.M_NODE  WHERE MARKS &lt;> '&lt;铁路局&gt;' order by   PINYIN)t order by t.name
+    </select> 
+    
+    	 <select id="getNodeByName" parameterType="string"  resultType="org.railway.com.trainplan.entity.Node">
+		
+		select ID as id,
+               NAME as name,
+               DESCRIPTION as description,
+               PINYIN as pinyin,
+               SHORT_NAME as shortName,
+               TELEGRAPH_CODE as telegraphCode,
+               CODE as code,
+               MARKS as marks,
+               BUREAU_ID as bureauId,
+               BUREAU_NAME as bureauName,
+               BUREAU_SHORT_NAME as bureauShortName,
+               SOUTHWEST_NODE_ID as southwestNodeId,
+               SOUTHWEST_NODE_NAME as southwestNodeName,
+               TDMS_NODE_ID as tdmsNodeId,
+               TDMS_NODE_NAME as tdmsNodeName,
+               TDCS_NODE_ID as tdcsNodeId,
+               TDCS_NODE_NAME as tdcsNodeName,
+               PINYIN_INITIALS as pinyinInitials
+        from JHPT_JBT.M_NODE  WHERE NAME = #{name}
+		
+     </select>
+
+    			
+</mapper>

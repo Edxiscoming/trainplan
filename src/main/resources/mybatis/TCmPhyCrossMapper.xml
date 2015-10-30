@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.comfirmedmap.repository.TCmPhyCrossMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmPhyCross" >
+    <id column="CM_PHY_CROSS_ID" property="cmPhyCrossId" jdbcType="VARCHAR" />
+    <result column="CM_CROSS_ID" property="cmCrossId" jdbcType="VARCHAR" />
+    <result column="GROUP_SN" property="groupSn" jdbcType="DECIMAL" />
+    <result column="CREAT_PEOPLE" property="creatPeople" jdbcType="VARCHAR" />
+    <result column="CREAT_PEOPLE_ORG" property="creatPeopleOrg" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="CHECK_PEOPLE" property="checkPeople" jdbcType="VARCHAR" />
+    <result column="CHECK_PEOPLE_ORG" property="checkPeopleOrg" jdbcType="VARCHAR" />
+    <result column="CHECK_TIME" property="checkTime" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+    <result column="CHECK_FLAG" property="checkFlag" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="selectByCmCrossId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_PHY_CROSS
+    where CM_CROSS_ID = #{cmCrossId}
+  </select>
+  <sql id="Base_Column_List" >
+    CM_PHY_CROSS_ID, CM_CROSS_ID, GROUP_SN, CREAT_PEOPLE, CREAT_PEOPLE_ORG, CREAT_TIME, 
+    CHECK_PEOPLE, CHECK_PEOPLE_ORG, CHECK_TIME, USE_STATUS, CHECK_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_PHY_CROSS
+    where CM_PHY_CROSS_ID = #{cmPhyCrossId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CM_PHY_CROSS
+    where CM_PHY_CROSS_ID = #{cmPhyCrossId}
+  </delete>
+  <update id="deleteByPrimaryKeyLogic" parameterType="java.lang.String" >
+    update T_CM_PHY_CROSS
+      set USE_STATUS = 0
+    where CM_PHY_CROSS_ID = #{cmPhyCrossId}
+  </update>
+  <delete id="deleteByCmCross" parameterType="java.lang.String" >
+    delete from T_CM_PHY_CROSS
+    where CM_CROSS_ID = #{cmCrossId)}
+  </delete>
+  <update id="deleteByCmCrossLogic" parameterType="java.lang.String" >
+    update T_CM_PHY_CROSS
+      set USE_STATUS = 0
+    where CM_CROSS_ID = #{cmCrossId}
+  </update>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmPhyCross" >
+    insert into T_CM_PHY_CROSS (CM_PHY_CROSS_ID, CM_CROSS_ID, GROUP_SN, CREAT_PEOPLE, CREAT_PEOPLE_ORG, 
+      CREAT_TIME, CHECK_PEOPLE, CHECK_PEOPLE_ORG, CHECK_TIME, USE_STATUS, CHECK_FLAG
+      )
+    values (#{cmPhyCrossId}, #{cmCrossId}, #{groupSn}, #{creatPeople}, #{creatPeopleOrg}, 
+      #{creatTime}, #{checkPeople}, #{checkPeopleOrg}, #{checkTime}, #{useStatus}, #{checkFlag}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmPhyCross" >
+    insert into T_CM_PHY_CROSS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmPhyCrossId != null" >
+        CM_PHY_CROSS_ID,
+      </if>
+      <if test="cmCrossId != null" >
+        CM_CROSS_ID,
+      </if>
+      <if test="groupSn != null" >
+        GROUP_SN,
+      </if>
+      <if test="creatPeople != null" >
+        CREAT_PEOPLE,
+      </if>
+      <if test="creatPeopleOrg != null" >
+        CREAT_PEOPLE_ORG,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="checkPeople != null" >
+        CHECK_PEOPLE,
+      </if>
+      <if test="checkPeopleOrg != null" >
+        CHECK_PEOPLE_ORG,
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmPhyCrossId != null" >
+        #{cmPhyCrossId},
+      </if>
+      <if test="cmCrossId != null" >
+        #{cmCrossId},
+      </if>
+      <if test="groupSn != null" >
+        #{groupSn},
+      </if>
+      <if test="creatPeople != null" >
+        #{creatPeople},
+      </if>
+      <if test="creatPeopleOrg != null" >
+        #{creatPeopleOrg},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime},
+      </if>
+      <if test="checkPeople != null" >
+        #{checkPeople},
+      </if>
+      <if test="checkPeopleOrg != null" >
+        #{checkPeopleOrg},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+      <if test="checkFlag != null" >
+        #{checkFlag},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmPhyCross" >
+    update T_CM_PHY_CROSS
+    <set >
+      <if test="cmCrossId != null" >
+        CM_CROSS_ID = #{cmCrossId},
+      </if>
+      <if test="groupSn != null" >
+        GROUP_SN = #{groupSn},
+      </if>
+      <if test="creatPeople != null" >
+        CREAT_PEOPLE = #{creatPeople},
+      </if>
+      <if test="creatPeopleOrg != null" >
+        CREAT_PEOPLE_ORG = #{creatPeopleOrg},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime},
+      </if>
+      <if test="checkPeople != null" >
+        CHECK_PEOPLE = #{checkPeople},
+      </if>
+      <if test="checkPeopleOrg != null" >
+        CHECK_PEOPLE_ORG = #{checkPeopleOrg},
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME = #{checkTime},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG = #{checkFlag},
+      </if>
+    </set>
+    where CM_PHY_CROSS_ID = #{cmPhyCrossId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmPhyCross" >
+    update T_CM_PHY_CROSS
+    set CM_CROSS_ID = #{cmCrossId},
+      GROUP_SN = #{groupSn},
+      CREAT_PEOPLE = #{creatPeople},
+      CREAT_PEOPLE_ORG = #{creatPeopleOrg},
+      CREAT_TIME = #{creatTime},
+      CHECK_PEOPLE = #{checkPeople},
+      CHECK_PEOPLE_ORG = #{checkPeopleOrg},
+      CHECK_TIME = #{checkTime},
+      USE_STATUS = #{useStatus},
+      CHECK_FLAG = #{checkFlag}
+    where CM_PHY_CROSS_ID = #{cmPhyCrossId}
+  </update>
+</mapper>

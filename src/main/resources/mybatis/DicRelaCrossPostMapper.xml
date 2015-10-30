@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="dicRelaCrossPostDao">
+
+	<resultMap id="dicRelaCrossPost"
+		type="org.railway.com.trainplan.entity.DicRelaCrossPost">
+		<id column="ID" property="id" />
+		<result column="BUREAU" property="bureau" />
+		<result column="POST_ID" property="post_id" />
+		<result column="CROSS_NAME" property="crossName" />
+		<result column="THROUGH_LINE" property="throughLine" />
+		<result column="POST_NAME" property="postName" />
+		<result column="DEPOT_NAME" property="depotName" />
+		<result column="RELATION_TYPE" property="relattonType" />
+		<result column="NOTE" property="note" />
+	</resultMap>
+
+
+	<select id="initDicRelaCrossPost" resultType="org.railway.com.trainplan.entity.DicRelaCrossPost" parameterType="map">
+				SELECT
+			crossName,
+			bureau,
+			depotName
+			,tokenVehBureau
+		FROM
+			(
+				SELECT DISTINCT
+					T .cross_name crossName,
+					T .creat_time,
+					(
+						CASE
+						WHEN T .relevant_bureau IS NULL THEN
+							T .token_veh_bureau
+						ELSE
+							T .relevant_bureau
+						END
+					) bureau,
+					T.token_veh_depot depotName,
+					T.token_veh_bureau tokenVehBureau,
+					RANK () OVER (
+						PARTITION BY T .cross_name
+						ORDER BY
+							T .creat_time DESC
+					) mm  
+				FROM
+					base_cross T
+				WHERE
+					T .cross_name IN (
+						SELECT
+							A .cross_name
+						FROM
+							base_cross A
+						WHERE
+						 A .relevant_bureau LIKE '%${bureau}%'
+						AND INSTR (A .highline_flag, 1) > 0
+						MINUS
+							SELECT
+								b.cross_name
+							FROM
+								dic_rela_cross_post b
+							WHERE
+								b.bureau =#{bureau}
+					)
+			)
+		WHERE
+			mm &lt;= 1
+	</select>
+
+	<select id="getDicRelaCrossPostList" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.DicRelaCrossPost">
+		SELECT
+		t.ID as id,
+		t.BUREAU AS bureau,
+		t.CROSS_NAME AS crossName,
+		t.THROUGH_LINE AS throughLine,
+		t.POST_NAME AS postName,
+		t.DEPOT_NAME AS depotName,
+		t.RELATION_TYPE AS relattonType,
+		t.NOTE AS note,
+		t.POST_ID AS post_id
+		,t.loaddate_offset loaddateOffset
+		,t.token_veh_bureau tokenVehBureau
+		FROM DIC_RELA_CROSS_POST t WHERE 1=1
+		<if test="bureau != null and bureau != '' ">
+			and t.BUREAU=#{bureau}
+		</if>
+		<if test="trainNbr != null and trainNbr != '' ">
+			and t.CROSS_NAME like '%${trainNbr}%'
+		</if>
+		<if test="throughLine != null and throughLine != '' ">
+			and t.THROUGH_LINE=#{throughLine}
+		</if>
+		<if test="tokenVehDepot != null and tokenVehDepot != '' ">
+			and t.DEPOT_NAME=#{tokenVehDepot}
+		</if>
+		<if test="postName != null and postName !='' ">
+			and t.POST_NAME = #{postName}
+		</if>
+		<if test="loaddateOffset != null and loaddateOffset !='' ">
+			and t.loaddate_offset = #{loaddateOffset}
+		</if>
+		
+		<!-- ORDER BY t.ID desc -->
+		<!-- ORDER BY t.CROSS_NAME -->
+		order by decode(t.token_veh_bureau,#{bureau},1,2),t.token_veh_bureau,t.cross_name
+	</select>
+
+	<update id="updateRelaCrossPost" parameterType="org.railway.com.trainplan.entity.DicRelaCrossPost">
+		update DIC_RELA_CROSS_POST
+		set
+		BUREAU=#{bureau,jdbcType=VARCHAR},
+		CROSS_NAME=#{crossName,jdbcType=VARCHAR},
+		THROUGH_LINE=#{throughLine,jdbcType=VARCHAR},
+		POST_NAME=#{postName,jdbcType=VARCHAR},
+		DEPOT_NAME=#{depotName,jdbcType=VARCHAR},
+		POST_ID=#{post_id,jdbcType=VARCHAR}
+		where id=#{id,jdbcType=VARCHAR}
+	</update>
+
+	<select id="getDicList" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.DicRelaCrossPost">
+		SELECT
+		t.ID as id,
+		t.BUREAU AS bureau,
+		t.CROSS_NAME AS crossName,
+		t.THROUGH_LINE AS throughLine,
+		t.POST_NAME AS postName,
+		t.DEPOT_NAME AS depotName,
+		t.RELATION_TYPE AS relattonType,
+		t.NOTE AS note,
+		t.POST_ID AS post_id
+		FROM DIC_RELA_CROSS_POST t WHERE 1=1
+		<if test="ids != null">
+			AND t.ID IN
+			<foreach collection="ids" item="item" index="index" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		ORDER BY t.ID desc
+	</select>
+
+
+	<insert id="insertDicRelaCrossPost" useGeneratedKeys="false"
+		keyProperty="id" parameterType="org.railway.com.trainplan.entity.DicRelaCrossPost">
+		insert into DIC_RELA_CROSS_POST(
+		ID,
+		BUREAU,
+		POST_ID,
+		CROSS_NAME,
+		THROUGH_LINE ,
+		POST_NAME ,
+		DEPOT_NAME ,
+		RELATION_TYPE ,
+		NOTE
+		,loaddate_offset
+		,token_veh_bureau
+		)values(
+		SEQ_DIC_RELA_CROSS_POST.nextval,
+		#{bureau, jdbcType=VARCHAR},
+		#{post_id, jdbcType=VARCHAR},
+		#{crossName, jdbcType=VARCHAR},
+		#{throughLine, jdbcType=VARCHAR},
+		#{postName, jdbcType=VARCHAR},
+		#{depotName,jdbcType=VARCHAR},
+		#{relattonType,jdbcType=VARCHAR},
+		#{note, jdbcType=VARCHAR}
+		,#{loaddateOffset, jdbcType=NUMERIC}
+		,#{tokenVehBureau, jdbcType=VARCHAR}
+		)
+
+
+	</insert>
+
+	<delete id="deleteDicRelaCrossPost" parameterType="map">
+
+		DELETE FROM DIC_RELA_CROSS_POST WHERE ID = #{dicIds}
+
+	</delete>
+
+	<delete id="deleteDicrelacrosspostByBureau" parameterType="map">
+		delete from dic_rela_cross_post where bureau = #{bureau}
+	</delete>
+
+	<update id="updateRelaCrossPostByMap" parameterType="map">
+		update dic_rela_cross_post a set
+		update_time = sysdate
+		<if test="through_line != null">
+			,a.through_line = #{through_line}
+		</if>
+		<if test="post_id != null">
+			,a.post_id = #{post_id}
+		</if>
+		<if test="post_name != null">
+			,a.post_name = #{post_name}
+		</if>
+		<if test="depot_name != null">
+			,a.depot_name = #{depot_name}
+		</if>
+		<if test="loaddate_offset != null">
+			,a.loaddate_offset = #{loaddate_offset}
+		</if>
+		
+		where a.id = #{id}
+	</update>
+
+</mapper>
