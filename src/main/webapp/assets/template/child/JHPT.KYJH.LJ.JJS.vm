@@ -1,0 +1,54 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<section class="leftMenu" style="display:none" id="runPlan">
+	<ul class="nav nav-pills nav-stacked" role="tablist">
+		<!-- <li class ="active" id="runPlan2"><a style="width: 100%;" href="${ctx}/runPlan" target="contentFrame" >管理图定</a></li>  -->
+        <!-- <li><a style="width: 100%;" href="${ctx}/runPlan/runPlanCreate?train_type=0" target="contentFrame">图定生成</a></li>  -->
+         <li class ="active"><a style="width: 100%;" href="${ctx}/runPlan/runPlanMain?train_type=0" target="contentFrame">首页</a></li>   
+         <li id="runPlan2"><a style="width: 100%;" href="${ctx}/runPlan/runPlanCreatePl?train_type=0" target="contentFrame">批量生成/检查</a></li>  
+         <li><a style="width: 100%;" href="${ctx}/runPlan/runPlanCreateCx?train_type=0" target="contentFrame">开行计划查询</a></li>   
+         <li><a style="width: 100%;" href="${ctx}/operationplan/autoGenSet" target="contentFrame">自动生成设置</a></li>   
+    </ul>
+ </section>
+
+ <section class="leftMenu" style="display:none" id="runPlanGt">
+    <ul class="nav nav-pills nav-stacked" role="tablist">
+          <!--<li class ="active" id ="runPlanGt2"><a style="width: 100%;" href="${ctx}/runPlan/runPlanGt" target="contentFrame">管理图定</a></li>  -->
+          <!-- <li><a style="width: 100%;" href="${ctx}/runPlan/runPlanCreate?train_type=1" target="contentFrame">图定生成</a></li> --> 
+          <li class ="active"><a style="width: 100%;" href="${ctx}/runPlan/runPlanMain?train_type=1" target="contentFrame">首页</a></li> 
+          <li id ="runPlanGt2"><a style="width: 100%;" href="${ctx}/runPlan/runPlanCreatePl?train_type=1" target="contentFrame">批量生成/检查</a></li>  
+          <li><a style="width: 100%;" href="${ctx}/runPlan/runPlanCreateCx?train_type=1" target="contentFrame">开行计划查询</a></li>                        
+    </ul>
+ </section>
+
+<section class="leftMenu" style="display:none" id="getBase">    
+  <ul class="nav nav-pills nav-stacked" role="tablist">
+         <!-- <li><a href="http://10.1.186.117:8080/southwest-trainlines-check-all-sub.jsp?bureau=${user.bureauShortName}" target="contentFrame">核基本图</a></li> -->
+         <!--<li><a href="${ctx}/jbtcx?type=jbt" target="contentFrame">查基本图</a></li>
+         <li><a href="${ctx}/cross" target="contentFrame">管对数表</a></li>
+         <li><a href="${ctx}/cross/passengerServiceExcel" target="contentFrame">客运处<br/>对数表</a></li>
+         <li><a href="${ctx}/cross/unit" target="contentFrame">交路单元</a></li>
+         <li><a href="${ctx}/cross/newunit" target="contentFrame">交路信息</a></li> 
+         <li><a href="${ctx}/cross/original_cross_import" target="contentFrame">导入对数表</a></li> 
+         <li><a href="${ctx}/cross/original_cross_manage" target="contentFrame">维护对数表</a></li>
+         <li><a href="${ctx}/partOriginalCross/pageIndex/import" target="contentFrame">对数表导入</a></li>
+         <li><a href="${ctx}/partOriginalCross/pageIndex/manager" target="contentFrame">对数表管理</a></li> 
+         <li><a href="${ctx}/partOriginalCross/pageIndex/check" target="contentFrame">对数表审核</a></li>
+         <li><a href="${ctx}/cmOriginalCross/pageIndex/manage" target="contentFrame">担当局管理</a></li> -->
+         
+         <li class ="active"><a href="${ctx}/cmOriginalCross/pageIndex/crossTrain" target="contentFrame">本局对数表</a></li>
+         <li><a href="${ctx}/cmOriginalCross/pageIndex/outerCrossTrain" target="contentFrame">外局对数表</a></li>
+         <li><a href="${ctx}/cmOriginalCross/pageIndex/check" target="contentFrame">核对/生成交路</a></li> 
+         <li><a href="${ctx}/cmcross/pageIndex/query" target="contentFrame">查询交路</a></li> 
+         <li><a href="${ctx}/cmcross/pageIndex/check" target="contentFrame">核对交路单元</a></li>
+         <li><a href="${ctx}/cmcross/pageIndex/jbsj_home_page" target="contentFrame">基本数据首页</a></li>
+         <li><a href="${ctx}/cmOriginalCross/pageIndex/bjdd" target="contentFrame">管理本局担当</a></li>
+         <li><a href="${ctx}/cmOriginalCross/pageIndex/wjdd" target="contentFrame">管理外局担当</a></li>
+         <li><a href="${ctx}/cmOriginalCross/pageIndex/alternateConfig" target="contentFrame">新旧图交替设置</a></li>
+         <li><a href="${ctx}/cmOriginalCross/pageIndex/alternateHome" target="contentFrame">新旧图交替首页</a></li>
+  </ul>
+</section>    
+<section class="leftMenu" style="display:none" id="getMsg">    
+  <ul class="nav nav-pills nav-stacked" role="tablist">                         
+         <li class="active" id="getBase2"><a href="${ctx}/msg" target="contentFrame">消息管理</a></li>
+  </ul>
+</section>             

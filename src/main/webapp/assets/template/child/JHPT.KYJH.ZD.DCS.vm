@@ -1,0 +1,18 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+ <section class="leftMenu" style="display:none" id="overplanGt">  
+  <ul class="nav nav-pills nav-stacked" role="tablist">                        
+         <li class="active"><a style="width: 100%;" href="${ctx}/highLine/vehicle" target="contentFrame">填报车底</a></li> 
+         <li><a style="width: 100%;" href="${ctx}/crew/page/jxs" target="contentFrame">报机械师</a></li>   
+  </ul>
+</section> 
+
+<section class="leftMenu" style="display:none" id="getBase">    
+  <ul class="nav nav-pills nav-stacked" role="tablist">                         
+         <li class="active" id="getBase2"><a href="${ctx}/jbtcx?type=jbt" target="contentFrame">查基本图</a></li>
+  </ul>
+</section>  
+<section class="leftMenu" style="display:none" id="getMsg">    
+  <ul class="nav nav-pills nav-stacked" role="tablist">                         
+         <li class="active" id="getBase2"><a href="${ctx}/msg" target="contentFrame">消息管理</a></li>
+  </ul>
+</section>

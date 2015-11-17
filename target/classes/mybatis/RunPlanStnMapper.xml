@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.RunPlanStnDao">
+
+    <insert id="addRunPlanStn" parameterType="java.util.List">
+        INSERT INTO PLAN_TRAIN_STN
+        (
+        PLAN_TRAIN_STN_ID,
+        PLAN_TRAIN_ID,
+        STN_SORT,
+        STN_NAME,
+        STN_BUREAU,
+        STN_BUREAU_FULL,
+        ARR_TRAIN_NBR,
+        DPT_TRAIN_NBR,
+        ARR_TIME,
+        DPT_TIME,
+        BASE_ARR_TIME,
+        BASE_DPT_TIME,
+        UP_DOWN,
+        TRACK_NBR,
+        TRACK_NAME,
+        PLATFORM,
+        PSG_FLG,
+        LOCO_FLAG,
+        TEC_TYPE,
+        STN_TYPE,
+        BOUNDARY_IN_OUT,
+        RUN_DAYS,
+        <!-- added by liuhang -->
+        JOBS,
+        STN_BUREAU_ID,
+        NODE_ID,
+        NODE_NAME
+        <!--  --> 
+        )
+        <foreach collection="list" item="item" index="index" open="(" separator="UNION ALL" close=")">
+            SELECT #{item.planTrainStnId, jdbcType=VARCHAR},
+            #{item.planTrainId, jdbcType=VARCHAR},
+            #{item.stnSort, jdbcType=NUMERIC},
+            #{item.stnName, jdbcType=VARCHAR},
+            #{item.stnBureauShortName, jdbcType=VARCHAR},
+            #{item.stnBureauFullName, jdbcType=VARCHAR},
+            #{item.arrTrainNbr, jdbcType=VARCHAR},
+            #{item.dptTrainNbr, jdbcType=VARCHAR},
+            #{item.arrTime, jdbcType=DATE},
+            #{item.dptTime, jdbcType=DATE},
+            #{item.baseArrTime, jdbcType=VARCHAR},
+            #{item.baseDptTime, jdbcType=VARCHAR},
+            #{item.upDown, jdbcType=VARCHAR},
+            #{item.trackNbr, jdbcType=VARCHAR},
+            #{item.trackName, jdbcType=VARCHAR},
+            #{item.platform, jdbcType=VARCHAR},
+            #{item.psgFlag, jdbcType=VARCHAR},
+            #{item.locoFlag, jdbcType=VARCHAR},
+            #{item.tecType, jdbcType=VARCHAR},
+            #{item.stnType, jdbcType=VARCHAR},
+            #{item.boundaryInOut, jdbcType=VARCHAR},
+            #{item.tRunDays, jdbcType=VARCHAR},
+            <!-- added by liuhang -->
+	        #{item.jobs, jdbcType=VARCHAR},
+	        #{item.bureauId, jdbcType=VARCHAR},
+	        #{item.nodeId, jdbcType=VARCHAR},
+	        #{item.nodeName, jdbcType=VARCHAR}
+            <!--  -->
+            
+             FROM DUAL
+        </foreach>
+    </insert>
+
+    <select id="getGrid" parameterType="map" resultType="map">
+
+    </select>
+    
+    <delete id="deleteRunPlanStnByStartTime" parameterType="java.util.Map">       
+	DELETE FROM PLAN_TRAIN_STN WHERE PLAN_TRAIN_ID IN
+      (
+        SELECT PLAN_TRAIN_ID FROM PLAN_TRAIN PT WHERE PT.START_TIME > #{startTime} AND EXISTS
+        (
+        SELECT 1 FROM PLAN_CROSS PC WHERE PC.CROSS_NAME = #{unitCrossName} 
+        AND PC.TOKEN_VEH_BUREAU = #{tokenVehBureau}
+        <if test="baseChartId != null">
+            AND PC.BASE_CHART_ID = #{baseChartId}
+        </if>
+        
+          <if test="trainNbr != null">
+            AND PT.TRAIN_NBR = #{trainNbr}
+        </if>
+        AND PT.PLAN_CROSS_ID = PC.PLAN_CROSS_ID
+        )
+       )
+    </delete>
+    
+</mapper> 

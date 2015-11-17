@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.comfirmedmap.repository.TCmPhyCrossTrainMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmPhyCrossTrain" >
+    <id column="CM_PHY_CROSS_TRAIN_ID" property="cmPhyCrossTrainId" jdbcType="VARCHAR" />
+    <result column="CM_TRAIN_ID" property="cmTrainId" jdbcType="VARCHAR" />
+    <result column="CM_PHY_CROSS_ID" property="cmPhyCrossId" jdbcType="VARCHAR" />
+    <result column="RUN_DATE" property="runDate" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+    <result column="TRAIN_SORT" property="trainSort" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <select id="selectByCmPhyCrossId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_PHY_CROSS_TRAIN
+    where CM_PHY_CROSS_ID = #{cmPhyCrossId}
+  </select>
+  <sql id="Base_Column_List" >
+    CM_PHY_CROSS_TRAIN_ID, CM_TRAIN_ID, CM_PHY_CROSS_ID, RUN_DATE, USE_STATUS, TRAIN_SORT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_PHY_CROSS_TRAIN
+    where CM_PHY_CROSS_TRAIN_ID = #{cmPhyCrossTrainId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CM_PHY_CROSS_TRAIN
+    where CM_PHY_CROSS_TRAIN_ID = #{cmPhyCrossTrainId}
+  </delete>
+  <update id="deleteByPrimaryKeyLogic" parameterType="java.lang.String" >
+    update T_CM_PHY_CROSS_TRAIN
+    set USE_STATUS = 0
+    where CM_PHY_CROSS_TRAIN_ID = #{cmPhyCrossTrainId}
+  </update>
+  <delete id="deleteByCmPhyCross" parameterType="java.lang.String" >
+    delete from T_CM_PHY_CROSS_TRAIN
+    where CM_PHY_CROSS_ID = #{cmPhyCrossId}
+  </delete>
+  <update id="deleteByCmPhyCrossLogic" parameterType="java.lang.String" >
+    update T_CM_PHY_CROSS_TRAIN
+    set USE_STATUS = 0
+    where CM_PHY_CROSS_ID = #{cmPhyCrossId}
+  </update>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmPhyCrossTrain" >
+    insert into T_CM_PHY_CROSS_TRAIN (CM_PHY_CROSS_TRAIN_ID, CM_TRAIN_ID, CM_PHY_CROSS_ID, RUN_DATE, USE_STATUS, TRAIN_SORT
+      )
+    values (#{cmPhyCrossTrainId}, #{cmTrainId}, #{cmPhyCrossId}, #{runDate}, #{useStatus}, #{trainSort}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmPhyCrossTrain" >
+    insert into T_CM_PHY_CROSS_TRAIN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmPhyCrossTrainId != null" >
+        CM_PHY_CROSS_TRAIN_ID,
+      </if>
+      <if test="cmTrainId != null" >
+        CM_TRAIN_ID,
+      </if>
+      <if test="cmPhyCrossId != null" >
+        CM_PHY_CROSS_ID,
+      </if>
+      <if test="runDate != null" >
+        RUN_DATE,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+      <if test="trainSort != null" >
+        TRAIN_SORT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmPhyCrossTrainId != null" >
+        #{cmPhyCrossTrainId},
+      </if>
+      <if test="cmTrainId != null" >
+        #{cmTrainId},
+      </if>
+      <if test="cmPhyCrossId != null" >
+        #{cmPhyCrossId},
+      </if>
+      <if test="runDate != null" >
+        #{runDate},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+      <if test="trainSort != null" >
+        #{trainSort},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmPhyCrossTrain" >
+    update T_CM_PHY_CROSS_TRAIN
+    <set >
+      <if test="cmTrainId != null" >
+        CM_TRAIN_ID = #{cmTrainId},
+      </if>
+      <if test="cmPhyCrossId != null" >
+        CM_PHY_CROSS_ID = #{cmPhyCrossId},
+      </if>
+      <if test="runDate != null" >
+        RUN_DATE = #{runDate},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+      <if test="trainSort != null" >
+        TRAIN_SORT = #{trainSort},
+      </if>
+    </set>
+    where CM_PHY_CROSS_TRAIN_ID = #{cmPhyCrossTrainId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmPhyCrossTrain" >
+    update T_CM_PHY_CROSS_TRAIN
+    set CM_TRAIN_ID = #{cmTrainId},
+      CM_PHY_CROSS_ID = #{cmPhyCrossId},
+      RUN_DATE = #{runDate},
+      USE_STATUS = #{useStatus}
+    where CM_PHY_CROSS_TRAIN_ID = #{cmPhyCrossTrainId}
+  </update>
+</mapper>

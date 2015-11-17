@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.RunLineStnDao">
+    <resultMap id="runLineStn" type="org.railway.com.trainplan.entity.RunLineStn">
+        <id column="ID" property="id"/>
+        <result column="NAME" property="name"/>
+        <result column="PARENT_ID" property="parentId"/>
+        <result column="PARENT_NAME" property="parentName"/>
+        <result column="CHILD_INDEX" property="childIndex"/>
+        <result column="BUREAU_ID" property="bureauId"/>
+        <result column="BUREAU_NAME" property="bureauName"/>
+        <result column="BUREAU_SHORTNAME" property="bureauShortName"/>
+        <result column="NODE_ID" property="nodeId"/>
+        <result column="NODE_NAME" property="nodeName"/>
+        <result column="TRACK_NAME" property="trackName"/>
+        <result column="STN_SOURCE_TIME" property="sourceTime"/>
+        <result column="STN_TARGET_TIME" property="targetTime"/>
+        <result column="STN_VERSION_MAJOR" property="versionMajor"/>
+        <result column="STN_VERSION_MINOR" property="versionMinor"/>
+        <result column="STN_VERSION_MICRO" property="versionMicro"/>
+        <result column="STN_VERSION_QUALIFIER" property="versionQualifier"/>
+    </resultMap>
+</mapper> 

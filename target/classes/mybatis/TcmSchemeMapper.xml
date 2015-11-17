@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.railway.common.repository.TcmSchemeMapper">
+    
+    <select id="getSchemeInfoByCrossId" resultType="org.railway.com.trainplan.entity.SchemeInfo">
+        select distinct s.id as schemeId, s.name as schemeName,s.publish_time as publishTime, s.execution_time as executionTime 
+        from t_cm_train t,t_cm_version v,JHPT_JBT.m_template_scheme s
+		where t.cm_cross_id = #{crossId}
+		and v.cm_version_id = t.cm_version_id
+		and s.id = v.m_template_scheme
+    </select> 
+    
+
+    			
+</mapper>

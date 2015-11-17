@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.dayplan.repository.TPlanCheckMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanCheck" >
+    <id column="PLAN_CHECK_ID" property="planCheckId" jdbcType="VARCHAR" />
+    <result column="PLAN_TRAIN_ID" property="planTrainId" jdbcType="VARCHAR" />
+    <result column="CMD_TEL_ID" property="cmdTelId" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="VARCHAR" />
+    <result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+    <result column="CHECK_PEOPLE" property="checkPeople" jdbcType="VARCHAR" />
+    <result column="CHECK_TIME" property="checkTime" jdbcType="VARCHAR" />
+    <result column="CHECK_DEPT" property="checkDept" jdbcType="VARCHAR" />
+    <result column="CHECK_BUREAU" property="checkBureau" jdbcType="VARCHAR" />
+    <result column="CHECK_HIS_FLAG" property="checkHisFlag" jdbcType="VARCHAR" />
+    <result column="CHECK_STATE" property="checkState" jdbcType="VARCHAR" />
+    <result column="CHECK_REJECT_REASON" property="checkRejectReason" jdbcType="VARCHAR" />
+    <result column="CHECK_PEOPLE_TEL" property="checkPeopleTel" jdbcType="VARCHAR" />
+    <result column="CHECK_FLAG" property="checkFlag" jdbcType="DECIMAL" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PLAN_CHECK_ID, PLAN_TRAIN_ID, CMD_TEL_ID, START_DATE, END_DATE, CHECK_PEOPLE, CHECK_TIME, 
+    CHECK_DEPT, CHECK_BUREAU, CHECK_HIS_FLAG, CHECK_STATE, CHECK_REJECT_REASON, CHECK_PEOPLE_TEL, 
+    CHECK_FLAG, USE_STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_PLAN_CHECK
+    where PLAN_CHECK_ID = #{planCheckId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_PLAN_CHECK
+    where PLAN_CHECK_ID = #{planCheckId}
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanCheck" >
+    insert into T_PLAN_CHECK (PLAN_CHECK_ID, PLAN_TRAIN_ID, CMD_TEL_ID, START_DATE, END_DATE, CHECK_PEOPLE, 
+      CHECK_TIME, CHECK_DEPT, CHECK_BUREAU, CHECK_HIS_FLAG, CHECK_STATE, CHECK_REJECT_REASON, 
+      CHECK_PEOPLE_TEL, CHECK_FLAG, USE_STATUS)
+    values (#{planCheckId}, #{planTrainId}, #{cmdTelId}, #{startDate}, #{endDate}, #{checkPeople}, 
+      #{checkTime}, #{checkDept}, #{checkBureau}, #{checkHisFlag}, #{checkState}, #{checkRejectReason}, 
+      #{checkPeopleTel}, #{checkFlag}, #{useStatus})
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanCheck" >
+    insert into T_PLAN_CHECK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="planCheckId != null" >
+        PLAN_CHECK_ID,
+      </if>
+      <if test="planTrainId != null" >
+        PLAN_TRAIN_ID,
+      </if>
+      <if test="cmdTelId != null" >
+        CMD_TEL_ID,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="checkPeople != null" >
+        CHECK_PEOPLE,
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME,
+      </if>
+      <if test="checkDept != null" >
+        CHECK_DEPT,
+      </if>
+      <if test="checkBureau != null" >
+        CHECK_BUREAU,
+      </if>
+      <if test="checkHisFlag != null" >
+        CHECK_HIS_FLAG,
+      </if>
+      <if test="checkState != null" >
+        CHECK_STATE,
+      </if>
+      <if test="checkRejectReason != null" >
+        CHECK_REJECT_REASON,
+      </if>
+      <if test="checkPeopleTel != null" >
+        CHECK_PEOPLE_TEL,
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="planCheckId != null" >
+        #{planCheckId},
+      </if>
+      <if test="planTrainId != null" >
+        #{planTrainId},
+      </if>
+      <if test="cmdTelId != null" >
+        #{cmdTelId},
+      </if>
+      <if test="startDate != null" >
+        #{startDate},
+      </if>
+      <if test="endDate != null" >
+        #{endDate},
+      </if>
+      <if test="checkPeople != null" >
+        #{checkPeople},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime},
+      </if>
+      <if test="checkDept != null" >
+        #{checkDept},
+      </if>
+      <if test="checkBureau != null" >
+        #{checkBureau},
+      </if>
+      <if test="checkHisFlag != null" >
+        #{checkHisFlag},
+      </if>
+      <if test="checkState != null" >
+        #{checkState},
+      </if>
+      <if test="checkRejectReason != null" >
+        #{checkRejectReason},
+      </if>
+      <if test="checkPeopleTel != null" >
+        #{checkPeopleTel},
+      </if>
+      <if test="checkFlag != null" >
+        #{checkFlag},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanCheck" >
+    update T_PLAN_CHECK
+    <set >
+      <if test="planTrainId != null" >
+        PLAN_TRAIN_ID = #{planTrainId},
+      </if>
+      <if test="cmdTelId != null" >
+        CMD_TEL_ID = #{cmdTelId},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate},
+      </if>
+      <if test="checkPeople != null" >
+        CHECK_PEOPLE = #{checkPeople},
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME = #{checkTime},
+      </if>
+      <if test="checkDept != null" >
+        CHECK_DEPT = #{checkDept},
+      </if>
+      <if test="checkBureau != null" >
+        CHECK_BUREAU = #{checkBureau},
+      </if>
+      <if test="checkHisFlag != null" >
+        CHECK_HIS_FLAG = #{checkHisFlag},
+      </if>
+      <if test="checkState != null" >
+        CHECK_STATE = #{checkState},
+      </if>
+      <if test="checkRejectReason != null" >
+        CHECK_REJECT_REASON = #{checkRejectReason},
+      </if>
+      <if test="checkPeopleTel != null" >
+        CHECK_PEOPLE_TEL = #{checkPeopleTel},
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG = #{checkFlag},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+    </set>
+    where PLAN_CHECK_ID = #{planCheckId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanCheck" >
+    update T_PLAN_CHECK
+    set PLAN_TRAIN_ID = #{planTrainId},
+      CMD_TEL_ID = #{cmdTelId},
+      START_DATE = #{startDate},
+      END_DATE = #{endDate},
+      CHECK_PEOPLE = #{checkPeople},
+      CHECK_TIME = #{checkTime},
+      CHECK_DEPT = #{checkDept},
+      CHECK_BUREAU = #{checkBureau},
+      CHECK_HIS_FLAG = #{checkHisFlag},
+      CHECK_STATE = #{checkState},
+      CHECK_REJECT_REASON = #{checkRejectReason},
+      CHECK_PEOPLE_TEL = #{checkPeopleTel},
+      CHECK_FLAG = #{checkFlag},
+      USE_STATUS = #{useStatus}
+    where PLAN_CHECK_ID = #{planCheckId}
+  </update>
+</mapper>

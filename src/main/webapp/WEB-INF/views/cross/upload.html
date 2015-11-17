@@ -1,0 +1,16 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">  
+ <html>  
+ <head>  
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">  
+ <meta http-equiv="pragma" content="no-cache" />  
+ <base target="_self">  
+ <title>文件上传</title>  
+ </head>  
+ <body>  
+     <h5>文件上传</h5><hr/>  
+     <form id="file_upload_id" name="file_upload_name" action="<%=root%>/CommonController.jhtml?method=doFileUpload" method="post" enctype="multipart/form-data">  
+         <div><input type="file" name="file_upload"/></div>   
+         <div><input type="submit" value="上传"/></div>  
+     </form>  
+ </body>  
+ </html>  

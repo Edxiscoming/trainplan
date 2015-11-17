@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.comfirmedmap.repository.TCmTrainMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmTrain" >
+    <id column="CM_TRAIN_ID" property="cmTrainId" jdbcType="VARCHAR" />
+    <result column="CM_CROSS_ID" property="cmCrossId" jdbcType="VARCHAR" />
+    <result column="TRAIN_SORT" property="trainSort" jdbcType="DECIMAL" />
+    <result column="TRAIN_NBR" property="trainNbr" jdbcType="VARCHAR" />
+    <result column="BASE_TRAIN_ID" property="baseTrainId" jdbcType="VARCHAR" />
+    <result column="START_STN" property="startStn" jdbcType="VARCHAR" />
+    <result column="START_BUREAU" property="startBureau" jdbcType="VARCHAR" />
+    <result column="END_STN" property="endStn" jdbcType="VARCHAR" />
+    <result column="END_BUREAU" property="endBureau" jdbcType="VARCHAR" />
+    <result column="SPARE_FLAG" property="spareFlag" jdbcType="DECIMAL" />
+    <result column="SPARE_APPLY_FLAG" property="spareApplyFlag" jdbcType="DECIMAL" />
+    <result column="TOKEN_VEH_BUREAU" property="tokenVehBureau" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+    <result column="EDIT_FLAG" property="editFlag" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CM_TRAIN_ID, CM_CROSS_ID, TRAIN_SORT, TRAIN_NBR, BASE_TRAIN_ID, START_STN, START_BUREAU, 
+    END_STN, END_BUREAU, SPARE_FLAG, SPARE_APPLY_FLAG, TOKEN_VEH_BUREAU, USE_STATUS, 
+    EDIT_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_TRAIN
+    where CM_TRAIN_ID = #{cmTrainId}
+  </select>
+  <select id="selectByCmCrossId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   select 
+   <include refid="Base_Column_List" />
+   from T_CM_TRAIN
+   WHERE CM_CROSS_ID = #{cmCrossId}
+   order by TRAIN_SORT
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CM_TRAIN
+    where CM_TRAIN_ID = #{cmTrainId}
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmTrain" >
+    insert into T_CM_TRAIN (CM_TRAIN_ID, CM_CROSS_ID, TRAIN_SORT, TRAIN_NBR, BASE_TRAIN_ID, START_STN, 
+      START_BUREAU, END_STN, END_BUREAU, SPARE_FLAG, SPARE_APPLY_FLAG, TOKEN_VEH_BUREAU, 
+      USE_STATUS, EDIT_FLAG)
+    values (#{cmTrainId}, #{cmCrossId}, #{trainSort}, #{trainNbr}, #{baseTrainId}, #{startStn}, 
+      #{startBureau}, #{endStn}, #{endBureau}, #{spareFlag}, #{spareApplyFlag}, #{tokenVehBureau}, 
+      #{useStatus}, #{editFlag})
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmTrain" >
+    insert into T_CM_TRAIN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmTrainId != null" >
+        CM_TRAIN_ID,
+      </if>
+      <if test="cmCrossId != null" >
+        CM_CROSS_ID,
+      </if>
+      <if test="trainSort != null" >
+        TRAIN_SORT,
+      </if>
+      <if test="trainNbr != null" >
+        TRAIN_NBR,
+      </if>
+      <if test="baseTrainId != null" >
+        BASE_TRAIN_ID,
+      </if>
+      <if test="startStn != null" >
+        START_STN,
+      </if>
+      <if test="startBureau != null" >
+        START_BUREAU,
+      </if>
+      <if test="endStn != null" >
+        END_STN,
+      </if>
+      <if test="endBureau != null" >
+        END_BUREAU,
+      </if>
+      <if test="spareFlag != null" >
+        SPARE_FLAG,
+      </if>
+      <if test="spareApplyFlag != null" >
+        SPARE_APPLY_FLAG,
+      </if>
+      <if test="tokenVehBureau != null" >
+        TOKEN_VEH_BUREAU,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+      <if test="editFlag != null" >
+        EDIT_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmTrainId != null" >
+        #{cmTrainId},
+      </if>
+      <if test="cmCrossId != null" >
+        #{cmCrossId},
+      </if>
+      <if test="trainSort != null" >
+        #{trainSort},
+      </if>
+      <if test="trainNbr != null" >
+        #{trainNbr},
+      </if>
+      <if test="baseTrainId != null" >
+        #{baseTrainId},
+      </if>
+      <if test="startStn != null" >
+        #{startStn},
+      </if>
+      <if test="startBureau != null" >
+        #{startBureau},
+      </if>
+      <if test="endStn != null" >
+        #{endStn},
+      </if>
+      <if test="endBureau != null" >
+        #{endBureau},
+      </if>
+      <if test="spareFlag != null" >
+        #{spareFlag},
+      </if>
+      <if test="spareApplyFlag != null" >
+        #{spareApplyFlag},
+      </if>
+      <if test="tokenVehBureau != null" >
+        #{tokenVehBureau},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+      <if test="editFlag != null" >
+        #{editFlag},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmTrain" >
+    update T_CM_TRAIN
+    <set >
+      <if test="cmCrossId != null" >
+        CM_CROSS_ID = #{cmCrossId},
+      </if>
+      <if test="trainSort != null" >
+        TRAIN_SORT = #{trainSort},
+      </if>
+      <if test="trainNbr != null" >
+        TRAIN_NBR = #{trainNbr},
+      </if>
+      <if test="baseTrainId != null" >
+        BASE_TRAIN_ID = #{baseTrainId},
+      </if>
+      <if test="startStn != null" >
+        START_STN = #{startStn},
+      </if>
+      <if test="startBureau != null" >
+        START_BUREAU = #{startBureau},
+      </if>
+      <if test="endStn != null" >
+        END_STN = #{endStn},
+      </if>
+      <if test="endBureau != null" >
+        END_BUREAU = #{endBureau},
+      </if>
+      <if test="spareFlag != null" >
+        SPARE_FLAG = #{spareFlag},
+      </if>
+      <if test="spareApplyFlag != null" >
+        SPARE_APPLY_FLAG = #{spareApplyFlag},
+      </if>
+      <if test="tokenVehBureau != null" >
+        TOKEN_VEH_BUREAU = #{tokenVehBureau},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+      <if test="editFlag != null" >
+        EDIT_FLAG = #{editFlag},
+      </if>
+    </set>
+    where CM_TRAIN_ID = #{cmTrainId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmTrain" >
+    update T_CM_TRAIN
+    set CM_CROSS_ID = #{cmCrossId},
+      TRAIN_SORT = #{trainSort},
+      TRAIN_NBR = #{trainNbr},
+      BASE_TRAIN_ID = #{baseTrainId},
+      START_STN = #{startStn},
+      START_BUREAU = #{startBureau},
+      END_STN = #{endStn},
+      END_BUREAU = #{endBureau},
+      SPARE_FLAG = #{spareFlag},
+      SPARE_APPLY_FLAG = #{spareApplyFlag},
+      TOKEN_VEH_BUREAU = #{tokenVehBureau},
+      USE_STATUS = #{useStatus},
+      EDIT_FLAG = #{editFlag}
+    where CM_TRAIN_ID = #{cmTrainId}
+  </update>
+</mapper>

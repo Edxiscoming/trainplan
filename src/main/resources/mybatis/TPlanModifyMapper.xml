@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.dayplan.repository.TPlanModifyMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanModify" >
+    <id column="PLAN_MODIFY_ID" property="planModifyId" jdbcType="VARCHAR" />
+    <result column="PLAN_TRAIN_ID" property="planTrainId" jdbcType="VARCHAR" />
+    <result column="CROSS_NAME" property="crossName" jdbcType="VARCHAR" />
+    <result column="RUN_DATE" property="runDate" jdbcType="VARCHAR" />
+    <result column="TRAIN_NBR" property="trainNbr" jdbcType="VARCHAR" />
+    <result column="MODIFY_TYPE" property="modifyType" jdbcType="VARCHAR" />
+    <result column="MODIFY_REASON" property="modifyReason" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="VARCHAR" />
+    <result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+    <result column="RUN_RULE" property="runRule" jdbcType="VARCHAR" />
+    <result column="SELECTED_DATE" property="selectedDate" jdbcType="VARCHAR" />
+    <result column="MODIFY_CONTENT" property="modifyContent" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_PEOPLE" property="modifyPeople" jdbcType="VARCHAR" />
+    <result column="MODIFY_PEOPLE_ORG" property="modifyPeopleOrg" jdbcType="VARCHAR" />
+    <result column="MODIFY_PEOPLE_BUREAU" property="modifyPeopleBureau" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PLAN_MODIFY_ID, PLAN_TRAIN_ID, CROSS_NAME, RUN_DATE, TRAIN_NBR, MODIFY_TYPE, MODIFY_REASON, 
+    START_DATE, END_DATE, RUN_RULE, SELECTED_DATE, MODIFY_CONTENT, MODIFY_TIME, MODIFY_PEOPLE, 
+    MODIFY_PEOPLE_ORG, MODIFY_PEOPLE_BUREAU, USE_STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_PLAN_MODIFY
+    where PLAN_MODIFY_ID = #{planModifyId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_PLAN_MODIFY
+    where PLAN_MODIFY_ID = #{planModifyId}
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanModify" >
+    insert into T_PLAN_MODIFY (PLAN_MODIFY_ID, PLAN_TRAIN_ID, CROSS_NAME, RUN_DATE, TRAIN_NBR, MODIFY_TYPE, 
+      MODIFY_REASON, START_DATE, END_DATE, RUN_RULE, SELECTED_DATE, MODIFY_CONTENT, 
+      MODIFY_TIME, MODIFY_PEOPLE, MODIFY_PEOPLE_ORG, MODIFY_PEOPLE_BUREAU, USE_STATUS
+      )
+    values (#{planModifyId}, #{planTrainId}, #{crossName}, #{runDate}, #{trainNbr}, #{modifyType}, 
+      #{modifyReason}, #{startDate}, #{endDate}, #{runRule}, #{selectedDate}, #{modifyContent}, 
+      #{modifyTime}, #{modifyPeople}, #{modifyPeopleOrg}, #{modifyPeopleBureau}, #{useStatus}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanModify" >
+    insert into T_PLAN_MODIFY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="planModifyId != null" >
+        PLAN_MODIFY_ID,
+      </if>
+      <if test="planTrainId != null" >
+        PLAN_TRAIN_ID,
+      </if>
+      <if test="crossName != null" >
+        CROSS_NAME,
+      </if>
+      <if test="runDate != null" >
+        RUN_DATE,
+      </if>
+      <if test="trainNbr != null" >
+        TRAIN_NBR,
+      </if>
+      <if test="modifyType != null" >
+        MODIFY_TYPE,
+      </if>
+      <if test="modifyReason != null" >
+        MODIFY_REASON,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="runRule != null" >
+        RUN_RULE,
+      </if>
+      <if test="selectedDate != null" >
+        SELECTED_DATE,
+      </if>
+      <if test="modifyContent != null" >
+        MODIFY_CONTENT,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyPeople != null" >
+        MODIFY_PEOPLE,
+      </if>
+      <if test="modifyPeopleOrg != null" >
+        MODIFY_PEOPLE_ORG,
+      </if>
+      <if test="modifyPeopleBureau != null" >
+        MODIFY_PEOPLE_BUREAU,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="planModifyId != null" >
+        #{planModifyId},
+      </if>
+      <if test="planTrainId != null" >
+        #{planTrainId},
+      </if>
+      <if test="crossName != null" >
+        #{crossName},
+      </if>
+      <if test="runDate != null" >
+        #{runDate},
+      </if>
+      <if test="trainNbr != null" >
+        #{trainNbr},
+      </if>
+      <if test="modifyType != null" >
+        #{modifyType},
+      </if>
+      <if test="modifyReason != null" >
+        #{modifyReason},
+      </if>
+      <if test="startDate != null" >
+        #{startDate},
+      </if>
+      <if test="endDate != null" >
+        #{endDate},
+      </if>
+      <if test="runRule != null" >
+        #{runRule},
+      </if>
+      <if test="selectedDate != null" >
+        #{selectedDate},
+      </if>
+      <if test="modifyContent != null" >
+        #{modifyContent},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime},
+      </if>
+      <if test="modifyPeople != null" >
+        #{modifyPeople},
+      </if>
+      <if test="modifyPeopleOrg != null" >
+        #{modifyPeopleOrg},
+      </if>
+      <if test="modifyPeopleBureau != null" >
+        #{modifyPeopleBureau},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanModify" >
+    update T_PLAN_MODIFY
+    <set >
+      <if test="planTrainId != null" >
+        PLAN_TRAIN_ID = #{planTrainId},
+      </if>
+      <if test="crossName != null" >
+        CROSS_NAME = #{crossName},
+      </if>
+      <if test="runDate != null" >
+        RUN_DATE = #{runDate},
+      </if>
+      <if test="trainNbr != null" >
+        TRAIN_NBR = #{trainNbr},
+      </if>
+      <if test="modifyType != null" >
+        MODIFY_TYPE = #{modifyType},
+      </if>
+      <if test="modifyReason != null" >
+        MODIFY_REASON = #{modifyReason},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate},
+      </if>
+      <if test="runRule != null" >
+        RUN_RULE = #{runRule},
+      </if>
+      <if test="selectedDate != null" >
+        SELECTED_DATE = #{selectedDate},
+      </if>
+      <if test="modifyContent != null" >
+        MODIFY_CONTENT = #{modifyContent},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime},
+      </if>
+      <if test="modifyPeople != null" >
+        MODIFY_PEOPLE = #{modifyPeople},
+      </if>
+      <if test="modifyPeopleOrg != null" >
+        MODIFY_PEOPLE_ORG = #{modifyPeopleOrg},
+      </if>
+      <if test="modifyPeopleBureau != null" >
+        MODIFY_PEOPLE_BUREAU = #{modifyPeopleBureau},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+    </set>
+    where PLAN_MODIFY_ID = #{planModifyId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanModify" >
+    update T_PLAN_MODIFY
+    set PLAN_TRAIN_ID = #{planTrainId},
+      CROSS_NAME = #{crossName},
+      RUN_DATE = #{runDate},
+      TRAIN_NBR = #{trainNbr},
+      MODIFY_TYPE = #{modifyType},
+      MODIFY_REASON = #{modifyReason},
+      START_DATE = #{startDate},
+      END_DATE = #{endDate},
+      RUN_RULE = #{runRule},
+      SELECTED_DATE = #{selectedDate},
+      MODIFY_CONTENT = #{modifyContent},
+      MODIFY_TIME = #{modifyTime},
+      MODIFY_PEOPLE = #{modifyPeople},
+      MODIFY_PEOPLE_ORG = #{modifyPeopleOrg},
+      MODIFY_PEOPLE_BUREAU = #{modifyPeopleBureau},
+      USE_STATUS = #{useStatus}
+    where PLAN_MODIFY_ID = #{planModifyId}
+  </update>
+</mapper>

@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="trainPlanDao">
+
+	<insert id="addTrainPlanTest" parameterType="map">
+		insert into plan_train
+		(PLAN_TRAIN_ID,END_BUREAU_FULL)values(SEQ_PLAN_TRAIN.nextVal,#{name})
+	</insert>
+	<!-- 更新数据表train_plan的字段check_state -->
+	<update id="updateCheckState">
+		update plan_train set
+		CHECK_STATE=1
+		where base_train_id=#{base_train_id}
+	</update>
+
+	<update id="updatePlanTrainDaylyPlanFlag" parameterType="map">
+		update plan_train set
+		DAILYPLAN_FLAG=0,
+		DAILYPLAN_TIME=sysdate,
+		DAILYPLAN_TIMES=DAILYPLAN_TIMES+1,
+		DAILYPLAN_ID=#{daylyPlanId}
+		where plan_train_id=#{planTrainId}
+
+	</update>
+
+	<select id="getTotalTrains" parameterType="map" resultType="map">
+		select base_train_id ,plan_train_id,
+		run_date
+		from plan_train
+		where run_date=#{runDate} and START_BUREAU_FULL = #{startBureauFull}
+		<if test="trainNbr != null">
+			AND TRAIN_NBR= #{trainNbr}
+		</if>
+
+	</select>
+
+
+   <select id="getTotalTrainsForPlanCrossId" parameterType="map" resultType="map">
+     select base_train_id ,plan_train_id,
+		run_date,train_nbr
+		from plan_train
+		where run_date>=#{startDate} and run_date&lt;=#{endDate} and plan_cross_id in (${planCrossIds})
+   </select>
+   
+   
+	<select id="getTrainShortInfo" parameterType="map" resultType="map">
+		select m.* from (select
+		PLAN_TRAIN_ID,RUN_DATE,TRAIN_NBR,START_STN,END_STN FROM PLAN_TRAIN
+		WHERE RUN_DATE= #{runDate}
+		<if test="trainNbr != null">
+			AND TRAIN_NBR= #{trainNbr}
+		</if>
+		 order by TRAIN_NBR )m where ROWNUM
+		&lt;=${rownum}
+		
+
+	</select>
+
+	<insert id="addTrainPlanStn"  parameterType="java.util.Map">
+	
+		insert into plan_train_stn
+		(PLAN_TRAIN_STN_ID,
+		PLAN_TRAIN_ID,
+		STN_NAME,
+		STN_BUREAU_FULL,
+		STN_SORT,
+		TRACK_NAME,
+		RUN_DAYS,
+		STN_BUREAU,
+		ARR_TRAIN_NBR,
+		DPT_TRAIN_NBR,
+		ARR_TIME,
+		DPT_TIME,
+		BASE_ARR_TIME,
+		BASE_DPT_TIME)
+		 (
+		 
+		 <foreach collection="trainStnList" item="item" index="index"
+            separator="UNION ALL">
+            <![CDATA[
+	       SELECT
+	       #{item.planTrainStnId,jdbcType=VARCHAR},
+	       #{item.planTrainId,jdbcType=VARCHAR},
+	       #{item.name,jdbcType=VARCHAR},
+	       #{item.stnBureauFull,jdbcType=VARCHAR},
+	       #{item.index,jdbcType=NUMERIC},
+	       #{item.trackName,jdbcType=VARCHAR},
+	       #{item.runDays,jdbcType=NUMERIC},
+	       #{item.bureauShortName,jdbcType=VARCHAR},
+	       #{item.trainNbr,jdbcType=VARCHAR},
+	       #{item.trainNbr,jdbcType=VARCHAR},
+	       to_date(#{item.sourceTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss'),
+		   to_date(#{item.targetTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss'),
+		    to_date(#{item.baseArrTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss'),
+			to_date(#{item.baseDptTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss')
+	       from dual
+	         ]]>
+	      </foreach>
+	    
+	     ) 
+	     
+	</insert>
+	
+	
+	
+	<insert id="addTrainPlan"  parameterType="java.util.Map">
+		 
+		insert into plan_train
+		(PLAN_TRAIN_ID,
+		RUN_DATE,
+		TRAIN_NBR,
+		START_STN,
+		END_STN,
+		BASE_CHART_ID,
+		BASE_TRAIN_ID,
+		START_BUREAU_FULL,
+		END_BUREAU_FULL,
+		START_BUREAU,
+		END_BUREAU,
+		PLAN_CROSS_ID,
+		PASS_BUREAU,
+		TRAIN_SCOPE,
+		TRAIN_TYPE_ID,
+		CREAT_TYPE,
+		PLAN_TRAIN_SIGN,
+		CREAT_TIME,
+		START_TIME,
+		END_TIME)
+	      (	<foreach collection="trainList" item="item" index="index"
+                separator="UNION">
+	       SELECT
+	       #{item.planTrainId,jdbcType=VARCHAR},
+	       #{item.runDate_8,jdbcType=VARCHAR},
+	       #{item.trainNbr,jdbcType=VARCHAR},
+	       #{item.startStn,jdbcType=VARCHAR},
+	       #{item.endStn,jdbcType=VARCHAR},
+	       #{item.baseChartId,jdbcType=VARCHAR},
+	       #{item.baseTrainId,jdbcType=VARCHAR} as BASE_TRAIN_ID,
+	       #{item.startBureauFull,jdbcType=VARCHAR},
+	       #{item.endBureauFull,jdbcType=VARCHAR},
+	       #{item.startBureau,jdbcType=VARCHAR},
+	       #{item.endBureau,jdbcType=VARCHAR},
+	       #{item.planCrossId,jdbcType=VARCHAR},
+	       #{item.passBureau,jdbcType=VARCHAR},
+	       #{item.trainScope,jdbcType=NUMERIC},
+	       #{item.trainTypeId,jdbcType=VARCHAR},
+	       #{item.createType,jdbcType=NUMERIC},
+	       #{item.planTrainSign,jdbcType=VARCHAR},
+	       sysdate,
+	       to_date(#{item.startTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss'),
+	       to_date(#{item.endTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss')
+	       from dual
+	      </foreach>
+	     ) 
+		
+	</insert>
+
+	<select id="getMaxPlanTrainId" resultType="map">
+		select plan_train_id from (select plan_train_id from plan_train order by
+		plan_train_id desc) where rownum = 1
+	</select>
+
+
+
+	<select id="getTrainTimeDetail" parameterType="map" resultType="map">
+		SELECT case when a.START_STN=b.STN_NAME then '1' else '0' end
+		IS_START_STN,case when a.END_STN=b.STN_NAME then '1' else '0' end
+		IS_END_STN,
+		to_char(b.ARR_TIME,'yyyy-mm-dd hh24:mi:ss')ARR_TIME_ALL ,
+		to_char(b.DPT_TIME,'yyyy-mm-dd hh24:mi:ss') DPT_TIME_ALL,b.STN_NAME,
+		to_char(b.ARR_TIME,'hh24:mi')ARR_TIME ,
+		to_char(b.DPT_TIME,'hh24:mi') DPT_TIME,
+		b.TRACK_NBR,b.TRACK_NAME,
+		b.RUN_DAYS,(select c.ljjc from jhpt_jcsj.ljzd c where c.ljqc=b.STN_BUREAU_FULL) LJJC
+		FROM PLAN_TRAIN a,PLAN_TRAIN_STN b
+		where a.PLAN_TRAIN_ID = b.PLAN_TRAIN_ID and a.RUN_DATE=#{runDate} and
+		a.TRAIN_NBR=#{trainNbr} order by b.STN_SORT
+
+	</select>
+
+	<select id="getTotalStationInfo" parameterType="map" resultType="map">
+		select m.ljqc,m.ljjc,
+		decode((nvl(n.countBegin,0)+nvl(o.countEnd,0)),0,'
+		',(nvl(n.countBegin,0)+nvl(o.countEnd,0))) as tdsfxj ,
+		decode(nvl(n.countBegin,0),0,' ',nvl(n.countBegin,0))
+		tdsfjc,decode(nvl(o.countEnd,0),0,' ',nvl(o.countEnd,0)) tdsfzd
+		from (select ljqc,ljjc,ljdm from jhpt_jcsj.ljzd) m,(SELECT
+		m.start_bureau_full ,COUNT(*) as countBegin
+		FROM (select count(distinct tt.stn_bureau_full) as
+		sf,tt1.start_bureau_full,tt.plan_train_id
+		from plan_train_stn tt, plan_train tt1,jhpt_jcsj.ljzd tt2
+		where tt.plan_train_id=tt1.plan_train_id and tt1.run_date = #{runDate} and
+		tt1.start_bureau_full =tt2.ljqc group by
+		tt.plan_train_id,tt1.start_bureau_full
+		order by tt.plan_train_id) M where M.sf>1 group by m.start_bureau_full)
+		n,(SELECT m.start_bureau_full ,COUNT(*) as countEnd
+		FROM (select count(distinct tt.stn_bureau_full) as
+		sf,tt1.start_bureau_full,tt.plan_train_id from plan_train_stn tt,
+		plan_train tt1,jhpt_jcsj.ljzd tt2
+		where tt.plan_train_id=tt1.plan_train_id and tt1.run_date = #{runDate} and
+		tt1.start_bureau_full =tt2.ljqc group by
+		tt.plan_train_id,tt1.start_bureau_full
+		order by tt.plan_train_id) M where M.sf=1 group by m.start_bureau_full) o
+		where m.ljqc = n.start_bureau_full(+) and
+		m.ljqc=o.start_bureau_full(+) order by m.ljdm
+	</select>
+
+	<select id="getOneStationInfo" parameterType="map" resultType="map">
+		select m.ljqc,m.ljjc,
+		decode((nvl(n.countBegin,0)+nvl(o.countEnd,0)),0,'
+		',(nvl(n.countBegin,0)+nvl(o.countEnd,0))) as tdsfxj ,
+		decode(nvl(n.countBegin,0),0,' ',nvl(n.countBegin,0))
+		tdsfjc,decode(nvl(o.countEnd,0),0,' ',nvl(o.countEnd,0)) tdsfzd
+		from (select ljqc,ljjc from jhpt_jcsj.ljzd) m,(SELECT m.start_bureau_full
+		,COUNT(*) as countBegin
+		FROM (select count(distinct tt.stn_bureau_full) as
+		sf,tt1.start_bureau_full,tt.plan_train_id
+		from plan_train_stn tt, plan_train tt1,jhpt_jcsj.ljzd tt2 where
+		tt.plan_train_id=tt1.plan_train_id
+		and tt1.run_date = #{runDate}
+		and tt1.start_bureau_full =tt2.ljqc group by
+		tt.plan_train_id,tt1.start_bureau_full
+		order by tt.plan_train_id ) M where M.sf>1 group by m.start_bureau_full) n,
+		(SELECT m.start_bureau_full ,COUNT(*) as countEnd
+		FROM (select count(distinct tt.stn_bureau_full) as
+		sf,tt1.start_bureau_full,tt.plan_train_id from plan_train_stn tt,
+		plan_train tt1,jhpt_jcsj.ljzd tt2
+		where tt.plan_train_id=tt1.plan_train_id and tt1.run_date = #{runDate} and
+		tt1.start_bureau_full =tt2.ljqc group by
+		tt.plan_train_id,tt1.start_bureau_full
+		order by tt.plan_train_id ) M where M.sf=1 group by m.start_bureau_full) o
+		where m.ljqc = n.start_bureau_full(+) and
+		m.ljqc=o.start_bureau_full(+) and m.ljqc=#{ljqc}
+	</select>
+
+	<select id="getGatherTotalStationJieru" parameterType="map"
+		resultType="map">
+		select decode(sum(m.jrzd),0,' ',sum(m.jrzd)) tdjrzd,decode(sum(m.jrjc),0,'
+		',sum(m.jrjc)) tdjrjc,
+		decode((sum(m.jrzd)+sum(m.jrjc)),0,' ',(sum(m.jrzd)+sum(m.jrjc))) tdjrxj
+		from (select distinct A.TRAIN_NBR,A.start_bureau_full,A.END_BUREAU_FULL ,
+		case when a.END_BUREAU_FULL=#{endBureauFull} then 1 else 0 end
+		jrzd,case when a.END_BUREAU_FULL!=#{endBureauFull}
+		or
+		a.END_BUREAU_FULL is null then 1 else 0 end jrjc from plan_train A,plan_train_stn B
+		where A.plan_train_id = B.plan_train_id
+		and A.run_date=#{runDate}
+		and B.STN_BUREAU_FULL =#{stnBureauFull}
+		and(a.start_bureau_full !=#{startBureauFull} or a.start_bureau_full is null)) m
+	</select>
+
+	<select id="getGatherPeriodRundateTrains" parameterType="map"
+		resultType="map">
+		select o.* from (select m.TRAIN_NBR,rownum rownum1
+		from (select DISTINCT t.TRAIN_NBR from plan_train t
+		where t.run_date>=#{startDate}
+		and t.run_date&lt;=#{endDate}
+		and t.START_BUREAU_FULL=#{startBureauFull}
+		<if test="trainNbr != null">
+			and t.TRAIN_NBR=#{trainNbr}
+		</if>
+		)m ) o
+		where o.rownum1>=#{rownumstart} and o.rownum1&lt;=#{rownumend}
+		order by o.TRAIN_NBR
+	</select>
+
+	<select id="getPeriodRundateTrainsTotal" parameterType="map"
+		resultType="map">
+		select count(distinct TRAIN_NBR) as count
+		from plan_train t where t.run_date>=#{startDate}
+		and t.run_date&lt;=#{endDate}
+		and t.START_BUREAU_FULL=#{startBureauFull}
+		<if test="trainNbr != null">
+			and t.TRAIN_NBR=#{trainNbr}
+		</if>
+	</select>
+
+	<select id="getRundateTrainCount" parameterType="map"
+		resultType="map">
+		select count(*) as count
+		from plan_train where run_date=#{runDate} and TRAIN_NBR=#{trainNbr}
+	</select>
+
+	<delete id="deleteTrainRundateTrainNbr" parameterType="map">
+		delete from plan_train where run_date =#{runDate} and train_nbr=#{trainNbr}
+	</delete>
+
+	<delete id="deleteTrainRundateTrainStn" parameterType="map">
+		delete from PLAN_TRAIN_STN a where a.PLAN_TRAIN_ID
+		in(select b.PLAN_TRAIN_ID from plan_train b where b.run_date =#{runDate} and
+		b.train_nbr=#{trainNbr} )
+	</delete>
+    
+    <delete id="deleteTrainRundateTrainStnInit"  parameterType="map">
+    delete from PLAN_TRAIN_STN a where a.PLAN_TRAIN_ID 
+    in(select b.PLAN_TRAIN_ID from plan_train b where b.run_date >=#{startRunDate} and b.run_date &lt;=#{endRunDate}) 
+    </delete>
+    
+    <delete id="deleteTrainRundateTrainNbrInit"  parameterType="map">
+    delete from plan_train where run_date >=#{startRunDate} and run_date &lt;=#{endRunDate}
+    </delete>
+    
+    <select id="findPlanTrainByGroupSerialNbr" parameterType="map"  resultType="org.railway.com.trainplan.entity.PlanTrain">
+      SELECT *  from (
+ 		select   PLAN_TRAIN_ID as planTrainId,TRAIN_NBR as trainNbr,START_STN as startStn,
+    	 END_STN as endStn,RUN_DATE as  runDate,START_TIME as startTime, TRAIN_SORT as trainSort,
+	     END_TIME as endTime,BASE_CHART_ID as baseChartId,BASE_TRAIN_ID as baseTrainId,
+	     START_BUREAU as startBureau,END_BUREAU as endBureau,END_BUREAU_FULL as endBureauFull, group_serial_nbr as groupSerialNbr,
+	     START_BUREAU_FULL as startBureauFull from plan_train where plan_cross_id=#{planCrossId}  and run_date >= #{startDate} AND group_serial_nbr=#{groupSerialNbr}  ORDER BY RUN_DATE
+       ) WHERE rownum &lt;= (SELECT MAX(TRAIN_SORT) FROM PLAN_TRAIN WHERE PLAN_CROSS_ID=#{planCrossId})
+    </select>
+    
+    <select id="findPlanTrainByStartBureauAndRundate" parameterType="map"  resultType="org.railway.com.trainplan.entity.PlanTrain">
+    
+     select o.* from
+       (select   PLAN_TRAIN_ID as planTrainId,TRAIN_NBR as trainNbr,START_STN as startStn,
+    	 END_STN as endStn,RUN_DATE as  runDate,START_TIME as startTime,
+	     END_TIME as endTime,BASE_CHART_ID as baseChartId,BASE_TRAIN_ID as baseTrainId,
+	     START_BUREAU as startBureau,END_BUREAU as endBureau,END_BUREAU_FULL as endBureauFull,
+	     START_BUREAU_FULL as startBureauFull,rownum as rownum1 from plan_train where run_date=#{runDate} and  START_BUREAU_FULL=#{startBureauFull} 
+	     <if test="trainNbr != null">
+			and TRAIN_NBR=#{trainNbr}
+         </if>
+	   ) o where o.rownum1>=#{rownumstart} and o.rownum1&lt;=#{rownumend} order by o.trainNbr 
+  
+    </select>
+    
+    
+    
+    <select id="findPlanTrainByStartBureauCount" parameterType="map"  resultType="map">
+          select count(*) as count from plan_train  where run_date=#{runDate} and  START_BUREAU_FULL=#{startBureauFull}
+       	 <if test="trainNbr != null">
+			and TRAIN_NBR=#{trainNbr}
+    	 </if>
+    </select>
+
+    <!-- lilong 20140820 add -->
+	<select id="findPlanTrainListByPassBureauAndRunDate"
+		parameterType="map" resultType="org.railway.com.trainplan.entity.PlanTrainModel">
+		select t.run_date runDate, t.train_nbr
+		trainNbr, t.plan_train_id
+		planTrainId, t.pre_train_id preTrainId,
+		t.next_train_id nextTrainId,
+		t.plan_cross_id planCrossId,
+		t.group_serial_nbr groupSerialNbr, t.plan_train_sign planTrainSign,
+		t.train_sort
+		trainSort, t.pass_bureau passBureau, t.start_stn startStn,
+		t.end_stn
+		endStn,
+		t.creat_type createType, t.start_time startTime from
+		plan_train t where
+		((t.start_time &lt;
+		to_date(#{sourceTodayDate},'yyyy-MM-dd hh24:mi:ss')
+		and t.end_time >
+		to_date(#{sourceYestodayDate}, 'yyyy-MM-dd hh24:mi:ss'))
+		or (t.end_time
+		> to_date(#{sourceYestodayDate}, 'yyyy-MM-dd hh24:mi:ss')
+		and t.start_time &lt; to_date(#{targetTomorrowDate},'yyyy-MM-dd
+		hh24:mi:ss')
+		and t.start_time > to_date(#{sourceYestodayDate},
+		'yyyy-mm-dd hh24:mi:ss')))
+		and t.pass_bureau like '%${bureau}%' and
+		t.highline_flag =
+		1 order by
+		t.plan_cross_id, t.train_sort,
+		t.plan_train_sign
+	</select>
+
+	<select id="findPlanTrainByPlanTrainId" parameterType="String"
+		resultType="org.railway.com.trainplan.entity.PlanTrainModel">
+		select t.run_date runDate, t.train_nbr trainNbr,
+		t.plan_train_id planTrainId, t.pre_train_id preTrainId,
+		t.next_train_id nextTrainId, t.plan_cross_id planCrossId,
+		t.group_serial_nbr groupSerialNbr, t.plan_train_sign planTrainSign,
+		t.train_sort trainSort, t.pass_bureau passBureau, t.start_stn
+		startStn, t.end_stn endStn, t.creat_type createType, t.start_time
+		startTime from plan_train t where t.plan_train_id = #{planTrainId}
+	</select>
+
+	<select id="findPlanTrainByPlanTrainId2" parameterType="String"
+		resultType="org.railway.com.trainplan.entity.PlanTrainModel">
+		select t.run_date runDate, t.train_nbr trainNbr,
+		t.plan_train_id planTrainId, t.pre_train_id preTrainId,
+		t.next_train_id nextTrainId, t.plan_cross_id planCrossId,
+		t.group_serial_nbr groupSerialNbr, t.plan_train_sign planTrainSign,
+		t.train_sort trainSort, t.pass_bureau passBureau, t.start_stn
+		startStn, t.end_stn endStn, t.creat_type createType, t.start_time
+		startTime,t.SPARE_FLAG spareFlag,t.pass_bureau relevantBureau,t.token_veh_bureau tokenVehBureau,
+		(CASE WHEN t.CREAT_TYPE =0 THEN '基本图'
+					WHEN t.CREAT_TYPE =1 THEN '基本图'
+					WHEN t.CREAT_TYPE =2 THEN t.TEL_SHORTINFO
+					WHEN t.CREAT_TYPE =3 THEN t.CMD_SHORTINFO
+				ELSE '' END
+			    ) createReason
+		from plan_train t where t.plan_train_id = #{planTrainId}
+	</select>
+
+	<select id="findCompareModelByBureauAndRunDate" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.CompareModel">
+		select t.stn_bureau bureau, min(t.arr_time) minArriveDate,
+		max(t.dpt_time) maxDepartDate
+		from plan_train_stn t where t.plan_train_id =
+		#{planTrainId}
+		and t.stn_bureau = #{bureau} group by t.stn_bureau
+	</select>
+
+	<select id="findPlanCrossByPlanCrossId" resultType="org.railway.com.trainplan.entity.PlanCrossModel">
+		select
+		t.plan_cross_id planCrossId, t.base_cross_id baseCrossId,
+		t.cross_name crossName, t.spare_flag spareFlag, t.relevant_bureau relevantBureau,
+		t.through_line throughLine, t.token_veh_bureau tokenVehBureau,
+		t.token_veh_dept tokenVehDept, t.token_veh_depot tokenVehDepot,
+		t.token_psg_bureau tokenPsgBureau, t.token_psg_dept tokenPsgDept, t.crh_type crhType,
+		r.post_id postId, r.post_name postName from plan_cross t left
+		join dic_rela_cross_post r on t.base_chart_name = r.base_chart_name
+		and t.cross_name = r.cross_name and r.relation_type = 1
+	</select>
+
+
+	<insert id="insertHighlineCross" parameterType="java.util.Map">
+		insert into highline_cross (highline_cross_id, plan_cross_id,
+		base_cross_id, cross_name, cross_bureau ,cross_start_date,
+		cross_end_date, cross_start_stn,
+		cross_end_stn, spare_flag,
+		relevant_bureau, through_line, token_veh_bureau,
+		token_veh_depot,
+		token_veh_dept, token_psg_bureau, token_psg_dept,
+		crh_type, cross_date,
+		creat_reason, post_id, post_name, creat_time)
+		values (
+		<foreach collection="highlineCrossList" item="item" index="index"
+			separator="UNION">
+			SELECT
+			#{item.highlineCrossId,jdbcType=VARCHAR},
+			#{item.planCrossId,jdbcType=VARCHAR},
+			#{item.baseCrossId,jdbcType=VARCHAR},
+			#{item.crossName,jdbcType=VARCHAR},
+			#{item.crossBureau,jdbcType=VARCHAR},
+			#{item.crossStartDate,jdbcType=VARCHAR},
+			#{item.crossEndDate,jdbcType=VARCHAR},
+			#{item.crossStartStn,jdbcType=VARCHAR},
+			#{item.crossEndStn,jdbcType=VARCHAR},
+			#{item.spareFlag,jdbcType=VARCHAR},
+			#{item.relevantBureau,jdbcType=VARCHAR},
+			#{item.throughLine,jdbcType=VARCHAR},
+			#{item.tokenVehBureau,jdbcType=VARCHAR},
+			#{item.tokenVehDepot,jdbcType=VARCHAR},
+			#{item.tokenVehDept,jdbcType=VARCHAR},
+			#{item.tokenPsgBureau,jdbcType=VARCHAR},
+			#{item.tokenPsgDept,jdbcType=VARCHAR},
+			#{item.crhType,jdbcType=VARCHAR},
+			#{item.crossDate,jdbcType=VARCHAR},
+			#{item.creatReason,jdbcType=VARCHAR},
+			#{item.postId,jdbcType=NUMERIC},
+			#{item.postName,jdbcType=VARCHAR},
+			sysdate
+			from dual
+		</foreach>
+		)
+	</insert>
+
+	<insert id="insertHighlineCrossTrain" parameterType="java.util.Map">
+		insert into highline_cross_train (highline_train_id,highline_cross_id,
+		plan_train_id,train_sort,train_nbr,run_date)
+		values (
+		<foreach collection="highlineCrossTrainList" item="item"
+			index="index" separator="UNION">
+			SELECT
+			#{item.highlineTrainId,jdbcType=VARCHAR},
+			#{item.highlineCrossId,jdbcType=VARCHAR},
+			#{item.planTrainId,jdbcType=VARCHAR},
+			#{item.trainSort,jdbcType=NUMERIC},
+			#{item.trainNbr,jdbcType=VARCHAR},
+			#{item.runDate,jdbcType=VARCHAR},
+			from dual
+		</foreach>
+		)
+	</insert>
+
+</mapper>

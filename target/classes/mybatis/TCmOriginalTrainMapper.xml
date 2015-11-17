@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.comfirmedmap.repository.TCmOriginalTrainMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalTrain" >
+    <id column="CM_ORIGINAL_TRAIN_ID" property="cmOriginalTrainId" jdbcType="VARCHAR" />
+    <result column="CM_ORIGINAL_CROSS_ID" property="cmOriginalCrossId" jdbcType="VARCHAR" />
+    <result column="TRAIN_NAME" property="trainName" jdbcType="VARCHAR" />
+    <result column="ALTERNATE_DATE" property="alternateDate" jdbcType="VARCHAR" />
+    <result column="ALTERNATE_TRAIN_NBR" property="alternateTrainNbr" jdbcType="VARCHAR" />
+    <result column="PAIR_NBR" property="pairNbr" jdbcType="VARCHAR" />
+    <result column="HIGHLINE_FLAG" property="highlineFlag" jdbcType="VARCHAR" />
+    <result column="HIGHLINE_RULE" property="highlineRule" jdbcType="VARCHAR" />
+    <result column="APPOINT_WEEK" property="appointWeek" jdbcType="VARCHAR" />
+    <result column="APPOINT_DAY" property="appointDay" jdbcType="VARCHAR" />
+    <result column="APPOINT_PERIOD" property="appointPeriod" jdbcType="VARCHAR" />
+    <result column="CROSS_SECTION" property="crossSection" jdbcType="VARCHAR" />
+    <result column="THROUGH_LINE" property="throughLine" jdbcType="VARCHAR" />
+    <result column="TOKEN_VEH_BUREAU" property="tokenVehBureau" jdbcType="VARCHAR" />
+    <result column="LOCO_TYPE" property="locoType" jdbcType="VARCHAR" />
+    <result column="CRH_TYPE" property="crhType" jdbcType="VARCHAR" />
+    <result column="NOTE" property="note" jdbcType="VARCHAR" />
+    <result column="CREAT_PEOPLE" property="creatPeople" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="CREAT_CROSS_TIME" property="creatCrossTime" jdbcType="VARCHAR" />
+    <result column="CREATE_CROSS_FLAG" property="createCrossFlag" jdbcType="DECIMAL" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+    <result column="EXCEL_ID" property="excelId" jdbcType="VARCHAR" />
+    <result column="TRAIN_SORT" property="trainSort" jdbcType="VARCHAR" />
+    <result column="CROSS_LEVEL" property="crossLevel" jdbcType="VARCHAR" />
+    <result column="COMMONLINE_RULE" property="commonlineRule" jdbcType="VARCHAR" />
+    
+     <result column="SOURCE_NODE" property="sourceNode" jdbcType="VARCHAR" />
+     <result column="SOURCE_TIME" property="sourceTime" jdbcType="VARCHAR" />
+     <result column="TARGET_NODE" property="targetNode" jdbcType="VARCHAR" />
+     <result column="TARGET_TIME" property="targetTime" jdbcType="VARCHAR" />
+     <result column="VERSION_NAME" property="versionName" jdbcType="VARCHAR" />
+     <result column="VERSION_ID" property="versionId" jdbcType="VARCHAR" />
+     <result column="EXECUTION_SOURCE_TIME" property="executionSourceTime" jdbcType="VARCHAR" />
+     <result column="EXECUTION_TARGET_TIME" property="executionTargetTime" jdbcType="VARCHAR" />
+     <result column="SPARE_FLAG" property="spareFlag" jdbcType="VARCHAR" />
+     <result column="EXCEPTION_FLAG" property="exceptionflag" jdbcType="DECIMAL" />
+     <result column="AUTO_FLAG" property="autoFlag" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CM_ORIGINAL_TRAIN_ID, CM_ORIGINAL_CROSS_ID, TRAIN_NAME, ALTERNATE_DATE, ALTERNATE_TRAIN_NBR, 
+    PAIR_NBR, HIGHLINE_FLAG, HIGHLINE_RULE, APPOINT_WEEK, APPOINT_DAY, APPOINT_PERIOD, 
+    CROSS_SECTION, THROUGH_LINE, TOKEN_VEH_BUREAU, LOCO_TYPE, CRH_TYPE, NOTE, CREAT_PEOPLE, 
+    CREAT_TIME, CREAT_CROSS_TIME, CREATE_CROSS_FLAG, USE_STATUS, EXCEL_ID, TRAIN_SORT, 
+    CROSS_LEVEL, COMMONLINE_RULE, SOURCE_NODE, SOURCE_TIME, TARGET_NODE, TARGET_TIME, VERSION_NAME, VERSION_ID,
+    EXECUTION_SOURCE_TIME, EXECUTION_TARGET_TIME, SPARE_FLAG, EXCEPTION_FLAG, AUTO_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_ORIGINAL_TRAIN
+    where CM_ORIGINAL_TRAIN_ID = #{cmOriginalTrainId}
+  </select>
+  
+   <select id="queryTrainCountByCrossId" resultType="int" parameterType="java.lang.String" >
+    select count(*)
+    from T_CM_ORIGINAL_TRAIN
+    where CM_ORIGINAL_CROSS_ID = #{crossId}
+  </select>
+  
+  <select id="queryNoOperationTrain" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_ORIGINAL_TRAIN
+    where 1=1 
+    AND USE_STATUS = 0 
+    AND EXCEPTION_FLAG = 0
+    AND TOKEN_VEH_BUREAU = #{loginBureau}
+    AND COMMONLINE_RULE is null
+    AND APPOINT_WEEK is null
+    AND APPOINT_DAY is null
+    AND APPOINT_PERIOD is null
+  </select>
+  
+  <select id="queryNoAlternateTrain" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_ORIGINAL_TRAIN
+    where 1=1 
+    AND USE_STATUS = 0 
+    AND EXCEPTION_FLAG = 0
+    AND TOKEN_VEH_BUREAU = #{loginBureau}
+    AND ALTERNATE_DATE is null
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CM_ORIGINAL_TRAIN
+    where CM_ORIGINAL_TRAIN_ID = #{cmOriginalTrainId}
+  </delete>
+  
+  <delete id="batchDeleteByKeys" parameterType="java.util.List" >
+    delete from T_CM_ORIGINAL_TRAIN
+    where CM_ORIGINAL_TRAIN_ID IN 
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+    	 #{item}
+    </foreach>
+  </delete>
+  
+  <delete id="batchDeleteByFKeys" parameterType="java.util.List" >
+    delete from T_CM_ORIGINAL_TRAIN
+    where CM_ORIGINAL_CROSS_ID IN 
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+    	 #{item}
+    </foreach>
+  </delete>
+  
+  <delete id="deleteByParam" parameterType="java.util.List" >
+    delete from T_CM_ORIGINAL_TRAIN  where 
+    <foreach collection="list" item="item" separator="or" open="(" close=")">
+    	TRAIN_NAME = #{item.trainName} AND TOKEN_VEH_BUREAU = #{item.tokenVehBureau}
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalTrain" >
+    insert into T_CM_ORIGINAL_TRAIN (CM_ORIGINAL_TRAIN_ID, CM_ORIGINAL_CROSS_ID, TRAIN_NAME, ALTERNATE_DATE, 
+      ALTERNATE_TRAIN_NBR, PAIR_NBR, HIGHLINE_FLAG, HIGHLINE_RULE, APPOINT_WEEK, 
+      APPOINT_DAY, APPOINT_PERIOD, CROSS_SECTION, THROUGH_LINE, TOKEN_VEH_BUREAU, 
+      LOCO_TYPE, CRH_TYPE, NOTE, CREAT_PEOPLE, CREAT_TIME, CREAT_CROSS_TIME, 
+      CREATE_CROSS_FLAG, USE_STATUS, EXCEL_ID, TRAIN_SORT, CROSS_LEVEL, COMMONLINE_RULE, SOURCE_NODE, SOURCE_TIME, TARGET_NODE, TARGET_TIME, VERSION_NAME, VERSION_ID,
+    EXECUTION_SOURCE_TIME, EXECUTION_TARGET_TIME, SPARE_FLAG, EXCEPTION_FLAG, AUTO_FLAG
+      )
+    values (#{cmOriginalTrainId}, #{cmOriginalCrossId}, #{trainName}, #{alternateDate}, 
+      #{alternateTrainNbr}, #{pairNbr}, #{highlineFlag}, #{highlineRule}, #{appointWeek}, 
+      #{appointDay}, #{appointPeriod}, #{crossSection}, #{throughLine}, #{tokenVehBureau}, 
+      #{locoType}, #{crhType}, #{note}, #{creatPeople}, #{creatTime}, #{creatCrossTime}, 
+      #{createCrossFlag}, #{useStatus}, #{excelId}, #{trainSort}, #{crossLevel}, #{commonlineRule},
+      #{sourceNode}, #{sourceTime}, #{targetNode}, #{targetTime}, #{versionName}, #{versionId}, #{executionSourceTime}, #{executionTargetTime}, #{spareFlag},
+      #{exceptionflag}, #{autoFlag}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalTrain" >
+    insert into T_CM_ORIGINAL_TRAIN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmOriginalTrainId != null" >
+        CM_ORIGINAL_TRAIN_ID,
+      </if>
+      <if test="cmOriginalCrossId != null" >
+        CM_ORIGINAL_CROSS_ID,
+      </if>
+      <if test="trainName != null" >
+        TRAIN_NAME,
+      </if>
+      <if test="alternateDate != null" >
+        ALTERNATE_DATE,
+      </if>
+      <if test="alternateTrainNbr != null" >
+        ALTERNATE_TRAIN_NBR,
+      </if>
+      <if test="pairNbr != null" >
+        PAIR_NBR,
+      </if>
+      <if test="highlineFlag != null" >
+        HIGHLINE_FLAG,
+      </if>
+      <if test="highlineRule != null" >
+        HIGHLINE_RULE,
+      </if>
+      <if test="appointWeek != null" >
+        APPOINT_WEEK,
+      </if>
+      <if test="appointDay != null" >
+        APPOINT_DAY,
+      </if>
+      <if test="appointPeriod != null" >
+        APPOINT_PERIOD,
+      </if>
+      <if test="crossSection != null" >
+        CROSS_SECTION,
+      </if>
+      <if test="throughLine != null" >
+        THROUGH_LINE,
+      </if>
+      <if test="tokenVehBureau != null" >
+        TOKEN_VEH_BUREAU,
+      </if>
+      <if test="locoType != null" >
+        LOCO_TYPE,
+      </if>
+      <if test="crhType != null" >
+        CRH_TYPE,
+      </if>
+      <if test="note != null" >
+        NOTE,
+      </if>
+      <if test="creatPeople != null" >
+        CREAT_PEOPLE,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="creatCrossTime != null" >
+        CREAT_CROSS_TIME,
+      </if>
+      <if test="createCrossFlag != null" >
+        CREATE_CROSS_FLAG,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+      <if test="excelId != null" >
+        EXCEL_ID,
+      </if>
+      <if test="trainSort != null" >
+        TRAIN_SORT,
+      </if>
+      <if test="crossLevel != null" >
+        CROSS_LEVEL,
+      </if>
+      <if test="commonlineRule != null" >
+        COMMONLINE_RULE,
+      </if>
+      
+      <if test="sourceNode != null" >
+        SOURCE_NODE,
+      </if>
+      <if test="sourceTime != null" >
+        SOURCE_TIME,
+      </if>
+      <if test="targetNode != null" >
+        TARGET_NODE,
+      </if>
+      <if test="targetTime != null" >
+        TARGET_TIME,
+      </if>
+      <if test="versionName != null" >
+        VERSION_NAME,
+      </if>
+      <if test="versionId != null" >
+        VERSION_ID,
+      </if>
+      <if test="executionSourceTime != null" >
+        EXECUTION_SOURCE_TIME,
+      </if>
+      <if test="executionTargetTime != null" >
+        EXECUTION_TARGET_TIME,
+      </if>
+      <if test="spareFlag != null" >
+        SPARE_FLAG,
+      </if>
+      <if test="exceptionflag != null" >
+        EXCEPTION_FLAG
+      </if>
+      <if test="autoFlag != null" >
+        AUTO_FLAG
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmOriginalTrainId != null" >
+        #{cmOriginalTrainId},
+      </if>
+      <if test="cmOriginalCrossId != null" >
+        #{cmOriginalCrossId},
+      </if>
+      <if test="trainName != null" >
+        #{trainName},
+      </if>
+      <if test="alternateDate != null" >
+        #{alternateDate},
+      </if>
+      <if test="alternateTrainNbr != null" >
+        #{alternateTrainNbr},
+      </if>
+      <if test="pairNbr != null" >
+        #{pairNbr},
+      </if>
+      <if test="highlineFlag != null" >
+        #{highlineFlag},
+      </if>
+      <if test="highlineRule != null" >
+        #{highlineRule},
+      </if>
+      <if test="appointWeek != null" >
+        #{appointWeek},
+      </if>
+      <if test="appointDay != null" >
+        #{appointDay},
+      </if>
+      <if test="appointPeriod != null" >
+        #{appointPeriod},
+      </if>
+      <if test="crossSection != null" >
+        #{crossSection},
+      </if>
+      <if test="throughLine != null" >
+        #{throughLine},
+      </if>
+      <if test="tokenVehBureau != null" >
+        #{tokenVehBureau},
+      </if>
+      <if test="locoType != null" >
+        #{locoType},
+      </if>
+      <if test="crhType != null" >
+        #{crhType},
+      </if>
+      <if test="note != null" >
+        #{note},
+      </if>
+      <if test="creatPeople != null" >
+        #{creatPeople},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime},
+      </if>
+      <if test="creatCrossTime != null" >
+        #{creatCrossTime},
+      </if>
+      <if test="createCrossFlag != null" >
+        #{createCrossFlag},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+      <if test="excelId != null" >
+        #{excelId},
+      </if>
+      <if test="trainSort != null" >
+        #{trainSort},
+      </if>
+      <if test="crossLevel != null" >
+        #{crossLevel},
+      </if>
+      <if test="commonlineRule != null" >
+        #{commonlineRule},
+      </if>
+      
+      <if test="sourceNode != null" >
+        #{sourceNode},
+      </if>
+      <if test="sourceTime != null" >
+        #{sourceTime},
+      </if>
+      <if test="targetNode != null" >
+        #{targetNode},
+      </if>
+      <if test="targetTime != null" >
+        #{targetTime},
+      </if>
+      <if test="versionName != null" >
+        #{versionName},
+      </if>
+      <if test="versionId != null" >
+        #{versionId},
+      </if>
+      <if test="executionSourceTime != null" >
+        #{executionSourceTime},
+      </if>
+      <if test="executionTargetTime != null" >
+        #{executionTargetTime},
+      </if>
+      <if test="spareFlag != null" >
+        #{spareFlag},
+      </if>
+      <if test="exceptionflag != null" >
+        #{exceptionflag},
+      </if>
+      <if test="autoFlag != null" >
+        #{autoFlag}
+      </if>
+    </trim>
+  </insert>
+  <update id="batchUpdateTrainsSort"  parameterType="java.util.List">
+       <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+                update T_CM_ORIGINAL_TRAIN 
+                <set>
+                  TRAIN_SORT = #{item.trainSort}
+                </set>
+                where CM_ORIGINAL_TRAIN_ID = #{item.cmOriginalTrainId}
+       </foreach>
+  </update>
+  
+  <update id="batchConfigOperationRule"  parameterType="java.util.List">
+       <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+                update T_CM_ORIGINAL_TRAIN 
+                <set>
+                  COMMONLINE_RULE = #{item.commonlineRule},
+                  SPARE_FLAG = #{item.spareFlag}
+                </set>
+                where CM_ORIGINAL_TRAIN_ID = #{item.cmOriginalTrainId}
+       </foreach>
+  </update>
+  
+  <update id="batchConfigAlternate"  parameterType="java.util.List">
+       <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+                update T_CM_ORIGINAL_TRAIN 
+                <set>
+                  ALTERNATE_DATE = #{item.alternateDate},
+                  AUTO_FLAG = #{item.autoFlag}
+                </set>
+                where CM_ORIGINAL_TRAIN_ID = #{item.cmOriginalTrainId}
+       </foreach>
+  </update>
+  
+  <update id="batchUpdateUseStatus"  parameterType="java.util.List">
+       update T_CM_ORIGINAL_TRAIN 
+       <set>
+         USE_STATUS = 0
+       </set>
+       where CM_ORIGINAL_CROSS_ID IN
+       <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+       	#{item}
+       </foreach>
+  </update>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalTrain" >
+    update T_CM_ORIGINAL_TRAIN
+    <set >
+      <if test="cmOriginalCrossId != null" >
+        CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId},
+      </if>
+      <if test="trainName != null" >
+        TRAIN_NAME = #{trainName},
+      </if>
+      <if test="alternateDate != null" >
+        ALTERNATE_DATE = #{alternateDate},
+      </if>
+      <if test="alternateTrainNbr != null" >
+        ALTERNATE_TRAIN_NBR = #{alternateTrainNbr},
+      </if>
+      <if test="pairNbr != null" >
+        PAIR_NBR = #{pairNbr},
+      </if>
+      <if test="highlineFlag != null" >
+        HIGHLINE_FLAG = #{highlineFlag},
+      </if>
+      <if test="highlineRule != null" >
+        HIGHLINE_RULE = #{highlineRule},
+      </if>
+      <if test="appointWeek != null" >
+        APPOINT_WEEK = #{appointWeek},
+      </if>
+      <if test="appointDay != null" >
+        APPOINT_DAY = #{appointDay},
+      </if>
+      <if test="appointPeriod != null" >
+        APPOINT_PERIOD = #{appointPeriod},
+      </if>
+      <if test="crossSection != null" >
+        CROSS_SECTION = #{crossSection},
+      </if>
+      <if test="throughLine != null" >
+        THROUGH_LINE = #{throughLine},
+      </if>
+      <if test="tokenVehBureau != null" >
+        TOKEN_VEH_BUREAU = #{tokenVehBureau},
+      </if>
+      <if test="locoType != null" >
+        LOCO_TYPE = #{locoType},
+      </if>
+      <if test="crhType != null" >
+        CRH_TYPE = #{crhType},
+      </if>
+      <if test="note != null" >
+        NOTE = #{note},
+      </if>
+      <if test="creatPeople != null" >
+        CREAT_PEOPLE = #{creatPeople},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime},
+      </if>
+      <if test="creatCrossTime != null" >
+        CREAT_CROSS_TIME = #{creatCrossTime},
+      </if>
+      <if test="createCrossFlag != null" >
+        CREATE_CROSS_FLAG = #{createCrossFlag},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+      <if test="excelId != null" >
+        EXCEL_ID = #{excelId},
+      </if>
+      <if test="trainSort != null" >
+        TRAIN_SORT = #{trainSort},
+      </if>
+      <if test="crossLevel != null" >
+        CROSS_LEVEL = #{crossLevel},
+      </if>
+      <if test="commonlineRule != null" >
+        COMMONLINE_RULE = #{commonlineRule},
+      </if>
+      
+      <if test="sourceNode != null" >
+        SOURCE_NODE = #{sourceNode},
+      </if>
+      <if test="sourceTime != null" >
+        SOURCE_TIME = #{sourceTime},
+      </if>
+      <if test="targetNode != null" >
+        TARGET_NODE = #{targetNode},
+      </if>
+      <if test="targetTime != null" >
+        TARGET_TIME = #{targetTime},
+      </if>
+      <if test="versionName != null" >
+        VERSION_NAME = #{versionName},
+      </if>
+      <if test="versionId != null" >
+        VERSION_ID = #{versionId},
+      </if>
+      <if test="executionSourceTime != null" >
+        EXECUTION_SOURCE_TIME = #{executionSourceTime},
+      </if>
+      <if test="executionTargetTime != null" >
+        EXECUTION_TARGET_TIME = #{executionTargetTime},
+      </if>
+      <if test="spareFlag != null" >
+        SPARE_FLAG = #{spareFlag},
+      </if>
+      <if test="exceptionflag != null" >
+        EXCEPTION_FLAG = #{exceptionflag},
+      </if>
+      <if test="autoFlag != null" >
+        AUTO_FLAG = #{autoFlag}
+      </if>
+    </set>
+    where CM_ORIGINAL_TRAIN_ID = #{cmOriginalTrainId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalTrain" >
+    update T_CM_ORIGINAL_TRAIN
+    set CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId},
+      TRAIN_NAME = #{trainName},
+      ALTERNATE_DATE = #{alternateDate},
+      ALTERNATE_TRAIN_NBR = #{alternateTrainNbr},
+      PAIR_NBR = #{pairNbr},
+      HIGHLINE_FLAG = #{highlineFlag},
+      HIGHLINE_RULE = #{highlineRule},
+      APPOINT_WEEK = #{appointWeek},
+      APPOINT_DAY = #{appointDay},
+      APPOINT_PERIOD = #{appointPeriod},
+      CROSS_SECTION = #{crossSection},
+      THROUGH_LINE = #{throughLine},
+      TOKEN_VEH_BUREAU = #{tokenVehBureau},
+      LOCO_TYPE = #{locoType},
+      CRH_TYPE = #{crhType},
+      NOTE = #{note},
+      CREAT_PEOPLE = #{creatPeople},
+      CREAT_TIME = #{creatTime},
+      CREAT_CROSS_TIME = #{creatCrossTime},
+      CREATE_CROSS_FLAG = #{createCrossFlag},
+      USE_STATUS = #{useStatus},
+      EXCEL_ID = #{excelId},
+      TRAIN_SORT = #{trainSort},
+      CROSS_LEVEL = #{crossLevel},
+      COMMONLINE_RULE = #{commonlineRule},
+      SOURCE_NODE = #{sourceNode},
+      SOURCE_TIME = #{sourceTime},
+      TARGET_NODE = #{targetNode},
+      TARGET_TIME = #{targetTime},
+      VERSION_NAME = #{versionName},
+      VERSION_ID = #{versionId},
+      EXECUTION_SOURCE_TIME = #{executionSourceTime},
+      EXECUTION_TARGET_TIME = #{executionTargetTime},
+      SPARE_FLAG = #{spareFlag},
+      EXCEPTION_FLAG = #{exceptionflag},
+      AUTO_FLAG = #{autoFlag}
+    where CM_ORIGINAL_TRAIN_ID = #{cmOriginalTrainId}
+  </update>
+  
+  <insert id="batchInsert"  parameterType="java.util.List">
+    insert into T_CM_ORIGINAL_TRAIN (
+    CM_ORIGINAL_TRAIN_ID, CM_ORIGINAL_CROSS_ID, TRAIN_NAME, ALTERNATE_DATE, 
+      ALTERNATE_TRAIN_NBR, PAIR_NBR, HIGHLINE_FLAG, HIGHLINE_RULE, APPOINT_WEEK, 
+      APPOINT_DAY, APPOINT_PERIOD, CROSS_SECTION, THROUGH_LINE, TOKEN_VEH_BUREAU, 
+      LOCO_TYPE, CRH_TYPE, NOTE, CREAT_PEOPLE, CREAT_TIME, CREAT_CROSS_TIME, 
+      CREATE_CROSS_FLAG, USE_STATUS, EXCEL_ID, TRAIN_SORT, CROSS_LEVEL, COMMONLINE_RULE, SOURCE_NODE, SOURCE_TIME, TARGET_NODE, TARGET_TIME, VERSION_NAME, VERSION_ID,
+    EXECUTION_SOURCE_TIME, EXECUTION_TARGET_TIME, SPARE_FLAG, EXCEPTION_FLAG, AUTO_FLAG
+    ) 
+    <foreach collection="list" item="item" index="index"  separator="UNION ALL"  >
+	        SELECT
+	        #{item.cmOriginalTrainId,jdbcType=VARCHAR},
+	        #{item.cmOriginalCrossId,jdbcType=VARCHAR},
+			#{item.trainName,jdbcType=VARCHAR}, 
+			#{item.alternateDate,jdbcType=VARCHAR},
+			#{item.alternateTrainNbr,jdbcType=VARCHAR},
+			#{item.pairNbr,jdbcType=VARCHAR},
+			#{item.highlineFlag,jdbcType=VARCHAR},
+			#{item.highlineRule,jdbcType=VARCHAR},
+			#{item.appointWeek,jdbcType=VARCHAR},
+			#{item.appointDay,jdbcType=VARCHAR},
+			#{item.appointPeriod,jdbcType=VARCHAR},
+			#{item.crossSection,jdbcType=VARCHAR},
+			#{item.throughLine,jdbcType=VARCHAR},
+			#{item.tokenVehBureau,jdbcType=VARCHAR},
+			#{item.locoType,jdbcType=VARCHAR},
+			#{item.crhType,jdbcType=VARCHAR},
+			#{item.note,jdbcType=VARCHAR},
+			#{item.creatPeople,jdbcType=VARCHAR},
+			sysdate,
+			#{item.creatCrossTime,jdbcType=VARCHAR},
+			#{item.createCrossFlag,jdbcType=NUMERIC},
+			#{item.useStatus,jdbcType=NUMERIC},
+			#{item.excelId,jdbcType=VARCHAR},
+			#{item.trainSort,jdbcType=VARCHAR},
+			#{item.crossLevel,jdbcType=VARCHAR},
+			#{item.commonlineRule,jdbcType=VARCHAR},
+			#{item.sourceNode,jdbcType=VARCHAR},
+	        #{item.sourceTime,jdbcType=VARCHAR},
+	        #{item.targetNode,jdbcType=VARCHAR},
+	        #{item.targetTime,jdbcType=VARCHAR},
+	        #{item.versionName,jdbcType=VARCHAR},
+	        #{item.versionId,jdbcType=VARCHAR},
+	        #{item.executionSourceTime,jdbcType=VARCHAR},
+	        #{item.executionTargetTime,jdbcType=VARCHAR},
+	        #{item.spareFlag,jdbcType=VARCHAR},
+	        #{item.exceptionflag,jdbcType=NUMERIC},
+	        #{item.autoFlag,jdbcType=NUMERIC}
+	         FROM DUAL
+    </foreach>
+  </insert>
+  
+  <select id="queryByParam" parameterType="map"
+		resultMap="BaseResultMap">
+		select 
+   	 <include refid="Base_Column_List" />
+    	from T_CM_ORIGINAL_TRAIN where 1=1
+   		<if test="cmOriginalCrossId != null">
+			AND CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId}
+		</if>
+		order by TRAIN_SORT asc
+	</select>
+</mapper>

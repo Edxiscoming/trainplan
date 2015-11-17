@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/rabbit
+                http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd"> 
+ 
+  
+	 <rabbit:connection-factory id="connectionFactory" host="10.1.186.130" virtual-host="/" username="crec" password="crec2014" />
+  
+<!--    	<rabbit:connection-factory id="connectionFactory" host="10.111.133.51" port="5672" virtual-host="/" username="guest" password="guest"/>
+ --><!--   	<rabbit:connection-factory id="connectionFactory" host="10.1.131.34" port="5672" virtual-host="/" username="crec" password="crec2014"/> -->
+  
+    <rabbit:admin connection-factory="connectionFactory" />
+    <!-- 定义队列 -->
+  
+    <rabbit:queue id="web-reply-Queue" />  
+    <rabbit:queue id="freightTransport-reply-Queue" />
+    <!-- create myExchange and bind myAnonymousQueue with my.routingkey.1 to the TUTORIAL-EXCHANGE-->
+    <rabbit:topic-exchange id="myExchange" name="CREC-REPLY-EXCHANGE">
+        <rabbit:bindings>
+        	<!-- 绑定自己的routing到对应的消息队列 -->
+           <rabbit:binding queue="web-reply-Queue" pattern="crec.reply.trainlineEvent"></rabbit:binding>  
+             <rabbit:binding queue="freightTransport-reply-Queue" pattern="crec.reply.createFreightTransportEvent"></rabbit:binding> 
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+    
+    <!-- 定义当前消息监听类 -->
+    <bean id="eventListener" class="org.railway.com.trainplan.service.MessageHandler" />  
+    <bean id="freightTransportListener" class="org.railway.com.trainplan.service.FreightTransportMessageHandler" /> 
+    
+    <!--绑定监听类到指定的队列上-->
+    
+     <rabbit:listener-container id="replyListenerContainer" prefetch="2000" concurrency="20" connection-factory="connectionFactory">
+        <rabbit:listener ref="eventListener" queues="web-reply-Queue" />
+    </rabbit:listener-container>  
+      <rabbit:listener-container id="freightTransportContainer" connection-factory="connectionFactory">
+        <rabbit:listener ref="freightTransportListener" queues="freightTransport-reply-Queue" />
+    </rabbit:listener-container> 
+ 
+    <!-- create a bean which can send message to TUTORIAL_EXCHANGE for the Java program to call -->
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"  exchange="CREC-EVENT-EXCHANGE"/>
+ 
+</beans>

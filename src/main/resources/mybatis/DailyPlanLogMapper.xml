@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.DailyPlanLogDao">
+
+    <resultMap id="preRunPlan" type="org.railway.com.trainplan.entity.DailyPlanLog">
+        <id column="DAILYPLAN_ERROR_LOG_ID" property="id"/>
+        <result column="PLAN_TRAIN_ID" property="planTrainId"/>
+        <result column="DAILYPLAN_ID" property="dailyPlanId"/>
+        <result column="BUREAU" property="bureau"/>
+        <result column="LOG_CONTENT" property="log"/>
+        <result column="CREAT_TIME" property="createTime"/>
+        <result column="CREAT_PEOPLE" property="createPeople"/>
+        <result column="REQUEST_ID" property="requestId"/>
+    </resultMap>
+
+    <insert id="insertDailyPlanLog" parameterType="org.railway.com.trainplan.entity.DailyPlanLog">
+        INSERT INTO DAILYPLAN_ERROR_LOG
+        (
+       		DAILYPLAN_ERROR_LOG_ID,
+       		PLAN_TRAIN_ID,
+       		DAILYPLAN_ID,
+       		BUREAU,
+       		LOG_CONTENT,
+       		CREAT_TIME,
+       		CREAT_PEOPLE,
+       		REQUEST_ID
+        <!--  -->
+        )
+        VALUES(
+        #{id, jdbcType=VARCHAR}, 
+        #{planTrainId, jdbcType=VARCHAR}, 
+        #{dailyPlanId, jdbcType=VARCHAR}, 
+        #{bureau, jdbcType=VARCHAR},
+        #{log, jdbcType=NUMERIC}, 
+        TO_DATE(#{createTime},'yyyy-MM-dd HH24:mi:ss'), 
+        #{createPeople, jdbcType=VARCHAR},
+        #{requestId, jdbcType=VARCHAR}
+      
+        <!--  -->
+        )
+    </insert>
+  
+    <delete id="deleteDailyPlanLog" parameterType="string">
+        delete from plan_cross where plan_cross_id = #{dailyPlanLogId}
+    </delete>
+  
+</mapper> 
+

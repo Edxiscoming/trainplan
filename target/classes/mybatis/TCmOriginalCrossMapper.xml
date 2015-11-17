@@ -1,0 +1,1161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.comfirmedmap.repository.TCmOriginalCrossMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCross" >
+    <id column="CM_ORIGINAL_CROSS_ID" property="cmOriginalCrossId" jdbcType="VARCHAR" />
+    <result column="CM_VERSION_ID" property="cmVersionId" jdbcType="VARCHAR" />
+    <result column="CROSS_NAME" property="crossName" jdbcType="VARCHAR" />
+    <result column="CROSS_SPARE_NAME" property="crossSpareName" jdbcType="VARCHAR" />
+    <result column="ALTERNATE_DATE" property="alternateDate" jdbcType="VARCHAR" />
+    <result column="ALTERNATE_TRAIN_NBR" property="alternateTrainNbr" jdbcType="VARCHAR" />
+    <result column="SPARE_FLAG" property="spareFlag" jdbcType="VARCHAR" />
+    <result column="CUT_OLD" property="cutOld" jdbcType="DECIMAL" />
+    <result column="GROUP_TOTAL_NBR" property="groupTotalNbr" jdbcType="DECIMAL" />
+    <result column="PAIR_NBR" property="pairNbr" jdbcType="VARCHAR" />
+    <result column="HIGHLINE_FLAG" property="highlineFlag" jdbcType="VARCHAR" />
+    <result column="HIGHLINE_RULE" property="highlineRule" jdbcType="VARCHAR" />
+    <result column="COMMONLINE_RULE" property="commonlineRule" jdbcType="VARCHAR" />
+    <result column="APPOINT_WEEK" property="appointWeek" jdbcType="VARCHAR" />
+    <result column="APPOINT_DAY" property="appointDay" jdbcType="VARCHAR" />
+    <result column="APPOINT_PERIOD" property="appointPeriod" jdbcType="VARCHAR" />
+    <result column="CROSS_SECTION" property="crossSection" jdbcType="VARCHAR" />
+    <result column="THROUGH_LINE" property="throughLine" jdbcType="VARCHAR" />
+    <result column="TOKEN_VEH_BUREAU" property="tokenVehBureau" jdbcType="VARCHAR" />
+    <result column="TOKEN_VEH_DEPT" property="tokenVehDept" jdbcType="VARCHAR" />
+    <result column="TOKEN_VEH_DEPOT" property="tokenVehDepot" jdbcType="VARCHAR" />
+    <result column="TOKEN_PSG_BUREAU" property="tokenPsgBureau" jdbcType="VARCHAR" />
+    <result column="TOKEN_PSG_DEPT" property="tokenPsgDept" jdbcType="VARCHAR" />
+    <result column="LOCO_TYPE" property="locoType" jdbcType="VARCHAR" />
+    <result column="CRH_TYPE" property="crhType" jdbcType="VARCHAR" />
+    <result column="ELEC_SUPPLY" property="elecSupply" jdbcType="DECIMAL" />
+    <result column="DEJ_COLLECT" property="dejCollect" jdbcType="DECIMAL" />
+    <result column="AIR_CONDITION" property="airCondition" jdbcType="DECIMAL" />
+    <result column="NOTE" property="note" jdbcType="VARCHAR" />
+    <result column="CREAT_PEOPLE" property="creatPeople" jdbcType="VARCHAR" />
+    <result column="CREAT_PEOPLE_ORG" property="creatPeopleOrg" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="CHECK_PEOPLE" property="checkPeople" jdbcType="VARCHAR" />
+    <result column="CHECK_PEOPLE_ORG" property="checkPeopleOrg" jdbcType="VARCHAR" />
+    <result column="CHECK_TIME" property="checkTime" jdbcType="VARCHAR" />
+    <result column="CREAT_CROSS_TIME" property="creatCrossTime" jdbcType="VARCHAR" />
+    <result column="CROSS_LEVEL" property="crossLevel" jdbcType="VARCHAR" />
+    <result column="RUN_RANGE" property="runRange" jdbcType="DECIMAL" />
+    <result column="MARSHALLING_NUMS" property="marshallingNums" jdbcType="DECIMAL" />
+    <result column="PEOPLE_NUMS" property="peopleNums" jdbcType="DECIMAL" />
+    <result column="MARSHALLING_CONTENT" property="marshallingContent" jdbcType="VARCHAR" />
+    <result column="RELEVANT_BUREAU" property="relevantBureau" jdbcType="VARCHAR" />
+    <result column="CHECK_FLAG" property="checkFlag" jdbcType="DECIMAL" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+    <result column="CREATE_CROSS_FLAG" property="createCrossFlag" jdbcType="DECIMAL" />
+    <result column="CM_CROSS_ID" property="cmCrossId" jdbcType="VARCHAR" />
+    <result column="EXCEPTION_FLAG" property="exceptionflag" jdbcType="DECIMAL" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CM_ORIGINAL_CROSS_ID, CM_VERSION_ID, CROSS_NAME, CROSS_SPARE_NAME, ALTERNATE_DATE, 
+    ALTERNATE_TRAIN_NBR, SPARE_FLAG, CUT_OLD, GROUP_TOTAL_NBR, PAIR_NBR, HIGHLINE_FLAG, 
+    HIGHLINE_RULE, COMMONLINE_RULE, APPOINT_WEEK, APPOINT_DAY, APPOINT_PERIOD, CROSS_SECTION, 
+    THROUGH_LINE, TOKEN_VEH_BUREAU, TOKEN_VEH_DEPT, TOKEN_VEH_DEPOT, TOKEN_PSG_BUREAU, 
+    TOKEN_PSG_DEPT, LOCO_TYPE, CRH_TYPE, ELEC_SUPPLY, DEJ_COLLECT, AIR_CONDITION, NOTE, 
+    CREAT_PEOPLE, CREAT_PEOPLE_ORG, CREAT_TIME, CHECK_PEOPLE, CHECK_PEOPLE_ORG, CHECK_TIME, 
+    CREAT_CROSS_TIME, CROSS_LEVEL, RUN_RANGE, MARSHALLING_NUMS, PEOPLE_NUMS, MARSHALLING_CONTENT, 
+    RELEVANT_BUREAU, CHECK_FLAG, USE_STATUS ,CREATE_CROSS_FLAG, EXCEPTION_FLAG,SOURCE_BUREAU_SHORT_NAME,TARGET_BUREAU_SHORT_NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_ORIGINAL_CROSS
+    where CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId}
+  </select>
+    <select id="selectByPrimaryKey_Cross" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     * 
+    from T_CM_CROSS a,T_CM_ORIGINAL_CROSS b 
+    where a.CM_CROSS_ID = #{cmCrossId}
+    and a.CM_ORIGINAL_CROSS_ID = b.CM_ORIGINAL_CROSS_ID
+  </select>
+  <select id="selectByPrimaryKeys" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_ORIGINAL_CROSS
+    where CM_ORIGINAL_CROSS_ID IN 
+    <foreach collection="list" item="item" separator="," open="(" close=")">
+    	#{item}
+    </foreach>
+  </select>
+  
+  <select id="queryNoOperationCross" resultMap="BaseResultMap" parameterType="map">
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_ORIGINAL_CROSS
+    where 1=1 
+    AND USE_STATUS != 1 
+    AND EXCEPTION_FLAG = 0 
+    AND TOKEN_VEH_BUREAU = #{loginBureau}
+    AND COMMONLINE_RULE is null
+    AND APPOINT_WEEK is null
+    AND APPOINT_DAY is null
+    AND APPOINT_PERIOD is null 
+  </select>
+  
+  <select id="queryNoAlternateCross" resultMap="BaseResultMap" parameterType="map">
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_ORIGINAL_CROSS
+    where 1=1 
+    AND USE_STATUS != 1 
+    AND EXCEPTION_FLAG = 0 
+    AND TOKEN_VEH_BUREAU = #{loginBureau}
+    AND ALTERNATE_DATE is null
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CM_ORIGINAL_CROSS
+    where CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId}
+  </delete>
+  <delete id="deleteByParam" parameterType="java.util.List" >
+    delete from T_CM_ORIGINAL_CROSS  where 
+    <foreach collection="list" item="item" separator="or" open="(" close=")">
+    	CM_VERSION_ID = #{item.cmVersionId} AND CROSS_NAME = #{item.crossName} AND TOKEN_VEH_BUREAU = #{item.tokenVehBureau}
+    </foreach>
+  </delete>
+  <delete id="deleteByKeys" parameterType="java.util.List" >
+    delete from T_CM_ORIGINAL_CROSS  where CM_ORIGINAL_CROSS_ID IN
+    <foreach collection="list" item="item" separator="," open="(" close=")">
+    	#{item}
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCross" >
+    insert into T_CM_ORIGINAL_CROSS (CM_ORIGINAL_CROSS_ID, CM_VERSION_ID, CROSS_NAME, CROSS_SPARE_NAME, ALTERNATE_DATE, 
+      ALTERNATE_TRAIN_NBR, SPARE_FLAG, CUT_OLD, GROUP_TOTAL_NBR, PAIR_NBR, HIGHLINE_FLAG, 
+      HIGHLINE_RULE, COMMONLINE_RULE, APPOINT_WEEK, APPOINT_DAY, APPOINT_PERIOD, 
+      CROSS_SECTION, THROUGH_LINE, TOKEN_VEH_BUREAU, TOKEN_VEH_DEPT, TOKEN_VEH_DEPOT, 
+      TOKEN_PSG_BUREAU, TOKEN_PSG_DEPT, LOCO_TYPE, CRH_TYPE, ELEC_SUPPLY, DEJ_COLLECT, 
+      AIR_CONDITION, NOTE, CREAT_PEOPLE, CREAT_PEOPLE_ORG, CREAT_TIME, CHECK_PEOPLE, 
+      CHECK_PEOPLE_ORG, CHECK_TIME, CREAT_CROSS_TIME, CROSS_LEVEL, RUN_RANGE, 
+      MARSHALLING_NUMS, PEOPLE_NUMS, MARSHALLING_CONTENT, RELEVANT_BUREAU, CHECK_FLAG, 
+      USE_STATUS, CREATE_CROSS_FLAG, EXCEPTION_FLAG)
+    values (#{cmOriginalCrossId}, #{cmVersionId}, #{crossName}, #{crossSpareName}, #{alternateDate}, 
+      #{alternateTrainNbr}, #{spareFlag}, #{cutOld}, #{groupTotalNbr}, #{pairNbr}, #{highlineFlag}, 
+      #{highlineRule}, #{commonlineRule}, #{appointWeek}, #{appointDay}, #{appointPeriod}, 
+      #{crossSection}, #{throughLine}, #{tokenVehBureau}, #{tokenVehDept}, #{tokenVehDepot}, 
+      #{tokenPsgBureau}, #{tokenPsgDept}, #{locoType}, #{crhType}, #{elecSupply}, #{dejCollect}, 
+      #{airCondition}, #{note}, #{creatPeople}, #{creatPeopleOrg}, #{creatTime}, #{checkPeople}, 
+      #{checkPeopleOrg}, #{checkTime}, #{creatCrossTime}, #{crossLevel}, #{runRange}, 
+      #{marshallingNums}, #{peopleNums}, #{marshallingContent}, #{relevantBureau}, #{checkFlag}, 
+      #{useStatus}, #{createCrossFlag}, #{exceptionflag})
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCross" >
+    insert into T_CM_ORIGINAL_CROSS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmOriginalCrossId != null" >
+        CM_ORIGINAL_CROSS_ID,
+      </if>
+      <if test="cmVersionId != null" >
+        CM_VERSION_ID,
+      </if>
+      <if test="crossName != null" >
+        CROSS_NAME,
+      </if>
+      <if test="crossSpareName != null" >
+        CROSS_SPARE_NAME,
+      </if>
+      <if test="alternateDate != null" >
+        ALTERNATE_DATE,
+      </if>
+      <if test="alternateTrainNbr != null" >
+        ALTERNATE_TRAIN_NBR,
+      </if>
+      <if test="spareFlag != null" >
+        SPARE_FLAG,
+      </if>
+      <if test="cutOld != null" >
+        CUT_OLD,
+      </if>
+      <if test="groupTotalNbr != null" >
+        GROUP_TOTAL_NBR,
+      </if>
+      <if test="pairNbr != null" >
+        PAIR_NBR,
+      </if>
+      <if test="highlineFlag != null" >
+        HIGHLINE_FLAG,
+      </if>
+      <if test="highlineRule != null" >
+        HIGHLINE_RULE,
+      </if>
+      <if test="commonlineRule != null" >
+        COMMONLINE_RULE,
+      </if>
+      <if test="appointWeek != null" >
+        APPOINT_WEEK,
+      </if>
+      <if test="appointDay != null" >
+        APPOINT_DAY,
+      </if>
+      <if test="appointPeriod != null" >
+        APPOINT_PERIOD,
+      </if>
+      <if test="crossSection != null" >
+        CROSS_SECTION,
+      </if>
+      <if test="throughLine != null" >
+        THROUGH_LINE,
+      </if>
+      <if test="tokenVehBureau != null" >
+        TOKEN_VEH_BUREAU,
+      </if>
+      <if test="tokenVehDept != null" >
+        TOKEN_VEH_DEPT,
+      </if>
+      <if test="tokenVehDepot != null" >
+        TOKEN_VEH_DEPOT,
+      </if>
+      <if test="tokenPsgBureau != null" >
+        TOKEN_PSG_BUREAU,
+      </if>
+      <if test="tokenPsgDept != null" >
+        TOKEN_PSG_DEPT,
+      </if>
+      <if test="locoType != null" >
+        LOCO_TYPE,
+      </if>
+      <if test="crhType != null" >
+        CRH_TYPE,
+      </if>
+      <if test="elecSupply != null" >
+        ELEC_SUPPLY,
+      </if>
+      <if test="dejCollect != null" >
+        DEJ_COLLECT,
+      </if>
+      <if test="airCondition != null" >
+        AIR_CONDITION,
+      </if>
+      <if test="note != null" >
+        NOTE,
+      </if>
+      <if test="creatPeople != null" >
+        CREAT_PEOPLE,
+      </if>
+      <if test="creatPeopleOrg != null" >
+        CREAT_PEOPLE_ORG,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="checkPeople != null" >
+        CHECK_PEOPLE,
+      </if>
+      <if test="checkPeopleOrg != null" >
+        CHECK_PEOPLE_ORG,
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME,
+      </if>
+      <if test="creatCrossTime != null" >
+        CREAT_CROSS_TIME,
+      </if>
+      <if test="crossLevel != null" >
+        CROSS_LEVEL,
+      </if>
+      <if test="runRange != null" >
+        RUN_RANGE,
+      </if>
+      <if test="marshallingNums != null" >
+        MARSHALLING_NUMS,
+      </if>
+      <if test="peopleNums != null" >
+        PEOPLE_NUMS,
+      </if>
+      <if test="marshallingContent != null" >
+        MARSHALLING_CONTENT,
+      </if>
+      <if test="relevantBureau != null" >
+        RELEVANT_BUREAU,
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+       <if test="createCrossFlag != null" >
+        CREATE_CROSS_FLAG,
+      </if>
+       <if test="exceptionflag != null" >
+        EXCEPTION_FLAG
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmOriginalCrossId != null" >
+        #{cmOriginalCrossId},
+      </if>
+      <if test="cmVersionId != null" >
+        #{cmVersionId},
+      </if>
+      <if test="crossName != null" >
+        #{crossName},
+      </if>
+      <if test="crossSpareName != null" >
+        #{crossSpareName},
+      </if>
+      <if test="alternateDate != null" >
+        #{alternateDate},
+      </if>
+      <if test="alternateTrainNbr != null" >
+        #{alternateTrainNbr},
+      </if>
+      <if test="spareFlag != null" >
+        #{spareFlag},
+      </if>
+      <if test="cutOld != null" >
+        #{cutOld},
+      </if>
+      <if test="groupTotalNbr != null" >
+        #{groupTotalNbr},
+      </if>
+      <if test="pairNbr != null" >
+        #{pairNbr},
+      </if>
+      <if test="highlineFlag != null" >
+        #{highlineFlag},
+      </if>
+      <if test="highlineRule != null" >
+        #{highlineRule},
+      </if>
+      <if test="commonlineRule != null" >
+        #{commonlineRule},
+      </if>
+      <if test="appointWeek != null" >
+        #{appointWeek},
+      </if>
+      <if test="appointDay != null" >
+        #{appointDay},
+      </if>
+      <if test="appointPeriod != null" >
+        #{appointPeriod},
+      </if>
+      <if test="crossSection != null" >
+        #{crossSection},
+      </if>
+      <if test="throughLine != null" >
+        #{throughLine},
+      </if>
+      <if test="tokenVehBureau != null" >
+        #{tokenVehBureau},
+      </if>
+      <if test="tokenVehDept != null" >
+        #{tokenVehDept},
+      </if>
+      <if test="tokenVehDepot != null" >
+        #{tokenVehDepot},
+      </if>
+      <if test="tokenPsgBureau != null" >
+        #{tokenPsgBureau},
+      </if>
+      <if test="tokenPsgDept != null" >
+        #{tokenPsgDept},
+      </if>
+      <if test="locoType != null" >
+        #{locoType},
+      </if>
+      <if test="crhType != null" >
+        #{crhType},
+      </if>
+      <if test="elecSupply != null" >
+        #{elecSupply},
+      </if>
+      <if test="dejCollect != null" >
+        #{dejCollect},
+      </if>
+      <if test="airCondition != null" >
+        #{airCondition},
+      </if>
+      <if test="note != null" >
+        #{note},
+      </if>
+      <if test="creatPeople != null" >
+        #{creatPeople},
+      </if>
+      <if test="creatPeopleOrg != null" >
+        #{creatPeopleOrg},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime},
+      </if>
+      <if test="checkPeople != null" >
+        #{checkPeople},
+      </if>
+      <if test="checkPeopleOrg != null" >
+        #{checkPeopleOrg},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime},
+      </if>
+      <if test="creatCrossTime != null" >
+        #{creatCrossTime},
+      </if>
+      <if test="crossLevel != null" >
+        #{crossLevel},
+      </if>
+      <if test="runRange != null" >
+        #{runRange},
+      </if>
+      <if test="marshallingNums != null" >
+        #{marshallingNums},
+      </if>
+      <if test="peopleNums != null" >
+        #{peopleNums},
+      </if>
+      <if test="marshallingContent != null" >
+        #{marshallingContent},
+      </if>
+      <if test="relevantBureau != null" >
+        #{relevantBureau},
+      </if>
+      <if test="checkFlag != null" >
+        #{checkFlag},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+      <if test="createCrossFlag != null" >
+        #{createCrossFlag},
+      </if>
+      <if test="exceptionflag != null" >
+        #{exceptionflag}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCross" >
+    update T_CM_ORIGINAL_CROSS
+    <set >
+      <if test="cmVersionId != null" >
+        CM_VERSION_ID = #{cmVersionId},
+      </if>
+      <if test="crossName != null" >
+        CROSS_NAME = #{crossName},
+      </if>
+      <if test="crossSpareName != null" >
+        CROSS_SPARE_NAME = #{crossSpareName},
+      </if>
+      <if test="alternateDate != null" >
+        ALTERNATE_DATE = #{alternateDate},
+      </if>
+      <if test="alternateTrainNbr != null" >
+        ALTERNATE_TRAIN_NBR = #{alternateTrainNbr},
+      </if>
+      <if test="spareFlag != null" >
+        SPARE_FLAG = #{spareFlag},
+      </if>
+      <if test="cutOld != null" >
+        CUT_OLD = #{cutOld},
+      </if>
+      <if test="groupTotalNbr != null" >
+        GROUP_TOTAL_NBR = #{groupTotalNbr},
+      </if>
+      <if test="pairNbr != null" >
+        PAIR_NBR = #{pairNbr},
+      </if>
+      <if test="highlineFlag != null" >
+        HIGHLINE_FLAG = #{highlineFlag},
+      </if>
+      <if test="highlineRule != null" >
+        HIGHLINE_RULE = #{highlineRule},
+      </if>
+      <if test="commonlineRule != null" >
+        COMMONLINE_RULE = #{commonlineRule},
+      </if>
+      <if test="appointWeek != null" >
+        APPOINT_WEEK = #{appointWeek},
+      </if>
+      <if test="appointDay != null" >
+        APPOINT_DAY = #{appointDay},
+      </if>
+      <if test="appointPeriod != null" >
+        APPOINT_PERIOD = #{appointPeriod},
+      </if>
+      <if test="crossSection != null" >
+        CROSS_SECTION = #{crossSection},
+      </if>
+      <if test="throughLine != null" >
+        THROUGH_LINE = #{throughLine},
+      </if>
+      <if test="tokenVehBureau != null" >
+        TOKEN_VEH_BUREAU = #{tokenVehBureau},
+      </if>
+      <if test="tokenVehDept != null" >
+        TOKEN_VEH_DEPT = #{tokenVehDept},
+      </if>
+      <if test="tokenVehDepot != null" >
+        TOKEN_VEH_DEPOT = #{tokenVehDepot},
+      </if>
+      <if test="tokenPsgBureau != null" >
+        TOKEN_PSG_BUREAU = #{tokenPsgBureau},
+      </if>
+      <if test="tokenPsgDept != null" >
+        TOKEN_PSG_DEPT = #{tokenPsgDept},
+      </if>
+      <if test="locoType != null" >
+        LOCO_TYPE = #{locoType},
+      </if>
+      <if test="crhType != null" >
+        CRH_TYPE = #{crhType},
+      </if>
+      <if test="elecSupply != null" >
+        ELEC_SUPPLY = #{elecSupply},
+      </if>
+      <if test="dejCollect != null" >
+        DEJ_COLLECT = #{dejCollect},
+      </if>
+      <if test="airCondition != null" >
+        AIR_CONDITION = #{airCondition},
+      </if>
+      <if test="note != null" >
+        NOTE = #{note},
+      </if>
+      <if test="creatPeople != null" >
+        CREAT_PEOPLE = #{creatPeople},
+      </if>
+      <if test="creatPeopleOrg != null" >
+        CREAT_PEOPLE_ORG = #{creatPeopleOrg},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime},
+      </if>
+      <if test="checkPeople != null" >
+        CHECK_PEOPLE = #{checkPeople},
+      </if>
+      <if test="checkPeopleOrg != null" >
+        CHECK_PEOPLE_ORG = #{checkPeopleOrg},
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME = #{checkTime},
+      </if>
+      <if test="creatCrossTime != null" >
+        CREAT_CROSS_TIME = #{creatCrossTime},
+      </if>
+      <if test="crossLevel != null" >
+        CROSS_LEVEL = #{crossLevel},
+      </if>
+      <if test="runRange != null" >
+        RUN_RANGE = #{runRange},
+      </if>
+      <if test="marshallingNums != null" >
+        MARSHALLING_NUMS = #{marshallingNums},
+      </if>
+      <if test="peopleNums != null" >
+        PEOPLE_NUMS = #{peopleNums},
+      </if>
+      <if test="marshallingContent != null" >
+        MARSHALLING_CONTENT = #{marshallingContent},
+      </if>
+      <if test="relevantBureau != null" >
+        RELEVANT_BUREAU = #{relevantBureau},
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG = #{checkFlag},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+      <if test="createCrossFlag != null" >
+        CREATE_CROSS_FLAG = #{createCrossFlag},
+      </if>
+      <if test="exceptionflag != null" >
+        EXCEPTION_FLAG = #{exceptionflag}
+      </if>
+    </set>
+    where CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCross" >
+    update T_CM_ORIGINAL_CROSS
+    set CM_VERSION_ID = #{cmVersionId},
+      CROSS_NAME = #{crossName},
+      CROSS_SPARE_NAME = #{crossSpareName},
+      ALTERNATE_DATE = #{alternateDate},
+      ALTERNATE_TRAIN_NBR = #{alternateTrainNbr},
+      SPARE_FLAG = #{spareFlag},
+      CUT_OLD = #{cutOld},
+      GROUP_TOTAL_NBR = #{groupTotalNbr},
+      PAIR_NBR = #{pairNbr},
+      HIGHLINE_FLAG = #{highlineFlag},
+      HIGHLINE_RULE = #{highlineRule},
+      COMMONLINE_RULE = #{commonlineRule},
+      APPOINT_WEEK = #{appointWeek},
+      APPOINT_DAY = #{appointDay},
+      APPOINT_PERIOD = #{appointPeriod},
+      CROSS_SECTION = #{crossSection},
+      THROUGH_LINE = #{throughLine},
+      TOKEN_VEH_BUREAU = #{tokenVehBureau},
+      TOKEN_VEH_DEPT = #{tokenVehDept},
+      TOKEN_VEH_DEPOT = #{tokenVehDepot},
+      TOKEN_PSG_BUREAU = #{tokenPsgBureau},
+      TOKEN_PSG_DEPT = #{tokenPsgDept},
+      LOCO_TYPE = #{locoType},
+      CRH_TYPE = #{crhType},
+      ELEC_SUPPLY = #{elecSupply},
+      DEJ_COLLECT = #{dejCollect},
+      AIR_CONDITION = #{airCondition},
+      NOTE = #{note},
+      CREAT_PEOPLE = #{creatPeople},
+      CREAT_PEOPLE_ORG = #{creatPeopleOrg},
+      CREAT_TIME = #{creatTime},
+      CHECK_PEOPLE = #{checkPeople},
+      CHECK_PEOPLE_ORG = #{checkPeopleOrg},
+      CHECK_TIME = #{checkTime},
+      CREAT_CROSS_TIME = #{creatCrossTime},
+      CROSS_LEVEL = #{crossLevel},
+      RUN_RANGE = #{runRange},
+      MARSHALLING_NUMS = #{marshallingNums},
+      PEOPLE_NUMS = #{peopleNums},
+      MARSHALLING_CONTENT = #{marshallingContent},
+      RELEVANT_BUREAU = #{relevantBureau},
+      CHECK_FLAG = #{checkFlag},
+      USE_STATUS = #{useStatus},
+      CREATE_CROSS_FLAG = #{createCrossFlag},
+      EXCEPTION_FLAG = #{exceptionflag}
+    where CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId}
+  </update>
+  <update id="batchUpdateOriginalCross"  parameterType="java.util.List">
+       <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+                update T_CM_ORIGINAL_CROSS 
+                <set >
+			      <if test="item.cmVersionId != null" >
+			        CM_VERSION_ID = #{item.cmVersionId},
+			      </if>
+			      <if test="item.crossName != null" >
+			        CROSS_NAME = #{item.crossName},
+			      </if>
+			      <if test="item.crossSpareName != null" >
+			        CROSS_SPARE_NAME = #{item.crossSpareName},
+			      </if>
+			      <if test="item.alternateDate != null" >
+			        ALTERNATE_DATE = #{item.alternateDate},
+			      </if>
+			      <if test="item.alternateTrainNbr != null" >
+			        ALTERNATE_TRAIN_NBR = #{item.alternateTrainNbr},
+			      </if>
+			      <if test="item.spareFlag != null" >
+			        SPARE_FLAG = #{item.spareFlag},
+			      </if>
+			      <if test="item.cutOld != null" >
+			        CUT_OLD = #{item.cutOld},
+			      </if>
+			      <if test="item.groupTotalNbr != null" >
+			        GROUP_TOTAL_NBR = #{item.groupTotalNbr},
+			      </if>
+			      <if test="item.pairNbr != null" >
+			        PAIR_NBR = #{item.pairNbr},
+			      </if>
+			      <if test="item.highlineFlag != null" >
+			        HIGHLINE_FLAG = #{item.highlineFlag},
+			      </if>
+			      <if test="item.highlineRule != null" >
+			        HIGHLINE_RULE = #{item.highlineRule},
+			      </if>
+			      <if test="item.commonlineRule != null" >
+			        COMMONLINE_RULE = #{item.commonlineRule},
+			      </if>
+			      <if test="item.appointWeek != null" >
+			        APPOINT_WEEK = #{item.appointWeek},
+			      </if>
+			      <if test="item.appointDay != null" >
+			        APPOINT_DAY = #{item.appointDay},
+			      </if>
+			      <if test="item.appointPeriod != null" >
+			        APPOINT_PERIOD = #{item.appointPeriod},
+			      </if>
+			      <if test="item.crossSection != null" >
+			        CROSS_SECTION = #{item.crossSection},
+			      </if>
+			      <if test="item.throughLine != null" >
+			        THROUGH_LINE = #{item.throughLine},
+			      </if>
+			      <if test="item.tokenVehBureau != null" >
+			        TOKEN_VEH_BUREAU = #{item.tokenVehBureau},
+			      </if>
+			      <if test="item.tokenVehDept != null" >
+			        TOKEN_VEH_DEPT = #{item.tokenVehDept},
+			      </if>
+			      <if test="item.tokenVehDepot != null" >
+			        TOKEN_VEH_DEPOT = #{item.tokenVehDepot},
+			      </if>
+			      <if test="item.tokenPsgBureau != null" >
+			        TOKEN_PSG_BUREAU = #{item.tokenPsgBureau},
+			      </if>
+			      <if test="item.tokenPsgDept != null" >
+			        TOKEN_PSG_DEPT = #{item.tokenPsgDept},
+			      </if>
+			      <if test="item.locoType != null" >
+			        LOCO_TYPE = #{item.locoType},
+			      </if>
+			      <if test="item.crhType != null" >
+			        CRH_TYPE = #{item.crhType},
+			      </if>
+			      <if test="item.elecSupply != null" >
+			        ELEC_SUPPLY = #{item.elecSupply},
+			      </if>
+			      <if test="item.dejCollect != null" >
+			        DEJ_COLLECT = #{item.dejCollect},
+			      </if>
+			      <if test="item.airCondition != null" >
+			        AIR_CONDITION = #{item.airCondition},
+			      </if>
+			      <if test="item.note != null" >
+			        NOTE = #{item.note},
+			      </if>
+			      <if test="item.creatPeople != null" >
+			        CREAT_PEOPLE = #{item.creatPeople},
+			      </if>
+			      <if test="item.creatPeopleOrg != null" >
+			        CREAT_PEOPLE_ORG = #{item.creatPeopleOrg},
+			      </if>
+			      <if test="item.creatTime != null" >
+			        CREAT_TIME = #{item.creatTime},
+			      </if>
+			      <if test="item.checkPeople != null" >
+			        CHECK_PEOPLE = #{item.checkPeople},
+			      </if>
+			      <if test="item.checkPeopleOrg != null" >
+			        CHECK_PEOPLE_ORG = #{item.checkPeopleOrg},
+			      </if>
+			      <if test="item.checkTime != null" >
+			        CHECK_TIME = #{item.checkTime},
+			      </if>
+			      <if test="item.creatCrossTime != null" >
+			        CREAT_CROSS_TIME = #{item.creatCrossTime},
+			      </if>
+			      <if test="item.crossLevel != null" >
+			        CROSS_LEVEL = #{item.crossLevel},
+			      </if>
+			      <if test="item.runRange != null" >
+			        RUN_RANGE = #{item.runRange},
+			      </if>
+			      <if test="item.marshallingNums != null" >
+			        MARSHALLING_NUMS = #{item.marshallingNums},
+			      </if>
+			      <if test="item.peopleNums != null" >
+			        PEOPLE_NUMS = #{item.peopleNums},
+			      </if>
+			      <if test="item.marshallingContent != null" >
+			        MARSHALLING_CONTENT = #{item.marshallingContent},
+			      </if>
+			      <if test="item.relevantBureau != null" >
+			        RELEVANT_BUREAU = #{item.relevantBureau},
+			      </if>
+			      <if test="item.checkFlag != null" >
+			        CHECK_FLAG = #{item.checkFlag},
+			      </if>
+			      <if test="item.useStatus != null" >
+			        USE_STATUS = #{item.useStatus},
+			      </if>
+			      <if test="item.createCrossFlag != null" >
+			        CREATE_CROSS_FLAG = #{item.createCrossFlag},
+			      </if>
+			      <if test="item.exceptionflag != null" >
+			        EXCEPTION_FLAG = #{item.exceptionflag}
+			      </if>
+			    </set>
+                where CM_ORIGINAL_CROSS_ID = #{item.cmOriginalCrossId}
+       </foreach>
+          
+    </update>
+    
+    <select id="pageQuery" parameterType="map"
+		resultType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCross">
+		select * from (select ROWNUM AS num, m.* from (select
+		t1.CM_VERSION_ID as
+		cmVersionId,
+		t1.CM_ORIGINAL_CROSS_ID as
+		cmOriginalCrossId,
+		t1.CROSS_NAME as crossName,
+		t1.CROSS_SPARE_NAME as
+		crossSpareName,
+		t1.ALTERNATE_DATE as alterNateDate,
+		t1.ALTERNATE_TRAIN_NBR as
+		alterNateTranNbr,
+		t1.SPARE_FLAG as spareFlag,
+		t1.CUT_OLD as cutOld,
+		t1.GROUP_TOTAL_NBR as groupTotalNbr,
+		t1.PAIR_NBR as pairNbr,
+		t1.TOKEN_VEH_BUREAU
+		as tokenVehBureau,
+		t1.HIGHLINE_FLAG as highlineFlag,
+		t1.HIGHLINE_RULE as
+		highlineRule,
+		t1.COMMONLINE_RULE as commonlineRule,
+		t1.APPOINT_WEEK as
+		appointWeek,
+		t1.APPOINT_DAY as appointDay,
+		t1.APPOINT_PERIOD as appointPeriod,
+		t1.CROSS_SECTION as crossSection,
+		t1.TOKEN_VEH_DEPT as tokenVehDept,
+		t1.TOKEN_VEH_DEPOT as tokenVehDepot,
+		t1.TOKEN_PSG_BUREAU as tokenPsgBureau,
+		t1.TOKEN_PSG_DEPT as tokenPsgDept,
+		t1.LOCO_TYPE as locoType,
+		t1.CRH_TYPE as crhType,
+		t1.ELEC_SUPPLY as elecSupply,
+		t1.DEJ_COLLECT as dejCollect,
+		t1.AIR_CONDITION as airCondition,
+		t1.NOTE as note,
+		t1.CREAT_PEOPLE as createPeople,
+		t1.CREAT_PEOPLE_ORG as createPeopleOrg,
+		t1.CHECK_PEOPLE as checkPeople,
+		t1.CHECK_PEOPLE_ORG as checkPeopleOrg,
+		t1.creat_time as createTime,
+		t1.CHECK_TIME as checkTime,
+		t1.CHECK_FLAG as checkFlag,
+		t1.CREATE_CROSS_FLAG AS createCrossFlag,		
+		t1.CREAT_CROSS_TIME as creatCrossTime,
+		t1.CROSS_LEVEL as crossLevel,
+		t1.RUN_RANGE as runRange,
+		t1.MARSHALLING_NUMS as marshallingNums,
+		t1.PEOPLE_NUMS as peopleNums,
+		t1.MARSHALLING_CONTENT as marshallingContent,
+		t1.RELEVANT_BUREAU as relevantBureau,
+		t1.EXCEPTION_FLAG as exceptionflag,
+		t2.CM_CROSS_ID as cmCrossId
+<!-- 		t1.SOURCE_BUREAU_SHORT_NAME as sourceBureauShortName, -->
+<!-- 		t.TARGET_BUREAU_SHORT_NAME as targetBureauShortName -->
+		from T_CM_ORIGINAL_CROSS t1 LEFT JOIN T_CM_CROSS t2 ON
+		t1.CM_ORIGINAL_CROSS_ID = t2.CM_ORIGINAL_CROSS_ID AND t2.USE_STATUS = 0
+		where 1=1
+		<if test="cmVersionId != null">
+			AND t1.CM_VERSION_ID= #{cmVersionId}
+		</if>
+		<if test="tokenVehBureau != null">
+			<if test="tokenVehBureau != '-1'">
+				AND t1.TOKEN_VEH_BUREAU = #{tokenVehBureau}
+			</if>
+		</if>
+		<if test="tokenFlag != null">
+			<if test="tokenFlag != 0">
+				AND t1.RELEVANT_BUREAU like '%${loginBureau}%' AND t1.TOKEN_VEH_BUREAU != #{loginBureau}
+			</if>
+		</if>
+		<if test="relevantBureau != null">
+			AND t1.RELEVANT_BUREAU like '%${relevantBureau}%'
+		</if>
+		<if test="crossName != null and crossName != '' ">
+			<if test="crossNamecheckflag == 1 ">
+				AND (t1.CROSS_NAME like '${cross_name_left}%' or t1.CROSS_NAME like '${crossName}%'  )
+			</if>
+		</if>
+		<if test="crossName != null and crossName != '' ">
+			<if test="crossNamecheckflag != 1 ">
+				AND ( (t1.CROSS_NAME like '%${cross_name_left}') or (t1.CROSS_NAME like '%${cross_name_mid}%') or (t1.CROSS_NAME like '${cross_name_right}%') )
+			</if>
+		</if>
+		<if test="spareFlag != null">
+			<if test="spareFlag != -1">
+				AND t1.SPARE_FLAG = #{spareFlag}
+			</if>
+		</if>
+		<if test="highlineFlag != null">
+			<if test="highlineFlag == 0 || highlineFlag == 1">
+				AND t1.HIGHLINE_FLAG = #{highlineFlag}
+			</if>
+		</if>
+		<if test="checkFlag != null ">
+			AND t1.CHECK_FLAG = #{checkFlag}
+		</if>
+
+		<if test="exceptionflag != null">
+			<if test="exceptionflag != 1">
+				AND t1.EXCEPTION_FLAG = #{exceptionflag}
+			</if>
+		</if>
+			
+		<if test="createCrossFlag != null">			
+				AND t1.CREATE_CROSS_FLAG = #{createCrossFlag}			
+		</if>
+		
+		<if test="useStatus != null ">
+			AND t1.USE_STATUS != #{useStatus}
+		</if>
+		<if test="isArriOrOverFlag == 2 ">
+			AND t1.SOURCE_BUREAU_SHORT_NAME like '%${bureauShortName}%'
+		</if>
+		<if test="isArriOrOverFlag == 1 ">
+			AND (t1.SOURCE_BUREAU_SHORT_NAME not like '%${bureauShortName}%' or t1.SOURCE_BUREAU_SHORT_NAME is null )
+		</if>
+		
+		order by crossName ) m ) where num >=#{rownumstart} AND num
+		&lt;=#{rownumend}
+
+	</select>
+	
+	<update id="batchUpdateCheckFlag"  parameterType="java.util.List">
+       UPDATE T_CM_ORIGINAL_CROSS SET CHECK_FLAG = 1 WHERE CM_ORIGINAL_CROSS_ID IN  
+	    <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >  
+	        #{item}  
+	    </foreach> 	
+    </update>
+    
+    <update id="batchUpdateCheckFlagNotPass"  parameterType="java.util.List">
+       UPDATE T_CM_ORIGINAL_CROSS SET CHECK_FLAG = -1 WHERE CM_ORIGINAL_CROSS_ID IN  
+	    <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >  
+	        #{item}  
+	    </foreach> 	
+    </update>
+    
+    <update id="batchUpdateCreateCrossFlag"  parameterType="java.util.List">
+       UPDATE T_CM_ORIGINAL_CROSS SET CREATE_CROSS_FLAG = 1 WHERE CM_ORIGINAL_CROSS_ID IN  
+	    <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >  
+	        #{item}  
+	    </foreach> 	
+    </update>
+    
+    <update id="batchConfigOperationRule"  parameterType="java.util.List">
+       <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+                update T_CM_ORIGINAL_CROSS 
+                <set>
+                  COMMONLINE_RULE = #{item.commonlineRule},
+                  SPARE_FLAG = #{item.spareFlag}
+                </set>
+                where CM_ORIGINAL_CROSS_ID = #{item.cmOriginalCrossId}
+       </foreach>
+   </update>
+   
+   <update id="batchConfigAlternate"  parameterType="java.util.List">
+       <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+                update T_CM_ORIGINAL_CROSS 
+                <set>
+                  ALTERNATE_DATE = #{item.alternateDate}
+                </set>
+                where CM_ORIGINAL_CROSS_ID = #{item.cmOriginalCrossId}
+       </foreach>
+   </update>
+   
+   <update id="batchUpdateUseStatus"  parameterType="java.util.List">
+       update T_CM_ORIGINAL_CROSS 
+       <set>
+         USE_STATUS = 0
+       </set>
+       where CM_ORIGINAL_CROSS_ID IN
+       <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+       	#{item}
+       </foreach>
+   </update>
+	
+	<select id="queryTotalCount" parameterType="map"
+		resultType="int">
+		select count(*) as count from T_CM_ORIGINAL_CROSS where 1=1
+		<if test="cmVersionId != null">
+			AND CM_VERSION_ID= #{cmVersionId}
+		</if>
+		<if test="tokenVehBureau != null">
+			<if test="tokenVehBureau != '-1'">
+				AND TOKEN_VEH_BUREAU= #{tokenVehBureau}
+			</if>
+		</if>
+		<if test="tokenFlag != null">
+			<if test="tokenFlag != 0">
+				AND RELEVANT_BUREAU like '%${loginBureau}%' AND TOKEN_VEH_BUREAU != #{loginBureau}
+			</if>
+		</if>
+		<if test="relevantBureau != null">
+			AND RELEVANT_BUREAU like '%${relevantBureau}%'
+		</if>
+		<if test="crossName != null and crossName != '' ">
+			<if test="crossNamecheckflag == 1">
+				AND (CROSS_NAME like '${cross_name_left}%' or CROSS_NAME like '${cross_name}%' )
+			</if>
+		</if>
+		<if test="crossName != null and crossName != '' ">
+			<if test="crossNamecheckflag != 1">
+				AND ( (CROSS_NAME like '%${cross_name_left}') or (CROSS_NAME like '%${cross_name_mid}%') or (CROSS_NAME like '${cross_name_right}%') )
+			</if>
+		</if>
+		<if test="spareFlag != null">
+			<if test="spareFlag != -1">
+				AND SPARE_FLAG = #{spareFlag}
+			</if>
+		</if>
+		<if test="highlineFlag != null">
+			<if test="highlineFlag == 0 || highlineFlag == 1">
+				AND HIGHLINE_FLAG = #{highlineFlag}
+			</if>
+		</if>
+		<if test="checkFlag != null ">
+			AND CHECK_FLAG = #{checkFlag}
+		</if>
+		<if test="exceptionflag != null">
+			<if test="exceptionflag != 1">
+				AND EXCEPTION_FLAG = #{exceptionflag}
+			</if>
+		</if>
+		<if test="useStatus != null ">
+			AND USE_STATUS != #{useStatus}
+		</if>
+	</select>
+	
+	<select id="queryExistCross" resultMap="BaseResultMap" parameterType="java.util.List" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from T_CM_ORIGINAL_CROSS where 
+	    <foreach collection="list" item="item" separator="or" open="(" close=")">
+	    	CM_VERSION_ID = #{item.cmVersionId} AND CROSS_NAME = #{item.crossName} AND TOKEN_VEH_BUREAU = #{item.tokenVehBureau}
+	    </foreach>
+	  </select>
+	
+	<select id="queryByParam" parameterType="map"
+		resultType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCross">
+
+		select
+		CM_VERSION_ID as
+		cmVersionId,
+		CM_ORIGINAL_CROSS_ID as
+		cmOriginalCrossId,
+		CROSS_NAME as crossName,
+		CROSS_SPARE_NAME as
+		crossSpareName,
+		ALTERNATE_DATE as alterNateDate,
+		ALTERNATE_TRAIN_NBR as
+		alterNateTranNbr,
+		SPARE_FLAG as spareFlag,
+		CUT_OLD as cutOld,
+		GROUP_TOTAL_NBR as groupTotalNbr,
+		PAIR_NBR as
+		pairNbr,
+		TOKEN_VEH_BUREAU
+		as tokenVehBureau,
+		HIGHLINE_FLAG as
+		highlineFlag,
+		HIGHLINE_RULE as
+		highlineRule,
+		COMMONLINE_RULE as
+		commonlineRule,
+		APPOINT_WEEK as
+		appointWeek,
+		APPOINT_DAY as appointDay,
+		APPOINT_PERIOD as appointPeriod,
+		CROSS_SECTION as crossSection,
+		TOKEN_VEH_DEPT as tokenVehDept,
+		TOKEN_VEH_DEPOT as tokenVehDepot,
+		TOKEN_PSG_BUREAU as tokenPsgBureau,
+		TOKEN_PSG_DEPT as tokenPsgDept,
+		LOCO_TYPE as locoType,
+		CRH_TYPE as
+		crhType,
+		ELEC_SUPPLY as elecSupply,
+		DEJ_COLLECT as dejCollect,
+		AIR_CONDITION as airCondition,
+		NOTE as note,
+		CREAT_PEOPLE as
+		createPeople,
+		CREAT_PEOPLE_ORG as createPeopleOrg,
+		CHECK_PEOPLE as
+		checkPeople,
+		CHECK_PEOPLE_ORG as checkPeopleOrg,
+		creat_time as
+		createTime,
+		CHECK_TIME as checkTime,
+		CHECK_FLAG as checkFlag,
+		
+		CREAT_CROSS_TIME as creatCrossTime,
+		CROSS_LEVEL as crossLevel,
+		RUN_RANGE as runRange,
+		MARSHALLING_NUMS as marshallingNums,
+		PEOPLE_NUMS as peopleNums,
+		MARSHALLING_CONTENT as marshallingContent,
+		RELEVANT_BUREAU as relevantBureau,
+		EXCEPTION_FLAG as exceptionflag
+		from T_CM_ORIGINAL_CROSS
+		where 1=1
+		<if test="crossName != null">
+			AND CROSS_NAME = #{crossName}
+		</if>
+		<if test="versionId != null">
+			AND CM_VERSION_ID = #{versionId}
+		</if>
+		<if test="tokenVhBureau != null">
+			AND TOKEN_VEH_BUREAU = #{tokenVhBureau}
+		</if>
+		<if test="crossIds != null">
+			AND CM_ORIGINAL_CROSS_ID IN <foreach collection="crossIds" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+	</select>
+	
+	<insert id="batchInsert"  parameterType="java.util.List">
+    insert into T_CM_ORIGINAL_CROSS (
+    CM_ORIGINAL_CROSS_ID,
+     CM_VERSION_ID, 
+     CROSS_NAME, 
+     CROSS_SPARE_NAME,
+      ALTERNATE_DATE, 
+    ALTERNATE_TRAIN_NBR,
+    SPARE_FLAG, 
+    CUT_OLD, 
+    GROUP_TOTAL_NBR, 
+    PAIR_NBR,
+     HIGHLINE_FLAG, 
+    HIGHLINE_RULE,
+     COMMONLINE_RULE,
+      APPOINT_WEEK,
+       APPOINT_DAY,
+        APPOINT_PERIOD, 
+        CROSS_SECTION, 
+    TOKEN_VEH_BUREAU, 
+    TOKEN_VEH_DEPT, TOKEN_VEH_DEPOT, TOKEN_PSG_BUREAU, 
+    TOKEN_PSG_DEPT, LOCO_TYPE, CRH_TYPE, ELEC_SUPPLY, DEJ_COLLECT, AIR_CONDITION, NOTE, 
+    CREAT_PEOPLE, CREAT_PEOPLE_ORG, CREAT_TIME, CHECK_PEOPLE, CHECK_PEOPLE_ORG, CHECK_TIME, 
+    CREAT_CROSS_TIME, CROSS_LEVEL, RUN_RANGE, MARSHALLING_NUMS, PEOPLE_NUMS, MARSHALLING_CONTENT, 
+    RELEVANT_BUREAU, CHECK_FLAG, USE_STATUS,CREATE_CROSS_FLAG, EXCEPTION_FLAG,SOURCE_BUREAU_SHORT_NAME,TARGET_BUREAU_SHORT_NAME
+    ) 
+    <foreach collection="list" item="item" index="index"  separator="UNION ALL"  >
+	        SELECT
+	        #{item.cmOriginalCrossId,jdbcType=VARCHAR},
+			#{item.cmVersionId,jdbcType=VARCHAR},
+			#{item.crossName,jdbcType=VARCHAR}, 
+			#{item.crossSpareName,jdbcType=VARCHAR},
+			#{item.alternateDate,jdbcType=VARCHAR},
+			#{item.alternateTrainNbr,jdbcType=VARCHAR},
+			#{item.spareFlag,jdbcType=VARCHAR},
+			#{item.cutOld,jdbcType=NUMERIC},
+			#{item.groupTotalNbr,jdbcType=NUMERIC},
+			#{item.pairNbr,jdbcType=VARCHAR},
+			#{item.highlineFlag,jdbcType=VARCHAR},
+			#{item.highlineRule,jdbcType=VARCHAR},
+			#{item.commonlineRule,jdbcType=VARCHAR},
+			#{item.appointWeek,jdbcType=VARCHAR},
+			#{item.appointDay,jdbcType=VARCHAR},
+			#{item.appointPeriod,jdbcType=VARCHAR},
+			#{item.crossSection,jdbcType=VARCHAR},
+			#{item.tokenVehBureau,jdbcType=VARCHAR},
+			#{item.tokenVehDept,jdbcType=VARCHAR},
+			#{item.tokenVehDepot,jdbcType=VARCHAR},
+			#{item.tokenPsgBureau,jdbcType=VARCHAR},
+			#{item.tokenPsgDept,jdbcType=VARCHAR},
+			#{item.locoType,jdbcType=VARCHAR},
+			#{item.crhType,jdbcType=VARCHAR},
+			#{item.elecSupply,jdbcType=NUMERIC},
+			#{item.dejCollect,jdbcType=NUMERIC},
+			#{item.airCondition,jdbcType=NUMERIC},
+			#{item.note,jdbcType=VARCHAR},
+			#{item.creatPeople,jdbcType=VARCHAR},
+			#{item.creatPeopleOrg,jdbcType=VARCHAR},
+			sysdate,
+			#{item.checkPeople,jdbcType=VARCHAR},
+			#{item.checkPeopleOrg,jdbcType=VARCHAR},
+			#{item.checkTime,jdbcType=VARCHAR},
+			#{item.creatCrossTime,jdbcType=VARCHAR},
+			#{item.crossLevel,jdbcType=VARCHAR},
+			#{item.runRange,jdbcType=NUMERIC},
+			#{item.marshallingNums,jdbcType=NUMERIC},
+			#{item.peopleNums,jdbcType=NUMERIC},
+			#{item.marshallingContent,jdbcType=VARCHAR},
+			#{item.relevantBureau,jdbcType=VARCHAR},
+			#{item.checkFlag,jdbcType=NUMERIC},
+			#{item.useStatus,jdbcType=NUMERIC},
+			#{item.createCrossFlag,jdbcType=NUMERIC},
+			#{item.exceptionflag,jdbcType=NUMERIC},
+			#{item.sourceBureauShortName,jdbcType=VARCHAR},
+			#{item.targetBureauShortName,jdbcType=VARCHAR}
+	         FROM DUAL
+    </foreach>
+  </insert>
+</mapper>

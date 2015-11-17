@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.RunLineDao">
+
+    <select id="findLineTimeTableByLineId" parameterType="string" resultType="map">
+        SELECT 
+        TLS.CHILD_INDEX AS STN_INDEX, 
+        TLS.NODE_NAME AS NODE_NAME, 
+        TLS.BUREAU_NAME AS BUREAU, 
+        TLS.BUREAU_SHORT_NAME AS STNBUREAU,
+        TLS.TRACK_NAME AS TRACK_NAME, 
+        decode(TO_CHAR(TLS.SOURCE_TIME, 'yyyy-mm-dd hh24:mi'),null,'',TO_CHAR(TLS.SOURCE_TIME, 'yyyy-mm-dd hh24:mi'))  AS ARR_TIME,
+        decode(TO_CHAR(TLS.TARGET_TIME, 'yyyy-mm-dd hh24:mi'),null,'',TO_CHAR(TLS.TARGET_TIME, 'yyyy-mm-dd hh24:mi'))  AS DPT_TIME
+        FROM JHPT_JBT.M_TRAINLINE_ITEM TLS
+        WHERE TLS.PARENT_ID = #{lineId} ORDER BY TLS.CHILD_INDEX
+    </select>
+
+    <select id="findLineInfoByLineId" parameterType="string" resultType="map">
+        SELECT
+        TL.NAME AS TRAIN_NAME, 
+        TL.SOURCE_BUREAU_NAME AS START_BUREAU, 
+        TL.SOURCE_BUREAU_SHORT_NAME AS START_BUREAU_SHORT,
+        TL.TARGET_BUREAU_NAME AS END_BUREAU, 
+        TL.TARGET_BUREAU_SHORT_NAME AS END_BUREAU_SHORT, 
+        TL.SOURCE_NODE_NAME AS START_STN,
+        TL.TARGET_NODE_NAME AS END_STN, 
+        TO_CHAR(TL.SOURCE_TIME, 'yyyy-mm-dd hh24:mi') AS START_TIME, 
+        TO_CHAR(TL.TARGET_TIME, 'yyyy-mm-dd hh24:mi') AS END_TIME
+        FROM JHPT_JBT.M_TRAINLINE TL WHERE TL.ID = #{lineId}
+    </select>
+
+    <select id="findUnknownRunLineCount" parameterType="map" resultType="map">
+        SELECT COUNT(DISTINCT TL.ID) AS NUM
+        FROM JHPT_JBT.M_TRAINLINE TL
+        WHERE (TL.SOURCE_TIME > #{startDate} AND TL.SOURCE_TIME &lt;= #{endDate})
+        AND NOT EXISTS (SELECT PT.PLAN_TRAIN_ID FROM PLAN_TRAIN PT WHERE TL.ID = PT.DAILYPLAN_ID)
+        <if test="bureau != null">
+            AND TL.SOURCE_BUREAU_SHORT_NAME = #{bureau}
+        </if>
+    </select>
+
+</mapper> 

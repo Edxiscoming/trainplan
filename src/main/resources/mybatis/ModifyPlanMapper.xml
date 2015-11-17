@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.ModifyPlanDao">
+
+
+	<insert id="addModifyList" parameterType="java.util.List">
+		INSERT INTO PLAN_MODIFY
+		(
+		plan_modify_id,
+		PLAN_CROSS_ID,
+		PLAN_TRAIN_ID,
+		CROSS_NAME,
+		RUN_DATE,
+		TRAIN_NBR,
+		MODIFY_TYPE,
+		MODIFY_REASON,
+		START_DATE,
+		END_DATE,
+		RUN_RULE,
+		SELECTED_DATE,
+		MODIFY_CONTENT,
+		MODIFY_TIME,
+		MODIFY_PEOPLE,
+		MODIFY_PEOPLE_ORG,
+		MODIFY_PEOPLE_BUREAU
+		)
+		<foreach collection="list" item="item" index="index" open="("
+			separator="UNION ALL" close=")">
+			SELECT
+			#{item.planModifyId,
+			jdbcType=VARCHAR},
+			#{item.planCrossId, jdbcType=VARCHAR},
+			#{item.planTrainId, jdbcType=VARCHAR},
+			#{item.crossName,
+			jdbcType=VARCHAR},
+			#{item.runDate, jdbcType=VARCHAR},
+			#{item.trainNbr,
+			jdbcType=VARCHAR},
+			#{item.modifyType, jdbcType=VARCHAR},
+			#{item.modifyReason, jdbcType=VARCHAR},
+
+			to_date(#{item.startDate,
+			jdbcType=VARCHAR},'yyyy-mm-dd'),
+			to_date(#{item.endDate,
+			jdbcType=VARCHAR},'yyyy-mm-dd'),
+
+			#{item.rule, jdbcType=VARCHAR},
+			#{item.selectedDate, jdbcType=VARCHAR},
+			#{item.modifyContent,
+			jdbcType=VARCHAR},
+			sysdate,
+			#{item.modifyPeople, jdbcType=VARCHAR},
+			#{item.modifyPeopleOrg, jdbcType=VARCHAR},
+			#{item.modifyPeopleBureau,
+			jdbcType=VARCHAR}
+			FROM DUAL
+		</foreach>
+	</insert>
+	<update id="updatePlanCheckHisFlag" parameterType="map">
+		update
+		plan_check
+		set
+		check_his_flag=#{checkHisFlag}
+		where PLAN_CROSS_ID =
+		#{planCrossId}
+	</update>
+	<update id="updatePlanCheckHisFlagCmd" parameterType="map">
+		update
+		plan_check
+		set
+		check_his_flag=#{checkHisFlag}
+		where CMD_TEL_ID =
+		#{cmdTelId}
+	</update>
+	<update id="updateTrainPlanSentBuearu" parameterType="string">
+		update
+		plan_train
+		set
+		SENT_BUREAU=''
+		where PLAN_TRAIN_ID =
+		#{planTrainId,jdbcType=VARCHAR}
+	</update>
+
+	<select id="getModifyRecordsByPlanCrossId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.ModifyPlanDTO">
+		select
+		PLAN_MODIFY_ID planModifyId,
+		PLAN_CROSS_ID planCrossId,
+		PLAN_TRAIN_ID planTrainId,
+		CROSS_NAME crossName,
+		RUN_DATE runDate,
+		TRAIN_NBR trainNbr,
+		MODIFY_TYPE modifyType,
+		MODIFY_REASON modifyReason,
+		START_DATE startDate,
+		END_DATE endDate,
+		RUN_RULE rule,
+		SELECTED_DATE
+		selectedDate,
+		MODIFY_CONTENT modifyContent,
+		MODIFY_TIME modifyTime,
+		MODIFY_PEOPLE modifyPeople,
+		MODIFY_PEOPLE_ORG modifyPeopleOrg,
+		MODIFY_PEOPLE_BUREAU modifyPeopleBureau
+		from PLAN_MODIFY M where
+		M.PLAN_CROSS_ID=#{planCrossId}
+		<!-- order by m.TRAIN_NBR,m.RUN_DATE,M.MODIFY_TIME desc -->
+		<!-- 2015-3-16 10:44:09,哲哥让修改的排序 -->
+		order by M.MODIFY_TIME,m.train_nbr,m.run_date
+	</select>
+	<select id="getModifyRecordsByPlanTrainId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.ModifyPlanDTO">
+		select
+		PLAN_MODIFY_ID planModifyId,
+		PLAN_CROSS_ID
+		planCrossId,
+		PLAN_TRAIN_ID planTrainId,
+		CROSS_NAME crossName,
+		RUN_DATE
+		runDate,
+		TRAIN_NBR trainNbr,
+		MODIFY_TYPE modifyType,
+		MODIFY_REASON
+		modifyReason,
+		START_DATE startDate,
+		END_DATE endDate,
+		RUN_RULE rule,
+		SELECTED_DATE selectedDate,
+		MODIFY_CONTENT modifyContent,
+		MODIFY_TIME
+		modifyTime,
+		MODIFY_PEOPLE modifyPeople,
+		MODIFY_PEOPLE_ORG
+		modifyPeopleOrg,
+		MODIFY_PEOPLE_BUREAU modifyPeopleBureau
+		from
+		PLAN_MODIFY M
+		where M.PLAN_TRAIN_ID in(#{planTrainId})
+		order by
+		M.MODIFY_TIME desc
+	</select>
+
+	<select id="getModifyRecordsByPlanTrainId1" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.ModifyPlanDTO">
+		select
+		PLAN_MODIFY_ID planModifyId,
+		PLAN_CROSS_ID planCrossId,
+		PLAN_TRAIN_ID planTrainId,
+		CROSS_NAME crossName,
+		RUN_DATE runDate,
+		TRAIN_NBR trainNbr,
+		MODIFY_TYPE modifyType,
+		MODIFY_REASON modifyReason,
+		START_DATE startDate,
+		END_DATE endDate,
+		RUN_RULE rule,
+		SELECTED_DATE
+		selectedDate,
+		MODIFY_CONTENT modifyContent,
+		MODIFY_TIME modifyTime,
+		MODIFY_PEOPLE modifyPeople,
+		MODIFY_PEOPLE_ORG modifyPeopleOrg,
+		MODIFY_PEOPLE_BUREAU modifyPeopleBureau
+		from PLAN_MODIFY M
+		where
+		M.PLAN_TRAIN_ID in(${ids})
+		<!-- order by M.MODIFY_TIME desc -->
+		<!-- 2015-3-16 10:44:09,哲哥让修改的排序 -->
+		order by M.MODIFY_TIME,m.train_nbr,m.run_date
+	</select>
+
+	<insert id="addModifyList1" parameterType="map">
+		insert into plan_modify
+		(plan_modify_id,
+		plan_cross_id,
+		plan_train_id,
+		cross_name,
+		run_date,
+		train_nbr,
+		modify_type,
+		modify_reason,
+		modify_time,
+		modify_content,
+		modify_people,
+		modify_people_org,
+		modify_people_bureau)
+
+		select sys_guid(),
+		a.plan_cross_id,
+		a.plan_train_id,
+		b.cross_name,
+		a.run_date,
+		a.train_nbr,
+		'6',
+		#{modify_reason},
+		sysdate,
+		a.train_nbr || '车次在' ||
+		a.run_date || '被删除',
+		#{modify_people},
+		#{modify_people_org},
+		#{modify_people_bureau}
+		from plan_train a
+		left join plan_cross b on
+		b.plan_cross_id = a.plan_cross_id
+		where 1 = 1
+		<if test="crossIds != null">
+			and a.plan_cross_id in
+			<foreach collection="crossIds" index="index" item="list"
+				open="(" separator="," close=")">
+				#{list}
+			</foreach>
+		</if>
+		<if test="telIdOrCmdTrainId != null">
+			and (a.tel_id in
+			<foreach collection="telIdOrCmdTrainId" index="index" item="list"
+				open="(" separator="," close=")">
+				#{list}
+			</foreach>
+			or a.cmd_train_id in
+			<foreach collection="telIdOrCmdTrainId" index="index" item="list"
+				open="(" separator="," close=")">
+				#{list}
+			</foreach>
+			)
+		</if>
+	</insert>
+
+</mapper>
+

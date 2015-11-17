@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.RoleDao">
+
+    <resultMap id="role" type="org.railway.com.trainplan.entity.Role">
+        <id column="ROL_ID" property="id"/>
+        <result column="ROL_NAME" property="name"/>
+        <result column="DESCRIPTION" property="desc"/>
+    </resultMap>
+	
+	<!-- 数据库用户，tds1adm orga -->
+
+<!--     <select id="getRoleByAccId" parameterType="int" resultMap="role"> -->
+<!--         SELECT ROL.ROL_ID AS ROL_ID, ROL.ROL_NAME AS ROL_NAME, ROL.ROL_DESCRIPTION AS DESCRIPTION -->
+<!--         FROM tds1adm.ACC_ROL_RELA ARR LEFT JOIN tds1adm.ROLE ROL ON ARR.ROL_ID = ROL.ROL_ID WHERE ARR.ACC_ID = #{accId} -->
+<!--     </select> -->
+    
+    
+<!--     <select id="getPermissionByRoleIds" parameterType="map" resultType="org.railway.com.trainplan.entity.Permission"> -->
+<!--         SELECT  t.AUT_ID id, t.AUT_KEY key FROM tds1adm.authority t WHERE t.AUT_VALUE = 'true' and t.ROL_ID in(${roleIds}) -->
+<!--     </select> -->
+    <select id="getRoleByAccId" parameterType="int" resultMap="role">
+        SELECT ROL.ROL_ID AS ROL_ID, ROL.ROL_NAME AS ROL_NAME, ROL.ROL_DESCRIPTION AS DESCRIPTION
+        FROM ORGA.ACC_ROL_RELA ARR LEFT JOIN ORGA.ROLE ROL ON ARR.ROL_ID = ROL.ROL_ID WHERE ARR.ACC_ID = #{accId}
+    </select>
+    
+    
+    <select id="getPermissionByRoleIds" parameterType="map" resultType="org.railway.com.trainplan.entity.Permission">
+        SELECT  t.AUT_ID id, t.AUT_KEY key FROM ORGA.authority t WHERE t.AUT_VALUE = 'true' and t.ROL_ID in(${roleIds})
+    </select>
+</mapper> 

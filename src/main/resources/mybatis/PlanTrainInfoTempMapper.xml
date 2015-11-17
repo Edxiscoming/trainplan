@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="planTrainInfoTempDao">
+
+	<insert id="insertPlanTrainInfoTemp" parameterType="org.railway.com.trainplan.entity.PlanTrainInFoTemp">
+		insert into PLAN_TRAIN_INFO_TEMP
+		(ID,REQUEST_ID,PLAN_TRAIN_ID,MSG_URL,CREATE_TIME,BUREAU,CREAT_PEOPLE)values(#{id},#{requestId},#{planTrainId},#{msgUrl},#{createTime},#{bureau},#{creatPeople})
+	</insert>
+
+
+    <delete id="deletePlanTrainInfoTemp"  parameterType="map">
+  	  DELETE FROM PLAN_TRAIN_INFO_TEMP WHERE id = #{id} 
+  </delete>
+  
+  
+        <update id="updatePlanTrainInfoTemp" parameterType="org.railway.com.trainplan.entity.PlanTrainInFoTemp">
+	        UPDATE PLAN_TRAIN_INFO_TEMP SET       
+				ID = #{id},		
+				REQUEST_ID = #{requestId},
+				PLAN_TRAIN_ID = #{planTrainId},
+				MSG_URL = #{msgUrl},
+				BUREAU = #{bureau},
+				CREAT_PEOPLE = #{creatPeople},
+				CREATE_TIME = TO_DATE(#{createTime},'yyyy-MM-dd')
+			where ID=#{id}
+     </update>
+  
+  
+         <select id="listPlanTrainInfoTemp" parameterType="map"  resultType="org.railway.com.trainplan.entity.PlanTrainInFoTemp">
+	     SELECT 
+	            ID  AS id,
+	            REQUEST_ID AS requestId,
+				PLAN_TRAIN_ID  AS requestId,
+				PLAN_TRAIN_ID  AS planTrainId,
+				MSG_URL  AS msgUrl,
+				BUREAU  AS bureau,
+				CREAT_PEOPLE  AS creatPeople,
+				TO_CHAR(CREATE_TIME,'yyyy-MM-dd hh24:mi:SS')  AS createTime
+	     FROM PLAN_TRAIN_INFO_TEMP 
+	     WHERE 1=1
+	     <if test="requestId != null">
+            AND REQUEST_ID =#{requestId}
+          </if>
+	     
+	     
+	    ORDER BY ID DESC
+     </select>
+     
+      <delete id="deletePlanTrainInfoTempByRequestid"  parameterType="string">
+        DELETE FROM PLAN_TRAIN_INFO_TEMP p WHERE REQUEST_ID  = #{requestid}
+     </delete>
+     
+     
+     
+</mapper>

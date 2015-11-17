@@ -1,0 +1,1149 @@
+/*css*/
+
+body {
+	/*background:#eaedf1;*/
+	font-family:"Helvetica Neue", "Hiragino Sans GB", "Segoe UI", "Microsoft Yahei", "微软雅黑", Tahoma, Arial, STHeiti, sans-serif;
+	color:#56688a;
+}
+.Iframe-body {
+	margin:5px 2%;
+}
+.margin-right-10 {
+	margin-right:10px;
+}
+.red {
+	color:#f00;
+}
+.mark {
+	margin:0px;
+	padding:0px;
+	color:#999;
+}
+.green {
+	color:#468847;
+}
+.yellow {
+	color:#c09853;
+}
+.modal-dialog {
+	width:600px;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p {
+	font-family: "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", "Microsoft Yahei", "微软雅黑", Tahoma, Arial, STHeiti, sans-serif;
+	color:#47505c;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	font-weight:700;
+}
+hr {
+	border-top: 1px solid #ccc;
+}
+.header {
+	z-index:99;
+	position: relative;
+	background:#30363e;
+	display:table;
+	width:100%;
+	margin:0px;
+	padding:0px;
+}
+.header-logo {
+	display:table-cell;
+	margin:0px;
+	padding:0px;
+	width:10%;
+}
+.header .logo {
+	margin:0px;
+	padding:0px;
+	margin-top:-35px;
+	padding-left:10px;
+}
+.header-right {
+	display:table-cell;
+	margin:0px;
+	padding:0px;
+	color:#eee;
+	margin-bottom:5px;
+}
+.header-right ul li {
+	list-style:none;
+	float:right;
+	padding-right:10px;
+	margin-top:-12px;
+}
+.header-right ul li i {
+	margin-right:3px;
+}
+.header-right ul li .label {
+	margin-left:3px;
+	padding:1px 6px;
+	border-radius:10px;
+	font-size:10px;
+	font-weight:normal;
+}
+.header-right ul li a {
+	color:#ccc;
+	font-size:12px;
+}
+.header-right ul li a:hover {
+	text-decoration:none;
+	color:#4caef5;
+}
+.contentIframe {
+	background:none;
+	margin-top: 0px;
+	position: relative;
+	min-height: 100px;
+	min-width: 100px;
+	font-family: "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", "Microsoft Yahei", "微软雅黑", Tahoma, Arial, STHeiti, sans-serif;
+}
+.content-menu {
+	background:#f5f7f6;
+	border-bottom:#ccc 1px solid;
+	padding:2px 20px;
+	height:41px;
+	line-height:38px;
+}
+.mainContent {
+	border:1px solid #ced5e3;
+	background:#f7fbff;
+	-moz-border-radius: 10px;   /* 圆的半径为边长的一半，即300px */
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	padding:5px;
+}
+.topic_menu {
+	display:block;
+	width:50px;
+	height:50px;
+	border-radius:50%;
+	border:5px solid #5cb85c;
+	padding-top: 5px;
+	font-size:20px;
+	float:left;
+	padding-left:10px;
+}
+.topic_menu i {
+	color:#5cb85c;
+}
+.topic_menu_h {
+	line-height:40px;
+	padding-right:10px;
+}
+.topic_menu_h.active {
+	color:#5cb85c;
+}
+/*search input*/
+.sb-search{
+	float:right;
+	position: relative;
+	width:40px;
+	transition:width 1s;
+	-moz-transition:width 1s; /* Firefox 4 */
+	-webkit-transition:width 1s; /* Safari and Chrome */
+	-o-transition:width 1s; /* Opera */
+	}
+.sb-search:hover{
+	width:180px;
+}
+.sb-search i{
+	margin-right:0px;
+	}
+.sb-search .form-control{
+	border-right:0px;
+	border-radius:20px;
+	}
+.sb-search .btn-search{
+	background-color: transparent;
+	border-left:0px;
+	border-radius:20px;
+	}
+/*search input*/
+
+/*下拉菜单*/
+.Navigation {
+	display:table-cell;
+	margin-bottom: 0;
+	padding-left: 10px;
+	list-style: none;
+	padding-top:10px;
+}
+.Navigation ul, .Navigation ul li {
+	margin:0;
+	padding:0;
+}
+.Navigation ul li {
+	float: left;
+	position: relative;
+}
+.Navigation ul li a, .Navigation ul li a:visited {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	font-family: "微软雅黑";
+	float: left;
+}
+.Navigation ul li:hover a, .Navigation ul li:hover i {
+	color: #fff;
+	background:#30363e;
+}
+.Navigation ul li ul {
+	display: none;
+	border-top:none;
+}
+.Navigation ul li:hover ul {
+	display: block;
+	position: absolute;
+	top: 38px;
+	left: 0;
+	z-index:100;
+	width: 128px;
+}
+/*1*/
+.Navigation ul li:hover ul li a {
+	display: block;
+	background: #30363e;
+	color: #56688a;
+	text-shadow: none;
+	text-align: left;
+	width: 128px;
+	padding-left:18px;
+	line-height:34px;
+}
+.Navigation ul li:hover ul li a i {
+	color:#69C;
+}
+.Navigation ul li:hover ul li a:hover i, .Navigation ul li:hover ul li a:hover {
+	color:#fff;
+	background:#3e8ec7;
+}
+.Navigation .start {
+	border-left: 0;
+}
+.Navigation .last {
+	border-right: 0;
+}
+.Navigation .active {
+}
+
+
+/*screen Compatibility*/
+@media all and (max-width:1280px) {
+.Iframe_body {
+ padding:12px 20px;
+}
+.sidebar {
+ top:0;
+ padding:0px 20px;
+}
+.header {
+ padding:0 10px;
+}
+}
+@media all and (max-width:900px) {
+}
+/*表格排序*/
+/*dataTable*/
+.dataTables_filter, .dataTables_length, .dataTables_info, .dataTables_paginate {
+	display:none;
+}
+table.table thead .sorting, table.table thead .sorting_asc, table.table thead .sorting_desc, table.table thead .sorting_asc_disabled, table.table thead .sorting_desc_disabled {
+	cursor: pointer;
+	outline:0;
+ *cursor: hand;
+}
+table.table thead .sorting:before, table.table thead .sorting_asc:before, table.table thead .sorting_desc:before, table.table thead .sorting_asc_disabled:before, table.table thead .sorting_desc_disabled:before {
+	float:right;
+	font-size:8px;
+	padding:0;
+	padding-top:3px;
+	color:#56688a;
+	display: inline-block;
+	font-style: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-family:'FontAwesome';
+}
+@font-face {
+font-family:'FontAwesome';
+src:url('../fonts/fontawesome-webfont.eot?v=4.0.1');
+src:url('../fonts/fontawesome-webfont.eot?#iefix&v=4.0.1') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.0.1') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.0.1') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.0.1#fontawesomeregular') format('svg');
+font-weight:normal;
+font-style:normal
+}
+.fa {
+	display:inline-block;
+	font-family:FontAwesome;
+	font-style:normal;
+	font-weight:normal;
+	line-height:1;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale
+}
+table.table thead .sorting:before {
+	content: "\f0d8";
+}
+table.table thead .sorting_asc:before {
+	content: "\f0d7";
+}
+table.table thead .sorting_desc:before {
+	content: "\f0d8";
+}
+table.table thead .sorting_asc_disabled {
+	content: "\f0d7";
+	color:#d7d8dd;
+}
+table.table thead .sorting_desc_disabled {
+	content: "\f0d8";
+	color:#d7d8dd;
+}
+/*表格排序*/
+/** jQuery UI Slider 1.8.16
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Slider#theming
+ */
+.ui-slider {
+	position: relative;
+	text-align: left;
+	background:#e2f1f8;
+	border-radius:10px;
+	margin-bottom:20px;
+}
+.ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	width: 1em;
+	height: 1em;
+	border-radius:50%;
+	cursor: default;
+	background:#6f7bd0;
+	border:#fff 3px solid;
+}
+.ui-slider .ui-slider-range {
+	position: absolute;
+	z-index: 1;
+	font-size: .5em;
+	display: block;
+	border: 0;
+	background-position: 0 0;
+	background:#19ddd6;
+	color: #ffffff;
+	background-color: #1892de;
+}
+.ui-slider .ui-state-hover, .ui-slider .ui-state-active {
+	border:#fff 4px solid;
+}
+.ui-slider-horizontal {
+	height: .8em;
+}
+.ui-slider-horizontal .ui-slider-handle {
+	top: -.1em;
+	margin-left: -.4em;
+}
+.ui-slider-horizontal .ui-slider-range {
+	top: 0;
+	height: 100%;
+}
+.ui-slider-horizontal .ui-slider-range-min {
+	left: 0;
+}
+.ui-slider-horizontal .ui-slider-range-max {
+	right: 0;
+}
+.ui-slider-vertical {
+	width: .8em;
+	height: 100px;
+}
+.ui-slider-vertical .ui-slider-handle {
+	left: -.1em;
+	margin-left: 0;
+	margin-bottom: -.4em;
+}
+.ui-slider-vertical .ui-slider-range {
+	left: 0;
+	width: 100%;
+}
+.ui-slider-vertical .ui-slider-range-min {
+	bottom: 0;
+}
+.ui-slider-vertical .ui-slider-range-max {
+	top: 0;
+}
+.slider-primary .ui-slider-range {
+	background:#607387;
+}
+.slider-success .ui-slider-range {
+	background:#45b854;
+}
+.slider-info .ui-slider-range {
+	background:#0474c8;
+}
+.slider-danger .ui-slider-range {
+	background:#f05352;
+}
+.slider-warning .ui-slider-range {
+	background:#ff7800;
+}
+/*<!--
+Jquery Slider--> */
+/* 页面左侧竖条分类*/
+.bs-callout {
+	margin:20px 0;
+	padding:20px;
+	border-left:3px solid #eee
+}
+.bs-callout h4 {
+	margin-top:0;
+	margin-bottom:5px
+}
+.bs-callout p:last-child {
+	margin-bottom:0
+}
+.bs-callout code {
+	background-color:#fff;
+	border-radius:3px
+}
+.bs-callout-danger {
+	background-color:#fdf7f7;
+	border-color:#d9534f
+}
+.bs-callout-danger h4 {
+	color:#d9534f
+}
+.bs-callout-warning {
+	background-color:#fcf8f2;
+	border-color:#f0ad4e
+}
+.bs-callout-warning h4 {
+	color:#f0ad4e
+}
+.bs-callout-info {
+	background-color:#f4f8fa;
+	border-color:#5bc0de
+}
+.bs-callout-info h4 {
+	color:#5bc0de
+}
+.bs-callout-success {
+	background-color:#edf7f5;
+	border-color:#45b854
+}
+.bs-callout-success h4 {
+	color:#45b854
+}
+.bs-callout-primary {
+	background-color:#edf2fc;
+	border-color:#6f7bd0
+}
+.bs-callout-primary h4 {
+	color:#6f7bd0
+}
+/* 页面左侧竖条分类*/
+
+/*!
+* Datepicker for Bootstrap
+*
+* Original Idea: http://www.eyecon.ro/bootstrap-datepicker (Copyright 2012 Stefan Petre)
+* Updated by AymKdn (http://kodono.info - https://github.com/Aymkdn/Datepicker-for-Bootstrap)
+* Licensed under the Apache License v2.0
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+*/
+.datepicker {
+	top: 0;
+	left: 0;
+	padding: 4px;
+	margin-top: 1px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;/*.dow {
+border-top: 1px solid #ddd !important;
+}*/
+}
+.datepicker:before {
+	content: '';
+	display: inline-block;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid #ccc;
+	border-bottom-color: rgba(0, 0, 0, 0.2);
+	position: absolute;
+	top: -7px;
+	left: 6px;
+}
+.datepicker:after {
+	content: '';
+	display: inline-block;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-bottom: 6px solid #ffffff;
+	position: absolute;
+	top: -6px;
+	left: 7px;
+}
+.datepicker > div {
+	display: none;
+}
+.datepicker table {
+	width: 100%;
+	margin: 0;
+}
+.datepicker td, .datepicker th {
+	text-align: center;
+	width: 20px;
+	height: 20px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.datepicker td.day:hover {
+	background: #eeeeee;
+	cursor: pointer;
+}
+.datepicker td.old, .datepicker td.new {
+	color: #999999;
+}
+.datepicker td.active, .datepicker td.active:hover {
+	background-color: #2f7ed8;
+	border-color: #2f7ed8;
+	color: #fff;
+	border-radius: 4px;
+}
+.datepicker td.active:hover, .datepicker td.active:hover:hover, .datepicker td.active:active, .datepicker td.active:hover:active, .datepicker td.active.active, .datepicker td.active:hover.active, .datepicker td.active.disabled, .datepicker td.active:hover.disabled, .datepicker td.active[disabled], .datepicker td.active:hover[disabled] {
+	background-color: #2f7ed8;
+}
+.datepicker td.active:active, .datepicker td.active:hover:active, .datepicker td.active.active, .datepicker td.active:hover.active {
+	background-color: #2f7ed8 \9;
+}
+.datepicker td span {
+	display: block;
+	width: 47px;
+	height: 54px;
+	line-height: 54px;
+	float: left;
+	margin: 2px;
+	cursor: pointer;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.datepicker td span:hover {
+	background: #eeeeee;
+}
+.datepicker td span.active {
+	background-color: #2f7ed8;
+	border-color: #2f7ed8;
+	color: #fff;
+	border-radius: 4px;
+}
+.datepicker td span.active:hover, .datepicker td span.active:active, .datepicker td span.active.active, .datepicker td span.active.disabled, .datepicker td span.active[disabled] {
+	background-color: #2f7ed8;
+}
+.datepicker td span.active:active, .datepicker td span.active.active {
+	background-color: #2f7ed8 \9;
+}
+.datepicker td span.old {
+	color: #999999;
+}
+.datepicker th.switch {
+	width: 145px;
+}
+.datepicker thead tr:first-child th {
+	cursor: pointer;
+}
+.datepicker thead tr:first-child th:hover {
+	background: #eeeeee;
+}
+.input-append.date .add-on i, .input-prepend.date .add-on i {
+	display: block;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+}
+.dropdown-menu.datepicker {
+	max-width:220px
+}
+/*!
+* Datepicker**/
+
+/*fuelUX css*/
+.fuelux .label, .fuelux .badge {
+	display: inline-block;
+	padding: 2px 4px;
+	font-size: 11.844px;
+	font-weight: bold;
+	line-height: 14px;
+	color: #ffffff;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	white-space: nowrap;
+	vertical-align: baseline;
+	background-color: #999999;
+}
+.fuelux .label {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+.fuelux .badge {
+	padding-right: 9px;
+	padding-left: 9px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	border-radius: 9px;
+}
+.fuelux .label:empty, .fuelux .badge:empty {
+	display: none;
+}
+.fuelux a.label:hover, .fuelux a.label:focus, .fuelux a.badge:hover, .fuelux a.badge:focus {
+	color: #ffffff;
+	text-decoration: none;
+	cursor: pointer;
+}
+.fuelux .label-important, .fuelux .badge-important {
+	background-color: #b94a48;
+}
+.fuelux .label-important[href], .fuelux .badge-important[href] {
+	background-color: #953b39;
+}
+.fuelux .label-warning, .fuelux .badge-warning {
+	background-color: #f89406;
+}
+.fuelux .label-warning[href], .fuelux .badge-warning[href] {
+	background-color: #c67605;
+}
+.fuelux .label-success, .fuelux .badge-success {
+	background-color: #45b854;
+}
+.fuelux .label-success[href], .fuelux .badge-success[href] {
+	background-color: #356635;
+}
+.fuelux .label-info, .fuelux .badge-info {
+	background-color: #0474c8;
+}
+.fuelux .label-info[href], .fuelux .badge-info[href] {
+	background-color: #2d6987;
+}
+.fuelux .label-inverse, .fuelux .badge-inverse {
+	background-color: #333333;
+}
+.fuelux .label-inverse[href], .fuelux .badge-inverse[href] {
+	background-color: #1a1a1a;
+}
+.fuelux .btn .label, .fuelux .btn .badge {
+	position: relative;
+	top: -1px;
+}
+.fuelux .btn-mini .label, .fuelux .btn-mini .badge {
+	top: 0;
+}
+.fuelux .wizard {
+	position: relative;
+	overflow: hidden;
+	background-color: #f9f9f9;
+	border: 1px solid #ced5e3;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+ *zoom: 1;
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+.fuelux .wizard:before, .fuelux .wizard:after {
+	display: table;
+	line-height: 0;
+	content: "";
+}
+.fuelux .wizard:after {
+	clear: both;
+}
+.fuelux .wizard ul {
+	width: 4000px;
+	padding: 0;
+	margin: 0;
+	list-style: none outside none;
+}
+.fuelux .wizard ul.previous-disabled li.complete {
+	cursor: default;
+}
+.fuelux .wizard ul.previous-disabled li.complete:hover {
+	color: #45b854;
+	cursor: default;
+	background: #f3f4f5;
+}
+.fuelux .wizard ul.previous-disabled li.complete:hover .chevron:before {
+	border-left-color: #f3f4f5;
+}
+.fuelux .wizard ul li {
+	position: relative;
+	float: left;
+	height: 46px;
+	padding: 0 20px 0 30px;
+	margin: 0;
+	font-size: 16px;
+	line-height: 46px;
+	color: #999999;
+	cursor: default;
+	background: #ededed;
+}
+.fuelux .wizard ul li .chevron {
+	position: absolute;
+	top: 0;
+	right: -14px;
+	z-index: 1;
+	display: block;
+	border: 24px solid transparent;
+	border-right: 0;
+	border-left: 14px solid #ced5e3;
+}
+.fuelux .wizard ul li .chevron:before {
+	position: absolute;
+	top: -24px;
+	right: 1px;
+	display: block;
+	border: 24px solid transparent;
+	border-right: 0;
+	border-left: 14px solid #ededed;
+	content: "";
+}
+.fuelux .wizard ul li.complete {
+	color: #45b854;
+	background: #f3f4f5;
+}
+.fuelux .wizard ul li.complete:hover {
+	cursor: pointer;
+	background: #f0f3f8;
+}
+.fuelux .wizard ul li.complete:hover .chevron:before {
+	border-left: 14px solid #e7eff8;
+}
+.fuelux .wizard ul li.complete .chevron:before {
+	border-left: 14px solid #f3f4f5;
+}
+.fuelux .wizard ul li.active {
+	color: #0474c8;
+	background: #f0f3f8;
+}
+.fuelux .wizard ul li.active .chevron:before {
+	border-left: 14px solid #f1f6fc;
+}
+.fuelux .wizard ul li .badge {
+	margin-right: 8px;
+}
+.fuelux .wizard ul li:first-child {
+	padding-left: 20px;
+	border-radius: 4px 0 0 4px;
+}
+.fuelux .wizard .actions {
+	position: absolute;
+	right: 0;
+	z-index: 1000;
+	float: right;
+	padding-right: 15px;
+	padding-left: 15px;
+	line-height: 46px;
+	vertical-align: middle;
+	background-color: #e5e5e5;
+	border-left: 1px solid #ced5e3;
+}
+.fuelux .wizard .actions a {
+	margin-right: 8px;
+	font-size: 12px;
+	line-height: 45px;
+}
+.fuelux .wizard .actions .btn-prev i {
+	margin-right: 5px;
+}
+.fuelux .wizard .actions .btn-next i {
+	margin-left: 5px;
+}
+.fuelux .step-content {
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ced5e3;
+	border-top: 0;
+	border-radius: 0 0 4px 4px;
+}
+.fuelux .step-content .step-pane {
+	display: none;
+}
+.fuelux .step-content .active {
+	display: block;
+}
+.fuelux .step-content .active .btn-group .active {
+	display: inline-block;
+}
+/*fuelUX css*/
+
+
+/*<!--gritter 弹出提示-->*/
+  #gritter-notice-wrapper {
+	position:fixed;
+	top:20px;
+	right:20px;
+	width:301px;
+	z-index:9999;
+	font-family: 'Roboto', sans-serif;
+}
+.gritter-item-wrapper {
+	position:relative;
+	margin:0 0 10px 0;
+	background: #000;
+	background: rgba(0, 0, 0, 0.5);
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+.growl-primary {
+	background:#7c8a9a;
+}
+.growl-success {
+	background:#45b854;
+}
+.growl-warning {
+	background:#ff7800;
+}
+.growl-danger {
+	background:#f05352;
+}
+.growl-info {
+	background:#0474c8;
+}
+.gritter-item {
+	display:block;
+	color:#eee;
+	padding: 15px;
+	font-size: 11px;
+}
+.gritter-item p {
+	padding:0;
+	margin:0;
+	word-wrap:break-word;
+	line-height: 18px;
+	font-size: 13px;
+	opacity: 0.75;
+	color:#fff;
+}
+
+.gritter-close {
+	display:none;
+	display: inline;
+	position:absolute;
+	top: 10px;
+	right: 10px;
+	background: url(../images/close-white.png) no-repeat center center;
+	cursor:pointer;
+	width:10px;
+	height:11px;
+	text-indent:-9999em;
+	opacity: 1;
+}
+.gritter-title {
+	font-size: 14px;
+	padding:0 0 7px 0;
+	display:block;
+	font-family: 'Roboto', sans-serif;
+	font-weight:700;
+}
+.gritter-image {
+	width:48px;
+	height:48px;
+	float:left;
+}
+.gritter-with-image, .gritter-without-image {
+	padding:0;
+}
+.gritter-with-image {
+	width:220px;
+	float:right;
+	padding-left: 10px;
+}
+/* for the light (white) version of the gritter notice */
+.gritter-light .gritter-item {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.75);
+	color: #666;
+}
+/*<!--gritter 弹出提示-->*/
+
+/*checkbox and radios*/
+.ckbox, .rdio {
+	position: relative;
+}
+.ckbox input[type="checkbox"], .rdio input[type="radio"] {
+	opacity: 0;
+}
+.ckbox label, .rdio label {
+	padding-left: 10px;
+	cursor: pointer;
+	margin-bottom: 7px !important;
+}
+.ckbox label:before {
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	top: 0px;
+	left: 1px;
+	content: '';
+	display: inline-block;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	border: 1px solid #bbb;
+	background: #fff;
+}
+.ckbox input[type="checkbox"]:disabled + label {
+	color: #999;
+}
+.ckbox input[type="checkbox"]:disabled + label:before {
+	background-color: #eee;
+}
+ .ckbox input[type="checkbox"]:checked + label::after {
+ font-family: 'FontAwesome';
+ content: "\F00C";
+ position: absolute;
+ top: 0;
+ left: 3.5px;
+ display: inline-block;
+ font-size: 11px;
+ width: 16px;
+ height: 16px;
+ color: #fff;
+}
+.ckbox-default input[type="checkbox"]:checked + label:before {
+	border-color: #999;
+}
+ .ckbox-default input[type="checkbox"]:checked + label::after {
+ color: #333;
+}
+.ckbox-primary input[type="checkbox"]:checked + label:before {
+	border-color: #357EBD;
+	background-color: #428BCA;
+}
+.ckbox-warning input[type="checkbox"]:checked + label:before {
+	border-color: #EEA236;
+	background-color: #F0AD4E;
+}
+.ckbox-success input[type="checkbox"]:checked + label:before {
+	border-color: #1CAF9A;
+	background-color: #1CAF9A;
+}
+.ckbox-danger input[type="checkbox"]:checked + label:before {
+	border-color: #D43F3A;
+	background-color: #D9534F;
+}
+.rdio label:before {
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	top: 1px;
+	left: 0;
+	content: '';
+	display: inline-block;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+	border: 1px solid #bcd9e5;
+	background: #fff;
+}
+.rdio input[type="radio"]:disabled + label {
+	color: #999;
+}
+.rdio input[type="radio"]:disabled + label:before {
+	background-color: #eee;
+}
+ .rdio input[type="radio"]:checked + label::after {
+ content: '';
+ position: absolute;
+ top: 5px;
+ left: 4px;
+ display: inline-block;
+ font-size: 11px;
+ width: 10px;
+ height: 10px;
+ background-color: #444;
+ -moz-border-radius: 50px;
+ -webkit-border-radius: 50px;
+ border-radius: 50px;
+}
+.rdio-default input[type="radio"]:checked + label:before {
+	border-color: #999;
+}
+.rdio-primary input[type="radio"]:checked + label:before {
+	border-color: #428BCA;
+}
+ .rdio-primary input[type="radio"]:checked + label::after {
+ background-color: #428BCA;
+}
+.rdio-warning input[type="radio"]:checked + label:before {
+	border-color: #F0AD4E;
+}
+ .rdio-warning input[type="radio"]:checked + label::after {
+ background-color: #F0AD4E;
+}
+.rdio-success input[type="radio"]:checked + label:before {
+	border-color: #1CAF9A;
+}
+ .rdio-success input[type="radio"]:checked + label::after {
+ background-color: #1CAF9A;
+}
+.rdio-danger input[type="radio"]:checked + label:before {
+	border-color: #D9534F;
+}
+ .rdio-danger input[type="radio"]:checked + label::after {
+ background-color: #D9534F;
+}
+/*checkbox and radios*/
+
+/*treeview*/
+.treeview, .treeview ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	padding-top:5px;
+}
+.treeview ul {
+	background-color:transparent;
+	margin-top: 4px;
+}
+.treeview .hitarea {
+	background: url(../img/treeview-default.gif) -64px -25px no-repeat;
+	height: 16px;
+	width: 16px;
+	margin-left: -16px;
+	float: left;
+	cursor: pointer;
+}
+/* fix for IE6 */
+* html .hitarea {
+	display: inline;
+	float:none;
+}
+.treeview li {
+	margin: 0;
+	padding: 3px 0pt 3px 16px;
+}
+.treeview a.selected {
+	background-color: #eee;
+}
+#treecontrol {
+	margin: 1em 0;
+	display: none;
+}
+.treeview .hover {
+	display:block;
+	color:#1888e8;
+	cursor: pointer;
+	background:rgba(204, 204, 204, 0.35);
+}
+.treeview li {
+	background: url(../img/treeview-default-line.gif) 0 0 no-repeat;
+}
+.treeview li.collapsable, .treeview li.expandable {
+	background-color:transparent;
+}
+.treeview .expandable-hitarea {
+}
+.treeview li.last {
+}
+.treeview li.lastCollapsable, .treeview li.lastExpandable {
+}
+.treeview li.lastCollapsable {
+	background-color:transparent;
+}
+.treeview li.lastExpandable {
+	background-color:transparent;
+}
+.treeview div.lastCollapsable-hitarea, .treeview div.lastExpandable-hitarea {
+	background-position: 0;
+}
+.treeview-red li {
+}
+.treeview-red .hitarea, .treeview-red li.lastCollapsable, .treeview-red li.lastExpandable {
+}
+.treeview-black li {
+}
+.treeview-black .hitarea, .treeview-black li.lastCollapsable, .treeview-black li.lastExpandable {
+}
+.treeview-gray li {
+}
+.treeview-gray .hitarea, .treeview-gray li.lastCollapsable, .treeview-gray li.lastExpandable {
+}
+.treeview-famfamfam li {
+}
+.treeview-famfamfam .hitarea, .treeview-famfamfam li.lastCollapsable, .treeview-famfamfam li.lastExpandable {
+}
+.treeview .placeholder {
+	height: 16px;
+	width: 16px;
+	display: block;
+}
+.filetree li {
+	padding: 3px 0 2px 16px;
+}
+.filetree span.folder, .filetree span.file {
+	padding: 1px 0 1px 6px;
+	display: block;
+}
+.filetree span.folder {
+}
+.filetree li.expandabl {
+}
+/*treeview*/
+
+/*Sign*/
+.sign_body {
+	background:#30363e;
+}
+.sign {
+	width:320px;
+	margin:0 auto;
+	margin-top:11%;
+}
+.sign_a a {
+	color:#979B97;
+}
+.sign hr {
+	border-top: 1px solid #444;
+}
+.sign .sign-logo {
+	color:#4caef5;
+	line-height:100px;
+	font-family:"微软雅黑";
+}
+.sign .form-control {
+	margin-top:15px;
+}
+.sign input {
+	height:40px;
+	background:rgba(255, 255, 255, 0.05);
+	margin-bottom:10px;
+	border:0;
+}
+.sign .checkbox input {
+	height:20px;
+}
+.sign .checkbox label {
+	line-height:25px;
+}
+.sign span {
+	line-height:50px;
+}
+.sign .btn {
+	padding-left:20px;
+	padding-right:20px;
+}
+.sign p {
+	line-height:40px;
+	text-align:center;
+	color:#fff;
+}
+/*Sign*/
+
+

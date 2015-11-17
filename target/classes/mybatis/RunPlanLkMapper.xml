@@ -1,0 +1,1708 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="runPlanLkDao">
+
+	<resultMap id="cmdTrain" type="org.railway.com.trainplan.entity.CmdTrain">
+		<id column="cmdTrainId" property="cmdTrainId" />
+		<result column="importantFlag" property="importantFlag" />
+		<result column="cmdBureau" property="cmdBureau" />
+		<result column="cmdType" property="cmdType" />
+		<result column="cmdTxtMlId" property="cmdTxtMlId" />
+		<result column="cmdTxtMlItemId" property="cmdTxtMlItemId" />
+		<result column="cmdNbrBureau" property="cmdNbrBureau" />
+		<result column="cmdItem" property="cmdItem" />
+		<result column="cmdNbrSuperior" property="cmdNbrSuperior" />
+		<result column="trainNbr" property="trainNbr" />
+		<result column="startStn" property="startStn" />
+		<result column="endStn" property="endStn" />
+		<result column="startDate" property="startDate" />
+		<result column="endDate" property="endDate" />
+		<result column="rule" property="rule" />
+		<result column="selectedDate" property="selectedDate" />
+		<result column="passBureau" property="passBureau" />
+		<result column="selectState" property="selectState" />
+		<result column="createState" property="createState" />
+		<result column="updateTime" property="updateTime" />
+		<result column="cmdTime" property="cmdTime" />
+		<result column="baseTrainId" property="baseTrainId" />
+
+		<result column="business" property="business" />
+		<result column="startBureauId" property="startBureauId" />
+		<result column="startStnId" property="startStnId" />
+		<result column="endBureauId" property="endBureauId" />
+		<result column="endStnId" property="endStnId" />
+		<result column="endDays" property="endDays" />
+		<result column="trainTypeId" property="trainTypeId" />
+
+		<result column="startStationStnId" property="startStationStnId" />
+		<result column="startStationStnName" property="startStationStnName" />
+		<result column="startStnTdcsId" property="startStnTdcsId" />
+		<result column="startStnTdcsName" property="startStnTdcsName" />
+		<result column="endStationStnId" property="endStationStnId" />
+		<result column="endStationStnName" property="endStationStnName" />
+		<result column="endStnTdcsId" property="endStnTdcsId" />
+		<result column="endStnTdcsName" property="endStnTdcsName" />
+
+		<collection property="cmdTrainStnList" resultMap="cmdTrainStn" />
+	</resultMap>
+
+	<resultMap id="cmdTrainStn" type="org.railway.com.trainplan.entity.CmdTrainStn">
+		<id column="cmdTrainStnId" property="cmdTrainStnId" />
+		<result column="cmdTrainId" property="cmdTrainId" />
+		<result column="stnSort" property="stnSort" />
+		<result column="stnName" property="stnName" />
+		<result column="stnBureau" property="stnBureau" />
+		<result column="stnBureauFull" property="stnBureauFull" />
+		<result column="arrTrainNbr" property="arrTrainNbr" />
+		<result column="dptTrainNbr" property="dptTrainNbr" />
+		<result column="arrTime" property="arrTime" />
+		<result column="dptTime" property="dptTime" />
+		<result column="baseArrTime" property="baseArrTime" />
+		<result column="baseDptTime" property="baseDptTime" />
+		<result column="arrRunDays" property="arrRunDays" />
+		<result column="dptRunDays" property="dptRunDays" />
+		<result column="trackNbr" property="trackNbr" />
+		<result column="trackName" property="trackName" />
+		<result column="platform" property="platform" />
+		<result column="psgFlg" property="psgFlg" />
+		<result column="locoFlag" property="locoFlag" />
+		<result column="tecType" property="tecType" />
+		<result column="stnType" property="stnType" />
+
+		<result column="jobs" property="jobs" />
+		<result column="stnBureauId" property="stnBureauId" />
+		<result column="nodeId" property="nodeId" />
+		<result column="nodeName" property="nodeName" />
+
+		<result column="Stn_Id" property="nodeStationId" />
+		<result column="Stn_Name" property="nodeStationName" />
+		<result column="Node_Tdcs_Id" property="nodeTdcsId" />
+		<result column="Node_Tdcs_Name" property="nodeTdcsName" />
+	</resultMap>
+
+
+	<select id="getCmdTrandAndStnInfo" parameterType="string"
+		resultMap="cmdTrain">
+		SELECT
+		a.important_flag as importantFlag,
+		A.CMD_TRAIN_ID AS cmdTrainId,
+		A.CMD_BUREAU AS cmdBureau,
+		A.CMD_TYPE AS cmdType,
+		A.CMD_TXTMLID AS
+		cmdTxtMlId,
+		A.CMD_TXTMLITEMID AS cmdTxtMlItemId,
+		A.CMD_NBR_BUREAU AS
+		cmdNbrBureau,
+		A.CMD_ITEM AS cmdItem,
+		A.CMD_NBR_SUPERIOR AS
+		cmdNbrSuperior,
+		A.TRAIN_NBR AS trainNbr,
+		A.START_STN AS startStn,
+		A.END_STN AS endStn,
+		to_char(A.START_DATE,'yyyy-MM-dd') AS startDate,
+		to_char(A.END_DATE ,'yyyy-MM-dd') AS endDate,
+		A.RULE AS rule,
+		A.SELECTED_DATE AS selectedDate,
+		A.PASS_BUREAU AS passBureau,
+		A.SELECT_STATE AS selectState,
+		A.CREATE_STATE AS createState,
+		A.BASE_TRAIN_ID AS baseTrainId,
+		TO_CHAR(A.UPDATE_TIME,'yyyy-MM-dd hh24:mi:SS') AS updateTime,
+		TO_CHAR(A.CMD_TIME,'yyyy-MM-dd') AS
+		cmdTime,
+
+		A.BUSINESS AS business,
+		A.START_BUREAU_ID AS startBureauId,
+		A.START_STN_ID AS startStnId,
+		A.END_BUREAU_ID AS endBureauId,
+		A.END_STN_ID AS endStnId,
+		A.END_DAYS AS endDays,
+		A.TRAIN_TYPE_ID AS
+		trainTypeId,
+
+		B.CMD_TRAIN_STN_ID AS cmdTrainStnId ,
+		B.CMD_TRAIN_ID AS
+		cmdTrainId,
+		B.STN_SORT AS stnSort,
+		B.STN_BUREAU AS stnBureau ,
+		B.STN_BUREAU_FULL AS stnBureauFull,
+		B.ARR_TRAIN_NBR AS arrTrainNbr,
+		B.DPT_TRAIN_NBR AS dptTrainNbr,
+		B.ARR_TIME AS arrTime ,
+		B.DPT_TIME AS
+		dptTime,
+		B.BASE_ARR_TIME AS baseArrTime,
+		B.BASE_DPT_TIME AS baseDptTime,
+		B.ARR_RUN_DAYS AS arrRunDays,
+		B.DPT_RUN_DAYS AS dptRunDays,
+		B.TRACK_NBR
+		AS trackNbr ,
+		B.TRACK_NAME AS trackName,
+		B.PLATFORM AS platform,
+		B.PSG_FLG AS psgFlg,
+		B.LOCO_FLAG AS locoFlag,
+		B.TEC_TYPE AS tecType ,
+		B.STN_TYPE AS stnType,
+
+		B.JOBS AS jobs,
+		B.STN_BUREAU_ID AS stnBureauId,
+		B.NODE_ID AS nodeId,
+		B.NODE_NAME AS nodeName
+
+		,A.Start_Station_Stn_Id
+		startStationStnId
+		,A.Start_Station_Stn_Name startStationStnName
+		,A.Start_Stn_Tdcs_Id startStnTdcsId
+		,A.Start_Stn_Tdcs_Name
+		startStnTdcsName
+		,A.End_Station_Stn_Id endStationStnId
+		,A.End_Station_Stn_Name endStationStnName
+		,A.End_Stn_Tdcs_Id
+		endStnTdcsId
+		,A.End_Stn_Tdcs_Name endStnTdcsName
+		<!-- B.STN_NAME AS stnName , -->
+		,B.Stn_Id
+		,B.Stn_Name
+		,B.Node_Tdcs_Id
+		,B.Node_Tdcs_Name
+		,a.train_type_id
+		trainTypeId
+		,B.STN_NAME AS stnName
+
+		FROM CMD_TRAIN A,CMD_TRAIN_STN B WHERE A.CMD_TRAIN_ID =
+		B.CMD_TRAIN_ID AND
+		A.CMD_TRAIN_ID=#{cmdTrainId} ORDER BY B.STN_SORT
+	</select>
+
+	<select id="getCmdTrainStnByCmdTrainId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.CmdTrainStn">
+		select
+		CMD_TRAIN_STN_ID AS cmdTrainStnId,
+		CMD_TRAIN_ID AS
+		cmdTrainId,
+		STN_SORT AS stnSort,
+		STN_ID AS stnId,
+		STN_NAME AS stnName,
+		NODE_ID AS nodeId,
+		NODE_NAME AS nodeName,
+		NODE_TDCS_ID AS nodeTdcsId,
+		NODE_TDCS_NAME AS nodeTdcsName,
+		STN_BUREAU_ID AS stnBureauId,
+		STN_BUREAU AS stnBureau,
+		STN_BUREAU_FULL AS stnBureauFull,
+		ARR_TRAIN_NBR AS arrTrainNbr,
+		ARR_TIME AS arrTime,
+		BASE_ARR_TIME AS
+		baseArrTime,
+		ARR_RUN_DAYS AS arrRunDays,
+		DPT_TRAIN_NBR AS dptTrainNbr,
+		DPT_TIME AS dptTime,
+		BASE_DPT_TIME AS baseDptTime,
+		DPT_RUN_DAYS AS
+		dptRunDays,
+		TRACK_NBR AS trackNbr,
+		TRACK_NAME AS trackName,
+		PLATFORM AS
+		platform,
+		JOBS AS jobs,
+		STN_TYPE AS stnType,
+		PSG_FLG AS psgFlg,
+		LOCO_FLAG
+		AS locoFlag,
+		TEC_TYPE AS tecType,
+		BOUNDARY_IN_OUT AS boundaryInOut,
+		UP_DOWN AS upDown
+		from CMD_TRAIN_STN t where 1=1 and
+		t.CMD_TRAIN_ID=#{cmdTrainId}
+		order by STN_SORT ASC
+	</select>
+
+
+	<select id="getPlanTrainLkInfo" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.RunPlan">
+		select planTrainId,
+		cmdTrainId,
+		trainNbr,
+		startStn,
+		passBureau,
+		endStn,
+		tokenVehBureau,
+		importantFlag,
+		cmdShortInfo,
+		createType,
+		checkType,
+		checkBureau from (
+
+
+		select planTrainId,
+		cmdTrainId,
+		trainNbr,
+		startStn,
+		passBureau,
+		endStn,
+		tokenVehBureau,
+		importantFlag,
+		cmdShortInfo
+		,createType
+		,CHECK_TYPE checkType
+		,a.CHECK_BUREAU checkBureau
+
+		from (
+		select planTrainId,
+		cmdTrainId,
+		trainNbr,
+		startStn,
+		passBureau,
+		endStn,
+		tokenVehBureau,
+		importantFlag,
+		case
+		when createType = 2 then
+		telShortinfo
+		when createType = 3 then
+		cmdShortInfo
+		end as cmdShortInfo
+		,createType
+		from (
+
+		select
+		wmsys.wm_concat(plan_train_id) as planTrainId,
+		train_nbr as
+		trainNbr,
+		start_stn as startStn,
+		PASS_BUREAU as passBureau,
+		end_stn as
+		endStn,
+		TOKEN_VEH_BUREAU as tokenVehBureau,
+		CMD_SHORTINFO as
+		cmdShortInfo,
+		tel_Shortinfo as telShortinfo,
+		CREAT_TYPE as createType,
+		important_flag as importantFlag,
+		case when CMD_TRAIN_ID is not null
+		then
+		CMD_TRAIN_ID
+		else tel_id
+		end AS cmdTrainId
+		from PLAN_TRAIN
+		WHERE 1=1
+		<choose>
+			<when test="highlineFlag != null"> AND HIGHLINE_FLAG = #{highlineFlag}</when>
+			<otherwise> AND HIGHLINE_FLAG IN ('0','2')</otherwise>
+		</choose>
+		AND (CREAT_TYPE = 3 or CREAT_TYPE = 2)
+		<if test="cmdTrainId != null and cmdTrainId !='' ">AND (CMD_TRAIN_ID = #{cmdTrainId} or tel_id =
+			#{cmdTrainId})
+		</if>
+		<if test="startDate != null and startDate !='' ">AND RUN_DATE>=#{startDate}</if>
+		<if test="endDate !=null and endDate !='' ">AND RUN_DATE &lt;=#{endDate}</if>
+		<if test="trainNbr !=null and trainNbr !='' ">AND TRAIN_NBR LIKE '%${trainNbr}%'    </if>
+		<if test="startBureau != null and startBureau !='' ">AND START_BUREAU = #{startBureau}</if>
+		<!-- 对应:管理临客,本局相关 选择本局相关也就是途径局只要包含本局,就查询出来 -->
+		<!-- <if test="isRelationBureau == '1' ">AND #{bureau} in (PASS_BUREAU)</if> -->
+		<if test="isRelationBureau == 1 ">and instr(PASS_BUREAU,'${bureau}') > 0</if>
+		<if test="tokenVehBureau !=null and tokenVehBureau !='' ">AND TOKEN_VEH_BUREAU =#{tokenVehBureau}</if>
+		<if test="currentBureanFlagFei == 1 ">and token_veh_bureau != #{bureau}</if>
+		group by
+		train_nbr,start_stn,end_stn,TOKEN_VEH_BUREAU,CMD_SHORTINFO,PASS_BUREAU,tel_Shortinfo,important_flag,CMD_TRAIN_ID,tel_id,
+		CREAT_TYPE) t)tt
+
+		join cmd_train ttttt on ttttt.cmd_train_id
+		=tt.cmdTrainId
+		<!-- 
+		<if test="checkflagchoice != null and checkflagchoice !='' ">
+			AND ttttt.CHECK_TYPE =#{checkflagchoice}
+			and
+			ttttt.create_state=1
+
+		</if>
+		 -->
+		left join(
+		select cmd_tel_id,WMSYS.WM_CONCAT(a.LJJC) CHECK_BUREAU from
+		plan_check
+		left join JHPT_JCSJ.LJZD a on a.LJPYM =
+		plan_check.CHECK_BUREAU
+		where plan_check.check_his_flag = 0
+		group by
+		cmd_tel_id
+		) a on a.cmd_tel_id = ttttt.cmd_train_id) fixtrain
+
+		order by
+		fixtrain.trainNbr
+
+	</select>
+
+	<select id="getCmdTrainTotalCount" parameterType="map"
+		resultType="map">
+		select count(*) as count from CMD_TRAIN t
+		WHERE 1=1
+
+		AND CMD_TIME >=
+		TO_DATE(#{startDate},'yyyy-MM-dd hh24:mi:SS') AND
+		CMD_TIME
+		&lt;=TO_DATE(#{endDate},'yyyy-MM-dd hh24:mi:SS')
+		<!-- 不明白为什么，发令局是本局的为何不能查看？ AND CMD_BUREAU != #{userBureau, jdbcType=VARCHAR} -->
+		<if test="userBureau != null and userBureau != '' ">
+			AND CMD_BUREAU != #{userBureau, jdbcType=VARCHAR}
+		</if>
+
+		<if test="trainNbr != null and trainNbr != '' ">
+			AND TRAIN_NBR = #{trainNbr, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdNbrSuperior != null and cmdNbrSuperior != '' ">
+			AND CMD_NBR_SUPERIOR = #{cmdNbrSuperior, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdNbrBureau != null and cmdNbrBureau != '' ">
+			AND CMD_NBR_BUREAU = #{cmdNbrBureau, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdBureau != null and cmdBureau != '' ">
+			AND CMD_BUREAU = #{cmdBureau, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdType !=null and cmdType !='' and cmdType != 'all' ">
+			AND CMD_TYPE = #{cmdType, jdbcType=VARCHAR}
+		</if>
+		AND CMD_TRAIN_ID in ( select s.CMD_TRAIN_ID from CMD_TRAIN_STN s)
+		and
+		CMD_TRAIN_ID!= #{cmdTrainId, jdbcType=VARCHAR}
+	</select>
+
+
+	<select id="getCmdTrainForPage" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.CmdTrain">
+		select * from (select ROWNUM AS num, m.* from (
+		SELECT
+		CMD_TRAIN_ID AS
+		cmdTrainId,
+		IMPORTANT_FLAG AS importantFlag,
+		CMD_BUREAU AS cmdBureau,
+		CMD_TYPE AS cmdType,
+		CMD_TXTMLID AS cmdTxtMlId,
+		CMD_TXTMLITEMID AS
+		cmdTxtMlItemId,
+		CMD_NBR_BUREAU AS cmdNbrBureau,
+		CMD_ITEM AS cmdItem,
+		CMD_NBR_SUPERIOR AS cmdNbrSuperior,
+		TRAIN_NBR AS trainNbr,
+		START_STN AS
+		startStn,
+		END_STN AS endStn,
+		START_DATE AS startDate,
+		END_DATE AS
+		endDate,
+		RULE AS rule,
+		SELECTED_DATE AS selectedDate,
+		PASS_BUREAU AS
+		passBureau,
+		SELECT_STATE AS selectState,
+		CREATE_STATE AS createState,
+		TO_CHAR(UPDATE_TIME,'yyyy-MM-dd hh24:mi:SS') AS updateTime,
+		TO_CHAR(CMD_TIME,'yyyy-MM-dd hh24:mi:SS') AS cmdTime
+		,TRAIN_TYPE_ID
+		trainTypeId
+		FROM CMD_TRAIN
+		WHERE 1=1
+
+		AND CMD_TIME >=
+		TO_DATE(#{startDate},'yyyy-MM-dd hh24:mi:SS') AND
+		CMD_TIME
+		&lt;=TO_DATE(#{endDate},'yyyy-MM-dd hh24:mi:SS')
+		<!-- 不明白为什么，发令局是本局的为何不能查看？ AND CMD_BUREAU != #{userBureau, jdbcType=VARCHAR} -->
+		<if test="userBureau != null and userBureau != '' ">
+			AND CMD_BUREAU != #{userBureau, jdbcType=VARCHAR}
+		</if>
+
+		<if test="trainNbr != null and trainNbr != '' ">
+			AND TRAIN_NBR = #{trainNbr, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdNbrSuperior != null and cmdNbrSuperior != '' ">
+			AND CMD_NBR_SUPERIOR = #{cmdNbrSuperior, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdNbrBureau != null and cmdNbrBureau != '' ">
+			AND CMD_NBR_BUREAU = #{cmdNbrBureau, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdBureau != null and cmdBureau != '' ">
+			AND CMD_BUREAU = #{cmdBureau, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdType !=null and cmdType !='' and cmdType != 'all' ">
+			AND CMD_TYPE = #{cmdType, jdbcType=VARCHAR}
+		</if>
+		<if
+			test="createState !='' and  createState !=null and createState != 'all' ">
+			AND CREATE_STATE = #{createState, jdbcType=VARCHAR}
+		</if>
+		<if
+			test="selectState != '' and  selectState !=  null and selectState != 'all' ">
+			AND SELECT_STATE = #{selectState, jdbcType=VARCHAR}
+		</if>
+		
+		<!-- 2015-4-20 16:12:36，一下两行注释 经过哲哥同意;原因：复制历史与主页查询不一致 -->
+		<!-- AND CMD_TRAIN_ID in ( select s.CMD_TRAIN_ID from CMD_TRAIN_STN s) -->
+		<!-- and CMD_TRAIN_ID!= #{cmdTrainId, jdbcType=VARCHAR} -->
+		
+		ORDER BY CMD_TIME DESC,
+		CMD_NBR_BUREAU ASC, CMD_ITEM ASC, TRAIN_NBR ASC
+		) m ) where num
+		>=#{rownumstart} AND num &lt;=#{rownumend}
+	</select>
+
+	<select id="getTrainLkRunPlans" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.CrossRunPlanInfo">
+		select t.PLAN_TRAIN_ID planTrainId,
+		t.run_date runDay,
+		t.train_nbr trainNbr,
+		t.start_stn startStn,
+		t.end_stn endStn,
+		t.spare_flag runFlag,
+		(select count(1) from plan_modify m where
+		m.PLAN_TRAIN_ID=t.PLAN_TRAIN_ID)
+		isModified
+		from plan_train t
+		where
+		(CREAT_TYPE = 3 OR CREAT_TYPE = 2) and t.train_nbr=#{trainNbr}
+		and
+		(t.cmd_train_id=#{cmdTrainId} or t.tel_id=#{cmdTrainId})
+		and
+		t.run_date>=#{startDate} and t.run_date &lt;=#{endDate} order by
+		t.TRAIN_SORT, t.run_date
+	</select>
+
+	<select id="getTrainLkRunPlans1" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.CrossRunPlanInfo">
+		select t.PLAN_TRAIN_ID planTrainId
+		from plan_train t
+		where
+		CMD_TRAIN_ID=#{cmdTrainId}
+	</select>
+
+	<resultMap id="trainSubInfo"
+		type="org.railway.com.trainplan.entity.TrainLineSubInfo">
+		<id column="planTrainId" property="planTrainId" />
+		<id column="passBureau" property="passBureau" />
+		<collection property="trainStaionList" resultMap="trainSubInfoTime" />
+	</resultMap>
+
+	<resultMap id="trainSubInfoTime"
+		type="org.railway.com.trainplan.entity.TrainLineSubInfoTime">
+		<id column="planTrainStnId" property="planTrainStnId" />
+		<result column="stationType" property="stationType" />
+		<result column="stnName" property="stnName" />
+		<result column="stnSort" property="stnSort" />
+		<result column="arrTime" property="arrTime" />
+		<result column="nodeName" property="nodeName" />
+		<result column="dptTime" property="dptTime" />
+		<result column="STNBUREAU" property="bureauShortName" />
+	</resultMap>
+
+
+
+
+	<select id="getTrainLkInfoForPlanTrainId" parameterType="map"
+		resultMap="trainSubInfo">
+		select
+		CASE
+		WHEN
+		(SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE
+		T3.CNAME=T1.NODE_NAME) >0
+		THEN 'FJK'
+		WHEN T1.ARR_TIME=T1.DPT_TIME
+		THEN
+		'BT'
+		ELSE 'TZ'
+		END stationType ,
+		T1.PLAN_TRAIN_STN_ID AS planTrainStnId,
+		T1.PLAN_TRAIN_ID AS planTrainId,
+		T1.STN_SORT AS
+		stnSort,
+		T1.STN_NAME AS
+		stnName,
+		T1.NODE_NAME AS nodeName,
+		T1.ARR_TIME AS
+		arrTime ,
+		T1.DPT_TIME AS
+		dptTime,
+		T1.STN_BUREAU as STNBUREAU
+        ,a.pass_bureau passBureau
+		from plan_train_stn T1 
+		left join plan_train a on a.plan_train_id = t1.plan_train_id
+		where T1.plan_train_id in (${planTrainIds}) order
+		by T1.STN_SORT
+	</select>
+
+
+	<select id="getTrainLineSubinfoTime" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.TrainLineSubInfoTime">
+
+		select
+		CASE
+		WHEN
+		(SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE
+		T3.CNAME=T1.NODE_NAME) >0
+		<!-- (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=T1.stn_name) 
+			>0 -->
+		THEN 'FJK'
+		WHEN T1.ARR_TIME=T1.DPT_TIME
+		THEN 'BT'
+		ELSE 'TZ'
+		END
+		stationType ,
+		T1.PLAN_TRAIN_STN_ID AS planTrainStnId,
+		T1.STN_SORT AS
+		stnSort,
+		T1.STN_NAME AS stnName,
+		T1.NODE_NAME AS nodeName,
+		T1.ARR_TIME AS
+		arrTime ,
+		T1.DPT_TIME AS dptTime,
+		T1.stn_BUREAU as bureauShortName
+		from
+		plan_train_stn T1 where T1.plan_train_id = #{planTrainId} order by
+		T1.STN_SORT
+
+	</select>
+
+
+	<select id="getCmdTrainInfoForCmdTxtmlItemId" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.CmdTrain">
+		SELECT
+		CMD_TRAIN_ID AS cmdTrainId,
+		CMD_BUREAU AS cmdBureau,
+		IMPORTANT_FLAG AS importantFlag,
+		CMD_TYPE AS cmdType,
+		CMD_TXTMLID AS
+		cmdTxtMlId,
+		CMD_TXTMLITEMID AS cmdTxtMlItemId,
+		CMD_NBR_BUREAU AS
+		cmdNbrBureau,
+		CMD_ITEM AS cmdItem,
+		CMD_NBR_SUPERIOR AS cmdNbrSuperior,
+		TRAIN_NBR AS trainNbr,
+		START_STN AS startStn,
+		END_STN AS endStn,
+		START_DATE AS startDate,
+		END_DATE AS endDate,
+		RULE AS rule,
+		SELECTED_DATE AS selectedDate,
+		PASS_BUREAU AS passBureau,
+		SELECT_STATE
+		AS selectState,
+		CREATE_STATE AS createState,
+		TO_CHAR(UPDATE_TIME,'yyyy-MM-dd hh24:mi:SS') AS updateTime,
+		TO_CHAR(CMD_TIME,'yyyy-MM-dd hh24:mi:SS') AS cmdTime,
+
+		BUSINESS AS
+		business,
+		START_BUREAU_ID AS startBureauId,
+		START_STN_ID AS startStnId,
+		END_BUREAU_ID AS endBureauId,
+		END_STN_ID AS endStnId,
+		END_DAYS AS
+		endDays,
+		ROUTE_ID AS routeId,
+		TRAIN_TYPE_ID AS trainTypeId
+
+		FROM CMD_TRAIN
+		WHERE CMD_TXTMLITEMID=${cmdTxtmlItemId}
+		<if test="cmdBuerau != null">
+			and CMD_BUREAU = #{cmdBuerau}
+		</if>
+
+	</select>
+
+
+	<select id="getCmdTrainInfoForCmdTrainId" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.CmdTrain">
+		SELECT
+		CMD_TRAIN_ID AS cmdTrainId,
+		CMD_BUREAU AS cmdBureau,
+		IMPORTANT_FLAG AS importantFlag,
+		CMD_TYPE AS cmdType,
+		CMD_TXTMLID AS
+		cmdTxtMlId,
+		CMD_TXTMLITEMID AS cmdTxtMlItemId,
+		CMD_NBR_BUREAU AS
+		cmdNbrBureau,
+		CMD_ITEM AS cmdItem,
+		CMD_NBR_SUPERIOR AS cmdNbrSuperior,
+		TRAIN_NBR AS trainNbr,
+		START_STN AS startStn,
+		END_STN AS endStn,
+
+		TO_CHAR(START_DATE,'yyyy-MM-dd') startDate,
+		TO_CHAR(END_DATE,'yyyy-MM-dd') endDate,
+		RULE AS rule,
+		SELECTED_DATE AS
+		selectedDate,
+		PASS_BUREAU AS passBureau,
+		SELECT_STATE AS selectState,
+		CREATE_STATE AS createState,
+		TO_CHAR(UPDATE_TIME,'yyyy-MM-dd
+		hh24:mi:SS') AS updateTime,
+		TO_CHAR(CMD_TIME,'yyyy-MM-dd hh24:mi:SS')
+		AS cmdTime,
+
+		BUSINESS AS business,
+		START_BUREAU_ID AS startBureauId,
+		START_STN_ID AS startStnId,
+		END_BUREAU_ID AS endBureauId,
+		END_STN_ID AS
+		endStnId,
+		END_DAYS AS endDays,
+		ROUTE_ID AS routeId,
+		TRAIN_TYPE_ID AS
+		trainTypeId
+
+
+		FROM CMD_TRAIN WHERE CMD_TRAIN_ID=#{cmdTrainId}
+
+	</select>
+
+
+	<select id="getCmdTrainStnInfo" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.CmdTrainStn">
+		SELECT
+		CMD_TRAIN_STN_ID AS cmdTrainStnId ,
+		CMD_TRAIN_ID AS
+		cmdTrainId,
+		STN_SORT AS stnSort,
+		STN_NAME AS stnName ,
+		STN_BUREAU AS
+		stnBureau ,
+		STN_BUREAU_FULL AS
+		stnBureauFull,
+		ARR_TRAIN_NBR AS
+		arrTrainNbr,
+		DPT_TRAIN_NBR AS
+		dptTrainNbr,
+		ARR_TIME AS arrTime ,
+		DPT_TIME
+		AS dptTime,
+		BASE_ARR_TIME AS
+		baseArrTime,
+		BASE_DPT_TIME AS baseDptTime,
+		ARR_RUN_DAYS AS arrRunDays,
+		DPT_RUN_DAYS AS dptRunDays,
+		TRACK_NBR AS
+		trackNbr ,
+		PLATFORM AS
+		platform,
+		PSG_FLG AS psgFlg,
+		LOCO_FLAG AS locoFlag,
+		TEC_TYPE AS tecType ,
+		STN_TYPE AS stnType,
+		JOBS AS jobs,
+		STN_BUREAU_ID AS
+		stnBureauId,
+		NODE_ID
+		AS nodeId,
+		NODE_NAME AS nodeName,
+		TRACK_NAME AS
+		trackName
+		,stn_id nodeStationId
+		,STN_NAME nodeStationName
+		,Node_Tdcs_Id
+		nodeTdcsId
+		,Node_Tdcs_Name nodeTdcsName
+		FROM CMD_TRAIN_STN WHERE
+		CMD_TRAIN_ID=#{cmdTrainId} ORDER BY STN_SORT
+
+	</select>
+
+	<insert id="insertMTrainLine" parameterType="org.railway.com.trainplan.entity.MTrainLine">
+
+		MERGE INTO
+		JHPT_JBT.M_TRAINLINE A
+		USING (SELECT * FROM DUAL) B
+		ON (A.ID = #{id})
+		WHEN MATCHED THEN
+		UPDATE
+		SET
+		A.HIGH_SPEED =#{highSpeed},
+		A.HIGHLINE_FLAG
+		=#{highLineFlag},
+		A.TYPE_ID =#{typeId},
+		A.BUSINESS =#{business},
+		A.ROUTE_ID =#{routeId},
+		A.ROUTE_NAME =#{routeName},
+		A.SOURCE_BUREAU_ID
+		=#{sourceBureauId},
+		A.SOURCE_NODE_ID =#{sourceNodeId},
+		A.TARGET_NODE_ID
+		=#{targetNodeId},
+		A.TARGET_BUREAU_ID =#{targetBureauId},
+		A.ORIGIN
+		=#{orgin},
+		A.ORIGIN_ID =#{orginId},
+		A.ORIGIN_NAME =#{orginName},
+		A.ROUTE_BUREAU_SHORT_NAMES =#{routeBureauShortNames},
+		A.TARGET_TIME_SCHEDULE_DATES =#{targetTimeScheduleDates},
+		A.NAME
+		=#{name} ,
+		A.SOURCE_BUREAU_NAME = #{sourceBureauName} ,
+		A.SOURCE_BUREAU_SHORT_NAME = #{sourceBureauShortname} ,
+		A.SOURCE_NODE_NAME = #{sourceNodeName},
+		A.TARGET_NODE_NAME =
+		#{targetNodeName},
+		A.TARGET_BUREAU_NAME =#{targetBureauName} ,
+		A.TARGET_BUREAU_SHORT_NAME =#{targetBureauShortname} ,
+		A.SOURCE_TIME =
+		TO_DATE(#{sourceTime},'yyyy-MM-dd hh24:mi:SS') ,
+		A.TARGET_TIME =
+		TO_DATE(#{targetTime},'yyyy-MM-dd hh24:mi:SS')
+		WHEN NOT MATCHED THEN
+		INSERT
+		(
+		A.ID,
+		A.HIGH_SPEED,
+		A.HIGHLINE_FLAG,
+		A.TYPE_ID,
+		A.BUSINESS ,
+		A.ROUTE_ID,
+		A.ROUTE_NAME,
+		A.SOURCE_BUREAU_ID,
+		A.SOURCE_NODE_ID,
+		A.TARGET_NODE_ID,
+		A.TARGET_BUREAU_ID,
+		A.ORIGIN,
+		A.ORIGIN_ID,
+		A.ORIGIN_NAME,
+		A.ROUTE_BUREAU_SHORT_NAMES,
+		A.TARGET_TIME_SCHEDULE_DATES,
+		A.NAME,
+		A.SOURCE_BUREAU_NAME,
+		A.SOURCE_BUREAU_SHORT_NAME,
+		A.SOURCE_NODE_NAME,
+		A.TARGET_NODE_NAME,
+		A.TARGET_BUREAU_NAME,
+		A.TARGET_BUREAU_SHORT_NAME,
+		A.SOURCE_TIME,
+		A.TARGET_TIME
+
+		)
+		VALUES
+		(
+		#{id},
+		#{highSpeed},
+		#{highLineFlag},
+		#{typeId},
+		#{business},
+		#{routeId},
+		#{routeName},
+		#{sourceBureauId},
+		#{sourceNodeId},
+		#{targetNodeId},
+		#{targetBureauId},
+		#{orgin},
+		#{orginId},
+		#{orginName},
+		#{routeBureauShortNames},
+		#{targetTimeScheduleDates},
+		#{name},
+		#{sourceBureauName},
+		#{sourceBureauShortname},
+		#{sourceNodeName},
+		#{targetNodeName},
+		#{targetBureauName},
+		#{targetBureauShortname},
+		TO_DATE(#{sourceTime},'yyyy-MM-dd hh24:mi:SS') ,
+		TO_DATE(#{targetTime},'yyyy-MM-dd hh24:mi:SS')
+		)
+
+	</insert>
+
+
+
+	<insert id="insertMTrainLineStnRoute" parameterType="org.railway.com.trainplan.entity.MTrainLineStn">
+
+		MERGE INTO
+		JHPT_JBT.M_TRAINLINE_ITEM A
+		USING (SELECT * FROM DUAL) B
+		ON (A.ID
+		=#{id})
+		WHEN MATCHED THEN
+		UPDATE
+		SET
+		A.NAME =#{name} ,
+		A.JOBS =#{jobs},
+		A.PARENT_ID = #{parentId},
+		A.PARENT_NAME = #{parentName},
+		A.CHILD_INDEX
+		= #{childIndex},
+		A.BUREAU_ID =#{bureauId},
+		A.NODE_ID =#{nodeId},
+		A.NODE_NAME =#{nodeName},
+		A.PLATFORM_NAME =#{platformName},
+		A.BUREAU_NAME = #{bureauName} ,
+		A.SOURCE_PARENT_NAME =
+		#{sourceParentName},
+		A.TARGET_PARENT_NAME = #{targetParentName},
+		A.BUREAU_SHORT_NAME = #{bureauShortname} ,
+		A.TRACK_NAME = #{trackName},
+		A.SOURCE_TIME = TO_DATE(#{sourceTime},'yyyy-MM-dd hh24:mi:SS'),
+		A.TARGET_TIME = TO_DATE(#{targetTime},'yyyy-MM-dd hh24:mi:SS'),
+		A.SOURCE_TIME_SCHEDULE_DATES = #{sourceTimeScheduleDates},
+		A.TARGET_TIME_SCHEDULE_DATES = #{targetTimeScheduleDates}
+		WHEN NOT
+		MATCHED THEN
+		INSERT
+		(
+		A.ID,
+		A.NAME,
+		A.JOBS,
+		A.PARENT_ID,
+		A.PARENT_NAME,
+		A.CHILD_INDEX,
+		A.BUREAU_ID,
+		A.NODE_ID,
+		A.NODE_NAME,
+		A.PLATFORM_NAME,
+		A.BUREAU_NAME,
+		A.SOURCE_PARENT_NAME,
+		A.TARGET_PARENT_NAME,
+		A.BUREAU_SHORT_NAME,
+		A.TRACK_NAME,
+		A.SOURCE_TIME,
+		A.TARGET_TIME,
+		A.SOURCE_TIME_SCHEDULE_DATES,
+		A.TARGET_TIME_SCHEDULE_DATES
+		)
+		VALUES
+		(
+		#{id},
+		#{name},
+		#{jobs},
+		#{parentId},
+		#{parentName},
+		#{childIndex} ,
+		#{bureauId},
+		#{nodeId},
+		#{nodeName},
+		#{platformName},
+		#{bureauName},
+		#{sourceParentName},
+		#{targetParentName},
+		#{bureauShortname},
+		#{trackName},
+		TO_DATE(#{sourceTime},'yyyy-MM-dd hh24:mi:SS'),
+		TO_DATE(#{targetTime},'yyyy-MM-dd hh24:mi:SS'),
+		#{sourceTimeScheduleDates},
+		#{targetTimeScheduleDates}
+		)
+
+	</insert>
+
+	<!-- -->
+
+	<select id="getTrainlineTypeForTypeId" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.runline.TrainTypeModel">
+		SELECT
+		ID AS id,
+		NAME AS name,
+		DESCRIPTION AS description,
+		SHORT_NAME AS shortName,
+		BUSINESS AS business,
+		GRADE AS grade,
+		IDENTIFY
+		AS identify,
+		SOURCE_CODE AS sourceCode,
+		TARGET_CODE AS targetCode
+
+		FROM
+		JHPT_JBT.M_TRAINLINE_TYPE WHERE ID=#{typeId}
+
+	</select>
+	<select id="getTrainlineTypeForTypeId2" parameterType="map"
+		resultType="org.railway.com.trainplanv2.dto.TrainTypeModel2">
+		SELECT
+		ID AS id,
+		NAME AS name,
+		DESCRIPTION AS description,
+		SHORT_NAME AS shortName,
+		BUSINESS AS business,
+		GRADE AS grade,
+		IDENTIFY
+		AS identify,
+		SOURCE_CODE AS sourceCode,
+		TARGET_CODE AS targetCode
+
+		FROM
+		JHPT_JBT.M_TRAINLINE_TYPE WHERE ID=#{typeId}
+
+	</select>
+
+	<insert id="insertCmdTrain" parameterType="org.railway.com.trainplan.entity.CmdTrain">
+		insert into CMD_TRAIN(
+		CMD_TRAIN_ID ,
+		BASE_TRAIN_ID,
+		IMPORTANT_FLAG,
+		CMD_BUREAU ,
+		CMD_TYPE ,
+		CMD_TXTMLID ,
+		CMD_TXTMLITEMID ,
+		CMD_NBR_BUREAU ,
+		CMD_ITEM ,
+		CMD_NBR_SUPERIOR ,
+		TRAIN_NBR ,
+		START_STN ,
+		END_STN ,
+		START_DATE ,
+		END_DATE
+		,
+		RULE ,
+		SELECTED_DATE ,
+		PASS_BUREAU ,
+		SELECT_STATE ,
+		CREATE_STATE ,
+		UPDATE_TIME,
+		CMD_TIME,
+
+		BUSINESS,
+		START_BUREAU_ID,
+		START_STN_ID,
+		END_BUREAU_ID,
+		END_STN_ID,
+		END_DAYS,
+		ROUTE_ID,
+		TRAIN_TYPE_ID
+		,START_STATION_STN_ID
+		,START_STATION_STN_NAME
+		,START_STN_TDCS_ID
+		,START_STN_TDCS_NAME
+		,END_STATION_STN_ID
+		,END_STATION_STN_NAME
+		,END_STN_TDCS_ID
+		,END_STN_TDCS_NAME
+
+		)values(
+		#{cmdTrainId,
+		jdbcType=VARCHAR},
+		#{baseTrainId, jdbcType=VARCHAR},
+		#{importantFlag,
+		jdbcType=VARCHAR},
+		#{cmdBureau, jdbcType=VARCHAR},
+		#{cmdType,
+		jdbcType=VARCHAR},
+		#{cmdTxtMlId},
+		#{cmdTxtMlItemId},
+		#{cmdNbrBureau,
+		jdbcType=VARCHAR},
+		#{cmdItem},
+		#{cmdNbrSuperior, jdbcType=VARCHAR},
+		#{trainNbr, jdbcType=VARCHAR},
+		#{startStn, jdbcType=VARCHAR},
+		#{endStn,
+		jdbcType=VARCHAR},
+		TO_DATE(#{startDate},'yyyy-MM-dd'),
+		TO_DATE(#{endDate},'yyyy-MM-dd'),
+		#{rule, jdbcType=VARCHAR},
+		#{selectedDate, jdbcType=VARCHAR},
+		#{passBureau, jdbcType=VARCHAR},
+		#{selectState, jdbcType=VARCHAR},
+		#{createState, jdbcType=VARCHAR},
+		sysdate,
+		TO_DATE(#{cmdTime},'yyyy-MM-dd'),
+		#{business,
+		jdbcType=VARCHAR},
+		#{startBureauId, jdbcType=VARCHAR},
+		#{startStnId,
+		jdbcType=VARCHAR},
+		#{endBureauId, jdbcType=VARCHAR},
+		#{endStnId,
+		jdbcType=VARCHAR},
+		#{endDays, jdbcType=VARCHAR},
+		#{routeId,
+		jdbcType=VARCHAR},
+		#{trainTypeId, jdbcType=VARCHAR},
+		#{startStationStnId, jdbcType=VARCHAR},
+		#{startStationStnName,
+		jdbcType=VARCHAR},
+		#{startStnTdcsId, jdbcType=VARCHAR},
+		#{startStnTdcsName, jdbcType=VARCHAR},
+		#{endStationStnId,
+		jdbcType=VARCHAR},
+		#{endStationStnName, jdbcType=VARCHAR},
+		#{endStnTdcsId, jdbcType=VARCHAR},
+		#{endStnTdcsName, jdbcType=VARCHAR}
+
+		)
+
+
+	</insert>
+
+
+	<insert id="insertCmdTrainStn" parameterType="org.railway.com.trainplan.entity.CmdTrainStn">
+		insert into
+		CMD_TRAIN_STN (
+		CMD_TRAIN_STN_ID ,
+		CMD_TRAIN_ID ,
+		STN_SORT ,
+		STN_BUREAU ,
+		STN_BUREAU_FULL,
+		ARR_TRAIN_NBR ,
+		DPT_TRAIN_NBR ,
+		ARR_TIME ,
+		DPT_TIME,
+		BASE_ARR_TIME ,
+		BASE_DPT_TIME ,
+		ARR_RUN_DAYS ,
+		DPT_RUN_DAYS ,
+		TRACK_NBR ,
+		PLATFORM ,
+		PSG_FLG,
+		LOCO_FLAG ,
+		TEC_TYPE ,
+		STN_TYPE ,
+		JOBS,
+		STN_BUREAU_ID,
+		NODE_ID,
+		NODE_NAME,
+		TRACK_NAME
+		,STN_ID
+		,STN_NAME
+		,node_Tdcs_Id
+		,node_Tdcs_Name
+
+		)values(
+		#{cmdTrainStnId, jdbcType=VARCHAR},
+		#{cmdTrainId, jdbcType=VARCHAR},
+		#{stnSort, jdbcType=NUMERIC},
+		#{stnBureau, jdbcType=VARCHAR},
+		#{stnBureauFull, jdbcType=VARCHAR},
+		#{arrTrainNbr, jdbcType=VARCHAR},
+		#{dptTrainNbr, jdbcType=VARCHAR},
+		#{arrTime, jdbcType=VARCHAR},
+		#{dptTime, jdbcType=VARCHAR},
+		#{baseArrTime, jdbcType=VARCHAR},
+		#{baseDptTime, jdbcType=VARCHAR},
+		#{arrRunDays, jdbcType=NUMERIC},
+		#{dptRunDays, jdbcType=NUMERIC},
+		#{trackNbr, jdbcType=VARCHAR},
+		#{platform, jdbcType=NUMERIC},
+		#{psgFlg,
+		jdbcType=NUMERIC},
+		#{locoFlag, jdbcType=NUMERIC},
+		#{tecType,
+		jdbcType=VARCHAR},
+		#{stnType, jdbcType=VARCHAR},
+		#{jobs,
+		jdbcType=VARCHAR},
+		#{stnBureauId, jdbcType=VARCHAR},
+		#{nodeId,
+		jdbcType=VARCHAR},
+		#{nodeName, jdbcType=VARCHAR},
+		#{trackName,
+		jdbcType=VARCHAR}
+		,#{stnId, jdbcType=VARCHAR}
+		,#{stnName,
+		jdbcType=VARCHAR}
+		,#{nodeTdcsId, jdbcType=VARCHAR}
+		,#{nodeTdcsName,
+		jdbcType=VARCHAR}
+		)
+
+	</insert>
+
+	<insert id="addRunPlanLk" parameterType="org.railway.com.trainplan.entity.RunPlan">
+		INSERT INTO PLAN_TRAIN
+		(
+		important_flag,
+		PLAN_TRAIN_ID,
+		PLAN_TRAIN_SIGN,
+		RUN_DATE,
+		TRAIN_NBR,
+		START_TIME,
+		END_TIME,
+		START_BUREAU,
+		START_BUREAU_FULL,
+		START_STN,
+		END_BUREAU,
+		END_BUREAU_FULL,
+		END_STN,
+		PASS_BUREAU,
+		TRAIN_SCOPE,
+		HIGHLINE_FLAG,
+		BASE_TRAIN_ID,
+		SPARE_FLAG,
+		CREAT_TYPE,
+		CREAT_TIME,
+		CHECK_LEV1_TYPE,
+		DAILYPLAN_FLAG,
+		CMD_BUREAU,
+		CMD_TXTMLID,
+		CMD_TXTMLITEMID,
+		CMD_SHORTINFO,
+		CMD_TRAIN_ID,
+
+		tel_bureau,
+		tel_id,
+		tel_name,
+		tel_shortinfo,
+
+
+		CREAT_PEOPLE,
+		CREAT_PEOPLE_ORG,
+		TOKEN_VEH_BUREAU,
+		<!-- added by liuhang -->
+		BUSINESS,
+		START_BUREAU_ID,
+		START_STN_ID,
+		END_BUREAU_ID,
+		END_STN_ID,
+		END_DAYS,
+		TRAIN_TYPE_ID
+		<!-- -->
+
+		,START_STATION_STN_ID
+		,START_STATION_STN_NAME
+		,START_STN_TDCS_ID
+		,START_STN_TDCS_NAME
+		,END_STATION_STN_ID
+		,END_STATION_STN_NAME
+		,END_STN_TDCS_ID
+		,END_STN_TDCS_NAME
+
+		)
+		VALUES(
+		#{importantFlag,
+		jdbcType=VARCHAR},
+		#{planTrainId, jdbcType=VARCHAR},
+		#{planTrainSign,
+		jdbcType=VARCHAR},
+		#{runDate, jdbcType=VARCHAR},
+		#{trainNbr,
+		jdbcType=VARCHAR},
+		#{startDateTime, jdbcType=DATE},
+		#{endDateTime,
+		jdbcType=DATE},
+		#{startBureauShortName, jdbcType=VARCHAR},
+		#{startBureauFullName, jdbcType=VARCHAR},
+		#{startStn,
+		jdbcType=VARCHAR},
+		#{endBureauShortName, jdbcType=VARCHAR},
+		#{endBureauFullName, jdbcType=VARCHAR},
+		#{endStn, jdbcType=VARCHAR},
+		#{passBureau, jdbcType=VARCHAR},
+		#{trainScope, jdbcType=NUMERIC},
+		#{highLineFlag, jdbcType=NUMERIC},
+		#{baseTrainId, jdbcType=VARCHAR},
+		#{spareFlag, jdbcType=NUMERIC},
+		#{createType, jdbcType=NUMERIC},
+		sysdate,
+		#{checkLev1Type, jdbcType=NUMERIC},
+		#{dailyPlanFlag,
+		jdbcType=NUMERIC},
+		#{cmdBureau,jdbcType=VARCHAR},
+		#{cmdTxtmlId,jdbcType=NUMERIC},
+		#{cmdTxtmlitemId,jdbcType=NUMERIC},
+		#{cmdShortInfo,jdbcType=VARCHAR},
+		#{cmdTrainId,jdbcType=VARCHAR},
+		<!-- private String telBureau; private String telId; private String telName; 
+			private String telShortinfo; -->
+
+		#{telBureau,jdbcType=VARCHAR},
+		#{telId,jdbcType=VARCHAR},
+		#{telName,jdbcType=VARCHAR},
+		#{telShortinfo,jdbcType=VARCHAR},
+
+
+
+		#{createPeople,jdbcType=VARCHAR},
+		#{createPeopleOrg,jdbcType=VARCHAR},
+		#{tokenVehBureau,jdbcType=VARCHAR},
+		<!-- added by liuhang -->
+		#{business, jdbcType=VARCHAR},
+		#{sourceBureauId, jdbcType=VARCHAR},
+		#{sourceNodeId, jdbcType=VARCHAR},
+		#{targetBureauId, jdbcType=VARCHAR},
+		#{targetNodeId, jdbcType=VARCHAR},
+		#{targetTimeScheduleDates,
+		jdbcType=VARCHAR},
+		#{trainTypeId, jdbcType=VARCHAR}
+		<!-- -->
+
+		,#{startStationStnId,jdbcType=VARCHAR}
+		,#{startStationStnName,jdbcType=VARCHAR}
+		,#{startStnTdcsId,jdbcType=VARCHAR}
+		,#{startStnTdcsName,jdbcType=VARCHAR}
+		,#{endStationStnId,jdbcType=VARCHAR}
+		,#{endStationStnName,jdbcType=VARCHAR}
+		,#{endStnTdcsId,jdbcType=VARCHAR}
+		,#{endStnTdcsName,jdbcType=VARCHAR}
+
+		)
+	</insert>
+
+
+	<insert id="addRunPlanLkTrainStn" parameterType="java.util.Map">
+		INSERT INTO PLAN_TRAIN_STN
+		(
+		PLAN_TRAIN_STN_ID,
+		PLAN_TRAIN_ID,
+		STN_SORT,
+		STN_BUREAU,
+		STN_BUREAU_FULL,
+		ARR_TRAIN_NBR,
+		DPT_TRAIN_NBR,
+		ARR_TIME,
+		DPT_TIME,
+		BASE_ARR_TIME,
+		BASE_DPT_TIME,
+		TRACK_NAME,
+		PLATFORM,
+		PSG_FLG,
+		LOCO_FLAG,
+		TEC_TYPE,
+		STN_TYPE,
+		RUN_DAYS,
+		ARR_RUN_DAYS,
+		<!-- added by liuhang -->
+		JOBS,
+		STN_BUREAU_ID,
+		NODE_ID,
+		NODE_NAME
+		<!-- -->
+		,STN_ID
+		,STN_NAME
+		,NODE_TDCS_ID
+		,NODE_TDCS_NAME
+
+
+		)
+		(
+
+		<foreach collection="trainStnList" item="item" index="index"
+			separator="UNION ALL">
+            <![CDATA[
+	       SELECT 
+	        #{item.planTrainStnId, jdbcType=VARCHAR},
+            #{item.planTrainId, jdbcType=VARCHAR},
+            #{item.stnSort, jdbcType=NUMERIC},
+            #{item.stnBureauShortName, jdbcType=VARCHAR},
+            #{item.stnBureauFullName, jdbcType=VARCHAR},
+            #{item.arrTrainNbr, jdbcType=VARCHAR},
+            #{item.dptTrainNbr, jdbcType=VARCHAR},
+            #{item.arrTime, jdbcType=DATE},
+            #{item.dptTime, jdbcType=DATE},
+            #{item.baseArrTime, jdbcType=DATE},
+            #{item.baseDptTime, jdbcType=DATE},
+            #{item.trackName, jdbcType=VARCHAR},
+            #{item.platform, jdbcType=NUMERIC},
+            #{item.psgFlag, jdbcType=NUMERIC},
+            #{item.locoFlag, jdbcType=NUMERIC},
+            #{item.tecType, jdbcType=VARCHAR},
+            #{item.stnType, jdbcType=VARCHAR},
+            #{item.tRunDays, jdbcType=VARCHAR},
+            #{item.sRunDays, jdbcType=VARCHAR},
+	        #{item.jobs, jdbcType=VARCHAR},
+	        #{item.bureauId, jdbcType=VARCHAR},
+	        #{item.nodeId, jdbcType=VARCHAR},
+	        #{item.nodeName, jdbcType=VARCHAR}
+	        ,#{item.nodeStationId, jdbcType=VARCHAR}
+	        ,#{item.nodeStationName, jdbcType=VARCHAR}
+	        ,#{item.nodeTdcsId, jdbcType=VARCHAR}
+	        ,#{item.nodeTdcsName, jdbcType=VARCHAR}
+            
+            FROM DUAL
+	         ]]>
+		</foreach>
+
+		)
+
+	</insert>
+
+
+
+
+
+	<delete id="deleteCmdTrainStnForCmdTrainId" parameterType="map">
+
+		DELETE FROM CMD_TRAIN_STN WHERE CMD_TRAIN_ID = #{cmdTrainId}
+		<if test="stnBureau != null">AND STN_BUREAU=#{stnBureau}</if>
+	</delete>
+
+	<delete id="deleteCmdTrainForCmdTrainId" parameterType="map">
+
+		DELETE
+		FROM CMD_TRAIN WHERE CMD_TRAIN_ID = #{cmdTrainId}
+
+	</delete>
+
+	<update id="updatePassBureauForCmdTraindId" parameterType="map">
+		UPDATE CMD_TRAIN SET PASS_BUREAU = #{passBureau},
+		SELECT_STATE =
+		#{selectState},
+		BUSINESS = #{ business },
+		START_BUREAU_ID = #{
+		startBureauId },
+		START_STN_ID =
+		#{ startStnId },
+		END_BUREAU_ID = #{
+		endBureauId },
+		END_STN_ID = #{
+		endStnId },
+		END_DAYS = #{ endDays },
+		TRAIN_TYPE_ID = #{ trainTypeId },
+		CMD_TXTMLID = ${ CmdTxtMlId },
+		CMD_TXTMLITEMID = ${ CmdTxtMlItemId }
+		,start_station_stn_id =
+		#{start_station_stn_id}
+		,start_station_stn_name =
+		#{start_station_stn_name}
+		,start_stn_tdcs_id = #{start_stn_tdcs_id}
+		,start_stn_tdcs_name = #{start_stn_tdcs_name}
+		,end_station_stn_id =
+		#{end_station_stn_id}
+		,end_station_stn_name = #{end_station_stn_name}
+		,end_stn_tdcs_id = #{end_stn_tdcs_id}
+		,end_stn_tdcs_name =
+		#{end_stn_tdcs_name}
+		WHERE CMD_TRAIN_ID = #{cmdTrainId}
+
+
+
+
+
+	</update>
+
+	<update id="updateCmdTrainForCmdTraindId" parameterType="map">
+		UPDATE
+		CMD_TRAIN SET
+		START_STN = #{startStn, jdbcType=VARCHAR},
+		END_STN = #{
+		endStn, jdbcType=VARCHAR },
+		START_BUREAU_ID = #{ startBureauId,
+		jdbcType=VARCHAR },
+		END_BUREAU_ID = #{ endBureauId, jdbcType=VARCHAR }
+		WHERE CMD_TRAIN_ID =
+		#{cmdTrainId, jdbcType=VARCHAR}
+
+
+
+
+
+	</update>
+
+	<select id="getBaseStationInfo" parameterType="string"
+		resultType="map">
+
+		select
+		A.ZM AS STNNAME,
+		B.LJPYM AS STNBUREAU,
+		B.LJQC AS
+		STNBUREAUFULLNAME,
+		B.LJJC AS STNBUREAUSHORTNAME
+		from jhpt_jcsj.ZMZD
+		A,jhpt_jcsj.LJZD B
+		WHERE A.LJPYM = B.LJPYM AND A.ZM = #{stnName}
+
+	</select>
+
+	<!-- <select id="getCmdTraindForMultipleParame" parameterType="map" resultType="org.railway.com.trainplan.entity.CmdTrain"> 
+		SELECT CMD_TRAIN_ID AS cmdTrainId, CMD_BUREAU AS cmdBureau, CMD_TYPE AS cmdType, 
+		CMD_TXTMLID AS cmdTxtMlId, CMD_TXTMLITEMID AS cmdTxtMlItemId, CMD_NBR_BUREAU 
+		AS cmdNbrBureau, CMD_ITEM AS cmdItem, CMD_NBR_SUPERIOR AS cmdNbrSuperior, 
+		TRAIN_NBR AS trainNbr, START_STN AS startStn, END_STN AS endStn, START_DATE 
+		AS startDate, END_DATE AS endDate, RULE AS rule, SELECTED_DATE AS selectedDate, 
+		PASS_BUREAU AS passBureau, SELECT_STATE AS selectState, CREATE_STATE AS createState, 
+		TO_CHAR(UPDATE_TIME,'yyyy-MM-dd hh24:mi:SS') AS updateTime, TO_CHAR(CMD_TIME,'yyyy-MM-dd 
+		hh24:mi:SS') AS cmdTime FROM CMD_TRAIN WHERE 1=1 AND CMD_TIME >= TO_DATE(#{startDate},'yyyy-MM-dd 
+		hh24:mi:SS') AND CMD_TIME &lt;=TO_DATE(#{endDate},'yyyy-MM-dd hh24:mi:SS') 
+		AND CMD_BUREAU != #{userBureau} <if test="trainNbr != null and trainNbr != 
+		'' "> AND TRAIN_NBR = #{trainNbr} </if> <if test="cmdNbrSuperior != null 
+		and cmdNbrSuperior != '' "> AND CMD_NBR_SUPERIOR = #{cmdNbrSuperior} </if> 
+		<if test="cmdBureau != null and cmdBureau != '' "> AND CMD_BUREAU = #{cmdBureau} 
+		</if> <if test="cmdType != 'all' "> AND CMD_TYPE = #{cmdType} </if> <if test="createState 
+		!= 'all' "> AND CREATE_STATE = #{createState} </if> <if test="selectState 
+		!= null and selectState != '' "> AND SELECT_STATE = #{selectState} </if> 
+		</select> -->
+
+	<select id="getCmdTraindForMultipleParame" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.CmdTrain">
+		SELECT
+		CMD_TRAIN_ID AS cmdTrainId,
+		IMPORTANT_FLAG AS importantFlag,
+		CMD_BUREAU AS cmdBureau,
+		CMD_TYPE AS cmdType,
+		CMD_TXTMLID AS cmdTxtMlId,
+		CMD_TXTMLITEMID AS cmdTxtMlItemId,
+		CMD_NBR_BUREAU AS cmdNbrBureau,
+		CMD_ITEM AS cmdItem,
+		CMD_NBR_SUPERIOR AS cmdNbrSuperior,
+		TRAIN_NBR AS
+		trainNbr,
+		START_STN AS startStn,
+		END_STN AS endStn,
+		START_DATE AS
+		startDate,
+		END_DATE AS endDate,
+		RULE AS rule,
+		SELECTED_DATE AS
+		selectedDate,
+		PASS_BUREAU AS passBureau,
+		SELECT_STATE AS selectState,
+		CREATE_STATE AS createState,
+		TO_CHAR(UPDATE_TIME,'yyyy-MM-dd
+		hh24:mi:SS') AS updateTime,
+		TO_CHAR(CMD_TIME,'yyyy-MM-dd hh24:mi:SS')
+		AS cmdTime
+		,TRAIN_TYPE_ID trainTypeId
+		FROM CMD_TRAIN
+		WHERE 1=1
+
+		AND
+		CMD_TIME >= TO_DATE(#{startDate},'yyyy-MM-dd hh24:mi:SS') AND
+		CMD_TIME
+		&lt;=TO_DATE(#{endDate},'yyyy-MM-dd hh24:mi:SS')
+		<!-- 不明白为什么，发令局是本局的为何不能查看？ AND CMD_BUREAU != #{userBureau, jdbcType=VARCHAR} -->
+		<if test="userBureau != null and userBureau != '' ">
+			AND CMD_BUREAU != #{userBureau, jdbcType=VARCHAR}
+		</if>
+
+		<if test="trainNbr != null and trainNbr != '' ">
+			AND TRAIN_NBR = #{trainNbr, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdNbrSuperior != null and cmdNbrSuperior != '' ">
+			AND CMD_NBR_SUPERIOR = #{cmdNbrSuperior, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdNbrBureau != null and cmdNbrBureau != '' ">
+			AND CMD_NBR_BUREAU = #{cmdNbrBureau, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdBureau != null and cmdBureau != '' ">
+			AND CMD_BUREAU = #{cmdBureau, jdbcType=VARCHAR}
+		</if>
+
+		<if test="cmdType != 'all' ">
+			AND CMD_TYPE = #{cmdType, jdbcType=VARCHAR}
+		</if>
+		<if test="createState != 'all' ">
+			AND CREATE_STATE = #{createState, jdbcType=VARCHAR}
+		</if>
+		<if test="selectState != 'all' ">
+			AND SELECT_STATE = #{selectState, jdbcType=VARCHAR}
+		</if>
+		ORDER BY CMD_TIME DESC, CMD_NBR_BUREAU ASC, CMD_ITEM ASC, TRAIN_NBR
+		ASC
+	</select>
+
+
+	<select id="getPlanTrainIdForCmdTrainId" parameterType="string"
+		resultType="map">
+
+		select plan_train_id as planTraindId
+
+		from plan_train where
+		(cmd_train_id=#{cmdTrainId} OR TEL_ID=#{cmdTrainId})
+
+
+	</select>
+
+	<delete id="deleteTrainForCmdTrainId" parameterType="string">
+		delete from
+		plan_train where (cmd_train_id=#{cmdTrainId} OR
+		TEL_ID=#{cmdTrainId})
+
+	</delete>
+
+	<delete id="deleteTrainStnForPlanTrainId" parameterType="string">
+		delete
+		from plan_train_stn where plan_train_id = #{planTrainId}
+	</delete>
+
+	<delete id="deleteTrainStnForPlanTrainIdFa" parameterType="string">
+		delete from plan_train_stn where plan_train_id = #{cmdTrainId}
+	</delete>
+
+	<update id="updateCreateStateForCmdTrainId" parameterType="map">
+		UPDATE CMD_TRAIN SET CREATE_STATE = #{createState} where
+		CMD_TRAIN_ID=#{cmdTrainId}
+	</update>
+
+	<update id="updateCmdTrainCmdTrainId" parameterType="org.railway.com.trainplan.entity.CmdTrain">
+		UPDATE
+		CMD_TRAIN SET
+		CMD_BUREAU = #{cmdBureau},
+		CMD_NBR_BUREAU =
+		#{cmdNbrBureau},
+		IMPORTANT_FLAG = #{importantFlag},
+		CMD_ITEM =
+		#{cmdItem},
+		CMD_NBR_SUPERIOR = #{cmdNbrSuperior},
+		TRAIN_NBR =
+		#{trainNbr},
+		START_STN = #{startStn},
+		END_STN = #{endStn},
+		SELECTED_DATE
+		= #{selectedDate},
+		START_DATE = TO_DATE(#{startDate},'yyyy-MM-dd'),
+		END_DATE = TO_DATE(#{endDate},'yyyy-MM-dd'),
+		RULE = #{rule},
+		UPDATE_TIME = sysdate,
+		CMD_TIME = TO_DATE(#{cmdTime},'yyyy-MM-dd')
+
+		where CMD_TRAIN_ID=#{cmdTrainId}
+	</update>
+
+	<update id="updateCmdTrainStnCmdTrainId" parameterType="org.railway.com.trainplan.entity.CmdTrainStn">
+		UPDATE
+		CMD_TRAIN_STN SET
+		STN_SORT = #{stnSort}
+
+		where
+		CMD_TRAIN_STN_ID=#{cmdTrainStnId}
+	</update>
+
+	<!-- 根据CMD_TRAIN_ID和rundate 停运开行计划 备用及停运标记（1:开行；2:备用；9:停运） 业务要求：将当前运行线id填入上一次生成的运行线ID； 
+		重置“生成运行线、一级审核、二级审核”标记及运行线ID -->
+	<update id="updateSpareFlag" parameterType="map">
+		UPDATE PLAN_TRAIN T
+		SET
+		T.SPARE_FLAG = 9,
+		T.CHECK_LEV1_TYPE = 0, T.CHECK_LEV1_BUREAU=NULL,
+		T.CHECK_LEV2_TYPE = 0, T.CHECK_LEV2_BUREAU=NULL,
+		T.DAILYPLAN_FLAG = 1,
+		T.DAILYPLAN_ID_LAST =
+		DECODE(T.DAILYPLAN_ID,NULL,T.DAILYPLAN_ID_LAST,T.DAILYPLAN_ID),
+		T.DAILYPLAN_ID = NULL
+		WHERE T.RUN_DATE=#{runDate}
+		AND
+		T.TRAIN_NBR=#{trainNbr}
+	</update>
+
+	<select id="getMTrainlineTypeByMap" parameterType="map"
+		resultType="map">
+		select a.id
+		,(a.name || ' (' || a.identify || '-' || a.source_code ||
+		'-' || a.target_code || ')') name,
+        a.identify identify,
+        a.source_code scode,
+        a.target_code tcode
+		from JHPT_JBT.m_trainline_type a
+		where 1=1
+		and a.business in (${param})
+		<if test="identify != null and identify != ''">
+			and upper(a.identify) = upper(#{identify,
+			jdbcType=VARCHAR})
+		</if>
+		<if test="code != null and code != ''">
+			and a.source_code &lt;= #{code, jdbcType=VARCHAR}
+			and a.target_code &gt;= #{code, jdbcType=VARCHAR}
+		</if>
+		order by a.grade
+	</select>
+
+	<!-- 删除plan_train_stn -->
+	<delete id="deletePlanTrainStn" parameterType="map">
+		delete from plan_train_stn a
+		where a.plan_train_id in (
+		select
+		plan_train_id from plan_train b
+		where (
+		b.tel_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+		or b.cmd_train_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+		)
+		)
+	</delete>
+	<!-- 删除plan_train -->
+	<delete id="deletePlanTrain" parameterType="map">
+		delete from plan_train a
+		where (
+		a.tel_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+		or a.cmd_train_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+		)
+	</delete>
+	<!-- 删除cmd_train_stn -->
+	<delete id="deleteCmdTrainStn" parameterType="map">
+		delete from cmd_train_stn a
+		where a.cmd_train_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+	</delete>
+	<!-- 删除cmd_train -->
+	<delete id="deleteCmdTrain" parameterType="map">
+		delete cmd_train a
+		where a.cmd_train_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+	</delete>
+
+	<select id="getCmdTrainByMap" parameterType="map"
+		resultType="map">
+		select a.cmd_train_id from cmd_train a
+		where 1 = 1
+	  <if test="cmd_bureau != null and cmd_bureau != ''">
+	  	and a.cmd_bureau = #{cmd_bureau}
+	  </if>
+	  <if test="train_nbr != null and train_nbr != ''">
+	  	and a.train_nbr = #{train_nbr}
+	  </if>
+	  <if test="start_stn != null and start_stn != ''">
+	  	and a.start_stn = #{start_stn}
+	  </if>
+	  <if test="end_stn != null and end_stn != ''">
+	  	and a.end_stn = #{end_stn}
+	  </if>
+	  <if test="start_date != null and start_date != ''">
+	  	and a.start_date = to_date(#{start_date},'yyyy/MM/dd')
+	  </if>
+	  <if test="end_date != null and end_date != ''">
+	  	and a.end_date = to_date(#{end_date},'yyyy/MM/dd')
+	  </if>
+	  <if test="rule != null and rule != ''">
+	  	and a.rule = #{rule}
+	  </if>
+	  <if test="selected_date != null and selected_date != ''">
+	  	and a.selected_date = #{selected_date}
+	  </if>
+	</select>
+
+	<select id="getPlanTrainByMap" parameterType="map" resultType="org.railway.com.trainplan.entity.PlanTrain">
+		select count(1),a.train_nbr trainNbr,a.pass_bureau passBureau 
+		from plan_train a
+		where (
+		a.tel_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+		or a.cmd_train_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+		)
+		group by a.train_nbr,a.pass_bureau
+	</select>
+
+</mapper>

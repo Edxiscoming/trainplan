@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/rabbit
+                http://www.springframework.org/schema/rabbit/spring-rabbit-1.4.xsd"> 
+  	 <!--
+	 <rabbit:connection-factory id="connectionFactory" host="10.1.186.114" virtual-host="crec" username="crec" password="crec2014" />
+ 	 -->
+  
+  	 	
+ 	<rabbit:connection-factory id="connectionFactory" addresses="10.111.133.19:5672"  virtual-host="/qq_test" username="qs" password="123456"/> 
+
+  	
+  	<!-- <rabbit:connection-factory id="connectionFactory"  addresses="172.16.12.151:5672,172.16.12.152:5672" virtual-host="/" username="guest" password="guest"/> -->
+	<!-- 外网，1.0 
+	<rabbit:connection-factory id="connectionFactory"  addresses="10.1.186.126:5672,10.1.186.127:5672" virtual-host="/" username="crec" password="crec2014"/>
+	-->
+
+<!-- 	<rabbit:connection-factory id="connectionFactory"  addresses="192.168.10.185:5672" virtual-host="/" username="romote_user" password="123456"/> -->
+
+	<!-- <rabbit:connection-factory id="connectionFactory"  addresses="localhost:5672" virtual-host="/" username="zpd" password="zpd"/> -->
+	<!-- 北京，测试 -->
+<!-- 	<rabbit:connection-factory id="connectionFactory"  addresses="10.1.186.115:5672" virtual-host="/" username="crec" password="crec2014"/> -->
+<!-- 	<rabbit:connection-factory id="connectionFactory"  addresses="10.1.186.114:5672" virtual-host="/" username="crec" password="123456"/> -->
+  	
+    <rabbit:admin id="crec-admin" connection-factory="connectionFactory" />
+    <!-- 定义队列 
+  
+    <rabbit:queue id="web-reply-Queue" />  
+    <rabbit:queue id="freightTransport-reply-Queue" />
+    -->
+    <!-- create myExchange and bind myAnonymousQueue with my.routingkey.1 to the TUTORIAL-EXCHANGE
+    <rabbit:topic-exchange id="myExchange" name="CREC-REPLY-EXCHANGE">
+        <rabbit:bindings>
+        -->
+        	<!-- 绑定自己的routing到对应的消息队列 
+           <rabbit:binding queue="web-reply-Queue" pattern="crec.reply.trainlineEvent"></rabbit:binding>  
+             <rabbit:binding queue="freightTransport-reply-Queue" pattern="crec.reply.createFreightTransportEvent"></rabbit:binding> 
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+    -->
+    
+      <rabbit:queue id="event-Queue" name="event-Queue" declared-by="crec-admin" />   
+      <rabbit:queue id="reply-Queue" name="reply-Queue" declared-by="crec-admin" />   
+      <rabbit:queue id="dwrmsg-Queue-1" name="dwrmsg-Queue-1" declared-by="crec-admin" />                                                                   
+    
+     <!-- 绑定自己的routing到对应的消息队列 -->
+      <rabbit:direct-exchange id="myExchange" auto-delete="false" name="CREC-EVENT-EXCHANGE">                                                                             
+         <rabbit:bindings>                                                     
+      <rabbit:binding queue="event-Queue" key="crec.event.trainlineEvent"></rabbit:binding>
+                   </rabbit:bindings>
+      </rabbit:direct-exchange>
+      
+      <rabbit:fanout-exchange id="mydwrExchange" auto-delete="false" name="CREC-DWRMSG-EXCHANGE">                                                                             
+         <rabbit:bindings>                                                     
+	      <rabbit:binding queue="dwrmsg-Queue-1"></rabbit:binding>
+	                   </rabbit:bindings>
+      </rabbit:fanout-exchange>
+      
+      <rabbit:direct-exchange id="myReplyExchange" auto-delete="false" name="CREC-REPLY-EXCHANGE">                                                                             
+         <rabbit:bindings>                                                     
+      <rabbit:binding queue="reply-Queue" key="crec.reply.trainlineEvent"></rabbit:binding>
+      <rabbit:binding queue="reply-Queue" key="crec.reply.lineDelEvent"></rabbit:binding>
+                   </rabbit:bindings>                 
+      </rabbit:direct-exchange>
+
+
+    
+    <!-- 定义当前消息监听类    
+    <bean id="eventListener" class="org.railway.com.trainplan.service.MessageHandler" />  --> 
+    <bean id="dwrmsgListener" class="org.railway.com.trainplan.service.DwrMessageHandler" /> 
+
+<!--     <bean id="freightTransportListener" class="org.railway.com.trainplan.service.FreightTransportMessageHandler" />  -->
+    
+    <!--绑定监听类到指定的队列上 --> 
+    
+<!--         <rabbit:listener-container id="replyListenerContainer" channel-transacted="true" acknowledge="manual" prefetch="2000" concurrency="20" connection-factory="connectionFactory"> -->
+<!--         	<rabbit:listener ref="eventListener" queues="reply-Queue" /> -->
+<!--     	</rabbit:listener-container> -->
+    	
+    	<rabbit:listener-container id="dwrmsgListenerContainer" channel-transacted="true" prefetch="2000" concurrency="10" connection-factory="connectionFactory">
+        	<rabbit:listener ref="dwrmsgListener" queues="dwrmsg-Queue-1" />
+    	</rabbit:listener-container>
+  	  
+<!--      <rabbit:listener-container id="replyListenerContainer" connection-factory="connectionFactory"> -->
+<!--         <rabbit:listener ref="eventListener" queues="web-reply-Queue" /> -->
+<!--     </rabbit:listener-container>   -->
+<!--       <rabbit:listener-container id="freightTransportContainer" connection-factory="connectionFactory"> -->
+<!--         <rabbit:listener ref="freightTransportListener" queues="freightTransport-reply-Queue" /> -->
+<!--     </rabbit:listener-container>  -->
+ 
+    <!-- create a bean which can send message to TUTORIAL_EXCHANGE for the Java program to call -->
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"  exchange="CREC-EVENT-EXCHANGE"/>
+    <rabbit:template id="amqpDwrTemplate" connection-factory="connectionFactory"  exchange="CREC-DWRMSG-EXCHANGE"/>
+ 
+</beans>

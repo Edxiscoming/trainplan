@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.LogApiDao">
+    
+
+    <insert id="insertLogApi" parameterType="org.railway.com.trainplan.entity.LogApi">
+		insert into log_api
+		  (id,
+		   api_type,
+		   create_time,
+		   api_user,
+		   api_ip,
+		   api_json,
+		   api_status,
+		   api_msg,
+		   api_time)
+		values
+		  (#{id, jdbcType=VARCHAR}, 
+		   #{api_type, jdbcType=VARCHAR}, 
+		   sysdate, 
+		   #{api_user, jdbcType=VARCHAR}, 
+		   #{api_ip, jdbcType=VARCHAR}, 
+		   #{api_json, jdbcType=VARCHAR}, 
+		   #{api_status, jdbcType=VARCHAR}, 
+		   #{api_msg, jdbcType=VARCHAR}, 
+		   #{api_time, jdbcType=VARCHAR})
+    </insert>
+    
+    <update id="updateLogApiById" parameterType="map">
+		  update log_api a
+		     set a.update_time = sysdate
+		   <if test="api_status != null">
+		       ,a.api_status   = #{api_status, jdbcType=VARCHAR}
+		   </if>
+		   <if test="api_msg != null">
+		       ,a.api_msg  = #{api_msg, jdbcType=NUMERIC}
+		   </if>
+		   where a.id = ?
+    </update>
+    
+</mapper> 
+

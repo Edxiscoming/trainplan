@@ -1,0 +1,254 @@
+.btn-big {
+	display:block;
+	font-size:17px;
+	font-family:"微软雅黑";
+}
+.btn-primary {
+	color: white;
+	background-color: #1297FF;
+	border-color: #007AD8;
+}
+.btn-display {
+	display:none;
+}
+i {
+	margin-right:10px;
+}
+body {
+	font-family:"微软雅黑";
+}
+@charset "utf-8";
+/* CSS Document */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/*a链接去除下划线*/
+a {
+	test-decoration:none;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	-webkit-text-size-adjust: 100%;
+	letter-spacing: 0px;
+}
+ol, ul {
+	list-style: none;
+}
+.login {
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+.login_backgroud {
+	overflow:hidden;
+	width:100%;
+	height:60%;
+	background:#133f80 url(../img/login_bg.jpg) no-repeat;
+	-moz-background-size: 100% 100%;
+	-ms-background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	background-size: 100% 100%;
+	background-attachment: fixed;
+}
+/*.login_overlay {
+	position:absolute;
+	top:50%;
+	margin-top:-200px;
+	left:50%;
+	margin-left:-181px;
+	width: 362px;
+}
+*/
+.login-logo {
+	width:553px;
+	height:63px;
+	background:url(../img/login-logo-1.png);
+	width: 345px;
+    margin-left:10%;
+}
+.login_input {
+	margin-top:10px;
+	z-index:20;
+}
+.btn-group > .btn + .dropdown-toggle {
+	padding-top: 5px;
+	padding-bottom: 11px;
+}
+.login_footer {
+	color:#c7e0f7;
+	position:absolute;
+	bottom:20px;
+	z-index:10;
+	text-align:center;
+	width:100%;
+}
+.aquila {
+	position:absolute;
+	right:5%;
+	top:6%;
+	background:url(../img/aquila.png);
+	height:271px;
+	width:234px;
+	background-repeat:no-repeat;
+}
+.col-sm-2.control-label{
+width: 73px;
+color: #555;
+font-weight: bold;
+padding: 0 5px 0 16px;
+}
+.form-control,.input-group .form-control{
+	width:245px;
+    height: 32px;
+}
+.form-group {
+margin-bottom: 21px;
+}
+.login-top{
+	height: 130px;
+	background: #EEF4FC;
+}
+.login-bottom{
+	height: 130px;
+	font-family:"微软雅黑";
+	line-height: 50px;
+	text-align: center;
+	font-size: 15px;
+	background: #EEF4FC;
+}
+body{
+	position: relative;
+}
+.login_overlay{
+	float: right;
+    background: #EEF4FC;
+    padding: 0 0 20px 0;
+}
+.backg-no{
+background: transparent;
+font-family:"微软雅黑";
+line-height: 55px;
+height: 55px;
+font-size: 20px;
+text-align: center;
+margin-left:0;
+background: #307EC8;
+color: #fff;
+text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+}
+.background-no{
+	background:transparent;
+}
+.col-sm-2.control-label{
+	width: 73px;
+color: #555;
+font-weight: bold;
+padding: 0;
+float: none;
+display: block;
+margin-bottom: 4px;
+font-size: 15px;
+}
+.paddingtop30 {
+padding-top: 5px;
+width: 245px;
+margin: 0 auto;
+}
+.form-control{
+	border-radius: 0;
+}
+.margin-left{
+	margin-left: 0;
+}
+.btn-login{
+	 padding:5px 13px; 
+	 border-radius: 2px; 
+	 width: 245px;
+	 font-family:"微软雅黑";
+	 font-size: 15px;
+}
+
+.login_btns{
+	float: left;
+	width: 580px;
+	padding:55px 0 0 8px;
+	padding:94px 0 0 8px;
+}
+.btn-left{
+	float: left;
+	border-radius: 0;
+	margin:0 20px 20px 0;
+	font-family:"微软雅黑";
+	background: #EEF4FC;
+	border: 1px solid #B1CAEC;
+	color: #2E64AD;
+	padding: 5px 14px 5px 18px;
+	font-size: 20px;
+	word-spacing:8px;
+	letter-spacing:4px;
+}
+.btn-left.active{
+	color: #ffffff;
+	background-color: #ee6021;
+	border-color: #d14b10;
+}
+.btn-left:focus{
+	outline: 0;
+}
+.login-logo.background{
+line-height: 72px;
+font-size: 28px;
+font-weight: bold;
+width: auto;
+height: 100px;
+background-repeat: no-repeat;
+margin:0 auto;
+width: 1050px;
+}
+
+.login_center {
+width: 1050px;
+margin: 0 auto;
+position: absolute;
+left: 50%;
+margin-left: -525px;
+top: 50%;
+margin-top: -200px;
+}
+.btn-login{
+	width: 48%;
+	float: left;	
+}
+.btn-login-last{
+	margin-left: 4%;
+}
+body{
+	font-family:"微软雅黑"
+}
+@media (min-width: 1400px) {
+.login_center {
+margin-top: -240px;
+}
+}
+.right-link{
+	width: 345px;
+	float: right;
+	font-size: 15px;
+	font-weight: normal;
+	margin-top: 10px;
+	line-height: 18px;
+}
+.form-control{
+	font-size: 15px;
+}
+.right-text{
+	color: #1888e8;
+}

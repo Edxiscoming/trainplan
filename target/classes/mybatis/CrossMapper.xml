@@ -1,0 +1,3279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="crossDao">
+
+
+	<select id="getPlanCrossInfoForPlanCrossId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.PlanCrossInfo">
+		select
+		t.plan_cross_id as planCrossId,
+		t.unit_cross_id as unitCrossId,
+		t.base_cross_id as
+		baseCrossId,
+		t.base_chart_id as baseChartId,
+		t.RELEVANT_BUREAU as
+		relevantBureau,
+		(select
+		WMSYS.WM_CONCAT(P.CHECK_BUREAU) from plan_check
+		P where
+		P.plan_cross_id=#{planCrossId}) AS checkedBureau ,
+		t.base_chart_name as
+		baseChartName,
+		t.cross_start_date as
+		crossStartDate,
+		t.cross_end_date as
+		crossEndDate,
+		t.cross_name as
+		crossName,
+		t.cross_spare_name as
+		crossSpareName,
+		t.SPARE_FLAG as
+		spareFlag,
+		t.GROUP_TOTAL_NBR as
+		groupTotalNbr,
+		t.PAIR_NBR as pairNbr,
+		t.HIGHLINE_FLAG as highlineFlag,
+		t.HIGHLINE_RULE as highlineRule,
+		t.COMMONLINE_RULE as commonlineRule,
+		t.APPOINT_WEEK as appointWeek,
+		t.APPOINT_DAY as appointDay,
+		t.CROSS_SECTION as crossSection,
+		t.THROUGH_LINE as throughline,
+		t.START_BUREAU as startBureau,
+		t.TOKEN_VEH_BUREAU as tokenVehBureau,
+		t.TOKEN_VEH_DEPT as tokenVehDept,
+		t.TOKEN_VEH_DEPOT as tokenVehDepot,
+		t.IS_AUTO_GENERATE as isAutoGenerate,
+		t.TOKEN_PSG_BUREAU as
+		tokenPsgBureau,
+		t.TOKEN_PSG_DEPT as tokenPsgDept,
+		t.LOCO_TYPE as
+		locoType,
+		t.CRH_TYPE as crhType,
+		t.ELEC_SUPPLY as
+		elecSupply,
+		t.DEJ_COLLECT as dejCollect,
+		t.AIR_CONDITION as
+		airCondition,
+		t.NOTE as
+		note,
+		t.CREAT_PEOPLE as createPeople,
+		t.CREAT_PEOPLE_ORG as
+		createPeopleOrg,
+		t.CREAT_TIME as createTime,
+		t.CHECK_TYPE as checkType
+		<!-- , suntao -->
+		<!-- t.CHECK_PEOPLE as checkPeople, -->
+		<!-- t.CHECK_PEOPLE_ORG as checkPeopleOrg, -->
+		<!-- t.CHECK_TIME as checkTime -->
+		from plan_cross t
+		where t.plan_cross_id=#{planCrossId}
+
+
+	</select>
+
+
+	<select id="getPlanCrossInfoByPlanCrossId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.PlanCrossInfo">
+		select
+		t.plan_cross_id as planCrossId,
+		t.unit_cross_id as unitCrossId,
+		t.base_cross_id as
+		baseCrossId,
+		t.base_chart_id as baseChartId,
+		t.RELEVANT_BUREAU as
+		relevantBureau,
+		(select
+		WMSYS.WM_CONCAT(P.CHECK_BUREAU) from plan_check
+		P where
+		P.plan_cross_id=#{planCrossId}) AS checkedBureau ,
+		t.base_chart_name as
+		baseChartName,
+		t.cross_start_date as
+		crossStartDate,
+		t.cross_end_date as
+		crossEndDate,
+		t.cross_name as
+		crossName,
+		t.cross_spare_name as
+		crossSpareName,
+		t.SPARE_FLAG as
+		spareFlag,
+		t.GROUP_TOTAL_NBR as
+		groupTotalNbr,
+		t.PAIR_NBR as pairNbr,
+		t.HIGHLINE_FLAG as highlineFlag,
+		t.HIGHLINE_RULE as highlineRule,
+		t.COMMONLINE_RULE as commonlineRule,
+		t.APPOINT_WEEK as appointWeek,
+		t.APPOINT_DAY as appointDay,
+		t.CROSS_SECTION as crossSection,
+		t.THROUGH_LINE as throughline,
+		t.START_BUREAU as startBureau,
+		t.TOKEN_VEH_BUREAU as tokenVehBureau,
+		t.TOKEN_VEH_DEPT as tokenVehDept,
+		t.TOKEN_VEH_DEPOT as tokenVehDepot,
+		t.TOKEN_PSG_BUREAU as
+		tokenPsgBureau,
+		t.TOKEN_PSG_DEPT as tokenPsgDept,
+		t.LOCO_TYPE as
+		locoType,
+		t.CRH_TYPE as crhType,
+		t.ELEC_SUPPLY as
+		elecSupply,
+		t.DEJ_COLLECT as dejCollect,
+		t.AIR_CONDITION as
+		airCondition,
+		t.NOTE as
+		note,
+		t.CREAT_PEOPLE as createPeople,
+		t.CREAT_PEOPLE_ORG as
+		createPeopleOrg,
+		t.CREAT_TIME as createTime,
+		t.CHECK_TYPE as checkType
+		<!-- , -->
+		<!-- t.CHECK_PEOPLE as checkPeople, -->
+		<!-- t.CHECK_PEOPLE_ORG as checkPeopleOrg, -->
+		<!-- t.CHECK_TIME as checkTime -->
+		from plan_cross t
+		where t.plan_cross_id=#{planCrossId}
+
+
+	</select>
+
+	<select id="getPlanCrossInfoByPlanCrossIdVehicle" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.PlanCrossInfo">
+		select
+		t.plan_cross_id as planCrossId,
+		t.unit_cross_id as unitCrossId,
+		t.base_cross_id as
+		baseCrossId,
+		t.base_chart_id as baseChartId,
+		t.RELEVANT_BUREAU as
+		relevantBureau,
+		(select
+		WMSYS.WM_CONCAT(P.CHECK_BUREAU) from plan_check
+		P where
+		P.plan_cross_id=#{planCrossId}) AS checkedBureau ,
+		t.base_chart_name as
+		baseChartName,
+		t.cross_start_date as
+		crossStartDate,
+		t.cross_end_date as
+		crossEndDate,
+		t.cross_name as
+		crossName,
+		t.cross_spare_name as
+		crossSpareName,
+		t.SPARE_FLAG as
+		spareFlag,
+		t.GROUP_TOTAL_NBR as
+		groupTotalNbr,
+		t.PAIR_NBR as pairNbr,
+		t.HIGHLINE_FLAG as highlineFlag,
+		t.HIGHLINE_RULE as highlineRule,
+		t.COMMONLINE_RULE as commonlineRule,
+		t.APPOINT_WEEK as appointWeek,
+		t.APPOINT_DAY as appointDay,
+		t.CROSS_SECTION as crossSection,
+		t.THROUGH_LINE as throughline,
+		t.START_BUREAU as startBureau,
+		t.TOKEN_VEH_BUREAU as tokenVehBureau,
+		t.TOKEN_VEH_DEPT as tokenVehDept,
+		t.TOKEN_VEH_DEPOT as tokenVehDepot,
+		t.TOKEN_PSG_BUREAU as
+		tokenPsgBureau,
+		t.TOKEN_PSG_DEPT as tokenPsgDept,
+		t.LOCO_TYPE as
+		locoType,
+		t.CRH_TYPE as crhType,
+		t.ELEC_SUPPLY as
+		elecSupply,
+		t.DEJ_COLLECT as dejCollect,
+		t.AIR_CONDITION as
+		airCondition,
+		t.NOTE as
+		note,
+		t.CREAT_PEOPLE as createPeople,
+		t.CREAT_PEOPLE_ORG as
+		createPeopleOrg,
+		t.CREAT_TIME as createTime,
+		t.CHECK_TYPE as checkType
+		<!-- , -->
+		<!-- t.CHECK_PEOPLE as checkPeople, -->
+		<!-- t.CHECK_PEOPLE_ORG as checkPeopleOrg, -->
+		<!-- t.CHECK_TIME as checkTime -->
+		from plan_cross t
+		where t.plan_cross_id=#{planCrossId}
+
+
+	</select>
+
+
+	<select id="getPlanCrossInfoByPlanCrossIdVehicleBy2"
+		parameterType="string" resultType="org.railway.com.trainplan.entity.PlanCrossInfo">
+		select
+		t.plan_cross_id as planCrossId,
+		t.unit_cross_id as unitCrossId,
+		t.base_cross_id as
+		baseCrossId,
+		t.base_chart_id as baseChartId,
+		t.RELEVANT_BUREAU as
+		relevantBureau,
+		(select
+		WMSYS.WM_CONCAT(P.CHECK_BUREAU) from plan_check
+		P where
+		P.plan_cross_id=#{planCrossId}) AS checkedBureau ,
+		t.base_chart_name as
+		baseChartName,
+		t.cross_start_date as
+		crossStartDate,
+		t.cross_end_date as
+		crossEndDate,
+		t.cross_name as
+		crossName,
+		t.cross_spare_name as
+		crossSpareName,
+		t.SPARE_FLAG as
+		spareFlag,
+		t.GROUP_TOTAL_NBR as
+		groupTotalNbr,
+		t.PAIR_NBR as pairNbr,
+		t.HIGHLINE_FLAG as highlineFlag,
+		t.HIGHLINE_RULE as highlineRule,
+		t.COMMONLINE_RULE as commonlineRule,
+		t.APPOINT_WEEK as appointWeek,
+		t.APPOINT_DAY as appointDay,
+		t.CROSS_SECTION as crossSection,
+		t.THROUGH_LINE as throughline,
+		t.START_BUREAU as startBureau,
+		t.TOKEN_VEH_BUREAU as tokenVehBureau,
+		t.TOKEN_VEH_DEPT as tokenVehDept,
+		t.TOKEN_VEH_DEPOT as tokenVehDepot,
+		t.TOKEN_PSG_BUREAU as
+		tokenPsgBureau,
+		t.TOKEN_PSG_DEPT as tokenPsgDept,
+		t.LOCO_TYPE as
+		locoType,
+		t.CRH_TYPE as crhType,
+		t.ELEC_SUPPLY as
+		elecSupply,
+		t.DEJ_COLLECT as dejCollect,
+		t.AIR_CONDITION as
+		airCondition,
+		t.NOTE as
+		note,
+		t.CREAT_PEOPLE as createPeople,
+		t.CREAT_PEOPLE_ORG as
+		createPeopleOrg,
+		t.CREAT_TIME as createTime,
+		t.CHECK_TYPE as checkType
+		<!-- , -->
+		<!-- t.CHECK_PEOPLE as checkPeople, -->
+		<!-- t.CHECK_PEOPLE_ORG as checkPeopleOrg, -->
+		<!-- t.CHECK_TIME as checkTime -->
+		from plan_cross t
+		where t.plan_cross_id=#{planCrossId}
+
+
+	</select>
+
+
+
+
+	<select id="getPlanCrossInfoByPlanCrossIdVehicleSearch"
+		parameterType="string" resultType="org.railway.com.trainplan.entity.PlanCrossInfo">
+		select
+		t.plan_cross_id as planCrossId,
+		t.unit_cross_id as unitCrossId,
+		t.base_cross_id as
+		baseCrossId,
+		t.base_chart_id as baseChartId,
+		t.RELEVANT_BUREAU as
+		relevantBureau,
+		(select
+		WMSYS.WM_CONCAT(P.CHECK_BUREAU) from plan_check
+		P where
+		P.plan_cross_id=#{planCrossId}) AS checkedBureau ,
+		t.base_chart_name as
+		baseChartName,
+		t.cross_start_date as
+		crossStartDate,
+		t.cross_end_date as
+		crossEndDate,
+		t.cross_name as
+		crossName,
+		t.cross_spare_name as
+		crossSpareName,
+		t.SPARE_FLAG as
+		spareFlag,
+		t.GROUP_TOTAL_NBR as
+		groupTotalNbr,
+		t.PAIR_NBR as pairNbr,
+		t.HIGHLINE_FLAG as highlineFlag,
+		t.HIGHLINE_RULE as highlineRule,
+		t.COMMONLINE_RULE as commonlineRule,
+		t.APPOINT_WEEK as appointWeek,
+		t.APPOINT_DAY as appointDay,
+		t.CROSS_SECTION as crossSection,
+		t.THROUGH_LINE as throughline,
+		t.START_BUREAU as startBureau,
+		t.TOKEN_VEH_BUREAU as tokenVehBureau,
+		t.TOKEN_VEH_DEPT as tokenVehDept,
+		t.TOKEN_VEH_DEPOT as tokenVehDepot,
+		t.TOKEN_PSG_BUREAU as
+		tokenPsgBureau,
+		t.TOKEN_PSG_DEPT as tokenPsgDept,
+		t.LOCO_TYPE as
+		locoType,
+		t.CRH_TYPE as crhType,
+		t.ELEC_SUPPLY as
+		elecSupply,
+		t.DEJ_COLLECT as dejCollect,
+		t.AIR_CONDITION as
+		airCondition,
+		t.NOTE as
+		note,
+		t.CREAT_PEOPLE as createPeople,
+		t.CREAT_PEOPLE_ORG as
+		createPeopleOrg,
+		t.CREAT_TIME as createTime,
+		t.CHECK_TYPE as checkType
+		<!-- , -->
+		<!-- t.CHECK_PEOPLE as checkPeople, -->
+		<!-- t.CHECK_PEOPLE_ORG as checkPeopleOrg, -->
+		<!-- t.CHECK_TIME as checkTime -->
+		from plan_cross t
+		where t.plan_cross_id=#{planCrossId}
+
+
+	</select>
+
+
+	<select id="getCrossTrainInfoForCrossid" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.CrossTrainInfo">
+		select
+		BASE_CROSS_TRAIN_ID as baseCrossTrainId,
+		BASE_CROSS_ID AS crossId,
+		TRAIN_SORT AS trainSort,
+		RUN_DATE AS runDate,
+		END_DATE AS endDate,
+		TRAIN_NBR AS trainNbr,
+		BASE_TRAIN_ID AS baseTrainId
+		,
+		START_STN AS startStn,
+		START_BUREAU AS startBureau,
+		END_STN AS endStn,
+		END_BUREAU AS endBureau,
+		DAY_GAP AS dayGap ,
+		ALTERNATE_TRAIN_NBR AS
+		alertNateTrainNbr,
+		ALTERNATE_TIME AS alertNateTime ,
+		SPARE_FLAG AS
+		spareFlag,
+		SPARE_APPLY_FLAG AS spareApplyFlage,
+		HIGHLINE_FLAG AS
+		highlineFlag,
+		HIGHLINE_RULE AS highlineRule,
+		COMMONLINE_RULE AS
+		commonLineRule,
+		APPOINT_WEEK AS appointWeek,
+		APPOINT_DAY AS appointDay,
+		PERIOD_SOURCE_TIME AS periodSourceTime,
+		PERIOD_TARGET_TIME AS
+		periodTargetTime
+		from base_cross_train where BASE_CROSS_ID=#{crossId}
+		order by
+		spareApplyFlage,trainSort
+	</select>
+
+	<select id="getUnitCrossInfoForChartId" parameterType="String"
+		resultType="org.railway.com.trainplan.entity.CrossInfo">
+		select
+		UNIT_CROSS_ID as unitCrossId,
+		BASE_CROSS_ID as
+		baseCrossId,
+		BASE_CHART_ID as chartId,
+		BASE_CHART_NAME as chartName,
+		CROSS_START_DATE as crossStartDate,
+		CROSS_END_DATE as crossEndDate,
+		RELEVANT_BUREAU as relevantBureau,
+		CROSS_NAME as crossName,
+		CROSS_SPARE_NAME as crossSpareName,
+		ALTERNATE_DATE as alterNateDate,
+		ALTERNATE_TRAIN_NBR as alterNateTranNbr,
+
+		SPARE_FLAG as spareFlag ,
+		CUT_OLD as cutOld,
+		GROUP_TOTAL_NBR as groupTotalNbr ,
+		PAIR_NBR as
+		pairNbr ,
+
+		HIGHLINE_FLAG as highlineFlag,
+		HIGHLINE_RULE as highlineRule,
+		COMMONLINE_RULE as commonlineRule,
+		APPOINT_WEEK as appointWeek ,
+
+		APPOINT_DAY as appointDay,
+		CROSS_SECTION as crossSection ,
+		THROUGH_LINE
+		as throughline,
+		START_BUREAU as startBureau ,
+
+		TOKEN_VEH_BUREAU as
+		tokenVehBureau ,
+		TOKEN_VEH_DEPT as tokenVehDept,
+		TOKEN_VEH_DEPOT as
+		tokenVehDepot ,
+		TOKEN_PSG_BUREAU as tokenPsgBureau ,
+
+		TOKEN_PSG_DEPT as
+		tokenPsgDept ,
+		LOCO_TYPE as locoType ,
+		CRH_TYPE as crhType ,
+		ELEC_SUPPLY
+		as elecSupply ,
+
+		DEJ_COLLECT as dejCollect ,
+		AIR_CONDITION as
+		airCondition ,
+		NOTE as note,
+		CREAT_PEOPLE as createPeople ,
+		CREAT_PEOPLE_ORG as createPeopleOrg ,
+		CREAT_TIME as createTime
+		from
+		unit_cross where base_chart_id=#{chartId}
+
+	</select>
+
+	<insert id="addPlanCrossInfo" parameterType="java.util.Map">
+
+		insert into plan_cross
+		(
+		PLAN_CROSS_ID,
+		UNIT_CROSS_ID,
+		BASE_CROSS_ID,
+		BASE_CHART_ID,
+		BASE_CHART_NAME,
+		CROSS_START_DATE,
+		CROSS_END_DATE,
+		CROSS_NAME,
+		CROSS_SPARE_NAME,
+		SPARE_FLAG,
+		GROUP_TOTAL_NBR,
+		PAIR_NBR,
+		HIGHLINE_FLAG,
+		HIGHLINE_RULE,
+		COMMONLINE_RULE,
+		APPOINT_WEEK,
+		APPOINT_DAY,
+		CROSS_SECTION,
+		THROUGH_LINE,
+		START_BUREAU,
+		TOKEN_VEH_BUREAU,
+		TOKEN_VEH_DEPT,
+		TOKEN_VEH_DEPOT,
+		TOKEN_PSG_BUREAU,
+		TOKEN_PSG_DEPT,
+		LOCO_TYPE,
+		CRH_TYPE,
+		ELEC_SUPPLY,
+		DEJ_COLLECT,
+		AIR_CONDITION,
+		NOTE,
+		RELEVANT_BUREAU,
+		CREAT_TIME
+
+
+		)
+		(
+
+		<foreach collection="trainCrossList" item="item" index="index"
+			separator="UNION ALL">
+            <![CDATA[
+	       SELECT
+	       #{item.planCrossId,jdbcType=VARCHAR},
+	       #{item.unitCrossId,jdbcType=VARCHAR},
+	       #{item.baseCrossId,jdbcType=VARCHAR},
+	       #{item.baseChartId,jdbcType=VARCHAR},
+	       #{item.baseChartName,jdbcType=VARCHAR},
+	       #{item.crossStartDate,jdbcType=VARCHAR},
+	       #{item.crossEndDate,jdbcType=VARCHAR},
+	       #{item.crossName,jdbcType=VARCHAR},
+	       #{item.crossSpareName,jdbcType=VARCHAR},
+	       #{item.spareFlag,jdbcType=VARCHAR},
+	        #{item.groupTotalNbr,jdbcType=NUMERIC},
+	        #{item.pairNbr,jdbcType=VARCHAR},
+	        #{item.highlineFlag,jdbcType=VARCHAR},
+	        #{item.highlineRule,jdbcType=VARCHAR},
+	        #{item.commonlineRule,jdbcType=VARCHAR},
+	        #{item.appointWeek,jdbcType=VARCHAR},
+	        #{item.appointDay,jdbcType=VARCHAR},
+	        #{item.crossSection,jdbcType=VARCHAR},
+	        #{item.throughline,jdbcType=VARCHAR},
+	        #{item.startBureau,jdbcType=VARCHAR},
+	        #{item.tokenVehBureau,jdbcType=VARCHAR},
+	        #{item.tokenVehDept,jdbcType=VARCHAR},
+	        #{item.tokenVehDepot,jdbcType=VARCHAR},
+	        #{item.tokenPsgBureau,jdbcType=VARCHAR},
+	        #{item.tokenPsgDept,jdbcType=VARCHAR},
+	        #{item.locoType,jdbcType=VARCHAR},
+	        #{item.crhType,jdbcType=VARCHAR},
+	        #{item.elecSupply,jdbcType=NUMERIC},
+	        #{item.dejCollect,jdbcType=NUMERIC},
+	        #{item.airCondition,jdbcType=NUMERIC},
+	        #{item.note,jdbcType=VARCHAR},
+	        #{item.relevantBureau,jdbcType=VARCHAR},
+	        sysdate
+	      
+	       from dual
+	         ]]>
+		</foreach>
+
+		)
+
+	</insert>
+
+	<insert id="addHighLineCrossInfo" parameterType="java.util.Map">
+
+		insert into highline_cross
+		(
+		HIGHLINE_CROSS_ID,
+		PLAN_CROSS_ID,
+		BASE_CROSS_ID,
+		CROSS_NAME,
+		CROSS_DATE,
+		CROSS_BUREAU,
+		CROSS_START_DATE,
+		CROSS_END_DATE,
+		CROSS_START_STN,
+		CROSS_END_STN,
+		SPARE_FLAG,
+		RELEVANT_BUREAU,
+		TOKEN_VEH_BUREAU,
+		TOKEN_VEH_DEPT,
+		TOKEN_VEH_DEPOT,
+		TOKEN_PSG_BUREAU,
+		TOKEN_PSG_DEPT,
+		THROUGH_LINE,
+		CRH_TYPE,
+		NOTE,
+		CREAT_PEOPLE,
+		CREAT_PEOPLE_ORG,
+		CREAT_TIME,
+		CREAT_REASON,
+		POST_ID,
+		POST_NAME
+		)
+		(
+		<foreach collection="hList" item="item" index="index"
+			separator="UNION ALL">
+
+			SELECT
+			#{item.highLineCrossId,jdbcType=VARCHAR},
+			#{item.planCrossId,jdbcType=VARCHAR},
+			#{item.baseCrossId,jdbcType=VARCHAR},
+			#{item.crossName,jdbcType=VARCHAR},
+			#{item.crossDate,jdbcType=VARCHAR},
+			#{item.crossBureau,jdbcType=VARCHAR},
+			#{item.crossStartDate,jdbcType=VARCHAR},
+			#{item.crossEndDate,jdbcType=VARCHAR},
+			#{item.crossStartStn,jdbcType=VARCHAR},
+			#{item.crossEndStn,jdbcType=VARCHAR},
+			#{item.spareFlag,jdbcType=VARCHAR},
+			#{item.relevantBureau,jdbcType=VARCHAR},
+			#{item.tokenVehBureau,jdbcType=VARCHAR},
+			#{item.tokenVehDept,jdbcType=VARCHAR},
+			#{item.tokenVehDepot,jdbcType=VARCHAR},
+			#{item.tokenPsgBureau,jdbcType=VARCHAR},
+			#{item.tokenPsgDept,jdbcType=VARCHAR},
+			#{item.throughLine,jdbcType=VARCHAR},
+			#{item.crhType,jdbcType=VARCHAR},
+			#{item.note,jdbcType=VARCHAR},
+			#{item.creatPeople,jdbcType=VARCHAR},
+			#{item.creatPeopleOrg,jdbcType=VARCHAR},
+			sysdate,
+			#{item.createReason,jdbcType=VARCHAR},
+			#{item.postId,jdbcType=VARCHAR},
+			#{item.postName,jdbcType=VARCHAR}
+			from dual
+
+		</foreach>
+
+		)
+
+	</insert>
+	<insert id="addHighLineCrossInfoSingle" parameterType="org.railway.com.trainplan.entity.HighlineCrossInfo">
+
+		insert into highline_cross
+		(
+		HIGHLINE_CROSS_ID,
+		PLAN_CROSS_ID,
+		BASE_CROSS_ID,
+		CROSS_NAME,
+		CROSS_DATE,
+		CROSS_BUREAU,
+		CROSS_START_DATE,
+		CROSS_END_DATE,
+		CROSS_START_STN,
+		CROSS_END_STN,
+		SPARE_FLAG,
+		RELEVANT_BUREAU,
+		TOKEN_VEH_BUREAU,
+		TOKEN_VEH_DEPT,
+		TOKEN_VEH_DEPOT,
+		TOKEN_PSG_BUREAU,
+		TOKEN_PSG_DEPT,
+		THROUGH_LINE,
+		CRH_TYPE,
+		NOTE,
+		CREAT_PEOPLE,
+		CREAT_PEOPLE_ORG,
+		CREAT_TIME,
+		CREAT_REASON,
+		POST_ID,
+		POST_NAME
+		)values(
+		#{highLineCrossId,jdbcType=VARCHAR},
+		#{planCrossId,jdbcType=VARCHAR},
+		#{baseCrossId,jdbcType=VARCHAR},
+		#{crossName,jdbcType=VARCHAR},
+		#{crossDate,jdbcType=VARCHAR},
+		#{crossBureau,jdbcType=VARCHAR},
+		#{crossStartDate,jdbcType=VARCHAR},
+		#{crossEndDate,jdbcType=VARCHAR},
+		#{crossStartStn,jdbcType=VARCHAR},
+		#{crossEndStn,jdbcType=VARCHAR},
+		#{spareFlag,jdbcType=VARCHAR},
+		#{relevantBureau,jdbcType=VARCHAR},
+		#{tokenVehBureau,jdbcType=VARCHAR},
+		#{tokenVehDept,jdbcType=VARCHAR},
+		#{tokenVehDepot,jdbcType=VARCHAR},
+		#{tokenPsgBureau,jdbcType=VARCHAR},
+		#{tokenPsgDept,jdbcType=VARCHAR},
+		#{throughLine,jdbcType=VARCHAR},
+		#{crhType,jdbcType=VARCHAR},
+		#{note,jdbcType=VARCHAR},
+		#{creatPeople,jdbcType=VARCHAR},
+		#{creatPeopleOrg,jdbcType=VARCHAR},
+		sysdate,
+		#{createReason,jdbcType=VARCHAR},
+		#{postId,jdbcType=VARCHAR},
+		#{postName,jdbcType=VARCHAR}
+		<!-- #{highLineCrossId}, -->
+		<!-- #{planCrossId}, -->
+		<!-- #{baseCrossId}, -->
+		<!-- #{crossName}, -->
+		<!-- #{crossDate}, -->
+		<!-- #{crossBureau}, -->
+		<!-- #{crossStartDate}, -->
+		<!-- #{crossEndDate}, -->
+		<!-- #{crossStartStn}, -->
+		<!-- #{crossEndStn}, -->
+		<!-- #{spareFlag}, -->
+		<!-- #{relevantBureau}, -->
+		<!-- #{tokenVehBureau}, -->
+		<!-- #{tokenVehDept}, -->
+		<!-- #{tokenVehDepot}, -->
+		<!-- #{tokenPsgBureau}, -->
+		<!-- #{tokenPsgDept}, -->
+		<!-- #{throughLine}, -->
+		<!-- #{crhType}, -->
+		<!-- #{note}, -->
+		<!-- #{creatPeople}, -->
+		<!-- #{creatPeopleOrg}, -->
+		<!-- sysdate, -->
+		<!-- #{createReason}, -->
+		<!-- #{postId}, -->
+		<!-- #{postName} -->
+		)
+
+	</insert>
+
+
+	<insert id="addHighLineCrossTrainInfo" parameterType="java.util.List">
+		insert into highline_cross_train
+		(HIGHLINE_TRAIN_ID,
+		HIGHLINE_CROSS_ID,
+		PLAN_TRAIN_ID,
+		TRAIN_SORT,
+		TRAIN_NBR,
+		RUN_DATE)
+		(
+		<foreach collection="list" item="item" index="index"
+			separator="UNION ALL">
+			SELECT
+			#{item.highLineTrainId,jdbcType=VARCHAR},
+			#{item.highLineCrossId,jdbcType=VARCHAR},
+			#{item.planTrainId,jdbcType=VARCHAR},
+			#{item.trainSort,jdbcType=NUMERIC},
+			#{item.trainNbr,jdbcType=VARCHAR},
+			#{item.runDate,jdbcType=NUMERIC}
+			from dual
+
+		</foreach>
+		)
+	</insert>
+
+
+
+	<insert id="insertPlanCheckInfo" parameterType="org.railway.com.trainplan.entity.PlanCheckInfo">
+		insert into
+		plan_check (
+		PLAN_CHECK_ID,
+		PLAN_CROSS_ID,
+		START_DATE,
+		END_DATE,
+		CHECK_PEOPLE,
+		CHECK_TIME,
+		CHECK_DEPT,
+		CHECK_BUREAU,
+		CHECK_STATE,
+		CHECK_REJECT_REASON,
+		CHECK_PEOPLE_TEL)values(
+		#{planCheckId},
+		#{planCrossId},
+		#{startDate},
+		#{endDate},
+		#{checkPeople},
+		sysdate,
+		#{checkDept},
+		#{checkBureau},
+		#{checkState, jdbcType=VARCHAR},
+		#{checkRejectReason, jdbcType=VARCHAR},
+		#{checkPeopleTel, jdbcType=VARCHAR}
+		)
+
+	</insert>
+
+
+
+
+	<insert id="insertPlanCheckInfocmd" parameterType="org.railway.com.trainplan.entity.PlanCheckInfo">
+		insert into
+		plan_check (
+		PLAN_CHECK_ID,
+		CMD_TEL_ID,
+		START_DATE,
+		END_DATE,
+		CHECK_PEOPLE,
+		CHECK_TIME,
+		CHECK_DEPT,
+		CHECK_BUREAU,
+		CHECK_STATE,
+		CHECK_REJECT_REASON,
+		CHECK_PEOPLE_TEL)values(
+		#{planCheckId},
+		#{planCrossId},
+		#{startDate},
+		#{endDate},
+		#{checkPeople},
+		sysdate,
+		#{checkDept},
+		#{checkBureau},
+		#{checkState, jdbcType=VARCHAR},
+		#{checkRejectReason, jdbcType=VARCHAR},
+		#{checkPeopleTel, jdbcType=VARCHAR}
+		)
+
+	</insert>
+	<update id="updateBaseCross" parameterType="org.railway.com.trainplan.entity.CrossInfo">
+
+		update base_cross
+		set
+		cross_section =#{crossSection},
+		HIGHLINE_RULE = #{highlineRule},
+		COMMONLINE_RULE = #{commonlineRule},
+		GROUP_TOTAL_NBR =
+		#{groupTotalNbr},
+		PAIR_NBR = #{pairNbr},
+		CUT_OLD = #{cutOld},
+		CROSS_START_DATE = #{crossStartDate},
+		CROSS_END_DATE = #{crossEndDate},
+		APPOINT_WEEK = #{appointWeek},
+		APPOINT_DAY = #{appointDay},
+		TOKEN_VEH_DEPT = #{tokenVehDept},
+		TOKEN_VEH_DEPOT = #{tokenVehDepot},
+		TOKEN_PSG_DEPT = #{tokenPsgDept},
+		LOCO_TYPE = #{locoType},
+		CRH_TYPE =
+		#{crhType},
+		ELEC_SUPPLY = #{elecSupply},
+		DEJ_COLLECT = #{dejCollect},
+		AIR_CONDITION = #{airCondition},
+		NOTE = #{note},
+		THROUGH_LINE =
+		#{throughline},
+		CREAT_UNIT_TIME = to_date(#{createUnitTime},'yyyy-MM-dd
+		hh24:mi:SS')
+
+		where BASE_CROSS_ID = #{baseCrossId}
+	</update>
+	<update id="updatePlanCrossCheckType" parameterType="map">
+
+		update
+		plan_cross
+		set
+		check_type=${checkType}
+
+
+
+		where PLAN_CROSS_ID =
+		#{planCrossId}
+	</update>
+
+
+	<select id="getCrossInfoForParam" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.CrossInfo">
+
+		select
+		BASE_CROSS_ID as crossId,
+		BASE_CHART_ID as chartId,
+		BASE_CHART_NAME as chartName,
+		CROSS_START_DATE as crossStartDate,
+		CROSS_END_DATE as crossEndDate,
+		RELEVANT_BUREAU as relevantBureau,
+		CROSS_NAME as crossName,
+		CROSS_SPARE_NAME as crossSpareName,
+		ALTERNATE_DATE as alterNateDate,
+		ALTERNATE_TRAIN_NBR as
+		alterNateTranNbr,
+
+		SPARE_FLAG as spareFlag ,
+		CUT_OLD as cutOld,
+		GROUP_TOTAL_NBR as groupTotalNbr ,
+		PAIR_NBR as pairNbr ,
+
+		HIGHLINE_FLAG
+		as highlineFlag,
+		HIGHLINE_RULE as highlineRule,
+		COMMONLINE_RULE as
+		commonlineRule,
+		APPOINT_WEEK as appointWeek ,
+
+		APPOINT_DAY as appointDay,
+		CROSS_SECTION as crossSection ,
+		THROUGH_LINE as throughline,
+		START_BUREAU as startBureau ,
+
+		TOKEN_VEH_BUREAU as tokenVehBureau ,
+		TOKEN_VEH_DEPT as tokenVehDept,
+		TOKEN_VEH_DEPOT as tokenVehDepot ,
+		TOKEN_PSG_BUREAU as tokenPsgBureau ,
+
+		TOKEN_PSG_DEPT as tokenPsgDept ,
+		LOCO_TYPE as locoType ,
+		CRH_TYPE as crhType ,
+		ELEC_SUPPLY as elecSupply
+		,
+
+		DEJ_COLLECT as dejCollect ,
+		AIR_CONDITION as airCondition ,
+		NOTE as
+		note,
+		CREAT_PEOPLE as createPeople ,
+		CREAT_PEOPLE_ORG as createPeopleOrg
+		,
+		RELEVANT_BUREAU as relevantBureau,
+		CREAT_TIME as createTime
+		from
+		base_cross where 1=1
+		<if test="crossId != null">
+			AND BASE_CROSS_ID = #{crossId}
+		</if>
+		<if test="crossName != null">
+			AND CROSS_NAME = #{crossName}
+		</if>
+		<if test="chartId != null">
+			AND BASE_CHART_ID = #{chartId}
+		</if>
+	</select>
+
+	<select id="getStationListForPlanCrossId" parameterType="map"
+		resultType="map">
+		select b.START_STN STNNAME,'0' stationType,'1' sort,
+		DECODE(b.start_bureau,#{stnBureau},1,0) isCurrentBureau
+		from PLAN_TRAIN
+		b,
+		(select a.PLAN_TRAIN_ID from PLAN_TRAIN a where a.PLAN_CROSS_ID
+		=#{planCrossId} group by a.PLAN_TRAIN_ID) a
+		where b.PLAN_TRAIN_ID =
+		a.PLAN_TRAIN_ID
+
+		UNION
+		select c.CNAME,'FJK' stationType ,'2' sort,
+		DECODE(a.stn_bureau,#{stnBureau},1,0) isCurrentBureau
+		from
+		JHPT_JCSJ.ZDFJK c,
+		(select d.STN_NAME,d.stn_bureau from PLAN_TRAIN a ,
+		plan_train_stn d where
+		a.PLAN_CROSS_ID =#{planCrossId} and
+		a.plan_train_id = d.plan_train_id
+		group by d.STN_NAME,d.stn_bureau) a
+		where c.CNAME = a.STN_NAME
+
+		UNION
+		select b.END_STN STNNAME,'0'
+		stationType,'3' sort,
+		DECODE(b.end_bureau,#{stnBureau},1,0)
+		isCurrentBureau
+		from PLAN_TRAIN b,
+		(select a.PLAN_TRAIN_ID from
+		PLAN_TRAIN a where a.PLAN_CROSS_ID
+		=#{planCrossId} group by
+		a.PLAN_TRAIN_ID) a
+		where b.PLAN_TRAIN_ID = a.PLAN_TRAIN_ID order by
+		sort
+	</select>
+
+	<select id="getUnitCrossInfoForCrossId" parameterType="String"
+		resultType="org.railway.com.trainplan.entity.CrossInfo">
+		select
+		UNIT_CROSS_ID as unitCrossId,
+		BASE_CHART_ID as
+		chartId,
+		BASE_CHART_NAME as chartName,
+		CROSS_START_DATE as
+		crossStartDate,
+		CROSS_END_DATE as crossEndDate,
+
+		CROSS_NAME as crossName,
+		CROSS_SPARE_NAME as crossSpareName,
+		ALTERNATE_DATE as alterNateDate,
+		ALTERNATE_TRAIN_NBR as alterNateTranNbr,
+
+		SPARE_FLAG as spareFlag ,
+		CUT_OLD as cutOld,
+		GROUP_TOTAL_NBR as groupTotalNbr ,
+		PAIR_NBR as
+		pairNbr ,
+
+		HIGHLINE_FLAG as highlineFlag,
+		HIGHLINE_RULE as highlineRule,
+		COMMONLINE_RULE as commonlineRule,
+		APPOINT_WEEK as appointWeek ,
+
+		APPOINT_DAY as appointDay,
+		CROSS_SECTION as crossSection ,
+		THROUGH_LINE
+		as throughline,
+		START_BUREAU as startBureau ,
+
+		TOKEN_VEH_BUREAU as
+		tokenVehBureau ,
+		TOKEN_VEH_DEPT as tokenVehDept,
+		TOKEN_VEH_DEPOT as
+		tokenVehDepot ,
+		TOKEN_PSG_BUREAU as tokenPsgBureau ,
+
+		TOKEN_PSG_DEPT as
+		tokenPsgDept ,
+		LOCO_TYPE as locoType ,
+		CRH_TYPE as crhType ,
+		ELEC_SUPPLY
+		as elecSupply ,
+
+		DEJ_COLLECT as dejCollect ,
+		AIR_CONDITION as
+		airCondition ,
+		NOTE as note,
+		CREAT_PEOPLE as createPeople ,
+		CREAT_PEOPLE_ORG as createPeopleOrg ,
+		CREAT_TIME as createTime,
+		RELEVANT_BUREAU as relevantBureau
+		,base_cross_id baseCrossId
+		from
+		unit_cross where base_cross_id=#{crossId}
+
+	</select>
+	<select id="getUnitCrossInfoByCrossNameAndChartId" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.CrossInfo">
+		select
+		UNIT_CROSS_ID as unitCrossId,
+<!-- 		, -->
+<!-- 		BASE_CHART_ID as -->
+<!-- 		chartId, -->
+<!-- 		BASE_CHART_NAME as chartName, -->
+<!-- 		CROSS_START_DATE as -->
+<!-- 		crossStartDate, -->
+<!-- 		CROSS_END_DATE as crossEndDate, -->
+
+		CROSS_NAME as crossName,
+<!-- 		CROSS_SPARE_NAME as crossSpareName, -->
+<!-- 		ALTERNATE_DATE as alterNateDate, -->
+<!-- 		ALTERNATE_TRAIN_NBR as alterNateTranNbr, -->
+
+<!-- 		SPARE_FLAG as spareFlag , -->
+<!-- 		CUT_OLD as cutOld, -->
+<!-- 		GROUP_TOTAL_NBR as groupTotalNbr , -->
+<!-- 		PAIR_NBR as -->
+<!-- 		pairNbr , -->
+
+<!-- 		HIGHLINE_FLAG as highlineFlag, -->
+<!-- 		HIGHLINE_RULE as highlineRule, -->
+<!-- 		COMMONLINE_RULE as commonlineRule, -->
+<!-- 		APPOINT_WEEK as appointWeek , -->
+
+<!-- 		APPOINT_DAY as appointDay, -->
+<!-- 		CROSS_SECTION as crossSection , -->
+<!-- 		THROUGH_LINE -->
+<!-- 		as throughline, -->
+<!-- 		START_BUREAU as startBureau , -->
+
+<!-- 		TOKEN_VEH_BUREAU as -->
+<!-- 		tokenVehBureau , -->
+<!-- 		TOKEN_VEH_DEPT as tokenVehDept, -->
+<!-- 		TOKEN_VEH_DEPOT as -->
+<!-- 		tokenVehDepot , -->
+<!-- 		TOKEN_PSG_BUREAU as tokenPsgBureau , -->
+
+<!-- 		TOKEN_PSG_DEPT as -->
+<!-- 		tokenPsgDept , -->
+<!-- 		LOCO_TYPE as locoType , -->
+<!-- 		CRH_TYPE as crhType , -->
+<!-- 		ELEC_SUPPLY -->
+<!-- 		as elecSupply , -->
+
+<!-- 		DEJ_COLLECT as dejCollect , -->
+<!-- 		AIR_CONDITION as -->
+<!-- 		airCondition , -->
+<!-- 		NOTE as note, -->
+<!-- 		CREAT_PEOPLE as createPeople , -->
+<!-- 		CREAT_PEOPLE_ORG as createPeopleOrg , -->
+<!-- 		CREAT_TIME as createTime, -->
+<!-- 		RELEVANT_BUREAU as relevantBureau -->
+		base_cross_id baseCrossId
+		from
+		unit_cross where cross_name=#{crossName} and BASE_CHART_ID=#{chartId}
+
+	</select>
+
+	<select id="getUnitCrossInfoForUnitCrossid" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.CrossInfo">
+		select
+		UNIT_CROSS_ID as unitCrossId,
+		BASE_CROSS_ID as
+		crossId,
+		BASE_CHART_ID as chartId,
+		BASE_CHART_NAME as chartName,
+		CROSS_START_DATE as crossStartDate,
+		CROSS_END_DATE as crossEndDate,
+
+		CROSS_NAME as crossName,
+		CROSS_SPARE_NAME as crossSpareName,
+		ALTERNATE_DATE as alterNateDate,
+		ALTERNATE_TRAIN_NBR as
+		alterNateTranNbr,
+
+		SPARE_FLAG as spareFlag ,
+		CUT_OLD as cutOld,
+		GROUP_TOTAL_NBR as groupTotalNbr ,
+		PAIR_NBR as pairNbr ,
+
+		HIGHLINE_FLAG
+		as highlineFlag,
+		HIGHLINE_RULE as highlineRule,
+		COMMONLINE_RULE as
+		commonlineRule,
+		APPOINT_WEEK as appointWeek ,
+
+		APPOINT_DAY as appointDay,
+		CROSS_SECTION as crossSection ,
+		THROUGH_LINE as throughline,
+		START_BUREAU as startBureau ,
+
+		TOKEN_VEH_BUREAU as tokenVehBureau ,
+		TOKEN_VEH_DEPT as tokenVehDept,
+		TOKEN_VEH_DEPOT as tokenVehDepot ,
+		TOKEN_PSG_BUREAU as tokenPsgBureau ,
+
+		TOKEN_PSG_DEPT as tokenPsgDept ,
+		LOCO_TYPE as locoType ,
+		CRH_TYPE as crhType ,
+		ELEC_SUPPLY as elecSupply
+		,
+
+		DEJ_COLLECT as dejCollect ,
+		AIR_CONDITION as airCondition ,
+		NOTE as
+		note,
+		CREAT_PEOPLE as createPeople ,
+		CREAT_PEOPLE_ORG as createPeopleOrg
+		,
+		CREAT_TIME as createTime,
+		RELEVANT_BUREAU as relevantBureau
+
+		from
+		unit_cross where UNIT_CROSS_ID=#{unitCrossId}
+	</select>
+
+	<resultMap id="crossTrain"
+		type="org.railway.com.trainplan.entity.BaseCrossTrainInfo">
+		<id column="base_cross_id" property="baseCrossId" />
+		<result column="cross_start_date" property="crossStartDate" />
+		<result column="cross_end_date" property="crossEndDate" />
+		<result column="cross_name" property="crossName" />
+		<collection property="trainList" resultMap="crossSubTrain" />
+	</resultMap>
+
+	<resultMap id="crossSubTrain"
+		type="org.railway.com.trainplan.entity.BaseCrossTrainSubInfo">
+		<id column="base_cross_train_id" property="baseCrossTrainId" />
+		<result column="train_sort" property="trainSort" />
+		<result column="start_time" property="startTime" />
+		<result column="train_nbr" property="trainNbr" />
+		<result column="base_train_id" property="baseTrainId" />
+		<result column="end_time" property="endTime" />
+		<result column="START_STN" property="startStn" />
+		<result column="group_sn" property="groupSn" />
+		<result column="END_STN" property="endStn" />
+		<collection property="stationList" resultMap="crossSubTrainTime" />
+	</resultMap>
+
+	<resultMap id="crossSubTrainTime"
+		type="org.railway.com.trainplan.entity.BaseCrossTrainInfoTime">
+
+		<result column="stn_Name" property="stnName" />
+		<result column="stn_Sort" property="stnSort" />
+		<result column="arr_time" property="arrTime" />
+		<result column="dpt_time" property="dptTime" />
+		<result column="staytime" property="stayTime" />
+		<result column="track_Name" property="trackName" />
+		<result column="stationFlag" property="stationType" />
+		<result column="node_id" property="nodeId" />
+		<result column="STN_BUREAU" property="bureauShortName" />
+	</resultMap>
+
+
+	<select id="getCrossTrainInfoForCrossId" parameterType="map"
+		resultMap="crossTrain">
+    <![CDATA[
+		select T1.*,
+		       case
+		         when INSTR(T1.STNTYPE,'<始发>')>0 OR INSTR(T1.STNTYPE,'<终到>')>0 THEN
+		          '0'
+		         WHEN INSTR(T1.STNTYPE,'<经由>')>0 THEN
+		          CASE
+		         WHEN (SELECT COUNT(*)
+		                 FROM JHPT_JCSJ.ZDFJK T3
+		                WHERE T3.CNAME = T1.stn_name) > 0 THEN
+		          'FJK'
+		         WHEN T1.ARR_TIME = T1.DPT_TIME THEN
+		          'BT'
+		         ELSE
+		          'TZ'
+		       END end stationFlag
+		  from 
+      (select o.*,tt.*
+              from 
+              (select 
+                  cpc.CM_PHY_CROSS_ID base_cross_id,
+                  tc.cm_cross_name cross_name,
+                  t.cm_train_id base_cross_train_id,
+                  t.CM_CROSS_ID,
+                  cpc.group_sn,
+                  pt.train_sort,
+                  
+                  
+                  t.train_nbr,
+                  t.start_stn ,
+                  t.end_stn ,
+                  pt.run_date,
+                  t.base_train_id d_base_train_id,
+                   TO_CHAR(TO_DATE(pt.RUN_DATE, 'yyyy-mm-dd'), 'yyyy-mm-dd') || ' ' ||(SELECT TO_CHAR(m.TARGET_TIME, 'hh24:mi:ss') FROM JHPT_JBT.m_trainline_item_temp m WHERE INSTR(m.JOBS,'<始发>')>0 AND m.NAME = t.START_STN AND m.PARENT_ID = t.BASE_TRAIN_ID) START_TIME,
+                   TO_CHAR(TO_DATE(pt.RUN_DATE, 'yyyy-mm-dd')+(SELECT m.source_time_schedule_dates FROM JHPT_JBT.m_trainline_item_temp m WHERE INSTR(m.JOBS,'<终到>')>0 AND m.NAME = t.end_stn AND m.PARENT_ID = t.BASE_TRAIN_ID), 'yyyy-mm-dd') || ' ' ||(SELECT TO_CHAR(m.SOURCE_TIME, 'hh24:mi:ss') FROM JHPT_JBT.m_trainline_item_temp m WHERE INSTR(m.JOBS,'<终到>')>0 AND m.NAME = t.end_stn AND m.PARENT_ID = t.BASE_TRAIN_ID) END_TIME
+              from t_cm_phy_cross_train pt ,t_cm_phy_cross cpc ,t_cm_cross tc ,t_cm_train t
+                where 
+                    cpc.CM_CROSS_ID = #{baseCrossId}
+                    and pt.CM_PHY_CROSS_ID = cpc.CM_PHY_CROSS_ID
+                    and tc.CM_CROSS_ID = cpc.CM_CROSS_ID
+                    and t.CM_CROSS_ID = cpc.CM_CROSS_ID
+                    and t.CM_TRAIN_ID = pt.CM_TRAIN_ID
+                    ) o,
+                    
+              (  SELECT t.parent_id BASE_TRAIN_ID,
+                                 T.CHILD_INDEX STN_SORT,
+                                 T.NAME STN_NAME,
+                                 T.BUREAU_SHORT_NAME STN_BUREAU,
+                                 T.Bureau_Name STN_BUREAU_FULL,
+                                 otrain.train_sort d_train_sort,
+                                 otrain.group_sn2,
+                                 otrain.cm_train_id,
+                                 to_char(otrain.RUN_DATE + DECODE(t.SOURCE_TIME_SCHEDULE_DATES, null, t.TARGET_TIME_SCHEDULE_DATES, t.SOURCE_TIME_SCHEDULE_DATES), 'yyyy-MM-dd') || ' ' ||
+                                 TO_CHAR(DECODE(T.SOURCE_TIME, null, T.TARGET_TIME, T.SOURCE_TIME), 'hh24:mi:SS') ARR_TIME,
+                                 to_char(otrain.RUN_DATE + DECODE(t.TARGET_TIME_SCHEDULE_DATES, null, t.SOURCE_TIME_SCHEDULE_DATES, t.TARGET_TIME_SCHEDULE_DATES), 'yyyy-MM-dd') || ' ' ||
+                                 TO_CHAR(DECODE(T.TARGET_TIME, null, T.SOURCE_TIME,T.TARGET_TIME), 'hh24:mi:SS') DPT_TIME,
+                                 ceil((to_date((to_char(otrain.RUN_DATE, 'yyyy-MM-dd') || ' ' ||
+                                               to_char(DECODE(T.TARGET_TIME, null, T.SOURCE_TIME,T.TARGET_TIME), 'hh24:mi:SS')),
+                                               'yyyy-MM-dd hh24:mi:SS') -
+                                      to_date((to_char(otrain.RUN_DATE, 'yyyy-MM-dd') || ' ' ||
+                                               to_char(DECODE(T.SOURCE_TIME, null, T.TARGET_TIME, T.SOURCE_TIME), 'hh24:mi:SS')),
+                                               'yyyy-MM-dd hh24:mi:SS')) * 24 * 60) stayTime,
+                                 decode(t.SOURCE_TIME_SCHEDULE_DATES,null,T.TARGET_TIME_SCHEDULE_DATES,t.SOURCE_TIME_SCHEDULE_DATES) run_days,
+                                 jobs stnType,
+                                 T.TRACK_NAME,
+                                 T.NODE_ID
+                            FROM JHPT_JBT.M_TRAINLINE_ITEM_TEMP T,
+                                 (select distinct train.BASE_TRAIN_ID,cpc.group_sn group_sn2,train.cm_train_id cm_train_id,
+                                         TO_DATE(pt.RUN_DATE, 'yyyy-mm-dd') RUN_DATE,pt.train_sort
+                                    from t_cm_phy_cross_train pt ,t_cm_phy_cross cpc ,t_cm_cross tc ,t_cm_train train
+                                    where 
+                                        cpc.CM_CROSS_ID = #{baseCrossId}
+                                        and pt.CM_PHY_CROSS_ID = cpc.CM_PHY_CROSS_ID
+                                        and tc.CM_CROSS_ID = cpc.CM_CROSS_ID
+                                        and train.CM_CROSS_ID = cpc.CM_CROSS_ID
+                                        and train.CM_TRAIN_ID = pt.CM_TRAIN_ID
+                                   ) otrain
+                           WHERE t.parent_id = otrain.BASE_TRAIN_ID
+                  ) tt
+                    
+                    
+              where o.base_cross_train_id = tt.cm_train_id
+              and o.group_sn = tt.group_sn2
+              order by o.group_sn,o.train_sort,tt.STN_SORT,tt.ARR_TIME
+              ) T1
+  
+		]]>
+	</select>
+
+	<resultMap id="trainPlanLine"
+		type="org.railway.com.trainplan.entity.TrainLineInfo">
+		<id column="groupSerialNbr" property="groupSerialNbr" />
+		<collection property="trainSubInfoList" resultMap="trainSubInfo" />
+	</resultMap>
+
+	<resultMap id="trainSubInfo"
+		type="org.railway.com.trainplan.entity.TrainLineSubInfo">
+		<id column="planTrainId" property="planTrainId" />
+		<result column="trainNbr" property="trainNbr" />
+		<result column="trainSort" property="trainSort" />
+		<result column="startTime" property="startTime" />
+		<result column="endTime" property="endTime" />
+		<result column="startStn" property="startStn" />
+		<result column="endStn" property="endStn" />
+		<result column="passBureau" property="passBureau" />
+		<result column="planCrossId" property="planCrossId" />
+		<collection property="trainStaionList" resultMap="trainSubInfoTime" />
+	</resultMap>
+
+	<resultMap id="trainSubInfoTime"
+		type="org.railway.com.trainplan.entity.TrainLineSubInfoTime">
+		<id column="plan_train_stn_id" property="planTrainStnId" />
+		<result column="stationFlag" property="stationType" />
+		<result column="stnName" property="stnName" />
+		<result column="stnSort" property="stnSort" />
+		<result column="arrTime" property="arrTime" />
+		<result column="dptTime" property="dptTime" />
+		<result column="staytime" property="stayTime" />
+		<result column="stnBureau" property="bureauShortName" />
+	</resultMap>
+
+
+
+	<select id="getTrainPlanLineInfoForPlanCrossId" parameterType="map"
+		resultMap="trainPlanLine">
+		SELECT *
+		FROM
+		(SELECT
+		CASE
+		WHEN
+		(M.SOURCE_TIME is null or M.TARGET_TIME is
+		null or TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss')=TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd hh24:mi:ss'))
+		THEN (
+		CASE
+		WHEN M.NAME = t2.startStn
+		OR M.NAME = t2.endStn
+		THEN '0'
+		WHEN (SELECT
+		COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=M.NAME) >0
+		THEN 'FJK'
+		ELSE 'BT'
+		END)
+		ELSE
+		CASE
+		WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3
+		WHERE T3.CNAME=M.NAME) >0
+		THEN 'FJK'
+		ELSE 'TZ'
+		END
+		END stationFlag ,
+		M.CHILD_INDEX AS stnSort,
+		M.BUREAU_SHORT_NAME AS stnBureau,
+		M.NAME AS
+		stnName,
+		M.ID AS PLAN_TRAIN_STN_ID,
+
+		DECODE(M.SOURCE_TIME,
+		null,to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'),
+		to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'))
+		arrTime,
+		DECODE(M.TARGET_TIME,
+		null,to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'),
+		to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'))
+		dptTime,
+
+		ceil((to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')-to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'))*24*60) stayTime,
+		DECODE(M.BUREAU_SHORT_NAME,#{bureauShortName},1,0) isCurrentBureau,
+		t2.*
+		FROM
+		(SELECT a.plan_cross_id AS planCrossId,
+		a.group_serial_nbr AS
+		groupSerialNbr,
+		a.train_nbr AS trainNbr,
+		a.train_sort AS trainSort,
+		TO_CHAR(a.start_time,'yyyy-MM-dd hh24:mi:SS') AS startTime,
+		TO_CHAR(a.end_time,'yyyy-MM-dd hh24:mi:SS') AS endTime,
+		a.start_stn AS
+		startStn,
+		a.end_stn AS endStn,
+		a.plan_train_id AS planTrainId,
+		a.pre_train_id AS preTrainId,
+		a.next_train_id AS nextTrainId,
+		a.BASE_TRAIN_ID AS baseTrainId,
+		a.pass_bureau passBureau
+		FROM PLAN_TRAIN
+		a
+		WHERE a.plan_cross_id=#{planCrossId}
+		)t2,
+		jhpt_jbt.M_TRAINLINE_ITEM_TEMP M
+		WHERE t2.baseTrainId = M.PARENT_ID
+		AND
+		#{startTime} || ' 00:00:00' &lt;= t2.startTime
+		AND #{endTime} || '
+		00:00:00' >= t2.endTime
+		AND t2.baseTrainId IS NOT NULL
+		UNION ALL
+		SELECT
+		CASE
+		WHEN TO_CHAR(t1.arr_time,'yyyy-MM-dd
+		hh24:mi:SS')=TO_CHAR(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS')
+		THEN (
+		CASE
+		WHEN t1.stn_name=t2.startStn
+		OR t1.stn_name =t2.endStn
+		THEN '0'
+		WHEN
+		(SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name)
+		>0
+		THEN 'FJK'
+		ELSE 'BT'
+		END)
+		ELSE
+		CASE
+		WHEN (SELECT COUNT(*) FROM
+		JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name)
+		>0
+		THEN 'FJK'
+		ELSE 'TZ'
+		END
+		END stationFlag ,
+		t1.stn_sort AS stnSort,
+		t1.stn_bureau AS stnBureau,
+		t1.stn_name AS stnName,
+		t1.PLAN_TRAIN_STN_ID,
+		TO_CHAR(t1.arr_time,'yyyy-MM-dd hh24:mi:SS') AS arrTime,
+		TO_CHAR(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS') AS dptTime,
+		ceil((t1.dpt_time -t1.arr_time)*24*60) stayTime,
+		DECODE(t1.stn_bureau,#{bureauShortName},1,0) isCurrentBureau,
+		t2.*
+		FROM
+		(SELECT a.plan_cross_id AS planCrossId,
+		a.group_serial_nbr AS
+		groupSerialNbr,
+		a.train_nbr AS trainNbr,
+		a.train_sort AS trainSort,
+		TO_CHAR(a.start_time,'yyyy-MM-dd hh24:mi:SS') AS startTime,
+		TO_CHAR(a.end_time,'yyyy-MM-dd hh24:mi:SS') AS endTime,
+		a.start_stn AS
+		startStn,
+		a.end_stn AS endStn,
+		a.plan_train_id AS planTrainId,
+		a.pre_train_id AS preTrainId,
+		a.next_train_id AS nextTrainId,
+		a.BASE_TRAIN_ID AS baseTrainId,
+		a.pass_bureau passBureau
+		FROM PLAN_TRAIN
+		a
+		WHERE a.plan_cross_id=#{planCrossId}
+		)t2,
+		PLAN_TRAIN_STN t1
+		WHERE
+		t2.planTrainId = t1.plan_train_id
+		AND #{startTime} || ' 00:00:00' &lt;=
+		t2.startTime
+		AND #{endTime} || ' 00:00:00' >= t2.endTime
+		AND
+		t2.baseTrainId IS NULL
+		) ttatol
+		ORDER BY
+		ttatol.groupSerialNbr,ttatol.arrTime
+
+
+		<!-- select case when to_char(t1.arr_time,'yyyy-MM-dd hh24:mi:SS')=to_char(t1.dpt_time,'yyyy-MM-dd 
+			hh24:mi:SS') then (case when t1.stn_name=t2.startStn or t1.stn_name=t2.endStn 
+			then '0' WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name) 
+			>0 THEN 'FJK' else 'BT' END) ELSE case WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK 
+			T3 WHERE T3.CNAME=t1.stn_name) >0 THEN 'FJK' ELSE 'TZ' END end stationFlag 
+			, t1.stn_sort as stnSort, t1.stn_bureau as stnBureau, t1.stn_name as stnName, 
+			t1.PLAN_TRAIN_STN_ID, to_char(t1.arr_time,'yyyy-MM-dd hh24:mi:SS') as arrTime, 
+			to_char(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS') as dptTime, ceil((t1.dpt_time 
+			-t1.arr_time)*24*60) stayTime, DECODE(t1.stn_bureau,#{bureauShortName},1,0) 
+			isCurrentBureau, t2.* from (select a.plan_cross_id as planCrossId, a.group_serial_nbr 
+			as groupSerialNbr, a.train_nbr as trainNbr, a.train_sort as trainSort, to_char(a.start_time,'yyyy-MM-dd 
+			hh24:mi:SS') as startTime, to_char(a.end_time,'yyyy-MM-dd hh24:mi:SS') as 
+			endTime, a.start_stn as startStn, a.end_stn as endStn, a.plan_train_id as 
+			planTrainId, a.pre_train_id as preTrainId, a.next_train_id as nextTrainId 
+			from PLAN_TRAIN a where a.plan_cross_id=#{planCrossId} )t2, PLAN_TRAIN_STN 
+			t1 where t2.planTrainId = t1.plan_train_id ORDER BY t2.groupSerialNbr, T1.arr_time -->
+	</select>
+
+
+	<select id="getTrainPlanLineInfoForPlanCrossIdAndBureauShortName"
+		parameterType="map" resultMap="trainPlanLine">
+		SELECT *
+		FROM
+		(SELECT
+		CASE
+		WHEN
+		(M.SOURCE_TIME is null or M.TARGET_TIME is
+		null)
+		THEN (
+		CASE
+		WHEN M.NAME = t2.startStn
+		OR M.NAME = t2.endStn
+		THEN '0'
+		WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=M.NAME)
+		>0
+		THEN 'FJK'
+		ELSE 'BT'
+		END)
+		ELSE
+		CASE
+		WHEN (SELECT COUNT(*) FROM
+		JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=M.NAME) >0
+		THEN 'FJK'
+		ELSE 'TZ'
+		END
+		END
+		stationFlag ,
+		M.CHILD_INDEX AS stnSort,
+		M.BUREAU_SHORT_NAME AS
+		stnBureau,
+		M.NAME AS stnName,
+		M.ID AS PLAN_TRAIN_STN_ID,
+
+		DECODE(M.SOURCE_TIME,
+		null,to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'),
+		to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'))
+		arrTime,
+		DECODE(M.TARGET_TIME,
+		null,to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'),
+		to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'))
+		dptTime,
+
+		ceil((to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')-to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'))*24*60) stayTime,
+		DECODE(M.BUREAU_SHORT_NAME,#{bureauShortName},1,0) isCurrentBureau,
+		t2.*
+		FROM
+		(SELECT a.plan_cross_id AS planCrossId,
+		a.group_serial_nbr AS
+		groupSerialNbr,
+		a.train_nbr AS trainNbr,
+		a.train_sort AS trainSort,
+		TO_CHAR(a.start_time,'yyyy-MM-dd hh24:mi:SS') AS startTime,
+		TO_CHAR(a.end_time,'yyyy-MM-dd hh24:mi:SS') AS endTime,
+		a.start_stn AS
+		startStn,
+		a.end_stn AS endStn,
+		a.plan_train_id AS planTrainId,
+		a.pre_train_id AS preTrainId,
+		a.next_train_id AS nextTrainId,
+		a.BASE_TRAIN_ID AS baseTrainId
+		FROM PLAN_TRAIN a
+		WHERE a.plan_train_id
+		in(
+		select plan_train_id from highline_cross_train where
+		highline_cross_id
+		=#{highLineCrossId}
+		)
+		)t2,
+		jhpt_jbt.M_TRAINLINE_ITEM_TEMP M
+		WHERE t2.baseTrainId = M.PARENT_ID
+		AND
+		t2.baseTrainId IS NOT NULL
+		UNION ALL
+		SELECT
+		CASE
+		WHEN
+		TO_CHAR(t1.arr_time,'yyyy-MM-dd
+		hh24:mi:SS')=TO_CHAR(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS')
+		THEN (
+		CASE
+		WHEN t1.node_name=t2.startStn
+		OR t1.node_name =t2.endStn
+		THEN '0'
+		WHEN
+		(SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.node_name)
+		>0
+		THEN 'FJK'
+		ELSE 'BT'
+		END)
+		ELSE
+		CASE
+		WHEN (SELECT COUNT(*) FROM
+		JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.node_name)
+		>0
+		THEN 'FJK'
+		ELSE 'TZ'
+		END
+		END stationFlag ,
+		t1.stn_sort AS stnSort,
+		t1.stn_bureau AS stnBureau,
+		t1.node_name AS stnName,
+		<!-- t1.stn_name AS stnName, -->
+		t1.PLAN_TRAIN_STN_ID,
+		TO_CHAR(t1.arr_time,'yyyy-MM-dd hh24:mi:SS') AS
+		arrTime,
+		TO_CHAR(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS') AS dptTime,
+		ceil((t1.dpt_time -t1.arr_time)*24*60) stayTime,
+		DECODE(t1.stn_bureau,#{bureauShortName},1,0) isCurrentBureau,
+		t2.*
+		FROM
+		(SELECT a.plan_cross_id AS planCrossId,
+		a.group_serial_nbr AS
+		groupSerialNbr,
+		a.train_nbr AS trainNbr,
+		a.train_sort AS trainSort,
+		TO_CHAR(a.start_time,'yyyy-MM-dd hh24:mi:SS') AS startTime,
+		TO_CHAR(a.end_time,'yyyy-MM-dd hh24:mi:SS') AS endTime,
+		a.start_stn AS
+		startStn,
+		a.end_stn AS endStn,
+		a.plan_train_id AS planTrainId,
+		a.pre_train_id AS preTrainId,
+		a.next_train_id AS nextTrainId,
+		a.BASE_TRAIN_ID AS baseTrainId
+		FROM PLAN_TRAIN a
+		WHERE
+		a.plan_train_id
+		in(
+		select plan_train_id from highline_cross_train where
+		highline_cross_id
+		=#{highLineCrossId}
+		)
+		)t2,
+		PLAN_TRAIN_STN t1
+		WHERE
+		t2.planTrainId = t1.plan_train_id
+		AND t2.baseTrainId IS NULL
+		) ttatol
+		ORDER BY ttatol.groupSerialNbr,ttatol.arrTime
+
+
+		<!-- select case when to_char(t1.arr_time,'yyyy-MM-dd hh24:mi:SS')=to_char(t1.dpt_time,'yyyy-MM-dd 
+			hh24:mi:SS') then (case when t1.stn_name=t2.startStn or t1.stn_name=t2.endStn 
+			then '0' WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name) 
+			>0 THEN 'FJK' else 'BT' END) ELSE case WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK 
+			T3 WHERE T3.CNAME=t1.stn_name) >0 THEN 'FJK' ELSE 'TZ' END end stationFlag 
+			, t1.stn_sort as stnSort, t1.stn_bureau as stnBureau, t1.stn_name as stnName, 
+			t1.PLAN_TRAIN_STN_ID, to_char(t1.arr_time,'yyyy-MM-dd hh24:mi:SS') as arrTime, 
+			to_char(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS') as dptTime, ceil((t1.dpt_time 
+			-t1.arr_time)*24*60) stayTime, DECODE(t1.stn_bureau,#{bureauShortName},1,0) 
+			isCurrentBureau, t2.* from (select a.plan_cross_id as planCrossId, a.group_serial_nbr 
+			as groupSerialNbr, a.train_nbr as trainNbr, a.train_sort as trainSort, to_char(a.start_time,'yyyy-MM-dd 
+			hh24:mi:SS') as startTime, to_char(a.end_time,'yyyy-MM-dd hh24:mi:SS') as 
+			endTime, a.start_stn as startStn, a.end_stn as endStn, a.plan_train_id as 
+			planTrainId, a.pre_train_id as preTrainId, a.next_train_id as nextTrainId 
+			from PLAN_TRAIN a where a.plan_cross_id=#{planCrossId} )t2, PLAN_TRAIN_STN 
+			t1 where t2.planTrainId = t1.plan_train_id ORDER BY t2.groupSerialNbr, T1.arr_time -->
+	</select>
+
+
+
+	<select id="getTrainPlanLineInfoForPlanCrossIdAndVehicle"
+		parameterType="map" resultMap="trainPlanLine">
+		SELECT *
+		FROM
+		(SELECT
+		CASE
+		WHEN
+		(M.SOURCE_TIME is null or M.TARGET_TIME is
+		null)
+		THEN (
+		CASE
+		WHEN M.NAME = t2.startStn
+		OR M.NAME = t2.endStn
+		THEN '0'
+		WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=M.NAME)
+		>0
+		THEN 'FJK'
+		ELSE 'BT'
+		END)
+		ELSE
+		CASE
+		WHEN (SELECT COUNT(*) FROM
+		JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=M.NAME) >0
+		THEN 'FJK'
+		ELSE 'TZ'
+		END
+		END
+		stationFlag ,
+		M.CHILD_INDEX AS stnSort,
+		M.BUREAU_SHORT_NAME AS
+		stnBureau,
+		M.NAME AS stnName,
+		M.ID AS PLAN_TRAIN_STN_ID,
+
+		DECODE(M.SOURCE_TIME,
+		null,to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'),
+		to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'))
+		arrTime,
+		DECODE(M.TARGET_TIME,
+		null,to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'),
+		to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'))
+		dptTime,
+
+		ceil((to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')-to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'))*24*60) stayTime,
+		DECODE(M.BUREAU_SHORT_NAME,#{bureauShortName},1,0) isCurrentBureau,
+		t2.*
+		FROM
+		(SELECT a.plan_cross_id AS planCrossId,
+		a.group_serial_nbr AS
+		groupSerialNbr,
+		a.train_nbr AS trainNbr,
+		a.train_sort AS trainSort,
+		TO_CHAR(a.start_time,'yyyy-MM-dd hh24:mi:SS') AS startTime,
+		TO_CHAR(a.end_time,'yyyy-MM-dd hh24:mi:SS') AS endTime,
+		a.start_stn AS
+		startStn,
+		a.end_stn AS endStn,
+		a.plan_train_id AS planTrainId,
+		a.pre_train_id AS preTrainId,
+		a.next_train_id AS nextTrainId,
+		a.BASE_TRAIN_ID AS baseTrainId
+		FROM PLAN_TRAIN a
+		WHERE a.plan_train_id
+		in(
+		select plan_train_id from highline_cross_train where
+		highline_cross_id
+		=#{highLineCrossId}
+		)
+		)t2,
+		jhpt_jbt.M_TRAINLINE_ITEM_TEMP M
+		WHERE t2.baseTrainId = M.PARENT_ID
+		AND
+		t2.baseTrainId IS NOT NULL
+		UNION ALL
+		SELECT
+		CASE
+		WHEN
+		TO_CHAR(t1.arr_time,'yyyy-MM-dd
+		hh24:mi:SS')=TO_CHAR(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS')
+		THEN (
+		CASE
+		WHEN t1.stn_name=t2.startStn
+		OR t1.stn_name =t2.endStn
+		THEN '0'
+		WHEN
+		(SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name)
+		>0
+		THEN 'FJK'
+		ELSE 'BT'
+		END)
+		ELSE
+		CASE
+		WHEN (SELECT COUNT(*) FROM
+		JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name)
+		>0
+		THEN 'FJK'
+		ELSE 'TZ'
+		END
+		END stationFlag ,
+		t1.stn_sort AS stnSort,
+		t1.stn_bureau AS stnBureau,
+		t1.stn_name AS stnName,
+		t1.PLAN_TRAIN_STN_ID,
+		TO_CHAR(t1.arr_time,'yyyy-MM-dd hh24:mi:SS') AS arrTime,
+		TO_CHAR(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS') AS dptTime,
+		ceil((t1.dpt_time -t1.arr_time)*24*60) stayTime,
+		DECODE(t1.stn_bureau,#{bureauShortName},1,0) isCurrentBureau,
+		t2.*
+		FROM
+		(SELECT a.plan_cross_id AS planCrossId,
+		a.group_serial_nbr AS
+		groupSerialNbr,
+		a.train_nbr AS trainNbr,
+		a.train_sort AS trainSort,
+		TO_CHAR(a.start_time,'yyyy-MM-dd hh24:mi:SS') AS startTime,
+		TO_CHAR(a.end_time,'yyyy-MM-dd hh24:mi:SS') AS endTime,
+		a.start_stn AS
+		startStn,
+		a.end_stn AS endStn,
+		a.plan_train_id AS planTrainId,
+		a.pre_train_id AS preTrainId,
+		a.next_train_id AS nextTrainId,
+		a.BASE_TRAIN_ID AS baseTrainId
+		FROM PLAN_TRAIN a
+		WHERE
+		a.plan_train_id
+		in(
+		select plan_train_id from highline_cross_train where
+		highline_cross_id
+		=#{highLineCrossId}
+		)
+		)t2,
+		PLAN_TRAIN_STN t1
+		WHERE
+		t2.planTrainId = t1.plan_train_id
+		AND t2.baseTrainId IS NULL
+		) ttatol
+		ORDER BY ttatol.groupSerialNbr,ttatol.arrTime
+
+
+		<!-- select case when to_char(t1.arr_time,'yyyy-MM-dd hh24:mi:SS')=to_char(t1.dpt_time,'yyyy-MM-dd 
+			hh24:mi:SS') then (case when t1.stn_name=t2.startStn or t1.stn_name=t2.endStn 
+			then '0' WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name) 
+			>0 THEN 'FJK' else 'BT' END) ELSE case WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK 
+			T3 WHERE T3.CNAME=t1.stn_name) >0 THEN 'FJK' ELSE 'TZ' END end stationFlag 
+			, t1.stn_sort as stnSort, t1.stn_bureau as stnBureau, t1.stn_name as stnName, 
+			t1.PLAN_TRAIN_STN_ID, to_char(t1.arr_time,'yyyy-MM-dd hh24:mi:SS') as arrTime, 
+			to_char(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS') as dptTime, ceil((t1.dpt_time 
+			-t1.arr_time)*24*60) stayTime, DECODE(t1.stn_bureau,#{bureauShortName},1,0) 
+			isCurrentBureau, t2.* from (select a.plan_cross_id as planCrossId, a.group_serial_nbr 
+			as groupSerialNbr, a.train_nbr as trainNbr, a.train_sort as trainSort, to_char(a.start_time,'yyyy-MM-dd 
+			hh24:mi:SS') as startTime, to_char(a.end_time,'yyyy-MM-dd hh24:mi:SS') as 
+			endTime, a.start_stn as startStn, a.end_stn as endStn, a.plan_train_id as 
+			planTrainId, a.pre_train_id as preTrainId, a.next_train_id as nextTrainId 
+			from PLAN_TRAIN a where a.plan_cross_id=#{planCrossId} )t2, PLAN_TRAIN_STN 
+			t1 where t2.planTrainId = t1.plan_train_id ORDER BY t2.groupSerialNbr, T1.arr_time -->
+	</select>
+
+
+
+	<select id="getTrainPlanLineInfoForPlanCrossIdAndVehicleBy2"
+		parameterType="map" resultMap="trainPlanLine">
+		SELECT *
+		FROM
+		(SELECT
+		CASE
+		WHEN
+		(M.SOURCE_TIME is null or M.TARGET_TIME is
+		null)
+		THEN (
+		CASE
+		WHEN M.NAME = t2.startStn
+		OR M.NAME = t2.endStn
+		THEN '0'
+		WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=M.NAME)
+		>0
+		THEN 'FJK'
+		ELSE 'BT'
+		END)
+		ELSE
+		CASE
+		WHEN (SELECT COUNT(*) FROM
+		JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=M.NAME) >0
+		THEN 'FJK'
+		ELSE 'TZ'
+		END
+		END
+		stationFlag ,
+		M.CHILD_INDEX AS stnSort,
+		M.BUREAU_SHORT_NAME AS
+		stnBureau,
+		M.NAME AS stnName,
+		M.ID AS PLAN_TRAIN_STN_ID,
+
+		DECODE(M.SOURCE_TIME,
+		null,to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'),
+		to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'))
+		arrTime,
+		DECODE(M.TARGET_TIME,
+		null,to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'),
+		to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'))
+		dptTime,
+
+		ceil((to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')-to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'))*24*60) stayTime,
+		DECODE(M.BUREAU_SHORT_NAME,#{bureauShortName},1,0) isCurrentBureau,
+		t2.*
+		FROM
+		(SELECT a.plan_cross_id AS planCrossId,
+		a.group_serial_nbr AS
+		groupSerialNbr,
+		a.train_nbr AS trainNbr,
+		a.train_sort AS trainSort,
+		TO_CHAR(a.start_time,'yyyy-MM-dd hh24:mi:SS') AS startTime,
+		TO_CHAR(a.end_time,'yyyy-MM-dd hh24:mi:SS') AS endTime,
+		a.start_stn AS
+		startStn,
+		a.end_stn AS endStn,
+		a.plan_train_id AS planTrainId,
+		a.pre_train_id AS preTrainId,
+		a.next_train_id AS nextTrainId,
+		a.BASE_TRAIN_ID AS baseTrainId
+		FROM PLAN_TRAIN a
+		WHERE a.plan_train_id
+		in(
+		select plan_train_id from highline_cross_train where
+		highline_cross_id
+		=#{highLineCrossId}
+		)
+		)t2,
+		jhpt_jbt.M_TRAINLINE_ITEM_TEMP M
+		WHERE t2.baseTrainId = M.PARENT_ID
+		AND
+		t2.baseTrainId IS NOT NULL
+		UNION ALL
+		SELECT
+		CASE
+		WHEN
+		TO_CHAR(t1.arr_time,'yyyy-MM-dd
+		hh24:mi:SS')=TO_CHAR(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS')
+		THEN (
+		CASE
+		WHEN t1.stn_name=t2.startStn
+		OR t1.stn_name =t2.endStn
+		THEN '0'
+		WHEN
+		(SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name)
+		>0
+		THEN 'FJK'
+		ELSE 'BT'
+		END)
+		ELSE
+		CASE
+		WHEN (SELECT COUNT(*) FROM
+		JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name)
+		>0
+		THEN 'FJK'
+		ELSE 'TZ'
+		END
+		END stationFlag ,
+		t1.stn_sort AS stnSort,
+		t1.stn_bureau AS stnBureau,
+		t1.stn_name AS stnName,
+		t1.PLAN_TRAIN_STN_ID,
+		TO_CHAR(t1.arr_time,'yyyy-MM-dd hh24:mi:SS') AS arrTime,
+		TO_CHAR(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS') AS dptTime,
+		ceil((t1.dpt_time -t1.arr_time)*24*60) stayTime,
+		DECODE(t1.stn_bureau,#{bureauShortName},1,0) isCurrentBureau,
+		t2.*
+		FROM
+		(SELECT a.plan_cross_id AS planCrossId,
+		a.group_serial_nbr AS
+		groupSerialNbr,
+		a.train_nbr AS trainNbr,
+		a.train_sort AS trainSort,
+		TO_CHAR(a.start_time,'yyyy-MM-dd hh24:mi:SS') AS startTime,
+		TO_CHAR(a.end_time,'yyyy-MM-dd hh24:mi:SS') AS endTime,
+		a.start_stn AS
+		startStn,
+		a.end_stn AS endStn,
+		a.plan_train_id AS planTrainId,
+		a.pre_train_id AS preTrainId,
+		a.next_train_id AS nextTrainId,
+		a.BASE_TRAIN_ID AS baseTrainId
+		FROM PLAN_TRAIN a
+		WHERE
+		a.plan_train_id
+		in(
+		select plan_train_id from highline_cross_train where
+		highline_cross_id
+		=#{highLineCrossId}
+		)
+		)t2,
+		PLAN_TRAIN_STN t1
+		WHERE
+		t2.planTrainId = t1.plan_train_id
+		AND t2.baseTrainId IS NULL
+		) ttatol
+		ORDER BY ttatol.groupSerialNbr,ttatol.arrTime
+
+
+		<!-- select case when to_char(t1.arr_time,'yyyy-MM-dd hh24:mi:SS')=to_char(t1.dpt_time,'yyyy-MM-dd 
+			hh24:mi:SS') then (case when t1.stn_name=t2.startStn or t1.stn_name=t2.endStn 
+			then '0' WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name) 
+			>0 THEN 'FJK' else 'BT' END) ELSE case WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK 
+			T3 WHERE T3.CNAME=t1.stn_name) >0 THEN 'FJK' ELSE 'TZ' END end stationFlag 
+			, t1.stn_sort as stnSort, t1.stn_bureau as stnBureau, t1.stn_name as stnName, 
+			t1.PLAN_TRAIN_STN_ID, to_char(t1.arr_time,'yyyy-MM-dd hh24:mi:SS') as arrTime, 
+			to_char(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS') as dptTime, ceil((t1.dpt_time 
+			-t1.arr_time)*24*60) stayTime, DECODE(t1.stn_bureau,#{bureauShortName},1,0) 
+			isCurrentBureau, t2.* from (select a.plan_cross_id as planCrossId, a.group_serial_nbr 
+			as groupSerialNbr, a.train_nbr as trainNbr, a.train_sort as trainSort, to_char(a.start_time,'yyyy-MM-dd 
+			hh24:mi:SS') as startTime, to_char(a.end_time,'yyyy-MM-dd hh24:mi:SS') as 
+			endTime, a.start_stn as startStn, a.end_stn as endStn, a.plan_train_id as 
+			planTrainId, a.pre_train_id as preTrainId, a.next_train_id as nextTrainId 
+			from PLAN_TRAIN a where a.plan_cross_id=#{planCrossId} )t2, PLAN_TRAIN_STN 
+			t1 where t2.planTrainId = t1.plan_train_id ORDER BY t2.groupSerialNbr, T1.arr_time -->
+	</select>
+
+
+
+	<select id="getTrainPlanLineInfoForPlanCrossIdAndVehicleSearch"
+		parameterType="map" resultMap="trainPlanLine">
+		SELECT *
+		FROM
+		(SELECT
+		CASE
+		WHEN
+		(M.SOURCE_TIME is null or M.TARGET_TIME is
+		null)
+		THEN (
+		CASE
+		WHEN M.NAME = t2.startStn
+		OR M.NAME = t2.endStn
+		THEN '0'
+		WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=M.NAME)
+		>0
+		THEN 'FJK'
+		ELSE 'BT'
+		END)
+		ELSE
+		CASE
+		WHEN (SELECT COUNT(*) FROM
+		JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=M.NAME) >0
+		THEN 'FJK'
+		ELSE 'TZ'
+		END
+		END
+		stationFlag ,
+		M.CHILD_INDEX AS stnSort,
+		M.BUREAU_SHORT_NAME AS
+		stnBureau,
+		M.NAME AS stnName,
+		M.ID AS PLAN_TRAIN_STN_ID,
+
+		DECODE(M.SOURCE_TIME,
+		null,to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'),
+		to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'))
+		arrTime,
+		DECODE(M.TARGET_TIME,
+		null,to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.SOURCE_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'),
+		to_char(to_date(to_char(to_date(T2.startTime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-MM-dd') ||
+		to_char(to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'),' hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')+M.TARGET_TIME_SCHEDULE_DATES,'yyyy-mm-dd hh24:mi:ss'))
+		dptTime,
+
+		ceil((to_date(TO_CHAR(M.TARGET_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd
+		hh24:mi:ss')-to_date(to_char(M.SOURCE_TIME,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss'))*24*60) stayTime,
+		DECODE(M.BUREAU_SHORT_NAME,#{bureauShortName},1,0) isCurrentBureau,
+		t2.*
+		FROM
+		(SELECT a.plan_cross_id AS planCrossId,
+		a.group_serial_nbr AS
+		groupSerialNbr,
+		a.train_nbr AS trainNbr,
+		a.train_sort AS trainSort,
+		TO_CHAR(a.start_time,'yyyy-MM-dd hh24:mi:SS') AS startTime,
+		TO_CHAR(a.end_time,'yyyy-MM-dd hh24:mi:SS') AS endTime,
+		a.start_stn AS
+		startStn,
+		a.end_stn AS endStn,
+		a.plan_train_id AS planTrainId,
+		a.pre_train_id AS preTrainId,
+		a.next_train_id AS nextTrainId,
+		a.BASE_TRAIN_ID AS baseTrainId
+		FROM PLAN_TRAIN a
+		WHERE a.plan_train_id
+		in(
+		select plan_train_id from highline_cross_train where
+		highline_cross_id
+		=#{highLineCrossId}
+		)
+		)t2,
+		jhpt_jbt.M_TRAINLINE_ITEM_TEMP M
+		WHERE t2.baseTrainId = M.PARENT_ID
+		AND
+		t2.baseTrainId IS NOT NULL
+		UNION ALL
+		SELECT
+		CASE
+		WHEN
+		TO_CHAR(t1.arr_time,'yyyy-MM-dd
+		hh24:mi:SS')=TO_CHAR(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS')
+		THEN (
+		CASE
+		WHEN t1.stn_name=t2.startStn
+		OR t1.stn_name =t2.endStn
+		THEN '0'
+		WHEN
+		(SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name)
+		>0
+		THEN 'FJK'
+		ELSE 'BT'
+		END)
+		ELSE
+		CASE
+		WHEN (SELECT COUNT(*) FROM
+		JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name)
+		>0
+		THEN 'FJK'
+		ELSE 'TZ'
+		END
+		END stationFlag ,
+		t1.stn_sort AS stnSort,
+		t1.stn_bureau AS stnBureau,
+		t1.stn_name AS stnName,
+		t1.PLAN_TRAIN_STN_ID,
+		TO_CHAR(t1.arr_time,'yyyy-MM-dd hh24:mi:SS') AS arrTime,
+		TO_CHAR(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS') AS dptTime,
+		ceil((t1.dpt_time -t1.arr_time)*24*60) stayTime,
+		DECODE(t1.stn_bureau,#{bureauShortName},1,0) isCurrentBureau,
+		t2.*
+		FROM
+		(SELECT a.plan_cross_id AS planCrossId,
+		a.group_serial_nbr AS
+		groupSerialNbr,
+		a.train_nbr AS trainNbr,
+		a.train_sort AS trainSort,
+		TO_CHAR(a.start_time,'yyyy-MM-dd hh24:mi:SS') AS startTime,
+		TO_CHAR(a.end_time,'yyyy-MM-dd hh24:mi:SS') AS endTime,
+		a.start_stn AS
+		startStn,
+		a.end_stn AS endStn,
+		a.plan_train_id AS planTrainId,
+		a.pre_train_id AS preTrainId,
+		a.next_train_id AS nextTrainId,
+		a.BASE_TRAIN_ID AS baseTrainId
+		FROM PLAN_TRAIN a
+		WHERE
+		a.plan_train_id
+		in(
+		select plan_train_id from highline_cross_train where
+		highline_cross_id
+		=#{highLineCrossId}
+		)
+		)t2,
+		PLAN_TRAIN_STN t1
+		WHERE
+		t2.planTrainId = t1.plan_train_id
+		AND t2.baseTrainId IS NULL
+		) ttatol
+		ORDER BY ttatol.groupSerialNbr,ttatol.arrTime
+
+
+		<!-- select case when to_char(t1.arr_time,'yyyy-MM-dd hh24:mi:SS')=to_char(t1.dpt_time,'yyyy-MM-dd 
+			hh24:mi:SS') then (case when t1.stn_name=t2.startStn or t1.stn_name=t2.endStn 
+			then '0' WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=t1.stn_name) 
+			>0 THEN 'FJK' else 'BT' END) ELSE case WHEN (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK 
+			T3 WHERE T3.CNAME=t1.stn_name) >0 THEN 'FJK' ELSE 'TZ' END end stationFlag 
+			, t1.stn_sort as stnSort, t1.stn_bureau as stnBureau, t1.stn_name as stnName, 
+			t1.PLAN_TRAIN_STN_ID, to_char(t1.arr_time,'yyyy-MM-dd hh24:mi:SS') as arrTime, 
+			to_char(t1.dpt_time,'yyyy-MM-dd hh24:mi:SS') as dptTime, ceil((t1.dpt_time 
+			-t1.arr_time)*24*60) stayTime, DECODE(t1.stn_bureau,#{bureauShortName},1,0) 
+			isCurrentBureau, t2.* from (select a.plan_cross_id as planCrossId, a.group_serial_nbr 
+			as groupSerialNbr, a.train_nbr as trainNbr, a.train_sort as trainSort, to_char(a.start_time,'yyyy-MM-dd 
+			hh24:mi:SS') as startTime, to_char(a.end_time,'yyyy-MM-dd hh24:mi:SS') as 
+			endTime, a.start_stn as startStn, a.end_stn as endStn, a.plan_train_id as 
+			planTrainId, a.pre_train_id as preTrainId, a.next_train_id as nextTrainId 
+			from PLAN_TRAIN a where a.plan_cross_id=#{planCrossId} )t2, PLAN_TRAIN_STN 
+			t1 where t2.planTrainId = t1.plan_train_id ORDER BY t2.groupSerialNbr, T1.arr_time -->
+	</select>
+
+
+
+
+
+	<resultMap id="unitCrossTrain"
+		type="org.railway.com.trainplan.entity.UnitCrossTrainInfo">
+		<id column="GROUPSERIALNBR" property="groupSerialNbr" />
+		<result column="UNITCROSSTRAINID" property="unitCrossTrainId" />
+		<result column="UNITCROSSID" property="unitCrossId" />
+
+		<collection property="trainInfoList" resultMap="unitCrossSubTrain" />
+	</resultMap>
+
+	<resultMap id="unitCrossSubTrain"
+		type="org.railway.com.trainplan.entity.UnitCrossTrainSubInfo">
+		<id column="TRAINSORT" property="trainSort" />
+		<result column="DAYGAP" property="dayGap" />
+		<result column="TRAINNBR" property="trainNbr" />
+		<result column="arrTime1" property="runDate" />
+		<result column="dptTime1" property="endDate" />
+		<result column="BASETRAINID" property="baseTrainId" />
+		<result column="STARTSTN" property="startStn" />
+		<result column="STARTBUREAU" property="startBureau" />
+		<result column="ENDSTN" property="endStn" />
+		<result column="ENDBUREAU" property="endBureau" />
+		<result column="TRAINSORT" property="trainSort" />
+		<collection property="stationTimeList" resultMap="unitCrossSubTrainTime" />
+	</resultMap>
+
+	<resultMap id="unitCrossSubTrainTime"
+		type="org.railway.com.trainplan.entity.UnitCrossTrainSubInfoTime">
+		<id column="id" property="id" />
+		<result column="stnName" property="stnName" />
+		<result column="stnSort" property="stnSort" />
+		<result column="arrTime" property="arrTime" />
+		<result column="dptTime" property="dptTime" />
+		<result column="staytime" property="stayTime" />
+		<result column="runDays" property="runDays" />
+		<result column="trackName" property="trackName" />
+		<result column="stationType" property="stationType" />
+		<result column="stnbureau" property="bureauShortName" />
+
+
+	</resultMap>
+
+
+	<select id="getUnitCrossTrainInfoForUnitCrossid" parameterType="map"
+		resultMap="unitCrossTrain">
+    <![CDATA[
+  select T2.*,
+  case 
+   when 
+    INSTR(T2.STNTYPE,'<始发>')>0 OR  INSTR(T2.STNTYPE,'<终到>')>0
+    THEN '0'
+    WHEN 
+    INSTR(T2.STNTYPE,'<经由>')>0
+    THEN
+      CASE 
+        WHEN 
+          (SELECT COUNT(*) FROM JHPT_JCSJ.ZDFJK T3 WHERE T3.CNAME=T2.stnname) >0 
+        THEN 'FJK'
+        WHEN T2.ARRTIME=T2.DPTTIME
+        THEN 'BT'
+        ELSE 'TZ'
+      END
+end stationType 
+ 
+ from
+ (
+  
+ SELECT distinct
+TO_CHAR(TO_DATE(M.runDate,'yyyy-mm-dd'),'yyyy-mm-dd') || ' '||
+(SELECT TO_CHAR(T.TARGET_TIME, 'hh24:mi:ss') FROM JHPT_JBT.m_trainline_item_temp T WHERE INSTR(T.JOBS,'<始发>')>0 and T.NAME = M.STARTSTN AND T.PARENT_ID = M.BASETRAINID) ARRTIME1,
+TO_CHAR(TO_DATE(M.endDate,'yyyy-mm-dd'),'yyyy-mm-dd') || ' '||
+(SELECT TO_CHAR(T.SOURCE_TIME, 'hh24:mi:ss') FROM JHPT_JBT.m_trainline_item_temp T WHERE INSTR(T.JOBS,'<终到>')>0 and T.NAME = M.ENDSTN AND T.PARENT_ID = M.BASETRAINID) DPTTIME1,
+
+M.*, N.* FROM
+
+(
+select O.*,
+        t.Source_Bureau_Name        STARTBUREAUFULL,
+        t.SOURCE_BUREAU_SHORT_NAME   STARTBUREAU,
+        t.source_node_name          STARTSTN,
+        t.target_bureau_name        ENDBUREAUFULL,
+        t.TARGET_BUREAU_SHORT_NAME   ENDBUREAU,
+        t.target_node_name          ENDSTN,
+        TO_CHAR(T.Source_Time, 'hh24:mi:SS')  STARTTIME,
+        TO_CHAR(t.target_time, 'hh24:mi:SS')  ENDTIME,
+        t.ROUTE_BUREAU_SHORT_NAMES   PASSBUREAU,
+        CASE WHEN t.ROUTE_BUREAU_SHORT_NAMES IS NULL OR LENGTH(t.ROUTE_BUREAU_SHORT_NAMES)=1 THEN 0 ELSE 1 END    TRAINSCOPE,
+        t.TARGET_TIME_SCHEDULE_DATES  runDaysAll,
+        t.type_id                   TRAINTYPEID,
+        t.TYPE_NAME                 TYPENAME,
+        t.PARENT_ID                 BASECHARTID
+  from JHPT_JBT.M_TRAINLINE_TEMP t,
+  (select 
+		UNIT_CROSS_TRAIN_ID as unitCrossTrainId,
+ 
+		UNIT_CROSS_ID as unitCrossId,
+		GROUP_SERIAL_NBR as groupSerialNbr,
+		TRAIN_SORT AS trainSort,
+		TRAIN_NBR AS trainNbr,
+    TO_CHAR(to_date(RUN_DATE,'yyyy-mm-dd'), 'yyyy-mm-dd') AS runDate,
+    TO_CHAR(to_date(END_DATE,'yyyy-mm-dd'), 'yyyy-mm-dd') AS endDate,
+		BASE_TRAIN_ID AS baseTrainId ,
+		DAY_GAP AS dayGap ,
+		ALTERNATE_TRAIN_NBR AS alertNateTrainNbr,
+		ALTERNATE_TIME AS alertNateTime ,
+		SPARE_FLAG AS spareFlag,
+		SPARE_APPLY_FLAG AS spareApplyFlage,
+		HIGHLINE_FLAG AS highlineFlag,
+		HIGHLINE_RULE AS highlineRule,
+		COMMONLINE_RULE AS commonLineRule,
+		APPOINT_WEEK AS appointWeek,
+		APPOINT_DAY AS appointDay
+ 
+	     from unit_cross_train where  BASE_TRAIN_ID is not null and UNIT_CROSS_ID=#{unitCrossId}
+  ) O
+WHERE t.ID = O.baseTrainId
+) M,
+
+(
+select T1.BASE_TRAIN_ID BASETRAINID1,
+    T1.ID || T1.ARR_TIME id,
+		T1.STN_SORT		STNSORT,
+		T1.STN_NAME		STNNAME,
+		T1.STN_BUREAU	STNBUREAU,
+		T1.STN_BUREAU_FULL	STNBUREAUFULL,
+		T1.ARR_TIME		ARRTIME,
+		T1.DPT_TIME		DPTTIME,
+    T1.stayTime stayTime,
+		T1.run_days		rundays,
+    T1.STNTYPE   STNTYPE,
+		T1.TRACK_NAME	TRACKNAME,
+    T1.TRAIN_SORT,
+    T1.GROUP_SERIAL_NBR
+    
+  from (
+  
+   SELECT 
+         t.parent_id      BASE_TRAIN_ID,
+         t.ID,
+         O.train_sort,
+         O.GROUP_SERIAL_NBR,
+         t.parent_name    TRAIN_NBR,
+         T.CHILD_INDEX    STN_SORT,
+         T.NAME           STN_NAME,
+         T.BUREAU_SHORT_NAME STN_BUREAU,
+         T.Bureau_Name    STN_BUREAU_FULL,
+        to_char(O.R_RUN_DATE+ t.SOURCE_TIME_SCHEDULE_DATES,'yyyy-MM-dd') || ' ' ||TO_CHAR(T.SOURCE_TIME, 'hh24:mi:SS')  ARR_TIME,
+        to_char(O.R_RUN_DATE + t.TARGET_TIME_SCHEDULE_DATES,'yyyy-MM-dd') || ' ' ||TO_CHAR(T.TARGET_TIME, 'hh24:mi:SS')  DPT_TIME,
+        ceil(( to_date(( to_char(O.R_RUN_DATE,'yyyy-MM-dd') || ' ' || to_char(T.TARGET_TIME,'hh24:mi:SS')),'yyyy-MM-dd hh24:mi:SS') - to_date(( to_char(O.R_RUN_DATE,'yyyy-MM-dd') || ' ' || to_char(T.SOURCE_TIME,'hh24:mi:SS')),'yyyy-MM-dd hh24:mi:SS') )*24*60) stayTime,
+         t.SOURCE_TIME_SCHEDULE_DATES run_days,
+          JOBS              stnType,
+         T.TRACK_NAME     
+    FROM JHPT_JBT.m_trainline_item_temp T,
+    (select A.BASE_TRAIN_ID, TO_DATE(A.RUN_DATE,'yyyy-mm-dd') R_RUN_DATE,A.train_sort,A.GROUP_SERIAL_NBR from UNIT_CROSS_TRAIN A WHERE A.UNIT_CROSS_ID =#{unitCrossId} ) O
+    WHERE t.parent_id = O.BASE_TRAIN_ID 
+    ) T1
+) N
+WHERE M.BASETRAINID = N.BASETRAINID1 AND M.groupSerialNbr = N.GROUP_SERIAL_NBR
+ORDER BY M.groupSerialNbr,M.trainSort,N.ARRTIME
+) T2 WHERE trainSort=train_Sort
+
+  ]]>
+
+	</select>
+
+	<select id="getUnitCrossTrainInfoForUnitCrossId" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.CrossTrainInfo">
+		select
+		A.UNIT_CROSS_TRAIN_ID as unitCrossTrainId,
+		A.GROUP_GAP AS groupGap,
+		A.UNIT_CROSS_ID as unitCrossId,
+		A.TRAIN_SORT AS
+		trainSort,
+		A.TRAIN_NBR AS trainNbr,
+		A.RUN_DATE AS runDate,
+		A.END_DATE AS
+		endDate,
+		A.BASE_TRAIN_ID AS baseTrainId ,
+		A.GROUP_SERIAL_NBR AS
+		groupSerialNbr,
+		A.START_STN AS startStn,
+		A.START_BUREAU AS startBureau,
+		A.END_STN AS endStn,
+		A.END_BUREAU AS endBureau,
+		A.DAY_GAP AS dayGap ,
+		A.ALTERNATE_TRAIN_NBR AS alertNateTrainNbr,
+		A.ALTERNATE_TIME AS
+		alertNateTime ,
+		A.SPARE_FLAG AS spareFlag,
+		A.SPARE_APPLY_FLAG AS
+		spareApplyFlage,
+		A.HIGHLINE_FLAG AS highlineFlag,
+		A.HIGHLINE_RULE AS
+		highlineRule,
+		A.COMMONLINE_RULE AS commonLineRule,
+		A.APPOINT_WEEK AS
+		appointWeek,
+		A.APPOINT_DAY AS appointDay,
+		A.MARSHALLING_NAME AS
+		marshallingName,
+		A.PERIOD_SOURCE_TIME AS periodSourceTime,
+		A.PERIOD_TARGET_TIME AS periodTargetTime
+		from
+		unit_cross_train A
+		where
+		A.UNIT_CROSS_ID = #{unitCrossId} order by A.GROUP_SERIAL_NBR
+		,A.train_sort
+	</select>
+
+	<insert id="addUnitCrossInfo" parameterType="java.util.List">
+
+		insert into unit_cross
+		(UNIT_CROSS_ID,
+		BASE_CROSS_ID,RELEVANT_BUREAU,APPOINT_PERIOD,
+		BASE_CHART_ID,BASE_CHART_NAME,CROSS_START_DATE,CROSS_END_DATE,
+		CROSS_NAME,CROSS_SPARE_NAME,ALTERNATE_DATE,ALTERNATE_TRAIN_NBR,
+		SPARE_FLAG,CUT_OLD,GROUP_TOTAL_NBR,PAIR_NBR,
+		HIGHLINE_FLAG,HIGHLINE_RULE,COMMONLINE_RULE,APPOINT_WEEK,
+		APPOINT_DAY,CROSS_SECTION,THROUGH_LINE,START_BUREAU,
+		TOKEN_VEH_BUREAU,TOKEN_VEH_DEPT,TOKEN_VEH_DEPOT,TOKEN_PSG_BUREAU,
+		TOKEN_PSG_DEPT,LOCO_TYPE,CRH_TYPE,ELEC_SUPPLY,
+		DEJ_COLLECT,AIR_CONDITION,NOTE,CREAT_PEOPLE,
+		CREAT_PEOPLE_ORG,
+		CREAT_TIME)
+		(
+		<foreach collection="list" item="item" index="index"
+			separator="UNION">
+			SELECT
+			#{item.unitCrossId,jdbcType=VARCHAR},
+			#{item.crossId,jdbcType=VARCHAR},#{item.relevantBureau,jdbcType=VARCHAR},#{item.appointPeriod,jdbcType=VARCHAR},
+			#{item.chartId,jdbcType=VARCHAR},#{item.chartName,jdbcType=VARCHAR},#{item.crossStartDate,jdbcType=VARCHAR},#{item.crossEndDate,jdbcType=VARCHAR},
+			#{item.crossName,jdbcType=VARCHAR},#{item.crossSpareName,jdbcType=VARCHAR},#{item.alterNateDate,jdbcType=VARCHAR},#{item.alterNateTranNbr,jdbcType=VARCHAR},
+			#{item.spareFlag,jdbcType=VARCHAR},#{item.cutOld,jdbcType=NUMERIC},#{item.groupTotalNbr,jdbcType=NUMERIC},#{item.pairNbr,jdbcType=VARCHAR},
+			#{item.highlineFlag,jdbcType=VARCHAR},
+			#{item.highlineRule,jdbcType=VARCHAR},#{item.commonlineRule,jdbcType=VARCHAR},#{item.appointWeek,jdbcType=VARCHAR},
+			#{item.appointDay,jdbcType=VARCHAR},#{item.crossSection,jdbcType=VARCHAR},#{item.throughline,jdbcType=VARCHAR},#{item.startBureau,jdbcType=VARCHAR},
+			#{item.tokenVehBureau,jdbcType=VARCHAR},#{item.tokenVehDept,jdbcType=VARCHAR},#{item.tokenVehDepot,jdbcType=VARCHAR},#{item.tokenPsgBureau,jdbcType=VARCHAR},
+			#{item.tokenPsgDept,jdbcType=VARCHAR},#{item.locoType,jdbcType=VARCHAR},#{item.crhType,jdbcType=VARCHAR},#{item.elecSupply,jdbcType=NUMERIC},
+			#{item.dejCollect,jdbcType=NUMERIC},#{item.airCondition,jdbcType=NUMERIC},#{item.note,jdbcType=VARCHAR},#{item.createPeople,jdbcType=VARCHAR},
+			#{item.createPeopleOrg,jdbcType=VARCHAR},
+			sysdate
+			from dual
+		</foreach>
+		)
+	</insert>
+
+	<insert id="addUnitCrossTrainInfo" parameterType="java.util.List">
+		insert into unit_cross_train
+		(UNIT_CROSS_TRAIN_ID,
+		MARSHALLING_NAME,
+		RUN_DATE,
+		GROUP_GAP,
+		END_DATE,
+		GROUP_SERIAL_NBR,
+		UNIT_CROSS_ID,
+		TRAIN_SORT,TRAIN_NBR,BASE_TRAIN_ID,
+		START_STN,START_BUREAU,END_STN,END_BUREAU,
+		DAY_GAP,ALTERNATE_TRAIN_NBR,ALTERNATE_TIME,SPARE_FLAG,
+		SPARE_APPLY_FLAG,HIGHLINE_FLAG,HIGHLINE_RULE,COMMONLINE_RULE,
+		APPOINT_WEEK,APPOINT_DAY,
+		PERIOD_SOURCE_TIME,
+		PERIOD_TARGET_TIME,
+		TRAIN_SORT_BASE)
+		(
+		<foreach collection="list" item="item" index="index"
+			separator="UNION">
+			SELECT
+			#{item.unitCrossTrainId,jdbcType=VARCHAR},
+			#{item.marshallingName,jdbcType=VARCHAR},
+			#{item.runDate,jdbcType=VARCHAR},
+			#{item.groupGap,jdbcType=NUMERIC},
+			#{item.endDate,jdbcType=VARCHAR},
+			#{item.groupSerialNbr,jdbcType=NUMERIC},
+			#{item.unitCrossId,jdbcType=VARCHAR},#{item.trainSort,jdbcType=NUMERIC},#{item.trainNbr,jdbcType=VARCHAR},#{item.baseTrainId,jdbcType=VARCHAR},
+			#{item.startStn,jdbcType=VARCHAR},
+			#{item.startBureau,jdbcType=VARCHAR},#{item.endStn,jdbcType=VARCHAR},#{item.endBureau,jdbcType=VARCHAR},
+			#{item.dayGap,jdbcType=NUMERIC},#{item.alertNateTrainNbr,jdbcType=VARCHAR},to_date(#{item.alertNateTime,jdbcType=VARCHAR},'yyyy-MM-dd
+			hh24:mi:ss'), #{item.spareFlag,jdbcType=NUMERIC},
+			#{item.spareApplyFlage,jdbcType=NUMERIC},
+			#{item.highlineFlag,jdbcType=NUMERIC},#{item.highlineRule,jdbcType=VARCHAR},#{item.commonLineRule,jdbcType=VARCHAR},
+			#{item.appointWeek,jdbcType=VARCHAR},#{item.appointDay,jdbcType=VARCHAR},
+			#{item.periodSourceTime,jdbcType=VARCHAR},#{item.periodTargetTime,jdbcType=VARCHAR},
+			#{item.trainSortBase,jdbcType=NUMERIC}
+			from dual
+
+		</foreach>
+		)
+	</insert>
+
+
+	<insert id="addCrossInfo" parameterType="java.util.List">
+
+		insert into base_cross
+		(BASE_CROSS_ID,RELEVANT_BUREAU,APPOINT_PERIOD,
+		BASE_CHART_ID,BASE_CHART_NAME,CROSS_START_DATE,CROSS_END_DATE,
+		CROSS_NAME,CROSS_SPARE_NAME,ALTERNATE_DATE,ALTERNATE_TRAIN_NBR,
+		SPARE_FLAG,CUT_OLD,GROUP_TOTAL_NBR,PAIR_NBR,
+		HIGHLINE_FLAG,HIGHLINE_RULE,COMMONLINE_RULE,APPOINT_WEEK,
+		APPOINT_DAY,CROSS_SECTION,THROUGH_LINE,START_BUREAU,
+		TOKEN_VEH_BUREAU,TOKEN_VEH_DEPT,TOKEN_VEH_DEPOT,TOKEN_PSG_BUREAU,
+		TOKEN_PSG_DEPT,LOCO_TYPE,CRH_TYPE,ELEC_SUPPLY,
+		DEJ_COLLECT,AIR_CONDITION,NOTE,CREAT_PEOPLE,
+		CREAT_PEOPLE_ORG,CREAT_TIME)
+		(
+		<foreach collection="list" item="item" index="index"
+			separator="UNION">
+			SELECT
+			#{item.crossId,jdbcType=VARCHAR},#{item.relevantBureau,jdbcType=VARCHAR},#{item.appointPeriod,jdbcType=VARCHAR},
+			#{item.chartId,jdbcType=VARCHAR},#{item.chartName,jdbcType=VARCHAR},#{item.crossStartDate,jdbcType=VARCHAR},#{item.crossEndDate,jdbcType=VARCHAR},
+			#{item.crossName,jdbcType=VARCHAR},#{item.crossSpareName,jdbcType=VARCHAR},#{item.alterNateDate,jdbcType=VARCHAR},#{item.alterNateTranNbr,jdbcType=VARCHAR},
+			#{item.spareFlag,jdbcType=VARCHAR},#{item.cutOld,jdbcType=NUMERIC},#{item.groupTotalNbr,jdbcType=NUMERIC},#{item.pairNbr,jdbcType=VARCHAR},
+			#{item.highlineFlag,jdbcType=VARCHAR},
+			#{item.highlineRule,jdbcType=VARCHAR},#{item.commonlineRule,jdbcType=VARCHAR},#{item.appointWeek,jdbcType=VARCHAR},
+			#{item.appointDay,jdbcType=VARCHAR},#{item.crossSection,jdbcType=VARCHAR},#{item.throughline,jdbcType=VARCHAR},#{item.startBureau,jdbcType=VARCHAR},
+			#{item.tokenVehBureau,jdbcType=VARCHAR},#{item.tokenVehDept,jdbcType=VARCHAR},#{item.tokenVehDepot,jdbcType=VARCHAR},#{item.tokenPsgBureau,jdbcType=VARCHAR},
+			#{item.tokenPsgDept,jdbcType=VARCHAR},#{item.locoType,jdbcType=VARCHAR},#{item.crhType,jdbcType=VARCHAR},#{item.elecSupply,jdbcType=NUMERIC},
+			#{item.dejCollect,jdbcType=NUMERIC},#{item.airCondition,jdbcType=NUMERIC},#{item.note,jdbcType=VARCHAR},#{item.createPeople,jdbcType=VARCHAR},
+			#{item.createPeopleOrg,jdbcType=VARCHAR},
+			sysdate
+			from dual
+		</foreach>
+		)
+	</insert>
+
+	<insert id="addCrossTrainInfo" parameterType="java.util.List">
+		insert into base_cross_train
+		(BASE_CROSS_TRAIN_ID,
+		RUN_DATE,
+		END_DATE,
+		BASE_CROSS_ID,TRAIN_SORT,TRAIN_NBR,BASE_TRAIN_ID,
+		START_STN,START_BUREAU,END_STN,END_BUREAU,
+		DAY_GAP,ALTERNATE_TRAIN_NBR,ALTERNATE_TIME,SPARE_FLAG,
+		SPARE_APPLY_FLAG,HIGHLINE_FLAG,HIGHLINE_RULE,COMMONLINE_RULE,
+		APPOINT_WEEK,APPOINT_DAY,
+		PERIOD_SOURCE_TIME,
+		PERIOD_TARGET_TIME)
+		(
+		<foreach collection="list" item="item" index="index"
+			separator="UNION">
+			SELECT
+			#{item.crossTainId,jdbcType=VARCHAR},
+			#{item.runDate,jdbcType=VARCHAR},
+			#{item.endDate,jdbcType=VARCHAR},
+			#{item.crossId,jdbcType=VARCHAR},#{item.trainSort,jdbcType=NUMERIC},#{item.trainNbr,jdbcType=VARCHAR},#{item.baseTrainId,jdbcType=VARCHAR},
+			#{item.startStn,jdbcType=VARCHAR},
+			#{item.startBureau,jdbcType=VARCHAR},#{item.endStn,jdbcType=VARCHAR},#{item.endBureau,jdbcType=VARCHAR},
+			#{item.dayGap,jdbcType=NUMERIC},#{item.alertNateTrainNbr,jdbcType=VARCHAR},to_date(#{item.alertNateTime,jdbcType=VARCHAR},'yyyyMMdd
+			hh24:mi:ss'), #{item.spareFlag,jdbcType=NUMERIC},
+			#{item.spareApplyFlage,jdbcType=NUMERIC},
+			#{item.highlineFlag,jdbcType=NUMERIC},#{item.highlineRule,jdbcType=NUMERIC},#{item.commonLineRule,jdbcType=NUMERIC},
+			#{item.appointWeek,jdbcType=VARCHAR},#{item.appointDay,jdbcType=VARCHAR},
+			#{item.periodSourceTime,jdbcType=VARCHAR},#{item.periodTargetTime,jdbcType=VARCHAR}
+			from dual
+
+		</foreach>
+		)
+	</insert>
+
+	<select id="getCrossInfoTotalCount" parameterType="map"
+		resultType="map">
+		select count(*) as count from BASE_CROSS where 1=1
+		<if test="chartId != null">
+			AND BASE_CHART_ID= #{chartId}
+		</if>
+		<if test="tokenVehBureau != null">
+			AND TOKEN_VEH_BUREAU= #{tokenVehBureau}
+		</if>
+		<if test="crossName != null">
+			AND cross_name = #{crossName}
+		</if>
+		<if test="currentBureanFlag == 1">
+			<if test="currentBureau != null">
+				AND RELEVANT_BUREAU like '%${currentBureau}%'
+			</if>
+		</if>
+		<if test="startBureau != null">
+			AND START_BUREAU = #{startBureau}
+		</if>
+		<if test="highlineFlag != null">
+
+			<if test="highlineFlag != 0">
+				<if test="highlineFlag != 1">
+					AND HIGHLINE_FLAG NOT IN ('0', '1')
+				</if>
+			</if>
+
+			<if test="highlineFlag == 0 || highlineFlag == 1">
+				AND HIGHLINE_FLAG = #{highlineFlag}
+			</if>
+
+		</if>
+		<if test="checkFlag == 0 ">
+			AND check_time is null
+		</if>
+		<if test="checkFlag == 1 ">
+			AND check_time is not null
+		</if>
+		<if test="unitCreateFlag == 0 ">
+			AND CREAT_UNIT_TIME is null
+		</if>
+		<if test="trainNbr != null">
+			AND cross_name like '%${trainNbr}%'
+		</if>
+		<if test="unitCreateFlag == 1 ">
+			AND CREAT_UNIT_TIME is not null
+		</if>
+	</select>
+
+	<select id="getCrossInfo" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.SubCrossInfo">
+		select * from (select ROWNUM AS num, m.* from (select
+		BASE_CHART_ID as
+		chartId,
+		RELEVANT_BUREAU as relevantBureau,
+		BASE_CROSS_ID as
+		crossId,CROSS_NAME as crossName,TOKEN_VEH_BUREAU as tokenVehBureau
+		,START_BUREAU as startBureau,HIGHLINE_FLAG as highlineFlag,creat_time
+		as createTime,
+		case when CREAT_UNIT_TIME is not null then '1' else '0'
+		end as
+		unitCreateFlag,
+		case when check_time is not null then '1' else
+		'0' end as checkFlag
+		from BASE_CROSS
+		where 1=1
+		<if test="chartId != null">
+			AND BASE_CHART_ID= #{chartId}
+		</if>
+		<if test="tokenVehBureau != null">
+			AND TOKEN_VEH_BUREAU= #{tokenVehBureau}
+		</if>
+		<if test="crossName != null">
+			AND cross_name = #{crossName}
+		</if>
+		<if test="currentBureanFlag == 1">
+			<if test="currentBureau != null">
+				AND RELEVANT_BUREAU like '%${currentBureau}%'
+			</if>
+		</if>
+		<if test="trainNbr != null">
+			AND cross_name like '%${trainNbr}%'
+		</if>
+		<if test="startBureau != null">
+			AND START_BUREAU = #{startBureau}
+		</if>
+		<if test="highlineFlag != null">
+
+			<if test="highlineFlag != 0">
+				<if test="highlineFlag != 1">
+					AND HIGHLINE_FLAG NOT IN ('0', '1')
+				</if>
+			</if>
+
+			<if test="highlineFlag == 0 || highlineFlag == 1">
+				AND HIGHLINE_FLAG = #{highlineFlag}
+			</if>
+
+		</if>
+		<if test="checkFlag == 0 ">
+			AND check_time is null
+		</if>
+		<if test="checkFlag == 1 ">
+			AND check_time is not null
+		</if>
+		<if test="unitCreateFlag == 0 ">
+			AND CREAT_UNIT_TIME is null
+		</if>
+		<if test="unitCreateFlag == 1 ">
+			AND CREAT_UNIT_TIME is not null
+		</if>
+
+		order by crossName ) m ) where num >=#{rownumstart} AND num
+		&lt;=#{rownumend}
+
+	</select>
+
+	<select id="getUnitCrossInfoCount" parameterType="map"
+		resultType="map">
+		select count(*) as count from UNIT_CROSS where 1=1
+		<if test="type != null">
+			AND check_time is not null
+		</if>
+		<if test="tokenVehBureau != null">
+			AND TOKEN_VEH_BUREAU= #{tokenVehBureau}
+		</if>
+		<if test="chartId != null">
+			AND BASE_CHART_ID= #{chartId}
+		</if>
+		<if test="startBureau != null">
+			AND START_BUREAU = #{startBureau}
+		</if>
+		<if test="currentBureanFlag == 1">
+			<if test="currentBureau != null">
+				AND RELEVANT_BUREAU like '%${currentBureau}%'
+			</if>
+		</if>
+		<if test="highlineFlag != null">
+
+			<if test="highlineFlag != 0">
+				<if test="highlineFlag != 1">
+					AND HIGHLINE_FLAG NOT IN ('0', '1')
+				</if>
+			</if>
+
+			<if test="highlineFlag == 0 || highlineFlag == 1">
+				AND HIGHLINE_FLAG = #{highlineFlag}
+			</if>
+
+		</if>
+		<if test="checkFlag == 0 ">
+			AND check_time is null
+		</if>
+		<if test="trainNbr != null">
+			AND CROSS_NAME like '%${trainNbr}%'
+		</if>
+		<if test="checkFlag == 1 ">
+			AND check_time is not null
+		</if>
+		<if test="unitCreateFlag == 0 ">
+			AND CREAT_CROSS_TIME is null
+		</if>
+		<if test="unitCreateFlag == 1 ">
+			AND CREAT_CROSS_TIME is not null
+		</if>
+	</select>
+
+	<select id="getBaseTrainInfoByParams" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.BaseTrainInfo">
+		select t.id as baseTrainId,
+		t.Source_Bureau_Name as startBureau,
+		t.source_bureau_short_name as startBureauShortName,
+		t.source_node_name
+		as startStn,
+		t.target_bureau_name as endBureau,
+		t.target_bureau_short_name as endBureanShortName,
+		t.target_node_name as
+		endStn,
+		t.route_bureau_short_names as routeBureauShortNames,
+		TO_CHAR(T.Source_Time, 'hh24:mi:SS') as startTime,
+		TO_CHAR(t.target_time, 'hh24:mi:SS') as endTime,
+		t.TARGET_TIME_SCHEDULE_DATES as runDays
+		from JHPT_JBT.m_trainline_temp
+		t
+		where t.name=#{trainNbr}
+		<if test="startStn != null">
+			<if test="endStn == null">
+				AND (source_node_name= #{startStn} OR target_node_name=
+				#{startStn})
+			</if>
+			<if test="endStn != null">
+				AND source_node_name= #{startStn} AND target_node_name=
+				#{startStn}
+			</if>
+		</if>
+		<if test="chartId != null">
+			AND t.PARENT_ID=#{chartId}
+		</if>
+		<if test="id != null">
+			AND t.id=#{id}
+		</if>
+	</select>
+
+	<select id="getBaseTrainInfoByParamsAndEndStn" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.BaseTrainInfo">
+		select t.id as baseTrainId,
+		t.Source_Bureau_Name as startBureau,
+		t.source_bureau_short_name as startBureauShortName,
+		t.source_node_name
+		as startStn,
+		t.target_bureau_name as endBureau,
+		t.target_bureau_short_name as endBureanShortName,
+		t.target_node_name as
+		endStn,
+		t.route_bureau_short_names as routeBureauShortNames,
+		TO_CHAR(T.Source_Time, 'hh24:mi:SS') as startTime,
+		TO_CHAR(t.target_time, 'hh24:mi:SS') as endTime,
+		t.TARGET_TIME_SCHEDULE_DATES as runDays
+		from JHPT_JBT.m_trainline_temp
+		t
+		where t.name=#{trainNbr}
+		and instr(t.source_bureau_short_name,#{bureau})>0
+		<if test="startStn != null">
+			<if test="endStn == null">
+				AND (source_node_name= #{startStn} OR target_node_name=
+				#{startStn})
+			</if>
+			<if test="endStn != null">
+				AND source_node_name= #{startStn} AND target_node_name=
+				#{startStn}
+			</if>
+		</if>
+		<if test="chartId != null">
+			AND t.PARENT_ID=#{chartId}
+		</if>
+		<if test="id != null">
+			AND t.id=#{id}
+		</if>
+	</select>
+
+
+	<select id="getBaseTrainInfoOneByParam" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.BaseTrainInfo">
+		select t.id as baseTrainId,
+		t.Source_Bureau_Name as
+		startBureau,
+		t.source_bureau_short_name as startBureauShortName,
+		t.source_node_name as startStn,
+		t.target_bureau_name as endBureau,
+		t.target_bureau_short_name as endBureanShortName,
+		t.target_node_name as
+		endStn,
+		t.route_bureau_short_names as routeBureauShortNames,
+		TO_CHAR(T.Source_Time, 'hh24:mi:SS') as startTime,
+		TO_CHAR(t.target_time, 'hh24:mi:SS') as endTime,
+		t.TARGET_TIME_SCHEDULE_DATES as runDays
+		from JHPT_JBT.m_trainline_temp
+		t
+		where t.id=#{baseTrainId}
+
+	</select>
+
+
+
+	<select id="getUnitCrossInfo" parameterType="map"
+		resultType="org.railway.com.trainplan.entity.SubCrossInfo">
+		select * from (select ROWNUM AS num,m.* from (select
+		UNIT_CROSS_ID as
+		unitCrossId,
+		TOKEN_VEH_BUREAU as tokenVehBureau ,
+		START_BUREAU as
+		startBureau,
+		HIGHLINE_FLAG as highlineFlag,
+		CROSS_NAME as crossName,
+		RELEVANT_BUREAU as relevantBureau, 
+		BASE_CROSS_ID as crossId,
+		case when check_time is not null then '1'
+		else '0' end as checkFlag,
+		case when CREAT_CROSS_TIME is not null then
+		'1' else '0' end as
+		unitCreateFlag
+		from UNIT_CROSS
+		where 1=1
+		<if test="highlineFlag != null">
+
+			<if test="highlineFlag != 0">
+				<if test="highlineFlag != 1">
+					AND HIGHLINE_FLAG NOT IN ('0', '1')
+				</if>
+			</if>
+
+			<if test="highlineFlag == 0 || highlineFlag == 1">
+				AND HIGHLINE_FLAG = #{highlineFlag}
+			</if>
+
+		</if>
+		<if test="type != null">
+			AND check_time is not null
+		</if>
+		<if test="tokenVehBureau != null">
+			AND TOKEN_VEH_BUREAU= #{tokenVehBureau}
+		</if>
+		<if test="relevantBureau != null">
+			AND RELEVANT_BUREAU like '%${relevantBureau}%'
+		</if>
+		<if test="startBureau != null">
+			AND START_BUREAU = #{startBureau}
+		</if>
+		<if test="chartId != null">
+			AND BASE_CHART_ID= #{chartId}
+		</if>
+		<if test="currentBureanFlag == 1">
+			<if test="currentBureau != null">
+				AND RELEVANT_BUREAU like '%${currentBureau}%'
+			</if>
+		</if>
+		<!-- <if test="highlineFlag != null"> -->
+		<!-- AND HIGHLINE_FLAG = #{highlineFlag} -->
+		<!-- </if> -->
+		<if test="trainNbr != null">
+			AND CROSS_NAME like '%${trainNbr}%'
+		</if>
+		<if test="checkFlag == 0 ">
+			AND check_time is null
+		</if>
+		<if test="checkFlag == 1 ">
+			AND check_time is not null
+		</if>
+		<if test="unitCreateFlag == 0 ">
+			AND CREAT_CROSS_TIME is null
+		</if>
+		<if test="unitCreateFlag == 1 ">
+			AND CREAT_CROSS_TIME is not null
+		</if>
+		order by CROSS_NAME) m ) where num >=#{rownumstart} AND num
+		&lt;=#{rownumend}
+
+	</select>
+
+	<select id="getTrainNbrFromUnitCross" parameterType="String"
+		resultType="map">
+		select DISTINCT(B.TRAIN_NBR),A.BASE_CHART_ID from
+		unit_cross A
+		,base_cross_train B
+		where A.BASE_CROSS_ID = B.BASE_CROSS_ID
+		AND A.UNIT_CROSS_ID=#{unitCrossId}
+	</select>
+
+
+	<select id="getUnitCrossInfoForBaseCrossId" parameterType="String"
+		resultType="org.railway.com.trainplan.entity.CrossInfo">
+		select
+		UNIT_CROSS_ID as unitCrossId,
+		BASE_CROSS_ID as
+		baseCrossId,
+		BASE_CHART_ID as chartId,
+		BASE_CHART_NAME as chartName,
+		CROSS_START_DATE as crossStartDate,
+		CROSS_END_DATE as crossEndDate,
+
+		CROSS_NAME as crossName,
+		CROSS_SPARE_NAME as crossSpareName,
+		ALTERNATE_DATE as alterNateDate,
+		ALTERNATE_TRAIN_NBR as
+		alterNateTranNbr,
+
+		SPARE_FLAG as spareFlag ,
+		CUT_OLD as cutOld,
+		GROUP_TOTAL_NBR as groupTotalNbr ,
+		PAIR_NBR as pairNbr ,
+
+		HIGHLINE_FLAG
+		as highlineFlag,
+		HIGHLINE_RULE as highlineRule,
+		COMMONLINE_RULE as
+		commonlineRule,
+		APPOINT_WEEK as appointWeek ,
+
+		APPOINT_DAY as appointDay,
+		CROSS_SECTION as crossSection ,
+		THROUGH_LINE as throughline,
+		START_BUREAU as startBureau ,
+
+		TOKEN_VEH_BUREAU as tokenVehBureau ,
+		TOKEN_VEH_DEPT as tokenVehDept,
+		TOKEN_VEH_DEPOT as tokenVehDepot ,
+		TOKEN_PSG_BUREAU as tokenPsgBureau ,
+
+		TOKEN_PSG_DEPT as tokenPsgDept ,
+		LOCO_TYPE as locoType ,
+		CRH_TYPE as crhType ,
+		ELEC_SUPPLY as elecSupply
+		,
+
+		DEJ_COLLECT as dejCollect ,
+		AIR_CONDITION as airCondition ,
+		NOTE as
+		note,
+		CREAT_PEOPLE as createPeople ,
+		CREAT_PEOPLE_ORG as createPeopleOrg
+		,
+		CREAT_TIME as createTime,
+		RELEVANT_BUREAU as relevantBureau
+		from
+		unit_cross where base_cross_id=#{baseCrossId}
+	</select>
+
+
+	<select id="getCrossRunPlans" parameterType="string"
+		resultType="org.railway.com.trainplan.entity.CrossInfo">
+
+	</select>
+
+	<update id="updateCrossCheckTime" parameterType="map">
+		update
+		base_cross set check_time = sysdate where base_cross_id in
+		(${baseCrossIds})
+	</update>
+
+	<select id="getCountfromBaseCrossNonCheck" parameterType="map"
+		resultType="map">
+		SELECT
+		count(*) as count
+		FROM
+		BASE_CROSS
+		WHERE
+		BASE_CROSS_ID IN (
+		${baseCrossIds}
+		)
+		AND CHECK_TIME IS NULL
+		AND TOKEN_VEH_BUREAU = #{bureau}
+
+	</select>
+
+	<select id="getCountfromUnitCrossNonCheck" parameterType="map"
+		resultType="map">
+		SELECT
+		count(*) as count
+		FROM
+		UNIT_CROSS
+		WHERE
+		CROSS_NAME IN (
+		${crossNames}
+		)
+		AND CHECK_TIME IS NULL
+		AND TOKEN_VEH_BUREAU = #{bureau}
+		AND BASE_CHART_ID = #{baseChartId}
+
+	</select>
+
+	<update id="updateCrossCheckTimeToNullByUnitCrossId"
+		parameterType="map">
+		update BASE_CROSS set CHECK_TIME = null WHERE
+		base_cross_id in (select
+		base_cross_id from unit_cross where
+		unit_cross_id in
+		(${unitCrossIds}))
+	</update>
+
+	<update id="updateUnitCrossCheckTime" parameterType="map">
+		update
+		unit_cross set check_time = sysdate where unit_cross_id in
+		(${unitCrossIds})
+
+	</update>
+
+	<update id="updateUnitCrossCheckTimeToNull" parameterType="map">
+		update unit_cross set check_time = null where unit_cross_id =
+		#{unitCrossId}
+
+	</update>
+
+
+	<update id="updateCrossUnitCreateTime" parameterType="map">
+		update
+		base_cross set creat_unit_time = sysdate where base_cross_id in
+		(${baseCrossIds})
+
+	</update>
+
+	<update id="updateCrossUnitCreateTimeToNull" parameterType="map">
+		update base_cross set creat_unit_time = '' where base_cross_id in
+		(${baseCrossIds})
+
+	</update>
+
+	<update id="updateCrossUnitCreateTimeToNullByUnitCrossId"
+		parameterType="map">
+		update BASE_CROSS set CREAT_UNIT_TIME = null WHERE
+		base_cross_id in (select
+		base_cross_id from unit_cross where
+		unit_cross_id in
+		(${unitCrossIds}))
+	</update>
+
+	<update id="updateUnitCrossUnitCreateTime" parameterType="map">
+		update
+		unit_cross set CREAT_CROSS_TIME = sysdate where unit_cross_id in
+		(${unitCrossIds})
+
+	</update>
+
+	<delete id="deleteCrossInfoForCrossIds" parameterType="map">
+		delete
+		from base_cross where BASE_CROSS_ID in (${baseCrossIds})
+	</delete>
+
+	<!-- <delete id="deleteUnitCrossAndCrossTrain" parameterType="map"> -->
+	<!-- delete from base_cross where BASE_CROSS_ID in (${baseCrossIds}) -->
+	<!-- </delete> -->
+
+	<delete id="deleteCrossInfoTrainForCrossIds" parameterType="map">
+		delete from base_cross_train where BASE_CROSS_ID in (${baseCrossIds})
+	</delete>
+
+	<delete id="deleteUnitCrossInfoByCrossNameAndChartId" parameterType="String">
+		delete from unit_cross where cross_name = #{crossName} and base_chart_id = #{chartId}
+
+	</delete>
+	<delete id="deleteUnitCrossInfoTrainForCrossIds" parameterType="map">
+		delete from unit_cross_train where unit_cross_id in (${unitCrossIds})
+
+	</delete>
+
+
+	<delete id="updateUnitCrossInfoTrainForCrossIds" parameterType="map">
+		<!-- update unit_cross_train set train_sort=${trainsort} , GROUP_GAP= ${groupGap} 
+			where unit_cross_train_id = #{unitCrossIds} -->
+		UPDATE unit_cross_train
+		SET train_sort=${trainsort}
+		,GROUP_GAP=${groupGap}
+		<if test="run_date != null">
+			<!-- 出发时间+组间间隔+当期车的到达与出发的时间差+组内间隔 -->
+			<choose>
+				<when test="day_gap != null">
+					,end_date =
+					to_char((to_date(${run_date},'yyyy-MM-dd')+${day_gap}+(select
+					a.END_DATE-a.RUN_DATE from unit_cross_train a where
+					a.unit_cross_train_id = #{unitCrossIds})),'yyyyMMdd')
+				</when>
+				<otherwise>,end_date =
+					to_char((to_date(${run_date},'yyyy-MM-dd')+${groupGap}+(select
+					a.END_DATE-a.RUN_DATE from unit_cross_train a where
+					a.unit_cross_train_id = #{unitCrossIds})),'yyyyMMdd')
+				</otherwise>
+			</choose>
+		</if>
+		<if test="run_date != null">
+			<!-- 出发时间+组间间隔 -->
+			<choose>
+				<when test="day_gap != null">
+					,run_date =
+					to_char((to_date(${run_date},'yyyy-MM-dd')+${day_gap}),'yyyyMMdd')
+				</when>
+				<otherwise>,run_date =
+					to_char((to_date(${run_date},'yyyy-MM-dd')+${groupGap}),'yyyyMMdd')
+				</otherwise>
+			</choose>
+		</if>
+		WHERE unit_cross_train_id=#{unitCrossIds}
+	</delete>
+
+
+	<delete id="updateUnitCrossTrainByTrainId" parameterType="map">
+		update unit_cross_train set train_sort_base=${train_sort_base}
+		where unit_cross_train_id = #{unitCrossIds}
+	</delete>
+
+	<delete id="deleteUnitCrossInfoForCrossIds" parameterType="map">
+		delete from unit_cross where unit_cross_id in (${unitCrossIds})
+	</delete>
+
+
+	<delete id="deleteCrossInfoByChartId" parameterType="map">
+		delete from base_cross where base_chart_ID=#{chartId}
+		<if test="bureaus != null">
+			and TOKEN_VEH_BUREAU in (#{bureaus})
+		</if>
+	</delete>
+	<delete id="deleteCrossTrainByChartId" parameterType="map">
+		delete from base_cross_train where BASE_CROSS_ID in (select
+		base_cross_id from base_cross where base_chart_ID=#{chartId}
+		<if test="bureaus != null">
+			and TOKEN_VEH_BUREAU in (#{bureaus})
+		</if>
+		)
+	</delete>
+	<delete id="deleteUnitCrossTrainByChartId" parameterType="map">
+		delete from unit_cross_train where unit_cross_id in (select
+		unit_cross_id from unit_cross where base_chart_ID=#{chartId}
+		<if test="bureaus != null">
+			and TOKEN_VEH_BUREAU in (#{bureaus})
+		</if>
+		)
+
+	</delete>
+	<delete id="deleteUnitCrossInfoByChartId" parameterType="map">
+		delete from unit_cross where base_chart_ID=#{chartId}
+		<if test="bureaus != null">
+			and TOKEN_VEH_BUREAU in (#{bureaus})
+		</if>
+	</delete>
+
+	<delete id="deleteHighlineCrossTrainByCrossDate" parameterType="map">
+		delete from highline_cross_train s where
+		s.highline_cross_id in (select
+		t.highline_cross_id from highline_cross
+		t where t.cross_date
+		=#{crossDate} and cross_bureau = #{crossBureau})
+	</delete>
+
+	<delete id="deleteHighlineCrossByCrossDate" parameterType="map">
+		delete
+		from highline_cross where cross_date =#{crossDate} and
+		cross_bureau = #{crossBureau}
+	</delete>
+
+	<update id="updateBaseCrossTrainPeriod" parameterType="java.util.Map">
+
+		update
+		base_cross_train
+		set
+		PERIOD_SOURCE_TIME = #{sourceTime},
+		PERIOD_TARGET_TIME = #{targetTime},
+		BASE_TRAIN_ID = #{baseTrainId},
+		START_STN = #{startStn},
+		END_STN = #{endStn}
+		where BASE_CROSS_TRAIN_ID = #{baseCrossTrainId}
+	</update>
+
+	<update id="updateBaseCrossBaseCrossId" parameterType="java.util.Map">
+
+		update
+		BASE_CROSS
+		set
+		CREAT_UNIT_TIME = null,
+		check_time = null
+		<if test="crossEndDate != null">
+			,cross_end_date = #{crossEndDate}
+		</if>
+		where
+		BASE_CROSS_ID = #{baseCrossId}
+	</update>
+
+	<select id="getUnitCrossTrainDateByMap" parameterType="string"
+		resultType="map">
+		select a.end_date from unit_cross_train a
+		where
+		a.Unit_Cross_Id = #{unitCrossId}
+		order by a.end_date desc
+	</select>
+
+	<select id="getBaseCrossTrainByMap" parameterType="map"
+		resultType="map">
+		select a.start_stn,
+		       a.end_stn,
+		       b.cross_name,
+		       b.group_total_nbr,
+		       b.appoint_week,
+		       b.appoint_day,
+		       b.appoint_period
+		from base_cross_train a
+		left join base_cross b on b.base_cross_id = a.base_cross_id
+		where 1 = 1
+		<if test="base_cross_id != null">
+			and a.base_cross_id = #{base_cross_id}
+		</if>
+		order by a. SPARE_APPLY_FLAG, a.train_Sort
+	</select>
+	
+	<select id="getBaseTrainStartBureauByTrainNbr" parameterType="string"
+		resultType="string">
+		select DISTINCT START_BUREAU from PLAN_TRAIN where
+		TRAIN_NBR=#{trainNbr}
+	</select>
+	
+	<select id="getBaseTrainEndBureauByTrainNbr" parameterType="string"
+		resultType="string">
+		select DISTINCT END_BUREAU from PLAN_TRAIN where
+		TRAIN_NBR=#{trainNbr}
+	</select>
+
+	<select id="getBaseCrossTrainObjByMap" parameterType="map" resultType="org.railway.com.trainplan.entity.CrossTrainInfo">
+		select a.base_cross_train_id baseCrossTrainId,
+		       a.train_sort trainSort,
+		       TO_CHAR(b.Source_Time, 'hh24:mi:SS') as sourceTargetTime,
+		       TO_CHAR(b.target_time, 'hh24:mi:SS') as targetTime,
+		       a.train_nbr trainNbr,
+       	       a.start_stn startStn,
+		       a.start_bureau startBureau,
+       		   a.end_stn endStn,
+		       a.end_bureau endBureau,
+       		   a.run_date runDate,
+               a.day_gap dayGap
+		  from base_cross_train a
+		  left join jhpt_jbt.m_trainline_temp b on b.id = a.base_train_id
+		 where a.base_cross_id = #{base_cross_id}
+		 <!-- 
+		   and a.train_sort >=
+		       (select (b.train_sort - 1)
+		          from base_cross_train b
+		         where b.base_cross_train_id = #{base_cross_train_id})
+		  -->
+		 order by a.train_sort
+	</select>
+
+	<select id="getBaseCrossByMap" parameterType="map" resultType="map">
+		 select a.base_chart_id,a.cross_start_date from base_cross a where a.base_cross_id = #{base_cross_id}
+	</select>
+
+	<update id="updBaseCrossTrainByObj" parameterType="java.util.Map">
+		update base_cross_train a
+		   set a.update_time = sysdate
+		   <if test="crossTrainInfo.runDate != null">
+		   		,a.run_date           = #{crossTrainInfo.runDate}
+		   </if>
+		   <if test="crossTrainInfo.endDate != null">
+		   		,a.end_date           = #{crossTrainInfo.endDate}
+		   </if>
+		   <if test="crossTrainInfo.baseTrainId != null">
+		   		,a.base_train_id      = #{crossTrainInfo.baseTrainId}
+		   </if>
+		   <if test="crossTrainInfo.startStn != null">
+		   		,a.start_stn          = #{crossTrainInfo.startStn}
+		   </if>
+		   <if test="crossTrainInfo.startBureau != null">
+		   		,a.start_bureau       = #{crossTrainInfo.startBureau}
+		   </if>
+		   <if test="crossTrainInfo.endStn != null">
+		   		,a.end_stn            = #{crossTrainInfo.endStn}
+		   </if>
+		   <if test="crossTrainInfo.endBureau != null">
+		   		,a.end_bureau         = #{crossTrainInfo.endBureau}
+		   </if>
+		   <if test="crossTrainInfo.dayGap != null">
+		       ,a.day_gap            = #{crossTrainInfo.dayGap}
+		   </if>
+		   <if test="crossTrainInfo.periodSourceTime != null">
+		       ,a.period_source_time = #{crossTrainInfo.periodSourceTime}
+		   </if>
+		   <if test="crossTrainInfo.periodTargetTime != null">
+		       ,a.period_target_time = #{crossTrainInfo.periodTargetTime}
+		   </if>
+		       
+		 where a.base_cross_train_id = #{crossTrainInfo.baseCrossTrainId}
+	</update>
+	
+	
+</mapper>

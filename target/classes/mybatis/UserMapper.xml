@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.UserDao">
+
+	<resultMap id="user" type="org.railway.com.trainplan.entity.User">
+		<id column="PER_ID" property="id" />
+		<result column="USERNAME" property="username" />
+		<result column="NAME" property="name" />
+		<result column="PASSWORD" property="password" />
+		<result column="LJPYM" property="ljpym" />
+		<result column="LJQC" property="ljqc" />
+		<result column="LJJC" property="ljjc" />
+		<result column="DEP_NAME" property="deptname" />
+		<result column="POST_ID" property="postId" />
+		<result column="POST_NAME" property="postName" />
+	</resultMap>
+
+	<!-- 数据库用户，tds1adm orga -->
+
+	<!-- <select id="getUserByUsernameAndAccId" parameterType="map" resultMap="user"> -->
+	<!-- SELECT PER.PER_ID AS PER_ID, PER.USERNAME AS USERNAME, PER.PER_NAME 
+		AS NAME, PAR.PASSWORD AS PASSWORD, -->
+	<!-- LJ.LJPYM AS LJPYM, LJ.LJQC AS LJQC, LJ.LJJC AS LJJC, DPT.DEP_NAME AS 
+		DEP_NAME,POST.ACC_ID POST_ID,POST.ACC_NAME POST_NAME -->
+<!-- FROM tds1adm.PERSON PER -->
+	<!-- INNER JOIN tds1adm.PER_ACC_RELA PAR ON PER.PER_ID = PAR.PER_ID -->
+	<!-- INNER JOIN tds1adm.ACCOUNT POST ON POST.ACC_ID = PAR.ACC_ID -->
+	<!-- INNER JOIN tds1adm.DEPARTMENT DPT ON PER.DEP_ID = DPT.DEP_ID -->
+<!-- LEFT JOIN JHPT_JCSJ.LJZD LJ ON DPT.LJPYM = LJ.LJPYM -->
+	<!-- WHERE PER.USERNAME = '${username}' AND PAR.ACC_ID = ${accId} -->
+	<!-- </select> -->
+
+	<!-- <select id="getAccountbyUsername" parameterType="string" resultType="map"> -->
+	<!-- SELECT ACC.ACC_ID AS ACC_ID, ACC.ACC_NAME AS ACC_NAME -->
+<!-- FROM tds1adm.PERSON PER -->
+	<!-- INNER JOIN tds1adm.PER_ACC_RELA PAR ON PER.PER_ID = PAR.PER_ID -->
+	<!-- INNER JOIN tds1adm.ACCOUNT ACC ON ACC.ACC_ID = PAR.ACC_ID -->
+<!-- WHERE PER.USERNAME = #{username} -->
+	<!-- </select> -->
+	<select id="getUserByUsernameAndAccId" parameterType="map"
+		resultMap="user">
+		SELECT PER.PER_ID AS PER_ID, PER.USERNAME AS USERNAME, PER.PER_NAME AS
+		NAME, PAR.PASSWORD AS PASSWORD,
+		LJ.LJPYM AS LJPYM, LJ.LJQC AS LJQC, LJ.LJJC AS LJJC, DPT.DEP_NAME AS
+		DEP_NAME,POST.ACC_ID POST_ID,POST.ACC_NAME POST_NAME FROM ORGA.PERSON
+		PER
+		INNER JOIN ORGA.PER_ACC_RELA PAR ON PER.PER_ID = PAR.PER_ID
+		INNER JOIN ORGA.ACCOUNT POST ON POST.ACC_ID = PAR.ACC_ID
+		INNER JOIN ORGA.DEPARTMENT DPT ON PER.DEP_ID = DPT.DEP_ID LEFT JOIN
+		JHPT_JCSJ.LJZD LJ ON DPT.LJPYM = LJ.LJPYM
+		WHERE PER.USERNAME = #{username} AND PAR.ACC_ID = #{accId}
+		<if test="ljjc != null">
+			and lj.ljjc = #{ljjc}
+		</if>
+	</select>
+
+
+	<update id="uptdateUser" parameterType="map">
+		UPDATE
+		ORGA.PER_ACC_RELA
+		SET PASSWORD=#{password}
+		WHERE ACC_ID=${accId}
+
+
+
+	</update>
+
+	<select id="getAccountbyUsername" parameterType="string" resultType="map">
+		SELECT ACC.ACC_ID AS ACC_ID, ACC.ACC_NAME AS ACC_NAME FROM ORGA.PERSON PER
+		INNER JOIN ORGA.PER_ACC_RELA PAR ON PER.PER_ID = PAR.PER_ID
+		INNER JOIN ORGA.ACCOUNT ACC ON ACC.ACC_ID = PAR.ACC_ID WHERE PER.USERNAME =
+		#{username}
+	</select>
+
+	<select id="getDctOrDcsByMap" parameterType="map" resultType="map">
+		select t3.ljpym, t2.acc_id, T2.ACC_NAME
+		  from orga.ACCOUNT t2, orga.department t3
+		 where t2.acc_id in
+		       (select t1.acc_id
+		          from orga.ACC_ROL_RELA t1
+		         where t1.rol_id in
+		               (select t.rol_id
+		                  from orga.ROLE t
+		                 where t.rol_name = #{rol_name}))
+		   and t2.fenlei01 = t3.dep_id
+		   <!-- and t3.ljpym = #{ljpym} -->
+		<if test="ljpym != null">
+			and t3.ljpym = #{ljpym}
+		</if>
+		<if test="ljpyms != null">
+			and t3.ljpym in(${ljpyms})
+		</if>
+		<if test="acc_name != null">
+   			and t2.acc_name = #{acc_name}
+		</if>
+	</select>
+</mapper> 
+

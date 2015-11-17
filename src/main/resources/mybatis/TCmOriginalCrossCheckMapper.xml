@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.comfirmedmap.repository.TCmOriginalCrossCheckMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCrossCheck" >
+    <id column="CM_ORIGINAL_CROSS_CHECK_ID" property="cmOriginalCrossCheckId" jdbcType="VARCHAR" />
+    <result column="CM_ORIGINAL_CROSS_ID" property="cmOriginalCrossId" jdbcType="VARCHAR" />
+    <result column="ROAD_BUREAU" property="roadBureau" jdbcType="VARCHAR" />
+    <result column="CHECK_FLAG" property="checkFlag" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CM_ORIGINAL_CROSS_CHECK_ID, CM_ORIGINAL_CROSS_ID, ROAD_BUREAU, CHECK_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_ORIGINAL_CROSS_CHECK
+    where CM_ORIGINAL_CROSS_CHECK_ID = #{cmOriginalCrossCheckId}
+  </select>
+  
+  <select id="selectByPrimaryKey_original" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CM_ORIGINAL_CROSS_CHECK
+    where CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CM_ORIGINAL_CROSS_CHECK
+    where CM_ORIGINAL_CROSS_CHECK_ID = #{cmOriginalCrossCheckId}
+  </delete>
+  
+   <delete id="deleteByPrimaryKey_original" parameterType="java.lang.String" >
+    delete from T_CM_ORIGINAL_CROSS_CHECK
+    where CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId}
+    and ROAD_BUREAU = #{roadBureau}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCrossCheck" >
+    insert into T_CM_ORIGINAL_CROSS_CHECK (CM_ORIGINAL_CROSS_CHECK_ID, CM_ORIGINAL_CROSS_ID, ROAD_BUREAU, CHECK_FLAG
+      )
+    values (#{cmOriginalCrossCheckId}, #{cmOriginalCrossId}, #{roadBureau}, #{checkFlag}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCrossCheck" >
+    insert into T_CM_ORIGINAL_CROSS_CHECK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmOriginalCrossCheckId != null" >
+        CM_ORIGINAL_CROSS_CHECK_ID,
+      </if>
+      <if test="cmOriginalCrossId != null" >
+        CM_ORIGINAL_CROSS_ID,
+      </if>
+      <if test="roadBureau != null" >
+        ROAD_BUREAU,
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmOriginalCrossCheckId != null" >
+        #{cmOriginalCrossCheckId},
+      </if>
+      <if test="cmOriginalCrossId != null" >
+        #{cmOriginalCrossId},
+      </if>
+      <if test="roadBureau != null" >
+        #{roadBureau},
+      </if>
+      <if test="checkFlag != null" >
+        #{checkFlag},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCrossCheck" >
+    update T_CM_ORIGINAL_CROSS_CHECK
+    <set >
+      <if test="cmOriginalCrossId != null" >
+        CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId},
+      </if>
+      <if test="roadBureau != null" >
+        ROAD_BUREAU = #{roadBureau},
+      </if>
+      <if test="checkFlag != null" >
+        CHECK_FLAG = #{checkFlag},
+      </if>
+    </set>
+    where CM_ORIGINAL_CROSS_CHECK_ID = #{cmOriginalCrossCheckId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TCmOriginalCrossCheck" >
+    update T_CM_ORIGINAL_CROSS_CHECK
+    set CM_ORIGINAL_CROSS_ID = #{cmOriginalCrossId},
+      ROAD_BUREAU = #{roadBureau},
+      CHECK_FLAG = #{checkFlag}
+    where CM_ORIGINAL_CROSS_CHECK_ID = #{cmOriginalCrossCheckId}
+  </update>
+</mapper>

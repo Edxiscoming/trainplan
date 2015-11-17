@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.MTrainLineItemDao">
+
+	<delete id="deleteMTrainLineItemByCmdId" parameterType="map">
+		delete from jhpt_jbt.m_trainline_item a
+		where
+		a.parent_id in (
+		select c.plan_train_id from plan_train c
+		where (
+		c.tel_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+		or c.cmd_train_id in
+		<foreach collection="idList" index="index" item="list" open="("
+			separator="," close=")">
+			#{list}
+		</foreach>
+		)
+		)
+
+	</delete>
+
+</mapper>

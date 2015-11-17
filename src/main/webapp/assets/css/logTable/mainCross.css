@@ -1,0 +1,59 @@
+/* CSS Document */
+@charset "utf-8";
+/*橘红*/
+.redBtn{
+    background: #ef6b00 !important;
+    color: white !important;
+    font-weight: bold;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px !important;
+}
+/* 大红 */
+.BredBtn{
+    background: #d04541 !important;
+    color: white !important;
+    font-weight: bold;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px !important;
+}
+/*绿*/
+.greenBtn{
+    background: #31aea2 !important;
+    color: white !important;
+    font-weight: bold;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px !important;
+}
+/*蓝*/
+.blueBtn{
+    background: #367ab4 !important;
+    color: white !important;
+    font-weight: bold;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px !important;
+}
+
+.redBtn{
+    background: #f53f00 !important;
+    color: white !important;
+    font-weight: bold;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px !important;
+}
+
+.table-center td, .table-center th{
+    text-align: center !important;
+}
+
+.container-header{
+    padding: 15px 0px;background: #f9f9f9; border-bottom: solid 1px #E0E0E0;
+}
+/* 所有easyUI的表头都居中 */
+tr.datagrid-header-row div.datagrid-cell{
+	text-align:center !important;
+}

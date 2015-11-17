@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.railway.passenger.transdispatch.dayplan.repository.TPlanTrainStnMapper" >
+  <resultMap id="BaseResultMap" type="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanTrainStn" >
+    <id column="PLAN_TRAIN_STN_ID" property="planTrainStnId" jdbcType="VARCHAR" />
+    <result column="PLAN_TRAIN_ID" property="planTrainId" jdbcType="VARCHAR" />
+    <result column="STN_SORT" property="stnSort" jdbcType="DECIMAL" />
+    <result column="STN_ID" property="stnId" jdbcType="VARCHAR" />
+    <result column="STN_NAME" property="stnName" jdbcType="VARCHAR" />
+    <result column="NODE_ID" property="nodeId" jdbcType="VARCHAR" />
+    <result column="NODE_NAME" property="nodeName" jdbcType="VARCHAR" />
+    <result column="NODE_TDCS_ID" property="nodeTdcsId" jdbcType="VARCHAR" />
+    <result column="NODE_TDCS_NAME" property="nodeTdcsName" jdbcType="VARCHAR" />
+    <result column="STN_BUREAU_ID" property="stnBureauId" jdbcType="VARCHAR" />
+    <result column="STN_BUREAU" property="stnBureau" jdbcType="VARCHAR" />
+    <result column="STN_BUREAU_FULL" property="stnBureauFull" jdbcType="VARCHAR" />
+    <result column="ARR_TRAIN_NBR" property="arrTrainNbr" jdbcType="VARCHAR" />
+    <result column="ARR_TIME" property="arrTime" jdbcType="VARCHAR" />
+    <result column="BASE_ARR_TIME" property="baseArrTime" jdbcType="VARCHAR" />
+    <result column="ARR_RUN_DAYS" property="arrRunDays" jdbcType="DECIMAL" />
+    <result column="DPT_TRAIN_NBR" property="dptTrainNbr" jdbcType="VARCHAR" />
+    <result column="DPT_TIME" property="dptTime" jdbcType="VARCHAR" />
+    <result column="BASE_DPT_TIME" property="baseDptTime" jdbcType="VARCHAR" />
+    <result column="RUN_DAYS" property="runDays" jdbcType="DECIMAL" />
+    <result column="TRACK_NBR" property="trackNbr" jdbcType="VARCHAR" />
+    <result column="TRACK_NAME" property="trackName" jdbcType="VARCHAR" />
+    <result column="PLATFORM" property="platform" jdbcType="DECIMAL" />
+    <result column="JOBS" property="jobs" jdbcType="VARCHAR" />
+    <result column="STN_TYPE" property="stnType" jdbcType="VARCHAR" />
+    <result column="PSG_FLG" property="psgFlg" jdbcType="DECIMAL" />
+    <result column="LOCO_FLAG" property="locoFlag" jdbcType="DECIMAL" />
+    <result column="TEC_TYPE" property="tecType" jdbcType="VARCHAR" />
+    <result column="BOUNDARY_IN_OUT" property="boundaryInOut" jdbcType="DECIMAL" />
+    <result column="UP_DOWN" property="upDown" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PLAN_TRAIN_STN_ID, PLAN_TRAIN_ID, STN_SORT, STN_ID, STN_NAME, NODE_ID, NODE_NAME, 
+    NODE_TDCS_ID, NODE_TDCS_NAME, STN_BUREAU_ID, STN_BUREAU, STN_BUREAU_FULL, ARR_TRAIN_NBR, 
+    ARR_TIME, BASE_ARR_TIME, ARR_RUN_DAYS, DPT_TRAIN_NBR, DPT_TIME, BASE_DPT_TIME, RUN_DAYS, 
+    TRACK_NBR, TRACK_NAME, PLATFORM, JOBS, STN_TYPE, PSG_FLG, LOCO_FLAG, TEC_TYPE, BOUNDARY_IN_OUT, 
+    UP_DOWN, USE_STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_PLAN_TRAIN_STN
+    where PLAN_TRAIN_STN_ID = #{planTrainStnId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_PLAN_TRAIN_STN
+    where PLAN_TRAIN_STN_ID = #{planTrainStnId}
+  </delete>
+  <insert id="insert" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanTrainStn" >
+    insert into T_PLAN_TRAIN_STN (PLAN_TRAIN_STN_ID, PLAN_TRAIN_ID, STN_SORT, STN_ID, STN_NAME, NODE_ID, 
+      NODE_NAME, NODE_TDCS_ID, NODE_TDCS_NAME, STN_BUREAU_ID, STN_BUREAU, STN_BUREAU_FULL, 
+      ARR_TRAIN_NBR, ARR_TIME, BASE_ARR_TIME, ARR_RUN_DAYS, DPT_TRAIN_NBR, DPT_TIME, 
+      BASE_DPT_TIME, RUN_DAYS, TRACK_NBR, TRACK_NAME, PLATFORM, JOBS, STN_TYPE, 
+      PSG_FLG, LOCO_FLAG, TEC_TYPE, BOUNDARY_IN_OUT, UP_DOWN, USE_STATUS)
+    values (#{planTrainStnId}, #{planTrainId}, #{stnSort}, #{stnId}, #{stnName}, #{nodeId}, 
+      #{nodeName}, #{nodeTdcsId}, #{nodeTdcsName}, #{stnBureauId}, #{stnBureau}, #{stnBureauFull}, 
+      #{arrTrainNbr}, #{arrTime}, #{baseArrTime}, #{arrRunDays}, #{dptTrainNbr}, #{dptTime}, 
+      #{baseDptTime}, #{runDays}, #{trackNbr}, #{trackName}, #{platform}, #{jobs}, #{stnType}, 
+      #{psgFlg}, #{locoFlag}, #{tecType}, #{boundaryInOut}, #{upDown}, #{useStatus})
+  </insert>
+  <insert id="insertSelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanTrainStn" >
+    insert into T_PLAN_TRAIN_STN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="planTrainStnId != null" >
+        PLAN_TRAIN_STN_ID,
+      </if>
+      <if test="planTrainId != null" >
+        PLAN_TRAIN_ID,
+      </if>
+      <if test="stnSort != null" >
+        STN_SORT,
+      </if>
+      <if test="stnId != null" >
+        STN_ID,
+      </if>
+      <if test="stnName != null" >
+        STN_NAME,
+      </if>
+      <if test="nodeId != null" >
+        NODE_ID,
+      </if>
+      <if test="nodeName != null" >
+        NODE_NAME,
+      </if>
+      <if test="nodeTdcsId != null" >
+        NODE_TDCS_ID,
+      </if>
+      <if test="nodeTdcsName != null" >
+        NODE_TDCS_NAME,
+      </if>
+      <if test="stnBureauId != null" >
+        STN_BUREAU_ID,
+      </if>
+      <if test="stnBureau != null" >
+        STN_BUREAU,
+      </if>
+      <if test="stnBureauFull != null" >
+        STN_BUREAU_FULL,
+      </if>
+      <if test="arrTrainNbr != null" >
+        ARR_TRAIN_NBR,
+      </if>
+      <if test="arrTime != null" >
+        ARR_TIME,
+      </if>
+      <if test="baseArrTime != null" >
+        BASE_ARR_TIME,
+      </if>
+      <if test="arrRunDays != null" >
+        ARR_RUN_DAYS,
+      </if>
+      <if test="dptTrainNbr != null" >
+        DPT_TRAIN_NBR,
+      </if>
+      <if test="dptTime != null" >
+        DPT_TIME,
+      </if>
+      <if test="baseDptTime != null" >
+        BASE_DPT_TIME,
+      </if>
+      <if test="runDays != null" >
+        RUN_DAYS,
+      </if>
+      <if test="trackNbr != null" >
+        TRACK_NBR,
+      </if>
+      <if test="trackName != null" >
+        TRACK_NAME,
+      </if>
+      <if test="platform != null" >
+        PLATFORM,
+      </if>
+      <if test="jobs != null" >
+        JOBS,
+      </if>
+      <if test="stnType != null" >
+        STN_TYPE,
+      </if>
+      <if test="psgFlg != null" >
+        PSG_FLG,
+      </if>
+      <if test="locoFlag != null" >
+        LOCO_FLAG,
+      </if>
+      <if test="tecType != null" >
+        TEC_TYPE,
+      </if>
+      <if test="boundaryInOut != null" >
+        BOUNDARY_IN_OUT,
+      </if>
+      <if test="upDown != null" >
+        UP_DOWN,
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="planTrainStnId != null" >
+        #{planTrainStnId},
+      </if>
+      <if test="planTrainId != null" >
+        #{planTrainId},
+      </if>
+      <if test="stnSort != null" >
+        #{stnSort},
+      </if>
+      <if test="stnId != null" >
+        #{stnId},
+      </if>
+      <if test="stnName != null" >
+        #{stnName},
+      </if>
+      <if test="nodeId != null" >
+        #{nodeId},
+      </if>
+      <if test="nodeName != null" >
+        #{nodeName},
+      </if>
+      <if test="nodeTdcsId != null" >
+        #{nodeTdcsId},
+      </if>
+      <if test="nodeTdcsName != null" >
+        #{nodeTdcsName},
+      </if>
+      <if test="stnBureauId != null" >
+        #{stnBureauId},
+      </if>
+      <if test="stnBureau != null" >
+        #{stnBureau},
+      </if>
+      <if test="stnBureauFull != null" >
+        #{stnBureauFull},
+      </if>
+      <if test="arrTrainNbr != null" >
+        #{arrTrainNbr},
+      </if>
+      <if test="arrTime != null" >
+        #{arrTime},
+      </if>
+      <if test="baseArrTime != null" >
+        #{baseArrTime},
+      </if>
+      <if test="arrRunDays != null" >
+        #{arrRunDays},
+      </if>
+      <if test="dptTrainNbr != null" >
+        #{dptTrainNbr},
+      </if>
+      <if test="dptTime != null" >
+        #{dptTime},
+      </if>
+      <if test="baseDptTime != null" >
+        #{baseDptTime},
+      </if>
+      <if test="runDays != null" >
+        #{runDays},
+      </if>
+      <if test="trackNbr != null" >
+        #{trackNbr},
+      </if>
+      <if test="trackName != null" >
+        #{trackName},
+      </if>
+      <if test="platform != null" >
+        #{platform},
+      </if>
+      <if test="jobs != null" >
+        #{jobs},
+      </if>
+      <if test="stnType != null" >
+        #{stnType},
+      </if>
+      <if test="psgFlg != null" >
+        #{psgFlg},
+      </if>
+      <if test="locoFlag != null" >
+        #{locoFlag},
+      </if>
+      <if test="tecType != null" >
+        #{tecType},
+      </if>
+      <if test="boundaryInOut != null" >
+        #{boundaryInOut},
+      </if>
+      <if test="upDown != null" >
+        #{upDown},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanTrainStn" >
+    update T_PLAN_TRAIN_STN
+    <set >
+      <if test="planTrainId != null" >
+        PLAN_TRAIN_ID = #{planTrainId},
+      </if>
+      <if test="stnSort != null" >
+        STN_SORT = #{stnSort},
+      </if>
+      <if test="stnId != null" >
+        STN_ID = #{stnId},
+      </if>
+      <if test="stnName != null" >
+        STN_NAME = #{stnName},
+      </if>
+      <if test="nodeId != null" >
+        NODE_ID = #{nodeId},
+      </if>
+      <if test="nodeName != null" >
+        NODE_NAME = #{nodeName},
+      </if>
+      <if test="nodeTdcsId != null" >
+        NODE_TDCS_ID = #{nodeTdcsId},
+      </if>
+      <if test="nodeTdcsName != null" >
+        NODE_TDCS_NAME = #{nodeTdcsName},
+      </if>
+      <if test="stnBureauId != null" >
+        STN_BUREAU_ID = #{stnBureauId},
+      </if>
+      <if test="stnBureau != null" >
+        STN_BUREAU = #{stnBureau},
+      </if>
+      <if test="stnBureauFull != null" >
+        STN_BUREAU_FULL = #{stnBureauFull},
+      </if>
+      <if test="arrTrainNbr != null" >
+        ARR_TRAIN_NBR = #{arrTrainNbr},
+      </if>
+      <if test="arrTime != null" >
+        ARR_TIME = #{arrTime},
+      </if>
+      <if test="baseArrTime != null" >
+        BASE_ARR_TIME = #{baseArrTime},
+      </if>
+      <if test="arrRunDays != null" >
+        ARR_RUN_DAYS = #{arrRunDays},
+      </if>
+      <if test="dptTrainNbr != null" >
+        DPT_TRAIN_NBR = #{dptTrainNbr},
+      </if>
+      <if test="dptTime != null" >
+        DPT_TIME = #{dptTime},
+      </if>
+      <if test="baseDptTime != null" >
+        BASE_DPT_TIME = #{baseDptTime},
+      </if>
+      <if test="runDays != null" >
+        RUN_DAYS = #{runDays},
+      </if>
+      <if test="trackNbr != null" >
+        TRACK_NBR = #{trackNbr},
+      </if>
+      <if test="trackName != null" >
+        TRACK_NAME = #{trackName},
+      </if>
+      <if test="platform != null" >
+        PLATFORM = #{platform},
+      </if>
+      <if test="jobs != null" >
+        JOBS = #{jobs},
+      </if>
+      <if test="stnType != null" >
+        STN_TYPE = #{stnType},
+      </if>
+      <if test="psgFlg != null" >
+        PSG_FLG = #{psgFlg},
+      </if>
+      <if test="locoFlag != null" >
+        LOCO_FLAG = #{locoFlag},
+      </if>
+      <if test="tecType != null" >
+        TEC_TYPE = #{tecType},
+      </if>
+      <if test="boundaryInOut != null" >
+        BOUNDARY_IN_OUT = #{boundaryInOut},
+      </if>
+      <if test="upDown != null" >
+        UP_DOWN = #{upDown},
+      </if>
+      <if test="useStatus != null" >
+        USE_STATUS = #{useStatus},
+      </if>
+    </set>
+    where PLAN_TRAIN_STN_ID = #{planTrainStnId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.railway.passenger.transdispatch.comfirmedmap.entity.TPlanTrainStn" >
+    update T_PLAN_TRAIN_STN
+    set PLAN_TRAIN_ID = #{planTrainId},
+      STN_SORT = #{stnSort},
+      STN_ID = #{stnId},
+      STN_NAME = #{stnName},
+      NODE_ID = #{nodeId},
+      NODE_NAME = #{nodeName},
+      NODE_TDCS_ID = #{nodeTdcsId},
+      NODE_TDCS_NAME = #{nodeTdcsName},
+      STN_BUREAU_ID = #{stnBureauId},
+      STN_BUREAU = #{stnBureau},
+      STN_BUREAU_FULL = #{stnBureauFull},
+      ARR_TRAIN_NBR = #{arrTrainNbr},
+      ARR_TIME = #{arrTime},
+      BASE_ARR_TIME = #{baseArrTime},
+      ARR_RUN_DAYS = #{arrRunDays},
+      DPT_TRAIN_NBR = #{dptTrainNbr},
+      DPT_TIME = #{dptTime},
+      BASE_DPT_TIME = #{baseDptTime},
+      RUN_DAYS = #{runDays},
+      TRACK_NBR = #{trackNbr},
+      TRACK_NAME = #{trackName},
+      PLATFORM = #{platform},
+      JOBS = #{jobs},
+      STN_TYPE = #{stnType},
+      PSG_FLG = #{psgFlg},
+      LOCO_FLAG = #{locoFlag},
+      TEC_TYPE = #{tecType},
+      BOUNDARY_IN_OUT = #{boundaryInOut},
+      UP_DOWN = #{upDown},
+      USE_STATUS = #{useStatus}
+    where PLAN_TRAIN_STN_ID = #{planTrainStnId}
+  </update>
+</mapper>

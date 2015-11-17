@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.MessageDao">
+
+	<!-- 使用于消息管理-发出的消息合并,其他查询请再重新写一个. -->
+	<resultMap id="msgSend" type="org.railway.com.trainplan.entity.MsgSend">
+        <id column="fId" property="id"/>
+        <collection property="receiveList" resultMap="receiveList"/> 
+    </resultMap>
+    <resultMap id="receiveList" type="org.railway.com.trainplan.entity.MsgReceive">
+        <id column="zId" property="id"/>
+        <result column="receive_bureau" property="receiveBureau"/>
+        <result column="receive_post" property="receivePost"/>
+        <result column="receive_people" property="receivePeople"/>
+        <result column="receive_time" property="receiveTime1"/>
+        <result column="qs_people" property="qsPeople"/>
+        <result column="qs_time" property="qsTime1"/>
+        <result column="receive_status" property="receiveStatus"/>
+        
+        <result column="msg_contents" property="msgContents"/>
+        <result column="send_post" property="sendPost"/>
+        <result column="send_people" property="sendPeople"/>
+        <result column="send_time" property="sendTime"/>
+        <result column="msg_status" property="msgStatus"/>
+        <result column="name" property="typeName"/>
+    </resultMap>
+    
+    <select id="getMsgType" parameterType="map" resultType="org.railway.com.trainplan.entity.MsgType">
+    	select a.code,a.name from msg_type a where 1=1 and a.status = 0
+    </select>
+
+    <select id="getReceiveMsg" parameterType="map" resultType="org.railway.com.trainplan.entity.MsgReceive">
+		select 
+		       a.id,
+		       a.send_id sendId,
+		       c.name typeName,
+		       b.msg_contents msgContents,
+		       b.send_bureau sendBureau,
+       		   <!-- d.ljjc bureauName, -->
+		       b.send_post sendPost,
+		       b.send_people sendPeople,
+		       <!-- b.send_time sendTime, -->
+       		   to_char(b.send_time,'MMdd hh24:mi') sendTime,
+		       a.qs_people qsPeople,
+		       <!-- a.qs_time qsTime1, -->
+       		   to_char(a.qs_time,'MMdd hh24:mi') qsTime1,
+		       a.msg_status msgStatus
+		  from msg_receive a
+		  left join msg_send b on b.id = a.send_id
+		  left join msg_type c on c.code = b.type_code
+  		  <!-- left join orga.ljzd d on d.ljpym = b.send_bureau -->
+		 where 1 = 1
+		 <if test="receiveStartDate != null">
+			and to_char(b.send_time,'yyyy-MM-dd') &gt;= #{receiveStartDate}
+		 </if>
+		 <if test="receiveEndDate != null">
+		 	<!-- 哲哥的查询条件是开始时间：2015-06-24；截止时间：2015-06-24；所以只能“=”了 -->
+			<!-- and to_char(b.send_time,'yyyy-MM-dd') &lt; #{receiveEndDate} -->
+			and to_char(b.send_time,'yyyy-MM-dd') &lt;= #{receiveEndDate}
+		 </if>
+		 <if test="bureauCode != null">
+			and b.send_bureau = #{bureauCode}
+		 </if>
+		 <if test="typeCode != null">
+			and b.type_code = #{typeCode}
+		 </if>
+		 <if test="statusCode != null">
+			 and a.msg_status = #{statusCode}
+		 </if>
+		 <if test="statusCode == null">
+			 and a.msg_status &lt;> 2
+		 </if>
+		 <if test="sendPeople != null">
+			<!-- and b.send_people = #{sendPeople} -->
+			and b.send_people like '%${sendPeople}%'
+		 </if>
+		 <if test="kw != null">
+			and b.msg_contents like '%${kw}%'
+		 </if>
+		 <if test="receivePost != null">
+			and a.receive_post = #{receivePost}
+		 </if>
+		 <if test="ids != null">
+			and a.id in (${ids})
+		 </if>
+		 
+		 order by b.send_time desc
+    </select>
+
+    <select id="getReceiveMsgCount" parameterType="map" resultType="java.lang.Integer">
+		select 
+		       count(1)
+		  from msg_receive a
+		  left join msg_send b on b.id = a.send_id
+		 where 1 = 1
+		 <if test="receiveStartDate != null">
+			and to_char(b.send_time,'yyyy-MM-dd') &gt;= #{receiveStartDate}
+		 </if>
+		 <if test="receiveEndDate != null">
+		 	<!-- 哲哥的查询条件是开始时间：2015-06-24；截止时间：2015-06-24；所以只能“=”了 -->
+			<!-- and to_char(b.send_time,'yyyy-MM-dd') &lt; #{receiveEndDate} -->
+			and to_char(b.send_time,'yyyy-MM-dd') &lt;= #{receiveEndDate}
+		 </if>
+		 <if test="bureauCode != null">
+			and b.send_bureau = #{bureauCode}
+		 </if>
+		 <if test="typeCode != null">
+			and b.type_code = #{typeCode}
+		 </if>
+		 <if test="statusCode != null">
+			 and a.msg_status = #{statusCode}
+		 </if>
+		 <if test="statusCode == null">
+			 and a.msg_status &lt;> 2
+		 </if>
+		 <if test="sendPeople != null">
+			<!-- and b.send_people = #{sendPeople} -->
+			and b.send_people like '%${sendPeople}%'
+		 </if>
+		 <if test="kw != null">
+			and b.msg_contents like '%${kw}%'
+		 </if>
+		 <if test="receivePost != null">
+			and a.receive_post = #{receivePost}
+		 </if>
+		 
+		 order by a.receive_time desc
+    </select>
+
+    <select id="getSendMsg" parameterType="map" resultMap="msgSend">
+		select a.id fId,
+		c.id zId,
+		b.name,
+		a.msg_contents,
+		c.receive_bureau,
+		c.receive_post,
+		c.receive_people,
+		<!-- c.receive_time, -->
+       to_char(c.receive_time,'MMdd hh24:mi') receive_time,
+        c.qs_people,
+        <!-- c.qs_time, -->
+       to_char(c.qs_time,'MMdd hh24:mi') qs_time,
+		a.send_post,
+		a.send_people,
+		<!-- a.send_time, -->
+       to_char(a.send_time,'MMdd hh24:mi') send_time,
+		a.msg_status,
+		c.msg_status receive_status
+		from msg_send a 
+		left join msg_type b on b.code = a.type_code
+		left join msg_receive c on c.send_id = a.id
+		where 1=1
+		 <if test="sendPost != null">
+			and a.send_post = #{sendPost}
+		 </if>
+		 <if test="sendStartDate != null">
+			and to_char(a.send_time,'yyyy-MM-dd') &gt;= #{sendStartDate}
+		 </if>
+		 <if test="sendEndDate != null">
+		 	<!-- 哲哥的查询条件是开始时间：2015-06-24；截止时间：2015-06-24；所以只能“=”了 -->
+			<!-- and to_char(a.send_time,'yyyy-MM-dd') &lt; #{sendEndDate} -->
+			and to_char(a.send_time,'yyyy-MM-dd') &lt;= #{sendEndDate}
+		 </if>
+		 <if test="bureauCode != null">
+			and c.receive_bureau = #{bureauCode}
+		 </if>
+		 <if test="receivePeople != null">
+			<!-- and c.receive_people = #{receivePeople} -->
+			and c.qs_people like '%${receivePeople}%'
+		 </if>
+		 <if test="kw != null">
+			and a.msg_contents like '%${kw}%'
+		 </if>
+		 <if test="typeCode != null">
+			and a.type_code = #{typeCode}
+		 </if>
+		 <if test="statusCode != null">
+			 and a.msg_status = #{statusCode}
+		 </if>
+		order by a.send_time desc,c.receive_post desc  
+    </select>
+
+    <insert id="insertMsgSent" parameterType="map">
+		insert into msg_send
+		  (id,
+		   type_code,
+		   msg_contents,
+		   msg_status,
+		   send_bureau,
+		   send_post,
+		   send_people,
+		   send_time)
+		values
+		  (#{id, jdbcType=VARCHAR}, 
+		  #{type_code, jdbcType=VARCHAR}, 
+		  #{msg_contents, jdbcType=VARCHAR}, 
+		  0, 
+		  #{send_bureau, jdbcType=VARCHAR}, 
+		  #{send_post, jdbcType=VARCHAR},
+		  #{send_people, jdbcType=VARCHAR}, 
+		  sysdate)
+    </insert>
+
+    <insert id="insertMsgReceive" parameterType="map">
+		insert into msg_receive
+		  (id,
+		   send_id,
+		   msg_status,
+		   receive_bureau,
+		   receive_post,
+		   receive_people,
+		   receive_time)
+        <foreach collection="list" item="item" index="index" open="(" separator="UNION ALL" close=")">
+            SELECT #{item.id, jdbcType=VARCHAR}, 
+            #{item.sendId, jdbcType=VARCHAR}, 
+            0, 
+            #{item.receiveBureau, jdbcType=VARCHAR},
+            #{item.receivePost, jdbcType=VARCHAR},
+            #{item.receivePeople, jdbcType=VARCHAR},  
+            sysdate
+            FROM DUAL
+        </foreach>
+    </insert>
+    
+    <update id="updateReceiveByMap" parameterType="map">
+		update msg_receive a
+		   set a.update_time = sysdate
+		   <if test="qsPeople != null">
+		       ,a.qs_time     = sysdate
+		       ,a.qs_people   = #{qsPeople, jdbcType=VARCHAR}
+		   </if>
+		   <if test="msgStatus != null">
+		       ,a.msg_status  = #{msgStatus, jdbcType=NUMERIC}
+		   </if>
+ 		where a.id in (${ids}) 
+    </update>
+    
+    <update id="updateSendByMap" parameterType="map">
+    	update msg_send a
+    		set a.update_time = sysdate
+    		<if test="msgStatus != null">
+    			, a.msg_status = case (select count(1) from msg_receive b where b.send_id = #{sendId, jdbcType=VARCHAR} and b.qs_people is not null and b.qs_time is not null)
+    							 when (select count(1) from msg_receive b where b.send_id = #{sendId, jdbcType=VARCHAR}) then 2
+    							 when 0 then 0
+    							 else 1
+    							 end
+		   </if>
+  where a.id = #{sendId, jdbcType=VARCHAR}
+ 		
+    </update>
+
+</mapper> 
+

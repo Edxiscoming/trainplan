@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.railway.com.trainplan.repository.mybatis.ChartDao">
+    <select id="getPlanTypeCount" parameterType="map" resultType="map">
+        SELECT SUM(RUNNING) AS RUNNING, SUM(BACKUP) AS BACKUP, SUM(STOPPED) AS STOPPED, SUM(UNKNOWN) AS UNKNOWN FROM(
+            SELECT COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS RUNNING, 0 AS BACKUP, 0 AS STOPPED, 0 AS UNKNOWN FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            WHERE PT.SPARE_FLAG = 1
+            AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+            UNION
+            SELECT 0 AS RUNNING, COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS BACKUP, 0 AS STOPPED, 0 AS UNKNOWN FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            WHERE PT.SPARE_FLAG = 2 AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+            UNION
+            SELECT 0 AS RUNNING, 0 AS BACKUP, COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS STOPPED, 0 AS UNKNOWN FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            WHERE PT.SPARE_FLAG = 9 AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+            UNION
+            SELECT 0 AS RUNNING, 0 AS BACKUP, 0 AS STOPPED, COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS UNKNOWN FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            WHERE ((PT.SPARE_FLAG &lt;> 9 AND PT.SPARE_FLAG &lt;> 1 AND PT.SPARE_FLAG &lt;> 2) OR PT.SPARE_FLAG IS NULL)
+            AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+        )
+    </select>
+
+    <select id="getPlanLineCount" parameterType="map" resultType="map">
+        SELECT SUM(LINE) AS LINE, SUM(PLAN) AS PLAN, SUM(UNKNOWN) AS UNKNOWN FROM(
+            SELECT COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS LINE, 0 AS PLAN, 0 AS UNKNOWN FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            WHERE PT.DAILYPLAN_FLAG = 0
+            AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+            UNION
+            SELECT 0 AS LINE, COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS PLAN, 0 AS UNKNOWN FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            WHERE PT.DAILYPLAN_FLAG = 1
+            AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+            UNION
+            SELECT 0 AS LINE, 0 AS PLAN, COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS UNKNOWN FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            WHERE ((PT.DAILYPLAN_FLAG &lt;> 1 AND PT.DAILYPLAN_FLAG &lt;> 0) OR PT.DAILYPLAN_FLAG IS NULL)
+            AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+        )
+    </select>
+
+    <select id="getLev1CheckCount" parameterType="map" resultType="map">
+        SELECT SUM(CHECKED) AS CHECKED, SUM(UNCHECKED) AS UNCHECKED FROM (
+            SELECT COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS CHECKED, 0 AS UNCHECKED
+            FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            LEFT JOIN JHPT_RJH.M_TRAINLINE TL ON PT.DAILYPLAN_ID = TL.ID
+            WHERE PT.CHECK_LEV1_BUREAU LIKE '%${bureau}%'
+            AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+            UNION
+            SELECT 0 AS CHECKED, COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS UNCHECKED
+            FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            LEFT JOIN JHPT_RJH.M_TRAINLINE TL ON PT.DAILYPLAN_ID = TL.ID
+            WHERE (PT.CHECK_LEV1_BUREAU IS NULL OR PT.CHECK_LEV1_BUREAU NOT LIKE '%${bureau}%')
+            AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+        )
+    </select>
+
+    <select id="getLev2CheckCount" parameterType="map" resultType="map">
+        SELECT SUM(CHECKED) AS CHECKED, SUM(UNCHECKED) AS UNCHECKED FROM (
+            SELECT COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS CHECKED, 0 AS UNCHECKED
+            FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            LEFT JOIN JHPT_RJH.M_TRAINLINE TL ON PT.DAILYPLAN_ID = TL.ID
+            WHERE PT.CHECK_LEV2_BUREAU LIKE '%${bureau}%'
+            AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+            UNION
+            SELECT 0 AS CHECKED, COUNT(DISTINCT PT.PLAN_TRAIN_ID) AS UNCHECKED
+            FROM PLAN_TRAIN PT
+            INNER JOIN PLAN_TRAIN_STN PTS ON PT.PLAN_TRAIN_ID = PTS.PLAN_TRAIN_ID
+            LEFT JOIN JHPT_RJH.M_TRAINLINE TL ON PT.DAILYPLAN_ID = TL.ID
+            WHERE (PT.CHECK_LEV2_BUREAU IS NULL OR PT.CHECK_LEV2_BUREAU NOT LIKE '%${bureau}%')
+            AND (TO_CHAR(PTS.ARR_TIME, 'yyyymmdd') = '${date}' OR TO_CHAR(PTS.DPT_TIME, 'yyyymmdd') = '${date}') AND PTS.STN_BUREAU = '${bureau}'
+            <if test="type == 1">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 2">
+                AND PT.START_BUREAU = '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="type == 3">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU = '${bureau}'
+            </if>
+            <if test="type == 4">
+                AND PT.START_BUREAU &lt;> '${bureau}' AND PT.END_BUREAU &lt;> '${bureau}'
+            </if>
+            <if test="name != null">
+                AND PT.TRAIN_NBR LIKE '%${name}%'
+            </if>
+            <choose>
+                <when test="trainType != null">
+                    AND PT.HIGHLINE_FLAG = 1
+                </when>
+                <otherwise>
+                    AND PT.HIGHLINE_FLAG &lt;> 1
+                </otherwise>
+            </choose>
+        )
+    </select>
+</mapper> 
